@@ -1,0 +1,45 @@
+{
+  "name": "@siberiacancode-core/stylelint",
+  "description": "stylelint config",
+  "license": "MIT",
+  "version": "0.0.1",
+  "keywords": [
+    "stylelint"
+  ],
+  "author": {
+    "name": "SIBERIA CAN CODE 🧊",
+    "url": "https://github.com/siberiacancode"
+  },
+  "bugs": {
+    "url": "https://github.com/siberiacancode/core/issues"
+  },
+  "homepage": "https://github.com/siberiacancode/@siberiacancode-core/stylelint",
+  "repository": {
+    "url": "https://github.com/siberiacancode-core"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    ".stylelintrc.js"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --write \"*.js\""
+  },
+  "lint-staged": {
+    "*.js": "prettier --write"
+  },
+  "peerDependencies": {
+    "stylelint": "^15.0.0"
+  },
+  "dependencies": {
+    "stylelint-config-idiomatic-order": "^9.0.0",
+    "stylelint-config-standard-scss": "^7.0.1",
+    "stylelint-order": "^6.0.3"
+  },
+  "devDependencies": {
+    "@siberiacancode-core/prettier": "*",
+    "stylelint": "^15.0.0"
+  }
+}

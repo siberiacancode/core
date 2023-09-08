@@ -1,0 +1,5 @@
+{
+  "extends": "@siberiacancode-core/tsconfig/tsconfig.react.json",
+  "exclude": ["node_modules"],
+  "include": ["**/*.ts"]
+}

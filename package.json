@@ -1,0 +1,42 @@
+{
+  "name": "siberiacancode-core",
+  "license": "MIT",
+  "version": "0.0.0",
+  "keywords": [
+    "stylelint"
+  ],
+  "private": true,
+  "author": {
+    "name": "SIBERIA CAN CODE 🧊",
+    "url": "https://github.com/siberiacancode"
+  },
+  "bugs": {
+    "url": "https://github.com/siberiacancode/core/issues"
+  },
+  "repository": {
+    "url": "https://github.com/siberiacancode-core"
+  },
+  "workspaces": [
+    "tools/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "deploy": "turbo run deploy",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "stylelint": "turbo run stylelint",
+    "unit-test": "turbo run unit-test",
+    "lint-staged": "turbo run lint-staged",
+    "change": "beachball change --no-commit",
+    "release": "beachball publish --yes",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "beachball": "^2.37.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3",
+    "turbo": "^1.10.13"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "@siberiacancode-core/prettier",
+  "description": "prettier configs",
+  "license": "MIT",
+  "version": "0.0.1",
+  "keywords": [
+    "prettier"
+  ],
+  "author": {
+    "name": "SIBERIA CAN CODE 🧊",
+    "url": "https://github.com/siberiacancode"
+  },
+  "bugs": {
+    "url": "https://github.com/siberiacancode/core/issues"
+  },
+  "homepage": "https://github.com/siberiacancode/@siberiacancode-core/prettier",
+  "repository": {
+    "url": "https://github.com/siberiacancode-core"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    ".prettierrc.js"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --write \"*.js\""
+  },
+  "lint-staged": {
+    "*.js": "prettier --write"
+  },
+  "peerDependencies": {
+    "prettier": "^3.0.3"
+  },
+  "dependencies": {
+    "prettier": "^3.0.3"
+  }
+}

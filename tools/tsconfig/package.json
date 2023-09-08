@@ -1,0 +1,29 @@
+{
+  "name": "@siberiacancode-core/tsconfig",
+  "description": "typescript config",
+  "license": "MIT",
+  "version": "0.0.1",
+  "keywords": [
+    "stylelint"
+  ],
+  "author": {
+    "name": "SIBERIA CAN CODE 🧊",
+    "url": "https://github.com/siberiacancode"
+  },
+  "bugs": {
+    "url": "https://github.com/siberiacancode/core/issues"
+  },
+  "homepage": "https://github.com/siberiacancode/@siberiacancode-core/tsconfig",
+  "repository": {
+    "url": "https://github.com/siberiacancode-core"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "tsconfig.react.json"
+  ],
+  "peerDependencies": {
+    "typescript": "^4.9.5 || ^5.0.0"
+  }
+}
