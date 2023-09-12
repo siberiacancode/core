@@ -1,5 +1,5 @@
 {
-  "name": "@siberiacancode-core/prettier",
+  "name": "@siberiacancode/prettier",
   "description": "prettier configs",
   "license": "MIT",
   "version": "0.0.0",
@@ -13,7 +13,7 @@
   "bugs": {
     "url": "https://github.com/siberiacancode/core/issues"
   },
-  "homepage": "https://github.com/siberiacancode/@siberiacancode-core/prettier",
+  "homepage": "https://github.com/siberiacancode/@siberiacancode/prettier",
   "repository": {
     "url": "https://github.com/siberiacancode-core"
   },

@@ -1,5 +1,5 @@
 {
-  "name": "@siberiacancode-core/builder",
+  "name": "@siberiacancode/builder",
   "description": "builder config",
   "license": "MIT",
   "version": "0.0.0",
@@ -13,7 +13,7 @@
   "bugs": {
     "url": "https://github.com/siberiacancode/core/issues"
   },
-  "homepage": "https://github.com/siberiacancode/@siberiacancode-core/builder",
+  "homepage": "https://github.com/siberiacancode/@siberiacancode/builder",
   "repository": {
     "url": "https://github.com/siberiacancode-core"
   },
@@ -55,9 +55,9 @@
     "rollup-plugin-dts": "^6.0.1"
   },
   "devDependencies": {
-    "@siberiacancode-core/eslint": "*",
-    "@siberiacancode-core/prettier": "*",
-    "@siberiacancode-core/tsconfig": "*",
+    "@siberiacancode/eslint": "*",
+    "@siberiacancode/prettier": "*",
+    "@siberiacancode/tsconfig": "*",
     "@rollup/plugin-json": "^6.0.0",
     "@types/glob": "^8.1.0",
     "eslint": "^8.48.0",

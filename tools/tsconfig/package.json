@@ -1,5 +1,5 @@
 {
-  "name": "@siberiacancode-core/tsconfig",
+  "name": "@siberiacancode/tsconfig",
   "description": "typescript config",
   "license": "MIT",
   "version": "0.0.0",
@@ -13,7 +13,7 @@
   "bugs": {
     "url": "https://github.com/siberiacancode/core/issues"
   },
-  "homepage": "https://github.com/siberiacancode/@siberiacancode-core/tsconfig",
+  "homepage": "https://github.com/siberiacancode/@siberiacancode/tsconfig",
   "repository": {
     "url": "https://github.com/siberiacancode-core"
   },

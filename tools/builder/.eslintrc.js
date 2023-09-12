@@ -1,4 +1,4 @@
-const { eslint } = require('@siberiacancode-core/eslint');
+const { eslint } = require('@siberiacancode/eslint');
 
 module.exports = {
   ...eslint.node,

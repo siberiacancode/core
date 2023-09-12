@@ -1,5 +1,5 @@
 {
-  "name": "@siberiacancode-core/eslint",
+  "name": "@siberiacancode/eslint",
   "description": "eslint configs",
   "license": "MIT",
   "version": "0.0.0",
@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/siberiacancode/core/issues"
   },
-  "homepage": "https://github.com/siberiacancode/@siberiacancode-core/eslint",
+  "homepage": "https://github.com/siberiacancode/@siberiacancode/eslint",
   "repository": {
     "url": "https://github.com/siberiacancode-core"
   },
@@ -54,7 +54,7 @@
     "eslint-plugin-simple-import-sort": "^10.0.0"
   },
   "devDependencies": {
-    "@siberiacancode-core/prettier": "*",
+    "@siberiacancode/prettier": "*",
     "eslint": "^8.2.0"
   }
 }

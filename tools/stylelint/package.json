@@ -1,5 +1,5 @@
 {
-  "name": "@siberiacancode-core/stylelint",
+  "name": "@siberiacancode/stylelint",
   "description": "stylelint config",
   "license": "MIT",
   "version": "0.0.0",
@@ -13,7 +13,7 @@
   "bugs": {
     "url": "https://github.com/siberiacancode/core/issues"
   },
-  "homepage": "https://github.com/siberiacancode/@siberiacancode-core/stylelint",
+  "homepage": "https://github.com/siberiacancode/@siberiacancode/stylelint",
   "repository": {
     "url": "https://github.com/siberiacancode-core"
   },
@@ -39,7 +39,7 @@
     "stylelint-order": "^6.0.3"
   },
   "devDependencies": {
-    "@siberiacancode-core/prettier": "*",
+    "@siberiacancode/prettier": "*",
     "stylelint": "^15.0.0"
   }
 }

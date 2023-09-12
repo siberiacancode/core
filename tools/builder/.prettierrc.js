@@ -1,2 +1,2 @@
-const { prettier } = require('@siberiacancode-core/prettier');
+const { prettier } = require('@siberiacancode/prettier');
 module.exports = prettier;
