@@ -2,7 +2,7 @@
   "name": "@siberiacancode/jest",
   "description": "jest config",
   "license": "MIT",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "keywords": [
     "jest"
   ],

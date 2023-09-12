@@ -1,0 +1,22 @@
+{
+  "name": "@siberiacancode/tsconfig",
+  "entries": [
+    {
+      "date": "Tue, 12 Sep 2023 07:53:07 GMT",
+      "version": "1.0.0",
+      "tag": "@siberiacancode/tsconfig_v1.0.0",
+      "comments": {
+        "major": [
+          {
+            "author": "dmitriybabinup@gmail.com",
+            "package": "@siberiacancode/tsconfig",
+            "commit": "not available",
+            "comment": {
+              "title": ""
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
