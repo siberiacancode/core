@@ -35,7 +35,7 @@ module.exports = {
           // External packages:
           ['^react', '^@?\\w'],
           // Internal packages:
-          ['^@(koronapay-core/.*|$)'],
+          ['^@(siberiacancodepay-core/.*|$)'],
           // Alias imports:
           ['^@(([\\/.]?\\w)|assets|test-utils)'],
           // Side effect imports:
