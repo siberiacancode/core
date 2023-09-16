@@ -23,6 +23,7 @@
   "files": [
     "jest.config.js"
   ],
+  "main": "index.js",
   "scripts": {
     "format": "prettier --write \"*.js\""
   },
