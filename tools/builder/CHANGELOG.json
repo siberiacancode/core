@@ -2,6 +2,21 @@
   "name": "@siberiacancode/builder",
   "entries": [
     {
+      "date": "Fri, 22 Sep 2023 18:24:59 GMT",
+      "version": "1.0.2",
+      "tag": "@siberiacancode/builder_v1.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "dmitriybabinup@gmail.com",
+            "package": "@siberiacancode/builder",
+            "commit": "not available",
+            "comment": "☄ update versions"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Sep 2023 07:53:07 GMT",
       "version": "1.0.0",
       "tag": "@siberiacancode/builder_v1.0.0",
