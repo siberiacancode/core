@@ -5,5 +5,14 @@ module.exports = {
   parserOptions: {
     ...eslint.node.parserOptions,
     tsconfigRootDir: __dirname
-  }
+  },
+  overrides: [
+    ...eslint.node.overrides,
+    {
+      files: ['*.ts'],
+      rules: {
+        'no-restricted-syntax': 'off'
+      }
+    }
+  ]
 };

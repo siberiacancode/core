@@ -54,7 +54,6 @@
     "eslint-plugin-simple-import-sort": "^10.0.0"
   },
   "devDependencies": {
-    "@siberiacancode/prettier": "*",
-    "eslint": "^8.2.0"
+    "@siberiacancode/prettier": "*"
   }
 }

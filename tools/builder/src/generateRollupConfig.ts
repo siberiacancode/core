@@ -90,13 +90,17 @@ export const generateRollupConfig = ({
   const config: RollupOptions[] = [
     {
       input: Object.fromEntries(
-        globSync(inputPattern, { ignore: ignorePattern }).map((file) => [
-          path.relative(
-            path.dirname(entry),
-            file.slice(0, file.length - path.extname(file).length)
-          ),
-          fileURLToPath(new URL(file, import.meta.url))
-        ])
+        globSync(inputPattern.replace(/\\/g, '/'), {
+          ignore: ignorePattern.replace(/\\/g, '/')
+        }).map((file) => {
+          return [
+            path.relative(
+              path.dirname(entry),
+              file.slice(0, file.length - path.extname(file).length)
+            ),
+            fileURLToPath(new URL(`file:///${file}`, import.meta.url))
+          ];
+        })
       ),
       output: [
         {
