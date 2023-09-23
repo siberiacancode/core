@@ -118,7 +118,7 @@ export const generateRollupConfig = ({
           ...output.module
         }
       ],
-      external: [...Object.keys(pkg.peerDependencies ?? {}), /@babel\/runtime/, ...external],
+      external: [...Object.keys(pkg.peerDependencies ?? {}), ...external],
       plugins: [
         getRollupPlugin(nodeResolve, configs.nodeResolve, {
           extensions: ['.js', '.ts', '.tsx']
@@ -136,9 +136,8 @@ export const generateRollupConfig = ({
         getRollupPlugin(babel, configs.babel, {
           exclude: /node_modules/,
           extensions: ['.js', '.ts', '.tsx'],
-          babelHelpers: 'runtime',
-          presets: ['@babel/preset-env', '@babel/preset-typescript'],
-          plugins: ['@babel/plugin-transform-runtime']
+          babelHelpers: 'inline',
+          presets: ['@babel/preset-env', '@babel/preset-typescript']
         }),
         getRollupPlugin(terser, configs.terser)
       ]
