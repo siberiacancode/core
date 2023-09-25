@@ -2,6 +2,21 @@
   "name": "@siberiacancode/builder",
   "entries": [
     {
+      "date": "Mon, 25 Sep 2023 11:15:22 GMT",
+      "version": "1.2.0",
+      "tag": "@siberiacancode/builder_v1.2.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "dmitriybabinup@gmail.com",
+            "package": "@siberiacancode/builder",
+            "commit": "not available",
+            "comment": "☄ add babel react, delete inline"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Sep 2023 08:26:28 GMT",
       "version": "1.1.0",
       "tag": "@siberiacancode/builder_v1.1.0",
