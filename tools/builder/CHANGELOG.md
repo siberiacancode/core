@@ -1,8 +1,16 @@
 # Change Log - @siberiacancode/builder
 
-This log was last generated on Sat, 23 Sep 2023 08:26:28 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Sep 2023 11:15:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.0
+
+Mon, 25 Sep 2023 11:15:22 GMT
+
+### Minor changes
+
+- ☄ add babel react, delete inline (dmitriybabinup@gmail.com)
 
 ## 1.1.0
 

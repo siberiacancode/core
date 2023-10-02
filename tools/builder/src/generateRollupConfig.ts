@@ -121,7 +121,7 @@ export const generateRollupConfig = ({
       external: [...Object.keys(pkg.peerDependencies ?? {}), ...external],
       plugins: [
         getRollupPlugin(nodeResolve, configs.nodeResolve, {
-          extensions: ['.js', '.ts', '.tsx']
+          extensions: ['.js', '.jsx', '.ts', '.tsx']
         }),
         getRollupPlugin(commonJS, configs.commonJS, {
           include: /node_modules/,
@@ -135,9 +135,9 @@ export const generateRollupConfig = ({
         }),
         getRollupPlugin(babel, configs.babel, {
           exclude: /node_modules/,
-          extensions: ['.js', '.ts', '.tsx'],
-          babelHelpers: 'inline',
-          presets: ['@babel/preset-env', '@babel/preset-typescript']
+          babelHelpers: 'bundled',
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
+          presets: ['@babel/preset-env', '@babel/preset-typescript', '@babel/preset-react']
         }),
         getRollupPlugin(terser, configs.terser)
       ]
@@ -145,7 +145,6 @@ export const generateRollupConfig = ({
     {
       input: entry,
       output: [{ file: pkg.types, format: 'esm', ...output.types }],
-      external: [/\.(sass|scss|css)$/],
       plugins: [getRollupPlugin(dts.default, configs.dts)]
     },
     ...options
