@@ -13,9 +13,9 @@
   "bugs": {
     "url": "https://github.com/siberiacancode/core/issues"
   },
-  "homepage": "https://github.com/siberiacancode/@siberiacancode/jest",
+  "homepage": "https://github.com/siberiacancode/core",
   "repository": {
-    "url": "https://github.com/siberiacancode-core"
+    "url": "https://github.com/siberiacancode/core"
   },
   "publishConfig": {
     "access": "public"

@@ -1,8 +1,13 @@
 {
   "name": "siberiacancode-core",
   "license": "MIT",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "keywords": [
+    "prettier",
+    "eslint",
+    "tsconfig",
+    "builder",
+    "jest",
     "stylelint"
   ],
   "private": true,
@@ -14,7 +19,7 @@
     "url": "https://github.com/siberiacancode/core/issues"
   },
   "repository": {
-    "url": "https://github.com/siberiacancode-core"
+    "url": "https://github.com/siberiacancode/core"
   },
   "workspaces": [
     "tools/*"
@@ -37,6 +42,6 @@
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
-    "turbo": "^1.10.13"
+    "turbo": "^1.10.14"
   }
 }

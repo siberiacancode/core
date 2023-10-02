@@ -30,10 +30,10 @@ export default [
         banner
       }
     ],
-    external: [...Object.keys(pkg.peerDependencies ?? {}), /@babel\/runtime/],
+    external: [...Object.keys(pkg.peerDependencies ?? {})],
     plugins: [
       resolve({
-        extensions: ['.js', '.ts', '.tsx']
+        extensions: ['.js', '.ts']
       }),
       commonjs({
         include: /node_modules/,
@@ -46,10 +46,9 @@ export default [
       }),
       babel({
         exclude: /node_modules/,
-        extensions: ['.js', '.ts', '.tsx'],
-        babelHelpers: 'runtime',
-        presets: ['@babel/preset-env', '@babel/preset-typescript'],
-        plugins: ['@babel/plugin-transform-runtime']
+        extensions: ['.js', '.ts'],
+        babelHelpers: 'bundled',
+        presets: ['@babel/preset-env', '@babel/preset-typescript']
       }),
       json(),
       terser()
@@ -58,7 +57,6 @@ export default [
   {
     input,
     output: [{ file: pkg.types, format: 'esm' }],
-    external: [/\.(sass|scss|css)$/],
     plugins: [dts.default()]
   }
 ];
