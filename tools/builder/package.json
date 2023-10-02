@@ -2,7 +2,7 @@
   "name": "@siberiacancode/builder",
   "description": "builder config",
   "license": "MIT",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "keywords": [
     "builder",
     "rollup"
@@ -58,9 +58,9 @@
   },
   "devDependencies": {
     "@rollup/plugin-json": "^6.0.0",
-    "@siberiacancode/eslint": "1.0.2",
-    "@siberiacancode/prettier": "1.0.0",
-    "@siberiacancode/tsconfig": "1.0.0",
+    "@siberiacancode/eslint": "1.0.3",
+    "@siberiacancode/prettier": "1.0.1",
+    "@siberiacancode/tsconfig": "1.0.1",
     "@types/glob": "^8.1.0",
     "eslint": "^8.50.0",
     "prettier": "^3.0.3",

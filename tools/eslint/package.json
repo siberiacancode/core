@@ -2,7 +2,7 @@
   "name": "@siberiacancode/eslint",
   "description": "eslint configs",
   "license": "MIT",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "keywords": [
     "eslint",
     "react",
