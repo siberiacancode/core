@@ -1,8 +1,16 @@
 # Change Log - @siberiacancode/jest
 
-This log was last generated on Sat, 16 Sep 2023 10:35:11 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Oct 2023 17:31:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.2
+
+Mon, 02 Oct 2023 17:31:56 GMT
+
+### Patches
+
+- [object Object] (dmitriybabinup@gmail.com)
 
 ## 1.0.1
 

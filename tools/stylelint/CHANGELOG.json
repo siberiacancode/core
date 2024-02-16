@@ -2,6 +2,23 @@
   "name": "@siberiacancode/stylelint",
   "entries": [
     {
+      "date": "Mon, 02 Oct 2023 17:31:56 GMT",
+      "version": "1.0.2",
+      "tag": "@siberiacancode/stylelint_v1.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "dmitriybabinup@gmail.com",
+            "package": "@siberiacancode/stylelint",
+            "commit": "not available",
+            "comment": {
+              "title": ""
+            }
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 16 Sep 2023 11:35:48 GMT",
       "version": "1.0.1",
       "tag": "@siberiacancode/stylelint_v1.0.1",

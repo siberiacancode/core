@@ -1,8 +1,19 @@
 # Change Log - @siberiacancode/builder
 
-This log was last generated on Mon, 25 Sep 2023 11:15:22 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Oct 2023 17:31:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.1
+
+Mon, 02 Oct 2023 17:31:56 GMT
+
+### Patches
+
+- [object Object] (dmitriybabinup@gmail.com)
+- Bump @siberiacancode/eslint to v1.0.3
+- Bump @siberiacancode/prettier to v1.0.1
+- Bump @siberiacancode/tsconfig to v1.0.1
 
 ## 1.2.0
 
