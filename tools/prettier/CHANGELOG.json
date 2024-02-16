@@ -2,6 +2,21 @@
   "name": "@siberiacancode/prettier",
   "entries": [
     {
+      "date": "Fri, 16 Feb 2024 11:19:32 GMT",
+      "version": "1.1.0",
+      "tag": "@siberiacancode/prettier_v1.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "dmitriybabinup@gmail.com",
+            "package": "@siberiacancode/prettier",
+            "commit": "not available",
+            "comment": "🧊 update packages"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 02 Oct 2023 17:31:56 GMT",
       "version": "1.0.1",
       "tag": "@siberiacancode/prettier_v1.0.1",

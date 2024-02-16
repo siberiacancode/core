@@ -1,8 +1,16 @@
 # Change Log - @siberiacancode/builder
 
-This log was last generated on Mon, 02 Oct 2023 17:31:56 GMT and should not be manually modified.
+This log was last generated on Fri, 16 Feb 2024 11:19:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.0
+
+Fri, 16 Feb 2024 11:19:32 GMT
+
+### Minor changes
+
+- 🧊 update packages (dmitriybabinup@gmail.com)
 
 ## 1.2.1
 
