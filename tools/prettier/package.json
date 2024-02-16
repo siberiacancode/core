@@ -31,9 +31,9 @@
     "*.js": "prettier --write"
   },
   "peerDependencies": {
-    "prettier": "^3.0.3"
+    "prettier": "^3.2.5"
   },
   "dependencies": {
-    "prettier": "^3.0.3"
+    "prettier": "^3.2.5"
   }
 }

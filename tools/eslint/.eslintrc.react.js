@@ -56,7 +56,7 @@ module.exports = {
           // External packages:
           ['^react', '^@?\\w'],
           // Internal packages:
-          ['^@(siberiacancodepay-core/.*|$)'],
+          ['^@(siberiacancode-core/.*|$)'],
           // Alias imports:
           ['^@(([\\/.]?\\w)|assets|test-utils)'],
           // Side effect imports:

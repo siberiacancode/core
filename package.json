@@ -38,10 +38,11 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "beachball": "^2.37.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^14.0.1",
-    "prettier": "^3.0.3",
-    "turbo": "^1.10.14"
+    "beachball": "^2.39.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "turbo": "^1.12.4",
+    "typescript": "^5.3.3"
   }
 }

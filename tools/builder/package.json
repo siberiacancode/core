@@ -41,31 +41,31 @@
     ]
   },
   "dependencies": {
-    "@babel/core": "^7.23.0",
-    "@babel/plugin-transform-runtime": "^7.22.15",
-    "@babel/preset-env": "^7.22.20",
-    "@babel/preset-react": "^7.22.15",
-    "@babel/preset-typescript": "^7.23.0",
-    "@babel/runtime": "^7.23.1",
-    "@rollup/plugin-babel": "^6.0.3",
-    "@rollup/plugin-commonjs": "^25.0.4",
-    "@rollup/plugin-node-resolve": "^15.2.1",
-    "@rollup/plugin-terser": "^0.4.3",
-    "@rollup/plugin-typescript": "^11.1.4",
+    "@babel/core": "^7.23.9",
+    "@babel/plugin-transform-runtime": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
+    "@babel/runtime": "^7.23.9",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
     "glob": "^9.3.5",
-    "rollup": "^3.29.4",
-    "rollup-plugin-dts": "^6.0.2"
+    "rollup": "^4.11.0",
+    "rollup-plugin-dts": "^6.1.0"
   },
   "devDependencies": {
-    "@rollup/plugin-json": "^6.0.0",
-    "@siberiacancode/eslint": "1.0.2",
-    "@siberiacancode/prettier": "1.0.0",
-    "@siberiacancode/tsconfig": "1.0.0",
+    "@rollup/plugin-json": "^6.1.0",
+    "@siberiacancode/eslint": "*",
+    "@siberiacancode/prettier": "*",
+    "@siberiacancode/tsconfig": "*",
     "@types/glob": "^8.1.0",
-    "eslint": "^8.50.0",
-    "prettier": "^3.0.3",
-    "rollup": "^3.29.4",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.5",
+    "rollup": "^4.11.0",
     "shx": "^0.3.4",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.3"
   }
 }
