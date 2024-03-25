@@ -32,7 +32,7 @@
     "format": "turbo run format",
     "stylelint": "turbo run stylelint",
     "unit-test": "turbo run unit-test",
-    "lint-staged": "turbo run lint-staged",
+    "lint-staged": "lint-staged",
     "change": "beachball change --no-commit",
     "release": "beachball publish --yes",
     "prepare": "husky install"
