@@ -1,10 +1,10 @@
 {
-  "name": "@siberiacancode/jest",
-  "description": "jest config",
+  "name": "@siberiacancode/vitest",
+  "description": "vitest config",
   "license": "MIT",
   "version": "1.1.0",
   "keywords": [
-    "jest"
+    "vitest"
   ],
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -21,7 +21,7 @@
     "access": "public"
   },
   "files": [
-    "jest.config.js"
+    "vitest.config.js"
   ],
   "main": "index.js",
   "scripts": {
@@ -31,20 +31,14 @@
     "*.js": "prettier --write"
   },
   "peerDependencies": {
-    "jest": "^29.7.0",
-    "ts-jest": "^29.1.2"
-  },
-  "peerDependenciesMeta": {
-    "ts-jest": {
-      "optional": true
-    }
+    "vitest": "^1.6.0",
+    "jsdom": "^24.1.0"
   },
   "dependencies": {
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0"
+    "vitest": "^1.6.0",
+    "jsdom": "^24.1.0"
   },
   "devDependencies": {
-    "@siberiacancode/prettier": "*",
-    "ts-jest": "^29.1.4"
+    "@siberiacancode/prettier": "*"
   }
 }
