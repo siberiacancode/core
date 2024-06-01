@@ -24,6 +24,7 @@
     "vite.config.js"
   ],
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "format": "prettier --write \"*.js\""
   },
