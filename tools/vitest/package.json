@@ -2,7 +2,7 @@
   "name": "@siberiacancode/vitest",
   "description": "vitest config",
   "license": "MIT",
-  "version": "1.2.0",
+  "version": "1.1.2",
   "keywords": [
     "vitest"
   ],
