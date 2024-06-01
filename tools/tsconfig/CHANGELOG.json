@@ -2,6 +2,21 @@
   "name": "@siberiacancode/tsconfig",
   "entries": [
     {
+      "date": "Sat, 01 Jun 2024 17:41:20 GMT",
+      "version": "1.0.2",
+      "tag": "@siberiacancode/tsconfig_v1.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "dmitriybabinup@gmail.com",
+            "package": "@siberiacancode/tsconfig",
+            "commit": "not available",
+            "comment": ""
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 02 Oct 2023 17:31:56 GMT",
       "version": "1.0.1",
       "tag": "@siberiacancode/tsconfig_v1.0.1",

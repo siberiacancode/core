@@ -1,8 +1,17 @@
 # Change Log - @siberiacancode/builder
 
-This log was last generated on Fri, 16 Feb 2024 11:19:32 GMT and should not be manually modified.
+This log was last generated on Sat, 01 Jun 2024 17:41:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.1
+
+Sat, 01 Jun 2024 17:41:20 GMT
+
+### Patches
+
+-  (dmitriybabinup@gmail.com)
+- Bump @siberiacancode/tsconfig to v1.0.2
 
 ## 1.3.0
 

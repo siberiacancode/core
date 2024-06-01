@@ -1,0 +1,20 @@
+{
+  "name": "@siberiacancode/vitest",
+  "entries": [
+    {
+      "date": "Sat, 01 Jun 2024 17:41:20 GMT",
+      "version": "1.1.1",
+      "tag": "@siberiacancode/vitest_v1.1.1",
+      "comments": {
+        "none": [
+          {
+            "author": "dmitriybabinup@gmail.com",
+            "package": "@siberiacancode/vitest",
+            "commit": "not available",
+            "comment": ""
+          }
+        ]
+      }
+    }
+  ]
+}
