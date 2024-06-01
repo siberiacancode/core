@@ -1,8 +1,16 @@
 # Change Log - @siberiacancode/vitest
 
-This log was last generated on Sat, 01 Jun 2024 17:59:24 GMT and should not be manually modified.
+This log was last generated on Sat, 01 Jun 2024 18:01:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.3
+
+Sat, 01 Jun 2024 18:01:11 GMT
+
+### Patches
+
+- main 🧊 add d.ts (dmitriybabinup@gmail.com)
 
 ## 1.2.2
 
