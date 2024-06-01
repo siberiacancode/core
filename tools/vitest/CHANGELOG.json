@@ -2,6 +2,21 @@
   "name": "@siberiacancode/vitest",
   "entries": [
     {
+      "date": "Sat, 01 Jun 2024 17:57:52 GMT",
+      "version": "1.2.1",
+      "tag": "@siberiacancode/vitest_v1.2.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "dmitriybabinup@gmail.com",
+            "package": "@siberiacancode/vitest",
+            "commit": "not available",
+            "comment": "main 🧊 delete coverage"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 01 Jun 2024 17:53:54 GMT",
       "version": "1.1.2",
       "tag": "@siberiacancode/vitest_v1.1.2",
