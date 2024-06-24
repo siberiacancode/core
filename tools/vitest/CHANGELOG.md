@@ -1,8 +1,16 @@
 # Change Log - @siberiacancode/vitest
 
-This log was last generated on Sat, 01 Jun 2024 18:01:11 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jun 2024 10:14:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.4
+
+Mon, 24 Jun 2024 10:14:19 GMT
+
+### Patches
+
+- release/vitest/1.2.4 🧊 delete preffield include (dmitriybabinup@gmail.com)
 
 ## 1.2.3
 

@@ -2,6 +2,21 @@
   "name": "@siberiacancode/vitest",
   "entries": [
     {
+      "date": "Mon, 24 Jun 2024 10:14:19 GMT",
+      "version": "1.2.4",
+      "tag": "@siberiacancode/vitest_v1.2.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "dmitriybabinup@gmail.com",
+            "package": "@siberiacancode/vitest",
+            "commit": "not available",
+            "comment": "release/vitest/1.2.4 🧊 delete preffield include"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 01 Jun 2024 18:01:11 GMT",
       "version": "1.2.3",
       "tag": "@siberiacancode/vitest_v1.2.3",
