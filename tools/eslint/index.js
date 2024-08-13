@@ -107,10 +107,7 @@ export const eslint = (...args) =>
         });
       }
 
-      acc.push({
-        ...config,
-        name: `siberiacancode/${config.name}`
-      });
+      acc.push(config);
 
       return acc;
     }, [])
