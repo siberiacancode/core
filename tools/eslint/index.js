@@ -4,11 +4,38 @@ import pluginReact from 'eslint-plugin-react';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 /** @type {import('@siberiacancode/eslint').Eslint} */
-export const eslint = (...args) =>
-  antfu(
-    {
-      typescript: true
-    },
+export const eslint = (options = {}, ...configs) => {
+  if (options['jsx-a11y']) {
+    configs.push({
+      ...pluginJsxA11y.flatConfigs.recommended,
+      name: 'siberiacancode/jsx-a11y'
+    });
+  }
+
+  if (options.react) {
+    configs.push({
+      name: 'siberiacancode/react',
+      plugins: {
+        'plugin-react': pluginReact
+      },
+      settings: {
+        react: {
+          version: 'detect'
+        }
+      },
+      rules: {
+        'plugin-react/function-component-definition': [
+          'error',
+          {
+            namedComponents: ['arrow-function'],
+            unnamedComponents: 'arrow-function'
+          }
+        ]
+      }
+    });
+  }
+
+  return antfu(
     {
       name: 'siberiacancode/rewrite',
       rules: {
@@ -75,40 +102,6 @@ export const eslint = (...args) =>
         'style/arrow-parens': ['error', 'always']
       }
     },
-    ...args.reduce((acc, config) => {
-      if (config['jsx-a11y']) {
-        acc.push({
-          ...pluginJsxA11y.flatConfigs.recommended,
-          name: 'siberiacancode/jsx-a11y'
-        });
-        return acc;
-      }
-
-      if (config.react) {
-        acc.push({
-          name: 'siberiacancode/react',
-          plugins: {
-            'plugin-react': pluginReact
-          },
-          settings: {
-            react: {
-              version: 'detect'
-            }
-          },
-          rules: {
-            'plugin-react/function-component-definition': [
-              'error',
-              {
-                namedComponents: ['arrow-function'],
-                unnamedComponents: 'arrow-function'
-              }
-            ]
-          }
-        });
-      }
-
-      acc.push(config);
-
-      return acc;
-    }, [])
+    ...configs
   );
+};

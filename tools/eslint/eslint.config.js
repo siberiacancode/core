@@ -1,3 +1,5 @@
 import { eslint } from './index.js';
 
-export default eslint();
+export default eslint({
+  typescript: true
+});
