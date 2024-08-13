@@ -1,40 +1,38 @@
 {
   "name": "@siberiacancode/eslint",
-  "description": "eslint configs",
-  "license": "MIT",
   "type": "module",
   "version": "2.0.1",
+  "description": "eslint configs",
+  "author": {
+    "name": "SIBERIA CAN CODE 🧊",
+    "url": "https://github.com/siberiacancode"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/siberiacancode/core",
+  "repository": {
+    "url": "https://github.com/siberiacancode/core"
+  },
+  "bugs": {
+    "url": "https://github.com/siberiacancode/core/issues"
+  },
   "keywords": [
     "eslint",
     "react",
     "node"
   ],
-  "author": {
-    "name": "SIBERIA CAN CODE 🧊",
-    "url": "https://github.com/siberiacancode"
-  },
-  "bugs": {
-    "url": "https://github.com/siberiacancode/core/issues"
-  },
-  "homepage": "https://github.com/siberiacancode/core",
-  "repository": {
-    "url": "https://github.com/siberiacancode/core"
-  },
   "publishConfig": {
     "access": "public"
   },
-  "files": [
-    "index.js",
-    "index.d.ts"
-  ],
   "main": "index.js",
   "types": "index.d.ts",
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ],
   "scripts": {
     "format": "prettier --write \"*.js\"",
+    "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector"
-  },
-  "lint-staged": {
-    "*.js": "prettier --write"
   },
   "peerDependencies": {
     "eslint": "^9.9.0"
@@ -51,5 +49,15 @@
   },
   "devDependencies": {
     "@siberiacancode/prettier": "*"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.ts": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }
