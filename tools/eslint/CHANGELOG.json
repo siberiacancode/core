@@ -2,6 +2,21 @@
   "name": "@siberiacancode/eslint",
   "entries": [
     {
+      "date": "Tue, 13 Aug 2024 11:55:42 GMT",
+      "version": "2.0.1",
+      "tag": "@siberiacancode/eslint_v2.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "dmitriybabinup@gmail.com",
+            "package": "@siberiacancode/eslint",
+            "commit": "not available",
+            "comment": "🎉 release/eslint/2.0.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Aug 2024 11:33:57 GMT",
       "version": "2.0.0",
       "tag": "@siberiacancode/eslint_v2.0.0",

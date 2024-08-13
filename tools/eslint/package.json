@@ -3,7 +3,7 @@
   "description": "eslint configs",
   "license": "MIT",
   "type": "module",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "keywords": [
     "eslint",
     "react",
