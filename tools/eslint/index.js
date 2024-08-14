@@ -1,14 +1,25 @@
 import antfu from '@antfu/eslint-config';
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginReact from 'eslint-plugin-react';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import pluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
 
 /** @type {import('@siberiacancode/eslint').Eslint} */
 export const eslint = (options = {}, ...configs) => {
   if (options['jsx-a11y']) {
     configs.push({
-      ...pluginJsxA11y.flatConfigs.recommended,
-      name: 'siberiacancode/jsx-a11y'
+      plugins: {
+        'siberiacancode-jsx-a11y': pluginJsxA11y
+      },
+      name: 'siberiacancode/jsx-a11y',
+      rules: {
+        ...Object.entries(pluginJsxA11y.flatConfigs.recommended.rules).reduce(
+          (acc, [key, value]) => {
+            acc[key.replace('jsx-a11y', 'siberiacancode-jsx-a11y')] = value;
+            return acc;
+          },
+          {}
+        )
+      }
     });
   }
 
@@ -16,7 +27,7 @@ export const eslint = (options = {}, ...configs) => {
     configs.push({
       name: 'siberiacancode/react',
       plugins: {
-        'plugin-react': pluginReact
+        'siberiacancode-react': pluginReact
       },
       settings: {
         react: {
@@ -24,7 +35,11 @@ export const eslint = (options = {}, ...configs) => {
         }
       },
       rules: {
-        'plugin-react/function-component-definition': [
+        ...Object.entries(pluginReact.configs.recommended.rules).reduce((acc, [key, value]) => {
+          acc[key.replace('react', 'siberiacancode-react')] = value;
+          return acc;
+        }, {}),
+        'siberiacancode-react/function-component-definition': [
           'error',
           {
             namedComponents: ['arrow-function'],
@@ -54,14 +69,14 @@ export const eslint = (options = {}, ...configs) => {
     {
       name: 'siberiacancode/imports',
       plugins: {
-        'simple-import-sort': simpleImportSort
+        'plugin-simple-import-sort': pluginSimpleImportSort
       },
       rules: {
         'sort-imports': 'off',
         'import/order': 'off',
         'import/extensions': 'off',
-        'simple-import-sort/exports': 'error',
-        'simple-import-sort/imports': [
+        'plugin-simple-import-sort/exports': 'error',
+        'plugin-simple-import-sort/imports': [
           'error',
           {
             groups: [
@@ -80,6 +95,8 @@ export const eslint = (options = {}, ...configs) => {
     {
       name: 'siberiacancode/formatter',
       rules: {
+        'style/multiline-ternary': 'off',
+        'style/jsx-curly-newline': 'off',
         'style/jsx-one-expression-per-line': 'off',
         'style/member-delimiter-style': 'off',
         'style/quote-props': 'off',
