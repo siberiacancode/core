@@ -1,5 +1,37 @@
 import { eslint } from './index.js';
 
-export default eslint({
-  typescript: true
-});
+export default eslint(
+  {
+    typescript: true,
+    react: true,
+    jsx: true
+  },
+  {
+    name: 'siberiacancode/hooks',
+    files: ['**/hooks/**/*.ts'],
+    rules: {
+      'jsdoc/no-defaults': 'off'
+    }
+  },
+  {
+    name: 'siberiacancode/demo',
+    files: ['**/*.demo.tsx'],
+    rules: {
+      'no-alert': 'off'
+    }
+  },
+  {
+    name: 'siberiacancode/md',
+    files: ['**/*.md'],
+    rules: {
+      'style/max-len': 'off'
+    }
+  },
+  {
+    name: 'siberiacancode/docs',
+    files: ['**/docs/**/*.ts'],
+    rules: {
+      'regexp/no-super-linear-backtracking': 'off'
+    }
+  }
+);

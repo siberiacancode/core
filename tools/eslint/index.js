@@ -1,57 +1,59 @@
-import antfu from '@antfu/eslint-config'
-import pluginJsxA11y from 'eslint-plugin-jsx-a11y'
-import pluginReact from 'eslint-plugin-react'
-import pluginSimpleImportSort from 'eslint-plugin-simple-import-sort'
+import antfu from '@antfu/eslint-config';
+import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
+import pluginReact from 'eslint-plugin-react';
+import pluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
 
 /** @type {import('@siberiacancode/eslint').Eslint} */
-export const eslint = (options = { stylistics: false }, ...configs) => {
+export const eslint = (options, ...configs) => {
+  const stylistic = options.stylistic ?? false;
+
   if (options['jsx-a11y']) {
     configs.unshift({
       plugins: {
-        'siberiacancode-jsx-a11y': pluginJsxA11y,
+        'siberiacancode-jsx-a11y': pluginJsxA11y
       },
       name: 'siberiacancode/jsx-a11y',
       rules: {
         ...Object.entries(pluginJsxA11y.flatConfigs.recommended.rules).reduce(
           (acc, [key, value]) => {
-            acc[key.replace('jsx-a11y', 'siberiacancode-jsx-a11y')] = value
-            return acc
+            acc[key.replace('jsx-a11y', 'siberiacancode-jsx-a11y')] = value;
+            return acc;
           },
-          {},
-        ),
-      },
-    })
+          {}
+        )
+      }
+    });
   }
 
   if (options.react) {
     configs.unshift({
       name: 'siberiacancode/react',
       plugins: {
-        'siberiacancode-react': pluginReact,
+        'siberiacancode-react': pluginReact
       },
       settings: {
         react: {
-          version: 'detect',
-        },
+          version: 'detect'
+        }
       },
       rules: {
         ...Object.entries(pluginReact.configs.recommended.rules).reduce((acc, [key, value]) => {
-          acc[key.replace('react', 'siberiacancode-react')] = value
-          return acc
+          acc[key.replace('react', 'siberiacancode-react')] = value;
+          return acc;
         }, {}),
         'siberiacancode-react/react-in-jsx-scope': 'off',
         'siberiacancode-react/function-component-definition': [
           'error',
           {
             namedComponents: ['arrow-function'],
-            unnamedComponents: 'arrow-function',
-          },
-        ],
-      },
-    })
+            unnamedComponents: 'arrow-function'
+          }
+        ]
+      }
+    });
   }
 
-  if (options.stylistics) {
+  if (stylistic) {
     configs.unshift({
       name: 'siberiacancode/formatter',
       rules: {
@@ -67,7 +69,7 @@ export const eslint = (options = { stylistics: false }, ...configs) => {
           'error',
           100,
           2,
-          { ignoreComments: true, ignoreStrings: true, ignoreTemplateLiterals: true },
+          { ignoreComments: true, ignoreStrings: true, ignoreTemplateLiterals: true }
         ],
         'style/quotes': ['error', 'single', { allowTemplateLiterals: true }],
         'style/jsx-quotes': ['error', 'prefer-single'],
@@ -76,13 +78,13 @@ export const eslint = (options = { stylistics: false }, ...configs) => {
         'style/indent': ['error', 2, { SwitchCase: 1 }],
         'style/no-tabs': 'error',
         'style/linebreak-style': ['error', 'unix'],
-        'style/arrow-parens': ['error', 'always'],
-      },
-    })
+        'style/arrow-parens': ['error', 'always']
+      }
+    });
   }
 
   return antfu(
-    options,
+    { ...options, stylistic },
     {
       name: 'siberiacancode/rewrite',
       rules: {
@@ -94,13 +96,13 @@ export const eslint = (options = { stylistics: false }, ...configs) => {
 
         'test/prefer-lowercase-title': 'off',
 
-        'no-console': 'warn',
-      },
+        'no-console': 'warn'
+      }
     },
     {
       name: 'siberiacancode/imports',
       plugins: {
-        'plugin-simple-import-sort': pluginSimpleImportSort,
+        'plugin-simple-import-sort': pluginSimpleImportSort
       },
       rules: {
         'sort-imports': 'off',
@@ -117,12 +119,12 @@ export const eslint = (options = { stylistics: false }, ...configs) => {
               ['^\\u0000'],
               ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
               ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
-              ['^.+\\.s?css$'],
-            ],
-          },
-        ],
-      },
+              ['^.+\\.s?css$']
+            ]
+          }
+        ]
+      }
     },
-    ...configs,
-  )
-}
+    ...configs
+  );
+};
