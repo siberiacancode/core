@@ -1,8 +1,16 @@
 # Change Log - @siberiacancode/eslint
 
-This log was last generated on Wed, 14 Aug 2024 14:06:21 GMT and should not be manually modified.
+This log was last generated on Thu, 15 Aug 2024 10:17:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.7
+
+Thu, 15 Aug 2024 10:17:05 GMT
+
+### Patches
+
+- ?? release/eslint/2.1.0 (dmitriybabinup@gmail.com)
 
 ## 2.0.6
 
