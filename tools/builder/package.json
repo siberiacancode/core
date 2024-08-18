@@ -2,7 +2,7 @@
   "name": "@siberiacancode/builder",
   "description": "builder config",
   "license": "MIT",
-  "version": "1.3.10",
+  "version": "1.3.11",
   "keywords": [
     "builder",
     "rollup"
