@@ -1,13 +1,32 @@
 import antfu from '@antfu/eslint-config';
+import pluginNext from '@next/eslint-plugin-next';
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginReact from 'eslint-plugin-react';
 import pluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
 
 /** @type {import('@siberiacancode/eslint').Eslint} */
-export const eslint = (options, ...configs) => {
+export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs) => {
   const stylistic = options.stylistic ?? false;
 
-  if (options['jsx-a11y']) {
+  if (next) {
+    configs.unshift({
+      plugins: {
+        'siberiacancode-next': pluginNext
+      },
+      name: 'siberiacancode/next',
+      rules: {
+        ...Object.entries({ ...pluginNext.configs.recommended.rules }).reduce(
+          (acc, [key, value]) => {
+            acc[key.replace('@next/next', 'siberiacancode-next')] = value;
+            return acc;
+          },
+          {}
+        )
+      }
+    });
+  }
+
+  if (jsxA11y) {
     configs.unshift({
       plugins: {
         'siberiacancode-jsx-a11y': pluginJsxA11y

@@ -1,7 +1,8 @@
 declare module '@siberiacancode/eslint' {
   declare type Eslint = (
     options?: import('@antfu/eslint-config').OptionsConfig & {
-      'jsx-a11y'?: boolean;
+      jsxA11y?: boolean;
+      next?: boolean;
     } & import('@antfu/eslint-config').TypedFlatConfigItem,
     ...userConfigs: import('@antfu/eslint-config').Awaitable<
       | import('@antfu/eslint-config').TypedFlatConfigItem
