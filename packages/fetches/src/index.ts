@@ -19,7 +19,7 @@ export interface InterceptorResponseResult {
 }
 export type SuccessResponseFun = (
   res: InterceptorResponseResult
-) => InterceptorResponseResult['data'];
+) => InterceptorResponseResult['data'] | Promise<InterceptorResponseResult['data']>;
 export type SuccessRequestFun = (
   options: _RequestConfig
 ) => _RequestConfig | Promise<_RequestConfig>;
