@@ -11,7 +11,6 @@ type _RequestConfig = RequestInit & {
   params?: FetchesSearchParams;
 };
 export interface InterceptorResponseResult {
-  headers: Response['headers'];
   success: Response['ok'];
   status: Response['status'];
   statusText: Response['statusText'];
@@ -149,22 +148,24 @@ export class Fetches {
       data: body
     };
 
-    this.interceptorHandlers.response?.forEach(({ onSuccess, onFailure }) => {
+    if (!this.interceptorHandlers.response?.length) return body;
+
+    for (const { onSuccess, onFailure } of this.interceptorHandlers.response) {
       try {
         if (!initialResponse.ok)
           throw new Error(initialResponse.statusText, {
-            cause: { config: initialConfig, response }
+            cause: { error: { ...response, headers: undefined } }
           });
-        if (!onSuccess) return;
-        body = onSuccess(response);
+        if (!onSuccess) continue;
+        body = await onSuccess(response);
       } catch (error) {
         (error as any).config = initialConfig;
         (error as any).response = response;
         if (onFailure) {
-          body = onFailure(error as ResponseError);
-        } else return Promise.reject(error);
+          body = await onFailure(error as ResponseError);
+        } else Promise.reject(error);
       }
-    });
+    }
 
     return body;
   }
@@ -181,7 +182,7 @@ export class Fetches {
       } catch (error) {
         (error as any).config = initialConfig;
         if (onFailure) {
-          onFailure(error as ResponseError);
+          await onFailure(error as ResponseError);
         } else Promise.reject(error);
       }
     }
@@ -220,13 +221,16 @@ export class Fetches {
 
     const response: Response = await fetch(url, config);
 
+    if (this.interceptorHandlers.response?.length) {
+      return this.runResponseInterceptors<T>(response, config);
+    }
+
     if (response.status >= 400) {
       const error = {} as ResponseError;
       const body = await this.parseJson<T>(response);
       error.config = config;
       error.response = {
         url: response.url,
-        headers: response.headers,
         status: response.status,
         statusText: response.statusText,
         success: response.ok,
@@ -235,12 +239,8 @@ export class Fetches {
       throw new Error(response.statusText, { cause: error });
     }
 
-    if (!this.interceptorHandlers.response?.length && response.ok) {
-      const body = await this.parseJson<T>(response);
-      return body;
-    }
-
-    return this.runResponseInterceptors<T>(response, config);
+    const body = await this.parseJson<T>(response);
+    return body;
   }
 
   get<T>(endpoint: string, options: Omit<RequestOptions, 'body'> = {}) {
