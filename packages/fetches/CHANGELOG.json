@@ -1,0 +1,20 @@
+{
+  "name": "@siberiacancode/fetches",
+  "entries": [
+    {
+      "date": "Thu, 31 Oct 2024 05:26:12 GMT",
+      "version": "1.0.0",
+      "tag": "@siberiacancode/fetches_v1.0.0",
+      "comments": {
+        "major": [
+          {
+            "author": "dmitriybabinup@gmail.com",
+            "package": "@siberiacancode/fetches",
+            "commit": "not available",
+            "comment": "fetches 🧊 init package"
+          }
+        ]
+      }
+    }
+  ]
+}
