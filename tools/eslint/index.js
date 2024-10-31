@@ -6,7 +6,7 @@ import pluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
 
 /** @type {import('@siberiacancode/eslint').Eslint} */
 export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs) => {
-  const stylistic = options.stylistic ?? false;
+  const stylistic = options?.stylistic ?? false;
 
   if (next) {
     configs.unshift({
@@ -60,6 +60,7 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
           acc[key.replace('react', 'siberiacancode-react')] = value;
           return acc;
         }, {}),
+        'siberiacancode-react/prop-types': 'off',
         'siberiacancode-react/react-in-jsx-scope': 'off',
         'siberiacancode-react/function-component-definition': [
           'error',

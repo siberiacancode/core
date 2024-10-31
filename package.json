@@ -22,7 +22,8 @@
     "url": "https://github.com/siberiacancode/core"
   },
   "workspaces": [
-    "tools/*"
+    "tools/*",
+    "packages/*"
   ],
   "scripts": {
     "dev": "turbo run dev",

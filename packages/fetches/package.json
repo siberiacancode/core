@@ -1,0 +1,56 @@
+{
+  "name": "@siberiacancode/fetches",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "fetch instance",
+  "author": {
+    "name": "SIBERIA CAN CODE 🧊",
+    "url": "https://github.com/siberiacancode"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/siberiacancode/core",
+  "repository": {
+    "url": "https://github.com/siberiacancode/core"
+  },
+  "bugs": {
+    "url": "https://github.com/siberiacancode/core/issues"
+  },
+  "keywords": [
+    "fetch",
+    "instance"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "prepublishOnly": "yarn type && yarn unit-test run && yarn build",
+    "build": "shx rm -rf dist && rollup -c --bundleConfigAsCjs",
+    "lint": "eslint . --fix",
+    "lint-inspector": "npx @eslint/config-inspector",
+    "type": "tsc --noEmit",
+    "format": "prettier --write .",
+    "pretty": "yarn type && yarn lint && yarn format"
+  },
+  "devDependencies": {
+    "@siberiacancode/builder": "*",
+    "@siberiacancode/eslint": "*",
+    "@siberiacancode/prettier": "*",
+    "typescript": "^5.6.3"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.ts": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  }
+}
