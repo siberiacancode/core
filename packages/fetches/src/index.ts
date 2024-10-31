@@ -154,7 +154,7 @@ export class Fetches {
       try {
         if (!initialResponse.ok)
           throw new Error(initialResponse.statusText, {
-            cause: { error: { ...response, headers: undefined } }
+            cause: { config: initialConfig, response }
           });
         if (!onSuccess) continue;
         body = await onSuccess(response);
@@ -236,7 +236,7 @@ export class Fetches {
         success: response.ok,
         data: body
       };
-      throw new Error(response.statusText, { cause: error });
+      throw new Error(response.statusText, { cause: { config, response } });
     }
 
     const body = await this.parseJson<T>(response);
