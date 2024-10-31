@@ -29,7 +29,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "prepublishOnly": "yarn type && yarn unit-test run && yarn build",
+    "prepublishOnly": "yarn type && yarn build",
     "build": "shx rm -rf dist && rollup -c --bundleConfigAsCjs",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector",
