@@ -138,7 +138,7 @@ export class Fetches {
     initialResponse: Response,
     initialConfig: _RequestConfig
   ) {
-    let body = await this.parseJson<T>(initialResponse);
+    const body = await this.parseJson<T>(initialResponse);
     const response = {
       url: initialResponse.url,
       headers: initialResponse.headers,
@@ -148,7 +148,7 @@ export class Fetches {
       data: body
     };
 
-    if (!this.interceptorHandlers.response?.length) return body;
+    if (!this.interceptorHandlers.response?.length) return response;
 
     for (const { onSuccess, onFailure } of this.interceptorHandlers.response) {
       try {
@@ -157,17 +157,17 @@ export class Fetches {
             cause: { config: initialConfig, response }
           });
         if (!onSuccess) continue;
-        body = await onSuccess(response);
+        response.data = await onSuccess(response);
       } catch (error) {
         (error as any).config = initialConfig;
         (error as any).response = response;
         if (onFailure) {
-          body = await onFailure(error as ResponseError);
+          response.data = await onFailure(error as ResponseError);
         } else Promise.reject(error);
       }
     }
 
-    return body;
+    return response;
   }
 
   private async runRequestInterceptors(initialConfig: _RequestConfig) {
@@ -240,7 +240,13 @@ export class Fetches {
     }
 
     const body = await this.parseJson<T>(response);
-    return body;
+    return {
+      data: body,
+      url: response.url,
+      status: response.status,
+      statusText: response.statusText,
+      success: response.ok
+    };
   }
 
   get<T>(endpoint: string, options: Omit<RequestOptions, 'body'> = {}) {
