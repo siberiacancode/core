@@ -2,7 +2,6 @@ import antfu from '@antfu/eslint-config';
 import pluginNext from '@next/eslint-plugin-next';
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginReact from 'eslint-plugin-react';
-import pluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
 
 /** @type {import('@siberiacancode/eslint').Eslint} */
 export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs) => {
@@ -116,31 +115,27 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
 
         'test/prefer-lowercase-title': 'off',
 
-        'no-console': 'warn'
-      }
-    },
-    {
-      name: 'siberiacancode/imports',
-      plugins: {
-        'plugin-simple-import-sort': pluginSimpleImportSort
-      },
-      rules: {
-        'sort-imports': 'off',
-        'import/order': 'off',
-        'import/extensions': 'off',
-        'plugin-simple-import-sort/exports': 'error',
-        'plugin-simple-import-sort/imports': [
+        'no-console': 'warn',
+
+        'perfectionist/sort-imports': [
           'error',
           {
             groups: [
-              ['^react', '^@?\\w'],
-              ['^@(siberiacancode-core/.*|$)'],
-              ['^@(([\\/.]?\\w)|assets|test-utils)'],
-              ['^\\u0000'],
-              ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
-              ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
-              ['^.+\\.s?css$']
-            ]
+              'type',
+              ['builtin', 'external'],
+              'internal-type',
+              ['internal'],
+              ['parent-type', 'sibling-type', 'index-type'],
+              ['parent', 'sibling', 'index'],
+              'object',
+              'style',
+              'side-effect-style',
+              'unknown'
+            ],
+            internalPattern: ['~/**', '@/**'],
+            newlinesBetween: 'ignore',
+            order: 'asc',
+            type: 'natural'
           }
         ]
       }
