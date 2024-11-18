@@ -9,10 +9,10 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
 
   if (next) {
     configs.unshift({
+      name: 'siberiacancode/next',
       plugins: {
         'siberiacancode-next': pluginNext
       },
-      name: 'siberiacancode/next',
       rules: {
         ...Object.entries({ ...pluginNext.configs.recommended.rules }).reduce(
           (acc, [key, value]) => {
@@ -27,10 +27,10 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
 
   if (jsxA11y) {
     configs.unshift({
+      name: 'siberiacancode/jsx-a11y',
       plugins: {
         'siberiacancode-jsx-a11y': pluginJsxA11y
       },
-      name: 'siberiacancode/jsx-a11y',
       rules: {
         ...Object.entries(pluginJsxA11y.flatConfigs.recommended.rules).reduce(
           (acc, [key, value]) => {
@@ -49,25 +49,25 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
       plugins: {
         'siberiacancode-react': pluginReact
       },
-      settings: {
-        react: {
-          version: 'detect'
-        }
-      },
       rules: {
         ...Object.entries(pluginReact.configs.recommended.rules).reduce((acc, [key, value]) => {
           acc[key.replace('react', 'siberiacancode-react')] = value;
           return acc;
         }, {}),
-        'siberiacancode-react/prop-types': 'off',
-        'siberiacancode-react/react-in-jsx-scope': 'off',
         'siberiacancode-react/function-component-definition': [
           'error',
           {
             namedComponents: ['arrow-function'],
             unnamedComponents: 'arrow-function'
           }
-        ]
+        ],
+        'siberiacancode-react/prop-types': 'off',
+        'siberiacancode-react/react-in-jsx-scope': 'off'
+      },
+      settings: {
+        react: {
+          version: 'detect'
+        }
       }
     });
   }
@@ -76,28 +76,28 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
     configs.unshift({
       name: 'siberiacancode/formatter',
       rules: {
-        'style/multiline-ternary': 'off',
+        'style/arrow-parens': ['error', 'always'],
+        'style/brace-style': 'off',
+        'style/comma-dangle': ['error', 'never'],
+        'style/indent': ['error', 2, { SwitchCase: 1 }],
         'style/jsx-curly-newline': 'off',
         'style/jsx-one-expression-per-line': 'off',
-        'style/member-delimiter-style': 'off',
-        'style/quote-props': 'off',
-        'style/operator-linebreak': 'off',
-        'style/brace-style': 'off',
+        'style/jsx-quotes': ['error', 'prefer-single'],
 
+        'style/linebreak-style': ['error', 'unix'],
         'style/max-len': [
           'error',
           100,
           2,
           { ignoreComments: true, ignoreStrings: true, ignoreTemplateLiterals: true }
         ],
-        'style/quotes': ['error', 'single', { allowTemplateLiterals: true }],
-        'style/jsx-quotes': ['error', 'prefer-single'],
-        'style/comma-dangle': ['error', 'never'],
-        'style/semi': ['error', 'always'],
-        'style/indent': ['error', 2, { SwitchCase: 1 }],
+        'style/member-delimiter-style': 'off',
+        'style/multiline-ternary': 'off',
         'style/no-tabs': 'error',
-        'style/linebreak-style': ['error', 'unix'],
-        'style/arrow-parens': ['error', 'always']
+        'style/operator-linebreak': 'off',
+        'style/quote-props': 'off',
+        'style/quotes': ['error', 'single', { allowTemplateLiterals: true }],
+        'style/semi': ['error', 'always']
       }
     });
   }
@@ -107,16 +107,28 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
     {
       name: 'siberiacancode/rewrite',
       rules: {
-        'antfu/top-level-function': 'off',
-        'antfu/if-newline': 'off',
         'antfu/curly': 'off',
-
-        'react-hooks/exhaustive-deps': 'off',
-
-        'test/prefer-lowercase-title': 'off',
+        'antfu/if-newline': 'off',
+        'antfu/top-level-function': 'off',
 
         'no-console': 'warn',
 
+        'react-hooks/exhaustive-deps': 'off',
+
+        'test/prefer-lowercase-title': 'off'
+      }
+    },
+    {
+      name: 'siberiacancode/sort',
+      rules: {
+        'perfectionist/sort-array-includes': [
+          'error',
+          {
+            matcher: 'minimatch',
+            order: 'asc',
+            type: 'alphabetical'
+          }
+        ],
         'perfectionist/sort-imports': [
           'error',
           {
@@ -133,9 +145,73 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
               'unknown'
             ],
             internalPattern: ['~/**', '@/**'],
+            matcher: 'minimatch',
             newlinesBetween: 'ignore',
             order: 'asc',
             type: 'natural'
+          }
+        ],
+        'perfectionist/sort-interfaces': [
+          'error',
+          {
+            groups: ['unknown', 'method', 'multiline'],
+            matcher: 'minimatch',
+            order: 'asc',
+            type: 'alphabetical'
+          }
+        ],
+        'perfectionist/sort-jsx-props': [
+          'error',
+          {
+            customGroups: {
+              callback: 'on*',
+              reserved: ['key', 'ref']
+            },
+            groups: ['shorthand', 'reserved', 'multiline', 'unknown', 'callback'],
+            matcher: 'minimatch',
+            order: 'asc',
+            type: 'alphabetical'
+          }
+        ],
+        'perfectionist/sort-object-types': [
+          'error',
+          {
+            matcher: 'minimatch',
+            order: 'asc',
+            specialCharacters: 'keep',
+            type: 'alphabetical'
+          }
+        ],
+        'perfectionist/sort-objects': [
+          'error',
+          {
+            matcher: 'minimatch',
+            order: 'asc',
+            specialCharacters: 'keep',
+            type: 'alphabetical'
+          }
+        ],
+        'perfectionist/sort-union-types': [
+          'error',
+          {
+            groups: [
+              'conditional',
+              'function',
+              'import',
+              'intersection',
+              'keyword',
+              'literal',
+              'named',
+              'object',
+              'operator',
+              'tuple',
+              'union',
+              'nullish'
+            ],
+            matcher: 'minimatch',
+            order: 'asc',
+            specialCharacters: 'keep',
+            type: 'alphabetical'
           }
         ]
       }
