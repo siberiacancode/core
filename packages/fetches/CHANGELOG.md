@@ -1,8 +1,16 @@
 # Change Log - @siberiacancode/fetches
 
-<!-- This log was last generated on Tue, 12 Nov 2024 06:50:45 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 18 Nov 2024 16:04:46 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.1.1
+
+Mon, 18 Nov 2024 16:04:46 GMT
+
+### Patches
+
+- release/eslint/2.4.0 🧊 update eslint and fetches (dmitriybabinup@gmail.com)
 
 ## 1.1.0
 

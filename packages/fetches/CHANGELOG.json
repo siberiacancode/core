@@ -2,6 +2,21 @@
   "name": "@siberiacancode/fetches",
   "entries": [
     {
+      "date": "Mon, 18 Nov 2024 16:04:46 GMT",
+      "version": "1.1.1",
+      "tag": "@siberiacancode/fetches_v1.1.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "dmitriybabinup@gmail.com",
+            "package": "@siberiacancode/fetches",
+            "commit": "not available",
+            "comment": "release/eslint/2.4.0 🧊 update eslint and fetches"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Nov 2024 06:50:45 GMT",
       "version": "1.1.0",
       "tag": "@siberiacancode/fetches_v1.1.0",
