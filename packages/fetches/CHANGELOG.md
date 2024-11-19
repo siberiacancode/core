@@ -1,8 +1,16 @@
 # Change Log - @siberiacancode/fetches
 
-<!-- This log was last generated on Mon, 18 Nov 2024 16:04:46 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 19 Nov 2024 15:35:00 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.1.3
+
+Tue, 19 Nov 2024 15:35:00 GMT
+
+### Patches
+
+- release/eslint/2.5.1 🧊 delete object sort (dmitriybabinup@gmail.com)
 
 ## 1.1.1
 

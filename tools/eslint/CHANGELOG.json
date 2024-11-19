@@ -2,6 +2,21 @@
   "name": "@siberiacancode/eslint",
   "entries": [
     {
+      "date": "Tue, 19 Nov 2024 15:35:00 GMT",
+      "version": "2.5.1",
+      "tag": "@siberiacancode/eslint_v2.5.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "dmitriybabinup@gmail.com",
+            "package": "@siberiacancode/eslint",
+            "commit": "not available",
+            "comment": "release/eslint/2.5.1 🧊 delete object sort"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 18 Nov 2024 16:33:29 GMT",
       "version": "2.5.0",
       "tag": "@siberiacancode/eslint_v2.5.0",
