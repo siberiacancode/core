@@ -173,24 +173,6 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
             type: 'alphabetical'
           }
         ],
-        'perfectionist/sort-object-types': [
-          'error',
-          {
-            matcher: 'minimatch',
-            order: 'asc',
-            specialCharacters: 'keep',
-            type: 'alphabetical'
-          }
-        ],
-        'perfectionist/sort-objects': [
-          'error',
-          {
-            matcher: 'minimatch',
-            order: 'asc',
-            specialCharacters: 'keep',
-            type: 'alphabetical'
-          }
-        ],
         'perfectionist/sort-union-types': [
           'error',
           {

@@ -1,7 +1,7 @@
 export type BaseUrl = string;
 export type RequestMethod = RequestInit['method'];
 export interface FetchesSearchParams {
-  [key: string]: string | number | boolean | string[];
+  [key: string]: boolean | number | string | string[] | null | undefined;
 }
 
 type _RequestConfig = RequestInit & {
@@ -23,20 +23,20 @@ export type FailureResponseFun = (e: ResponseError) => any;
 export type FailureRequestFun = (e: ResponseError) => any;
 
 export interface RequestInterceptor {
-  onSuccess?: SuccessRequestFun;
   onFailure?: FailureRequestFun;
+  onSuccess?: SuccessRequestFun;
 }
 
 export interface ResponseInterceptor {
-  onSuccess?: SuccessResponseFun;
   onFailure?: FailureResponseFun;
+  onSuccess?: SuccessResponseFun;
 }
 export interface Interceptors {
   request?: RequestInterceptor[];
   response?: ResponseInterceptor[];
 }
 
-export type RequestBody = Record<string, any> | FormData;
+export type RequestBody = FormData | Record<string, any>;
 
 export interface RequestOptions extends Omit<RequestInit, 'method'> {
   headers?: Record<string, string>;
@@ -53,12 +53,12 @@ export interface FetchesParams {
 }
 
 export interface FetchesResponse<T> {
+  config: _RequestConfig;
   data: T;
-  url: string;
+  headers: Headers;
   status: number;
   statusText: string;
-  headers: Headers;
-  config: _RequestConfig;
+  url: string;
 }
 
 export class Fetches {
@@ -121,6 +121,8 @@ export class Fetches {
     for (const key in params) {
       if (Object.prototype.hasOwnProperty.call(params, key)) {
         const value = params[key];
+
+        if (value === undefined || value === null) continue;
 
         if (Array.isArray(value)) {
           value.forEach((currentValue) => searchParams.append(key, currentValue));

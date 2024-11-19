@@ -5,9 +5,9 @@ declare module '@siberiacancode/eslint' {
       next?: boolean;
     } & import('@antfu/eslint-config').TypedFlatConfigItem,
     ...userConfigs: import('@antfu/eslint-config').Awaitable<
+      | import('@antfu/eslint-config').FlatConfigComposer<any, any>
       | import('@antfu/eslint-config').TypedFlatConfigItem
       | import('@antfu/eslint-config').TypedFlatConfigItem[]
-      | import('@antfu/eslint-config').FlatConfigComposer<any, any>
       | Linter.Config[]
     >[]
   ) => import('@antfu/eslint-config').FlatConfigComposer<
