@@ -2,6 +2,21 @@
   "name": "@siberiacancode/fetches",
   "entries": [
     {
+      "date": "Tue, 19 Nov 2024 15:37:30 GMT",
+      "version": "1.2.0",
+      "tag": "@siberiacancode/fetches_v1.2.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "dmitriybabinup@gmail.com",
+            "package": "@siberiacancode/fetches",
+            "commit": "not available",
+            "comment": "release/fetches/1.2.0 🧊 add default generic"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 Nov 2024 15:35:00 GMT",
       "version": "1.1.3",
       "tag": "@siberiacancode/fetches_v1.1.3",
