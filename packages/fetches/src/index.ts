@@ -45,7 +45,7 @@ export interface RequestOptions extends Omit<RequestInit, 'method'> {
 
 export type FetchesRequestConfig<Params = undefined> = Params extends undefined
   ? { config?: RequestOptions }
-  : { params: Params; config?: RequestOptions };
+  : { params: Partial<Params>; config?: RequestOptions };
 
 export interface FetchesParams {
   baseURL: BaseUrl;

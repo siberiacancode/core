@@ -146,7 +146,7 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
             ],
             internalPattern: ['~/**', '@/**'],
             matcher: 'minimatch',
-            newlinesBetween: 'ignore',
+            newlinesBetween: 'always',
             order: 'asc',
             type: 'natural'
           }
