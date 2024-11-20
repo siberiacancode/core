@@ -1,8 +1,16 @@
 # Change Log - @siberiacancode/fetches
 
-<!-- This log was last generated on Tue, 19 Nov 2024 15:37:30 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 20 Nov 2024 05:06:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.2.1
+
+Wed, 20 Nov 2024 05:06:14 GMT
+
+### Patches
+
+- release/fetches/1.2.1 🧊 fix params (dmitriybabinup@gmail.com)
 
 ## 1.2.0
 

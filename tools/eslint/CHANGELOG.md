@@ -1,8 +1,16 @@
 # Change Log - @siberiacancode/eslint
 
-<!-- This log was last generated on Tue, 19 Nov 2024 15:35:00 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 20 Nov 2024 05:06:13 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 2.5.2
+
+Wed, 20 Nov 2024 05:06:13 GMT
+
+### Patches
+
+- release/fetches/1.2.1 🧊 fix params (dmitriybabinup@gmail.com)
 
 ## 2.5.1
 
