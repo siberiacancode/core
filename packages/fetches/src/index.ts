@@ -139,7 +139,7 @@ export class Fetches {
     initialResponse: Response,
     initialConfig: _RequestConfig
   ) {
-    const body = await this.parseJson<T>(initialResponse);
+    const body = await this.parse<T>(initialResponse);
     let response = {
       data: body,
       url: initialResponse.url,
@@ -191,12 +191,21 @@ export class Fetches {
     return config;
   }
 
-  private async parseJson<T>(response: Response): Promise<T> {
-    try {
-      return (await response.json()) as T;
-    } catch {
-      return null as T;
-    }
+  private async parse<T>(response: Response): Promise<T> {
+    const contentType = response.headers.get('content-type');
+    if (!contentType) return (await response.text()) as T;
+
+    const parseMethods = [
+      { match: /json/, parse: () => response.json() },
+      { match: /text/, parse: () => response.text() },
+      { match: /(octet-stream|zip|pdf|image)/, parse: () => response.blob() }
+    ];
+
+    const parser = parseMethods.find((entry) => contentType.match(entry.match));
+
+    if (!parser) return (await response.text()) as T;
+
+    return (await parser.parse()) as T;
   }
 
   private async request<T, R = FetchesResponse<T>>(
@@ -232,7 +241,7 @@ export class Fetches {
 
     if (response.status >= 400) {
       const error = {} as ResponseError;
-      const body = await this.parseJson<T>(response);
+      const body = await this.parse<T>(response);
       error.config = config;
       error.response = {
         config,
@@ -245,7 +254,7 @@ export class Fetches {
       throw new Error(response.statusText, { cause: { config, response } });
     }
 
-    const body = await this.parseJson<T>(response);
+    const body = await this.parse<T>(response);
     return {
       config,
       data: body,
