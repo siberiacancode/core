@@ -15,7 +15,7 @@ export type SuccessResponseFun = <T = any>(
   response: FetchesResponse<T>
 ) => FetchesResponse<T> | Promise<FetchesResponse<T>>;
 export type SuccessRequestFun = (
-  options: _RequestConfig
+  config: _RequestConfig
 ) => _RequestConfig | Promise<_RequestConfig>;
 
 export type ResponseError = Error & { config: _RequestConfig; response: FetchesResponse<any> };
@@ -44,8 +44,8 @@ export interface RequestOptions extends Omit<RequestInit, 'method'> {
 }
 
 export type FetchesRequestConfig<Params = undefined> = Params extends undefined
-  ? { config?: RequestOptions }
-  : { params: Partial<Params>; config?: RequestOptions };
+  ? { params?: undefined; config?: RequestOptions }
+  : { params: Params; config?: RequestOptions };
 
 export interface FetchesParams {
   baseURL: BaseUrl;
