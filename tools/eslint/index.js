@@ -124,7 +124,6 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
         'perfectionist/sort-array-includes': [
           'error',
           {
-            matcher: 'minimatch',
             order: 'asc',
             type: 'alphabetical'
           }
@@ -144,8 +143,7 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
               'side-effect-style',
               'unknown'
             ],
-            internalPattern: ['~/**', '@/**'],
-            matcher: 'minimatch',
+            internalPattern: ['^~/.*', '^@/.*'],
             newlinesBetween: 'always',
             order: 'asc',
             type: 'natural'
@@ -155,7 +153,6 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
           'error',
           {
             groups: ['unknown', 'method', 'multiline'],
-            matcher: 'minimatch',
             order: 'asc',
             type: 'alphabetical'
           }
@@ -168,7 +165,6 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
               reserved: ['key', 'ref']
             },
             groups: ['shorthand', 'reserved', 'multiline', 'unknown', 'callback'],
-            matcher: 'minimatch',
             order: 'asc',
             type: 'alphabetical'
           }
@@ -190,7 +186,6 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
               'union',
               'nullish'
             ],
-            matcher: 'minimatch',
             order: 'asc',
             specialCharacters: 'keep',
             type: 'alphabetical'
