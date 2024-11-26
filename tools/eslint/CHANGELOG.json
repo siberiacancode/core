@@ -2,6 +2,21 @@
   "name": "@siberiacancode/eslint",
   "entries": [
     {
+      "date": "Tue, 26 Nov 2024 12:08:45 GMT",
+      "version": "2.6.0",
+      "tag": "@siberiacancode/eslint_v2.6.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "d.babin@cft.ru",
+            "package": "@siberiacancode/eslint",
+            "commit": "not available",
+            "comment": "release/eslint/2.6.0 🧊 change versions"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Nov 2024 05:06:13 GMT",
       "version": "2.5.2",
       "tag": "@siberiacancode/eslint_v2.5.2",
