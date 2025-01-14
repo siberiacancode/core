@@ -44,7 +44,7 @@ export interface RequestOptions extends Omit<RequestInit, 'method'> {
 }
 
 export type FetchesRequestConfig<Params = undefined> = Params extends undefined
-  ? { config?: RequestOptions }
+  ? { params?: undefined; config?: RequestOptions }
   : { params: Partial<Params>; config?: RequestOptions };
 
 export interface FetchesParams {
@@ -79,7 +79,8 @@ export class Fetches {
     };
   };
 
-  constructor({ baseURL, headers = {} }: FetchesParams) {
+  constructor(params?: FetchesParams) {
+    const { baseURL = '', headers = {} } = params ?? {};
     this.baseURL = baseURL;
     this.headers = headers;
     this.interceptorHandlers = { request: [], response: [] };
@@ -213,9 +214,15 @@ export class Fetches {
     method: RequestMethod,
     options: RequestOptions = {}
   ) {
+    let url = `${this.baseURL}${endpoint}`;
+
+    if (options.params) {
+      url += this.createSearchParams(options.params);
+    }
+
     const defaultConfig: _RequestConfig = {
       ...options,
-      url: endpoint,
+      url,
       method,
       headers: {
         ...this.headers,
@@ -226,14 +233,10 @@ export class Fetches {
         ...(!!options?.headers && options.headers)
       }
     };
+
     const config = await this.runRequestInterceptors(defaultConfig);
 
-    let url = `${this.baseURL}/${endpoint}`;
-    if (options.params) {
-      url += this.createSearchParams(options.params);
-    }
-
-    const response: Response = await fetch(url, config);
+    const response: Response = await fetch(config.url, config);
 
     if (this.interceptorHandlers.response?.length) {
       return this.runResponseInterceptors<T>(response, config) as R;
