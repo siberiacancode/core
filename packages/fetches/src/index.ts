@@ -313,3 +313,6 @@ export class Fetches {
     return this.request<T, R>(options.url, options.method, options);
   }
 }
+
+const fetches = (params?: FetchesParams) => new Fetches(params);
+export default fetches;
