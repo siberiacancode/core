@@ -1,6 +1,5 @@
 {
   "name": "@siberiacancode/fetches",
-  "type": "module",
   "version": "1.5.0",
   "description": "fetch instance",
   "author": {
@@ -21,6 +20,11 @@
   ],
   "publishConfig": {
     "access": "public"
+  },
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "require": "./dist/cjs/index.js",
+    "default": "./dist/esm/index.js"
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
