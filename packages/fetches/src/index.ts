@@ -61,7 +61,7 @@ export interface FetchesResponse<T> {
   url: string;
 }
 
-export class Fetches {
+class Fetches {
   readonly baseURL: BaseUrl;
 
   public headers: Record<string, string>;
@@ -314,5 +314,13 @@ export class Fetches {
   }
 }
 
-const fetches = (params?: FetchesParams) => new Fetches(params);
+interface Instance extends Fetches {
+  Fetches: typeof Fetches;
+  create: (params: FetchesParams) => Fetches;
+}
+
+const fetches = new Fetches() as Instance;
+fetches.Fetches = Fetches;
+fetches.create = (params?: FetchesParams) => new Fetches(params);
+
 export default fetches;
