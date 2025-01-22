@@ -321,7 +321,7 @@ class Fetches {
 
 interface Instance extends Fetches {
   Fetches: typeof Fetches;
-  create: (params: FetchesParams) => Fetches;
+  create: (params?: FetchesParams) => Fetches;
 }
 
 const fetches = new Fetches() as Instance;
