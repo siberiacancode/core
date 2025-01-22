@@ -310,7 +310,12 @@ class Fetches {
   }
 
   call<T, R = FetchesResponse<T>>(options: _RequestConfig) {
-    return this.request<T, R>(options.url, options.method, options);
+    return this.request<T, R>(options.url, options.method, {
+      ...options,
+      ...(!!options.body && {
+        body: options.body instanceof FormData ? options.body : JSON.stringify(options.body)
+      })
+    });
   }
 }
 
