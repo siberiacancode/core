@@ -216,7 +216,7 @@ class Fetches {
   ) {
     let url = `${this.baseURL}${endpoint}`;
 
-    if (options.params) {
+    if (options.params && Object.keys(options.params).length) {
       url += this.createSearchParams(options.params);
     }
 
