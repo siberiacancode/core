@@ -268,49 +268,62 @@ class Fetches {
     } as R;
   }
 
-  get<T, R = FetchesResponse<T>>(endpoint: string, options: Omit<RequestOptions, 'body'> = {}) {
-    return this.request<T, R>(endpoint, 'GET', options);
+  get<Data, Response = FetchesResponse<Data>>(
+    endpoint: string,
+    options: Omit<RequestOptions, 'body'> = {}
+  ) {
+    return this.request<Data, Response>(endpoint, 'GET', options);
   }
 
-  delete<T, R = FetchesResponse<T>>(endpoint: string, options: Omit<RequestOptions, 'body'> = {}) {
-    return this.request<T, R>(endpoint, 'DELETE', options);
+  head<Data, Response = FetchesResponse<Data>>(
+    endpoint: string,
+    options: Omit<RequestOptions, 'body'> = {}
+  ) {
+    return this.request<Data, Response>(endpoint, 'HEAD', options);
   }
 
-  post<T, R = FetchesResponse<T>>(
+  delete<Data, Response = FetchesResponse<Data>>(
+    endpoint: string,
+    options: Omit<RequestOptions, 'body'> = {}
+  ) {
+    return this.request<Data, Response>(endpoint, 'DELETE', options);
+  }
+
+  post<Data, Response = FetchesResponse<Data>>(
     endpoint: string,
     body?: RequestBody,
     options: RequestOptions = {}
   ) {
-    return this.request<T, R>(endpoint, 'POST', {
+    return this.request<Data, Response>(endpoint, 'POST', {
       ...options,
       ...(!!body && { body: body instanceof FormData ? body : JSON.stringify(body) })
     });
   }
 
-  put<T, R = FetchesResponse<T>>(
+  put<Data, Response = FetchesResponse<Data>>(
     endpoint: string,
     body?: RequestBody,
     options: RequestOptions = {}
   ) {
-    return this.request<T, R>(endpoint, 'PUT', {
+    return this.request<Data, Response>(endpoint, 'PUT', {
       ...options,
       ...(!!body && { body: body instanceof FormData ? body : JSON.stringify(body) })
     });
   }
 
-  patch<T, R = FetchesResponse<T>>(
+  patch<Data, Response = FetchesResponse<Data>>(
     endpoint: string,
     body?: RequestBody,
     options: RequestOptions = {}
   ) {
-    return this.request<T, R>(endpoint, 'PATCH', {
+    return this.request<Data, Response>(endpoint, 'PATCH', {
       ...options,
       ...(!!body && { body: body instanceof FormData ? body : JSON.stringify(body) })
     });
   }
 
-  call<T, R = FetchesResponse<T>>(options: _RequestConfig) {
-    return this.request<T, R>(options.url, options.method, {
+  call<Data, Response = FetchesResponse<Data>>(options: _RequestConfig) {
+    return this.request<Data, Response>(options.url, options.method, {
       ...options,
       ...(!!options.body && {
         body: options.body instanceof FormData ? options.body : JSON.stringify(options.body)

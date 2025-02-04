@@ -35,11 +35,11 @@
     "lint-inspector": "npx @eslint/config-inspector"
   },
   "dependencies": {
-    "@antfu/eslint-config": "3.14.0",
-    "@eslint-react/eslint-plugin": "1.23.2",
-    "@next/eslint-plugin-next": "15.1.4",
+    "@antfu/eslint-config": "4.1.1",
+    "@eslint-react/eslint-plugin": "1.26.1",
+    "@next/eslint-plugin-next": "15.1.6",
     "@vue/compiler-sfc": "3.5.13",
-    "eslint": "9.18.0",
+    "eslint": "9.19.0",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-react": "7.37.4",
     "eslint-plugin-react-hooks": "5.1.0",
