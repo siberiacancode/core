@@ -192,9 +192,11 @@ class Fetches {
     return config;
   }
 
-  private async parse<T>(response: Response): Promise<T> {
+  private async parse<Data>(response: Response): Promise<Data | undefined> {
+    if (!response.body) return undefined;
+
     const contentType = response.headers.get('content-type');
-    if (!contentType) return (await response.text()) as T;
+    if (!contentType) return (await response.text()) as Data;
 
     const parseMethods = [
       { match: /json/, parse: () => response.json() },
@@ -204,9 +206,9 @@ class Fetches {
 
     const parser = parseMethods.find((entry) => contentType.match(entry.match));
 
-    if (!parser) return (await response.text()) as T;
+    if (!parser) return (await response.text()) as Data;
 
-    return (await parser.parse()) as T;
+    return (await parser.parse()) as Data;
   }
 
   private async request<T, R = FetchesResponse<T>>(
@@ -242,9 +244,10 @@ class Fetches {
       return this.runResponseInterceptors<T>(response, config) as R;
     }
 
+    const body = await this.parse<T>(response);
+
     if (response.status >= 400) {
       const error = {} as ResponseError;
-      const body = await this.parse<T>(response);
       error.config = config;
       error.response = {
         config,
@@ -257,7 +260,6 @@ class Fetches {
       throw new Error(response.statusText, { cause: { config, response } });
     }
 
-    const body = await this.parse<T>(response);
     return {
       config,
       data: body,
