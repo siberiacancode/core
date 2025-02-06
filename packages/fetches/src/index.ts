@@ -3,42 +3,41 @@ export type RequestMethod = RequestInit['method'];
 export interface FetchesSearchParams {
   [key: string]: boolean | number | string | string[] | null | undefined;
 }
+export type RequestBody = BodyInit | Record<string, any> | null | undefined;
 
-type _RequestConfig = RequestInit & {
+type RequestConfig = RequestInit & {
   url: string;
   _retry?: boolean;
   headers?: Record<string, string>;
   params?: FetchesSearchParams;
 };
 
-export type SuccessResponseFun = <T = any>(
+export type SuccessResponseFunction = <T = any>(
   response: FetchesResponse<T>
 ) => FetchesResponse<T> | Promise<FetchesResponse<T>>;
-export type SuccessRequestFun = (
-  config: _RequestConfig
-) => _RequestConfig | Promise<_RequestConfig>;
+export type SuccessRequestFunction = (
+  config: RequestConfig
+) => Promise<RequestConfig> | RequestConfig;
 
-export type ResponseError = Error & { config: _RequestConfig; response: FetchesResponse<any> };
-export type FailureResponseFun = (e: ResponseError) => any;
-export type FailureRequestFun = (e: ResponseError) => any;
+export type ResponseError = Error & { config: RequestConfig; response: FetchesResponse<any> };
+export type FailureResponseFunction = (e: ResponseError) => any;
+export type FailureRequestFunction = (e: ResponseError) => any;
 
 export interface RequestInterceptor {
-  onFailure?: FailureRequestFun;
-  onSuccess?: SuccessRequestFun;
+  onFailure?: FailureRequestFunction;
+  onSuccess?: SuccessRequestFunction;
 }
 
 export interface ResponseInterceptor {
-  onFailure?: FailureResponseFun;
-  onSuccess?: SuccessResponseFun;
+  onFailure?: FailureResponseFunction;
+  onSuccess?: SuccessResponseFunction;
 }
 export interface Interceptors {
   request?: RequestInterceptor[];
   response?: ResponseInterceptor[];
 }
-
-export type RequestBody = FormData | Record<string, any>;
-
-export interface RequestOptions extends Omit<RequestInit, 'method'> {
+export interface RequestOptions extends Omit<RequestInit, 'body' | 'method'> {
+  body?: RequestBody;
   headers?: Record<string, string>;
   params?: FetchesSearchParams;
 }
@@ -53,7 +52,7 @@ export interface FetchesParams {
 }
 
 export interface FetchesResponse<T> {
-  config: _RequestConfig;
+  config: RequestConfig;
   data: T;
   headers: Headers;
   status: number;
@@ -70,11 +69,17 @@ class Fetches {
 
   readonly interceptors: {
     request: {
-      use: (onSuccess?: SuccessRequestFun, onFailure?: FailureRequestFun) => RequestInterceptor;
+      use: (
+        onSuccess?: SuccessRequestFunction,
+        onFailure?: FailureRequestFunction
+      ) => RequestInterceptor;
       eject: (interceptor: RequestInterceptor) => void;
     };
     response: {
-      use: (onSuccess?: SuccessResponseFun, onFailure?: FailureResponseFun) => ResponseInterceptor;
+      use: (
+        onSuccess?: SuccessResponseFunction,
+        onFailure?: FailureResponseFunction
+      ) => ResponseInterceptor;
       eject: (interceptor: ResponseInterceptor) => void;
     };
   };
@@ -116,6 +121,11 @@ class Fetches {
     this.headers = { ...this.headers, ...headers };
   }
 
+  private createBody(data?: RequestBody) {
+    if (data instanceof FormData || data instanceof Blob) return data;
+    return JSON.stringify(data);
+  }
+
   private createSearchParams(params: FetchesSearchParams) {
     const searchParams = new URLSearchParams();
 
@@ -138,7 +148,7 @@ class Fetches {
 
   private async runResponseInterceptors<T>(
     initialResponse: Response,
-    initialConfig: _RequestConfig
+    initialConfig: RequestConfig
   ) {
     const body = await this.parse<T>(initialResponse);
     let response = {
@@ -172,7 +182,7 @@ class Fetches {
     return response;
   }
 
-  private async runRequestInterceptors(initialConfig: _RequestConfig) {
+  private async runRequestInterceptors(initialConfig: RequestConfig) {
     let config = initialConfig;
 
     if (!this.interceptorHandlers.request?.length) return config;
@@ -216,20 +226,22 @@ class Fetches {
     method: RequestMethod,
     options: RequestOptions = {}
   ) {
+    const { body, params, ...rest } = options;
     let url = `${this.baseURL}${endpoint}`;
 
-    if (options.params && Object.keys(options.params).length) {
-      url += this.createSearchParams(options.params);
+    if (params && Object.keys(params).length) {
+      url += this.createSearchParams(params);
     }
 
-    const defaultConfig: _RequestConfig = {
-      ...options,
+    const defaultConfig: RequestConfig = {
+      ...rest,
+      ...(body && { body: this.createBody(body) }),
       url,
       method,
       headers: {
         ...this.headers,
-        ...(options?.body &&
-          !(options.body instanceof FormData) && {
+        ...(body &&
+          !(body instanceof FormData || options.body instanceof Blob) && {
             'content-type': 'application/json'
           }),
         ...(!!options?.headers && options.headers)
@@ -244,7 +256,7 @@ class Fetches {
       return this.runResponseInterceptors<T>(response, config) as R;
     }
 
-    const body = await this.parse<T>(response);
+    const data = await this.parse<T>(response);
 
     if (response.status >= 400) {
       const error = {} as ResponseError;
@@ -255,14 +267,14 @@ class Fetches {
         status: response.status,
         statusText: response.statusText,
         headers: response.headers,
-        data: body
+        data
       };
       throw new Error(response.statusText, { cause: { config, response } });
     }
 
     return {
       config,
-      data: body,
+      data,
       url: response.url,
       headers: response.headers,
       status: response.status,
@@ -296,10 +308,8 @@ class Fetches {
     body?: RequestBody,
     options: RequestOptions = {}
   ) {
-    return this.request<Data, Response>(endpoint, 'POST', {
-      ...options,
-      ...(!!body && { body: body instanceof FormData ? body : JSON.stringify(body) })
-    });
+    options.body = body;
+    return this.request<Data, Response>(endpoint, 'POST', options);
   }
 
   put<Data, Response = FetchesResponse<Data>>(
@@ -307,10 +317,8 @@ class Fetches {
     body?: RequestBody,
     options: RequestOptions = {}
   ) {
-    return this.request<Data, Response>(endpoint, 'PUT', {
-      ...options,
-      ...(!!body && { body: body instanceof FormData ? body : JSON.stringify(body) })
-    });
+    options.body = body;
+    return this.request<Data, Response>(endpoint, 'POST', options);
   }
 
   patch<Data, Response = FetchesResponse<Data>>(
@@ -318,19 +326,12 @@ class Fetches {
     body?: RequestBody,
     options: RequestOptions = {}
   ) {
-    return this.request<Data, Response>(endpoint, 'PATCH', {
-      ...options,
-      ...(!!body && { body: body instanceof FormData ? body : JSON.stringify(body) })
-    });
+    options.body = body;
+    return this.request<Data, Response>(endpoint, 'POST', options);
   }
 
-  call<Data, Response = FetchesResponse<Data>>(options: _RequestConfig) {
-    return this.request<Data, Response>(options.url, options.method, {
-      ...options,
-      ...(!!options.body && {
-        body: options.body instanceof FormData ? options.body : JSON.stringify(options.body)
-      })
-    });
+  call<Data, Response = FetchesResponse<Data>>(options: RequestConfig) {
+    return this.request<Data, Response>(options.url, options.method, options);
   }
 }
 
