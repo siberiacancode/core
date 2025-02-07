@@ -216,7 +216,7 @@ class Fetches {
 
     const parser = parseMethods.find((entry) => contentType.match(entry.match));
 
-    if (!parser) return (await response.text()) as Data;
+    if (!parser) return response.body as Data;
 
     return (await parser.parse()) as Data;
   }
