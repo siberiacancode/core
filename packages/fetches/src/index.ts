@@ -327,7 +327,7 @@ class Fetches {
     options: RequestOptions = {}
   ) {
     options.body = body;
-    return this.request<Data, Response>(endpoint, 'POST', options);
+    return this.request<Data, Response>(endpoint, 'PATCH', options);
   }
 
   call<Data, Response = FetchesResponse<Data>>(options: RequestConfig) {
