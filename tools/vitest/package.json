@@ -2,7 +2,7 @@
   "name": "@siberiacancode/vitest",
   "description": "vitest config",
   "license": "MIT",
-  "version": "1.2.4",
+  "version": "2.0.0",
   "keywords": [
     "vitest"
   ],
@@ -33,12 +33,12 @@
     "*.js": "prettier --write"
   },
   "peerDependencies": {
-    "vitest": "^1.6.0",
-    "jsdom": "^24.1.0"
+    "jsdom": "^26.0.0",
+    "vitest": "^3.0.6"
   },
   "dependencies": {
-    "vitest": "^1.6.0",
-    "jsdom": "^24.1.0"
+    "jsdom": "^26.0.0",
+    "vitest": "^3.0.6"
   },
   "devDependencies": {
     "@siberiacancode/prettier": "*"
