@@ -21,7 +21,7 @@
     "access": "public"
   },
   "files": [
-    "vite.config.js",
+    "vitest.config.js",
     "index.d.ts"
   ],
   "main": "index.js",
