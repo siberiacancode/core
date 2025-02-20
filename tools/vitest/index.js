@@ -1,2 +1,2 @@
-const vitest = require('./vite.config.js');
+const vitest = require('./vitest.config.js');
 module.exports = { vitest };
