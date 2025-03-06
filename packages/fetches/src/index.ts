@@ -326,7 +326,7 @@ class Fetches {
     options: RequestOptions = {}
   ) {
     options.body = body;
-    return this.request<Data, Response>(endpoint, 'POST', options);
+    return this.request<Data, Response>(endpoint, 'PUT', options);
   }
 
   patch<Data, Response = FetchesResponse<Data>>(
