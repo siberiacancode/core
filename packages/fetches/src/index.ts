@@ -60,6 +60,14 @@ export interface FetchesResponse<T> {
   url: string;
 }
 
+export type ApiFetchesRequest<Params, Response = any> = (
+  Params extends { [K in keyof Params]: undefined extends Params[K] ? never : any }[keyof Params]
+    ? true
+    : false
+) extends true
+  ? (requestConfig: FetchesRequestConfig<Params>) => Promise<Response>
+  : (requestConfig?: FetchesRequestConfig<Params>) => Promise<Response>;
+
 class Fetches {
   readonly baseURL: BaseUrl;
 
