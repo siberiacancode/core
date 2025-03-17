@@ -34,11 +34,11 @@
   },
   "peerDependencies": {
     "jsdom": "26.0.0",
-    "vitest": "3.0.6"
+    "vitest": "3.0.8"
   },
   "dependencies": {
     "jsdom": "26.0.0",
-    "vitest": "3.0.6"
+    "vitest": "3.0.8"
   },
   "devDependencies": {
     "@siberiacancode/prettier": "*"
