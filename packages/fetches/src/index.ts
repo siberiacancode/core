@@ -1,7 +1,7 @@
 export type BaseUrl = string;
 export type RequestMethod = RequestInit['method'];
 export interface FetchesSearchParams {
-  [key: string]: boolean | number | string | string[] | null | undefined;
+  [key: string]: boolean | number | string | number[] | string[] | null | undefined;
 }
 export type RequestBody = BodyInit | Record<string, any> | null | undefined;
 
@@ -144,7 +144,7 @@ class Fetches {
         if (value === undefined || value === null) continue;
 
         if (Array.isArray(value)) {
-          value.forEach((currentValue) => searchParams.append(key, currentValue));
+          value.forEach((currentValue) => searchParams.append(key, currentValue.toString()));
         } else {
           searchParams.set(key, value.toString());
         }
