@@ -1,6 +1,6 @@
 {
   "name": "@siberiacancode/fetches",
-  "version": "1.9.5",
+  "version": "1.9.6",
   "description": "fetch instance",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -21,10 +21,11 @@
   "publishConfig": {
     "access": "public"
   },
+  "sideEffects": false,
   "exports": {
-    "types": "./dist/index.d.ts",
-    "require": "./dist/cjs/index.js",
-    "default": "./dist/esm/index.js"
+    "types": "./dist/types/index.d.ts",
+    "import": "./dist/esm/index.mjs",
+    "require": "./dist/cjs/index.cjs"
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -34,7 +35,7 @@
   ],
   "scripts": {
     "prepublishOnly": "yarn type && yarn build",
-    "build": "shx rm -rf dist && rollup -c --bundleConfigAsCjs",
+    "build": "shx rm -rf dist && vite build",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector",
     "type": "tsc --noEmit",
@@ -42,10 +43,11 @@
     "pretty": "yarn type && yarn lint && yarn format"
   },
   "devDependencies": {
-    "@siberiacancode/builder": "*",
     "@siberiacancode/eslint": "*",
     "@siberiacancode/prettier": "*",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.5.4"
   },
   "lint-staged": {
     "*.js": [
