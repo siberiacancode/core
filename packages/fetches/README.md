@@ -54,13 +54,11 @@ const getUsers: ApiFetchesRequest<GetUsersParams, any[]> = ({ params, config }) 
 
 The fetches library provides flexible response parsing options to handle different types of responses. You can specify how to parse the response body using predefined modes or custom functions. If no parse mode is specified, the response will be automatically parsed based on the `Content-Type` header:
 
-### Using Predefined Parse Modes
-
 ```typescript
 const response = await fetches.get('/users', { parse: 'json' });
 ```
 
-### Custom Parse Functions
+### Custom parse functions
 
 You can provide a custom function that takes a Response object and returns a Promise with parsed data. This is useful for handling special response formats or custom parsing logic.
 
