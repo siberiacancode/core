@@ -1,16 +1,44 @@
 export type BaseUrl = string;
-export type RequestMethod = RequestInit['method'];
-export interface FetchesSearchParams {
+
+export type ResponseParseFunction = (data: unknown) => Promise<unknown>;
+export type ResponseParseMode = 'arrayBuffer' | 'blob' | 'formData' | 'json' | 'raw' | 'text';
+export type ResponseParse = ResponseParseFunction | ResponseParseMode;
+
+export type RequestMethod = 'DELETE' | 'GET' | 'HEAD' | 'PATCH' | 'POST' | 'PUT';
+export type RequestBody = BodyInit | Record<string, any> | null | undefined;
+export interface RequestSearchParams {
   [key: string]: boolean | number | string | number[] | string[] | null | undefined;
 }
-export type RequestBody = BodyInit | Record<string, any> | null | undefined;
+export interface RequestOptions extends Omit<RequestInit, 'body' | 'method'> {
+  body?: RequestBody;
+  headers?: Record<string, string>;
+  params?: RequestSearchParams;
+  parse?: ResponseParse;
+}
 
 type RequestConfig = RequestInit & {
   url: string;
   _retry?: boolean;
+  method: RequestMethod;
   headers?: Record<string, string>;
-  params?: FetchesSearchParams;
+  params?: RequestSearchParams;
+  parse?: ResponseParse;
 };
+
+export interface FetchesParams {
+  baseURL: BaseUrl;
+  headers?: Record<string, string>;
+  parse?: ResponseParse;
+}
+
+export interface FetchesResponse<Data> {
+  config: RequestConfig;
+  data: Data;
+  headers: Headers;
+  status: number;
+  statusText: string;
+  url: string;
+}
 
 export type SuccessResponseFunction = <T = any>(
   response: FetchesResponse<T>
@@ -36,29 +64,10 @@ export interface Interceptors {
   request?: RequestInterceptor[];
   response?: ResponseInterceptor[];
 }
-export interface RequestOptions extends Omit<RequestInit, 'body' | 'method'> {
-  body?: RequestBody;
-  headers?: Record<string, string>;
-  params?: FetchesSearchParams;
-}
 
 export type FetchesRequestConfig<Params = undefined> = Params extends undefined
   ? { params?: undefined; config?: RequestOptions }
   : { params: Params; config?: RequestOptions };
-
-export interface FetchesParams {
-  baseURL: BaseUrl;
-  headers?: Record<string, string>;
-}
-
-export interface FetchesResponse<T> {
-  config: RequestConfig;
-  data: T;
-  headers: Headers;
-  status: number;
-  statusText: string;
-  url: string;
-}
 
 export type ApiFetchesRequest<Params, Response = any> = (
   Params extends { [K in keyof Params]: undefined extends Params[K] ? never : any }[keyof Params]
@@ -72,6 +81,7 @@ class Fetches {
   readonly baseURL: BaseUrl;
 
   public headers: Record<string, string>;
+  public parse?: ResponseParse;
 
   readonly interceptorHandlers: Interceptors;
 
@@ -93,10 +103,12 @@ class Fetches {
   };
 
   constructor(params?: FetchesParams) {
-    const { baseURL = '', headers = {} } = params ?? {};
+    const { baseURL = '', headers = {}, parse } = params ?? {};
     this.baseURL = baseURL;
     this.headers = headers;
+    this.parse = parse;
     this.interceptorHandlers = { request: [], response: [] };
+
     this.interceptors = {
       request: {
         use: (onSuccess, onFailure) => {
@@ -129,16 +141,72 @@ class Fetches {
     this.headers = { ...this.headers, ...headers };
   }
 
-  private createBody(data?: RequestBody) {
-    if (data instanceof FormData || data instanceof Blob) return data;
-    return JSON.stringify(data);
+  setParse(parse: ResponseParse) {
+    this.parse = parse;
   }
 
-  private createSearchParams(params: FetchesSearchParams) {
+  private prepareBody(body?: RequestBody) {
+    if (body instanceof FormData || body instanceof Blob) return body;
+    return JSON.stringify(body);
+  }
+
+  private async parseResponse<Data>(
+    response: Response,
+    parse?: ResponseParse
+  ): Promise<Data | undefined> {
+    if (!response.body) return undefined;
+
+    if (typeof parse === 'function') {
+      return (await parse(response.body)) as Data;
+    }
+
+    const parseMethods = {
+      raw: {
+        parse: () => response.body,
+        match: 'raw'
+      },
+      text: {
+        parse: () => response.text(),
+        match: /text/
+      },
+      json: {
+        parse: () => response.json(),
+        match: /json/
+      },
+      blob: {
+        parse: () => response.blob(),
+        match: /(octet-stream|zip|pdf|image)/
+      },
+      formData: {
+        parse: () => response.formData(),
+        match: /form-data/
+      },
+      arrayBuffer: {
+        parse: () => response.arrayBuffer(),
+        match: /array-buffer/
+      }
+    };
+
+    if (parse) {
+      const parser = parseMethods[parse];
+      return (await parser.parse()) as Data;
+    }
+
+    const contentType = response.headers.get('content-type');
+    if (!contentType) return (await response.text()) as Data;
+
+    const parser = Object.values(parseMethods).find((entry) => contentType.match(entry.match));
+
+    if (!parser) return response.body as Data;
+
+    return (await parser.parse()) as Data;
+  }
+
+  private createSearchParams(params: RequestSearchParams) {
     const searchParams = new URLSearchParams();
 
     for (const key in params) {
-      if (Object.prototype.hasOwnProperty.call(params, key)) {
+      if (key in params) {
         const value = params[key];
 
         if (value === undefined || value === null) continue;
@@ -158,7 +226,7 @@ class Fetches {
     initialResponse: Response,
     initialConfig: RequestConfig
   ) {
-    const body = await this.parse<T>(initialResponse);
+    const body = await this.parseResponse<T>(initialResponse);
     let response = {
       data: body,
       url: initialResponse.url,
@@ -210,31 +278,12 @@ class Fetches {
     return config;
   }
 
-  private async parse<Data>(response: Response): Promise<Data | undefined> {
-    if (!response.body) return undefined;
-
-    const contentType = response.headers.get('content-type');
-    if (!contentType) return (await response.text()) as Data;
-
-    const parseMethods = [
-      { match: /json/, parse: () => response.json() },
-      { match: /text/, parse: () => response.text() },
-      { match: /(octet-stream|zip|pdf|image)/, parse: () => response.blob() }
-    ];
-
-    const parser = parseMethods.find((entry) => contentType.match(entry.match));
-
-    if (!parser) return response.body as Data;
-
-    return (await parser.parse()) as Data;
-  }
-
-  private async request<T, R = FetchesResponse<T>>(
+  private async request<Data, R = FetchesResponse<Data>>(
     endpoint: string,
     method: RequestMethod,
     options: RequestOptions = {}
   ) {
-    const { body, params, ...rest } = options;
+    const { body, params, parse, ...rest } = options;
     let url = `${this.baseURL}${endpoint}`;
 
     if (params && Object.keys(params).length) {
@@ -243,9 +292,10 @@ class Fetches {
 
     const defaultConfig: RequestConfig = {
       ...rest,
-      ...(body && { body: this.createBody(body) }),
+      ...(body && { body: this.prepareBody(body) }),
       url,
       method,
+      parse,
       headers: {
         ...this.headers,
         ...(body &&
@@ -261,10 +311,10 @@ class Fetches {
     const response: Response = await fetch(config.url, config);
 
     if (this.interceptorHandlers.response?.length) {
-      return this.runResponseInterceptors<T>(response, config) as R;
+      return this.runResponseInterceptors<Data>(response, config) as R;
     }
 
-    const data = await this.parse<T>(response);
+    const data = await this.parseResponse<Data>(response, config.parse);
 
     if (response.status >= 400) {
       const error = {} as ResponseError;
