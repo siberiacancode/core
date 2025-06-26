@@ -47,9 +47,22 @@ export type SuccessRequestFunction = (
   config: RequestConfig
 ) => Promise<RequestConfig> | RequestConfig;
 
-export type ResponseError = Error & { config: RequestConfig; response: FetchesResponse<any> };
-export type FailureResponseFunction = (e: ResponseError) => any;
-export type FailureRequestFunction = (e: ResponseError) => any;
+export class ResponseError extends Error {
+  response: FetchesResponse<any>;
+  request: RequestConfig;
+
+  constructor(
+    message: string,
+    options: { request: RequestConfig; response: FetchesResponse<any> }
+  ) {
+    super(message, { cause: options });
+    this.response = options.response;
+    this.request = options.request;
+  }
+}
+
+export type FailureResponseFunction = (error: ResponseError) => any;
+export type FailureRequestFunction = (error: ResponseError) => any;
 
 export interface RequestInterceptor {
   onFailure?: FailureRequestFunction;
@@ -226,9 +239,9 @@ class Fetches {
     initialResponse: Response,
     initialConfig: RequestConfig
   ) {
-    const body = await this.parseResponse<T>(initialResponse);
+    const data = await this.parseResponse<T>(initialResponse);
     let response = {
-      data: body,
+      data,
       url: initialResponse.url,
       headers: initialResponse.headers,
       status: initialResponse.status,
@@ -317,17 +330,16 @@ class Fetches {
     const data = await this.parseResponse<Data>(response, config.parse);
 
     if (response.status >= 400) {
-      const error = {} as ResponseError;
-      error.config = config;
-      error.response = {
-        config,
+      const errorResponse = {
+        data,
         url: response.url,
+        headers: response.headers,
         status: response.status,
         statusText: response.statusText,
-        headers: response.headers,
-        data
-      };
-      throw new Error(response.statusText, { cause: { config, response } });
+        config
+      } as FetchesResponse<Data>;
+
+      throw new ResponseError(response.statusText, { request: config, response: errorResponse });
     }
 
     return {

@@ -33,12 +33,12 @@
     "*.js": "prettier --write"
   },
   "peerDependencies": {
-    "jsdom": "26.0.0",
-    "vitest": "3.0.8"
+    "jsdom": "26.1.0",
+    "vitest": "3.2.4"
   },
   "dependencies": {
-    "jsdom": "26.0.0",
-    "vitest": "3.0.8"
+    "jsdom": "26.1.0",
+    "vitest": "3.2.4"
   },
   "devDependencies": {
     "@siberiacancode/prettier": "*"
