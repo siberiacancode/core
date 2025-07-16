@@ -10,10 +10,16 @@ export interface RequestSearchParams {
   [key: string]: boolean | number | string | number[] | string[] | null | undefined;
 }
 export interface RequestOptions extends Omit<RequestInit, 'body' | 'method'> {
+  baseURL?: BaseUrl;
   body?: RequestBody;
+  context?: Record<string, any>;
   headers?: Record<string, string>;
-  params?: RequestSearchParams;
+  onRequestFailure?: FailureRequestFunction;
+  onRequestSuccess?: SuccessRequestFunction;
+  onResponseFailure?: FailureResponseFunction;
+  onResponseSuccess?: SuccessResponseFunction;
   parse?: ResponseParse;
+  query?: RequestSearchParams;
 }
 
 type RequestConfig = RequestInit & {
@@ -21,7 +27,7 @@ type RequestConfig = RequestInit & {
   _retry?: boolean;
   method: RequestMethod;
   headers?: Record<string, string>;
-  params?: RequestSearchParams;
+  query?: RequestSearchParams;
   parse?: ResponseParse;
 };
 
@@ -35,6 +41,7 @@ export interface FetchesResponse<Data> {
   config: RequestConfig;
   data: Data;
   headers: Headers;
+  options: RequestOptions;
   status: number;
   statusText: string;
   url: string;
@@ -117,7 +124,7 @@ class Fetches {
 
   constructor(params?: FetchesParams) {
     const { baseURL = '', headers = {}, parse } = params ?? {};
-    this.baseURL = baseURL;
+    this.baseURL = baseURL ?? '';
     this.headers = headers;
     this.parse = parse;
     this.interceptorHandlers = { request: [], response: [] };
@@ -215,12 +222,12 @@ class Fetches {
     return (await parser.parse()) as Data;
   }
 
-  private createSearchParams(params: RequestSearchParams) {
+  private createSearchParams(query: RequestSearchParams) {
     const searchParams = new URLSearchParams();
 
-    for (const key in params) {
-      if (key in params) {
-        const value = params[key];
+    for (const key in query) {
+      if (key in query) {
+        const value = query[key];
 
         if (value === undefined || value === null) continue;
 
@@ -235,11 +242,12 @@ class Fetches {
     return `?${searchParams.toString()}`;
   }
 
-  private async runResponseInterceptors<T>(
+  private async runResponseInterceptors<Data>(
     initialResponse: Response,
-    initialConfig: RequestConfig
+    initialConfig: RequestConfig,
+    requestOptions: RequestOptions
   ) {
-    const data = await this.parseResponse<T>(initialResponse);
+    const data = await this.parseResponse<Data>(initialResponse);
     let response = {
       data,
       url: initialResponse.url,
@@ -247,11 +255,14 @@ class Fetches {
       status: initialResponse.status,
       statusText: initialResponse.statusText,
       config: initialConfig
-    } as FetchesResponse<T>;
+    } as FetchesResponse<Data>;
 
     if (!this.interceptorHandlers.response?.length) return response;
 
-    for (const { onSuccess, onFailure } of this.interceptorHandlers.response) {
+    for (const { onSuccess, onFailure } of [
+      { onSuccess: requestOptions.onResponseSuccess, onFailure: requestOptions.onResponseFailure },
+      ...this.interceptorHandlers.response
+    ]) {
       try {
         if (!initialResponse.ok)
           throw new Error(initialResponse.statusText, {
@@ -271,12 +282,18 @@ class Fetches {
     return response;
   }
 
-  private async runRequestInterceptors(initialConfig: RequestConfig) {
+  private async runRequestInterceptors(
+    initialConfig: RequestConfig,
+    requestOptions: RequestOptions
+  ) {
     let config = initialConfig;
 
     if (!this.interceptorHandlers.request?.length) return config;
 
-    for (const { onSuccess, onFailure } of this.interceptorHandlers.request) {
+    for (const { onSuccess, onFailure } of [
+      { onSuccess: requestOptions.onRequestSuccess, onFailure: requestOptions.onRequestFailure },
+      ...this.interceptorHandlers.request
+    ]) {
       try {
         if (!onSuccess) continue;
         config = await onSuccess(config);
@@ -296,11 +313,11 @@ class Fetches {
     method: RequestMethod,
     options: RequestOptions = {}
   ) {
-    const { body, params, parse, ...rest } = options;
-    let url = `${this.baseURL}${endpoint}`;
+    const { body, query, parse, baseURL, ...rest } = options;
+    let url = `${baseURL ?? this.baseURL}${endpoint}`;
 
-    if (params && Object.keys(params).length) {
-      url += this.createSearchParams(params);
+    if (query && Object.keys(query).length) {
+      url += this.createSearchParams(query);
     }
 
     const defaultConfig: RequestConfig = {
@@ -319,12 +336,12 @@ class Fetches {
       }
     };
 
-    const config = await this.runRequestInterceptors(defaultConfig);
+    const config = await this.runRequestInterceptors(defaultConfig, options);
 
     const response: Response = await fetch(config.url, config);
 
     if (this.interceptorHandlers.response?.length) {
-      return this.runResponseInterceptors<Data>(response, config) as R;
+      return this.runResponseInterceptors<Data>(response, config, options) as R;
     }
 
     const data = await this.parseResponse<Data>(response, config.parse);
@@ -336,7 +353,8 @@ class Fetches {
         headers: response.headers,
         status: response.status,
         statusText: response.statusText,
-        config
+        config,
+        options
       } as FetchesResponse<Data>;
 
       throw new ResponseError(response.statusText, { request: config, response: errorResponse });
@@ -344,6 +362,7 @@ class Fetches {
 
     return {
       config,
+      options,
       data,
       url: response.url,
       headers: response.headers,

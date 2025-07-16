@@ -73,3 +73,33 @@ To get the raw response body without any parsing, use the `'raw'` parse mode. Th
 ```typescript
 const response = await fetches.get('/binary-file', { parse: 'raw' });
 ```
+
+## Base URL
+
+You can set the base URL when creating a new instance:
+
+```typescript
+import { Fetches } from '@siberiacancode/fetches';
+
+const api = new Fetches({
+  baseURL: '/api'
+});
+
+await api.get('/users'); // /api/users
+```
+
+You can override the base URL for individual requests using the `baseURL` option:
+
+```typescript
+await api.get('/users', { baseUrl: '/api' });
+```
+
+## Context
+
+The library supports a context system that allows you to pass data through the entire request lifecycle.
+
+```typescript
+const response = await fetches.get('/users', { context: 'data' });
+
+console.log('response', response.options.context); // 'data'
+```
