@@ -1,0 +1,68 @@
+{
+  "name": "@siberiacancode/apicraft",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Generate types, requests and hooks for your API with one command",
+  "author": {
+    "name": "SIBERIA CAN CODE 🧊",
+    "url": "https://github.com/siberiacancode"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/siberiacancode/core",
+  "repository": {
+    "url": "https://github.com/siberiacancode/core"
+  },
+  "bugs": {
+    "url": "https://github.com/siberiacancode/core/issues"
+  },
+  "keywords": [
+    "api",
+    "typegen",
+    "requests",
+    "hooks"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "bin": {
+    "apicraft": "dist/bin/bin.js"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "prepublishOnly": "yarn type && yarn build",
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "lint": "eslint . --fix",
+    "lint-inspector": "npx @eslint/config-inspector",
+    "type": "tsc --noEmit",
+    "format": "prettier --write .",
+    "pretty": "yarn type && yarn lint && yarn format"
+  },
+  "dependencies": {
+    "@hey-api/openapi-ts": "0.80.8",
+    "cosmiconfig": "^9.0.0",
+    "yargs": "^18.0.0",
+    "zod": "^3.25.74"
+  },
+  "devDependencies": {
+    "@siberiacancode/eslint": "*",
+    "@siberiacancode/prettier": "*",
+    "@types/node": "^24.0.4",
+    "@types/yargs": "^17.0.33",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.ts": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  }
+}
