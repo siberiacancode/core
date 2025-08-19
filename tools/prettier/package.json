@@ -2,7 +2,7 @@
   "name": "@siberiacancode/prettier",
   "description": "prettier configs",
   "license": "MIT",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "keywords": [
     "prettier"
   ],
@@ -31,9 +31,9 @@
     "*.js": "prettier --write"
   },
   "peerDependencies": {
-    "prettier": "^3.6.1"
+    "prettier": "^3.6.2"
   },
   "dependencies": {
-    "prettier": "^3.6.1"
+    "prettier": "^3.6.2"
   }
 }
