@@ -1,20 +1,25 @@
 // TEST CONFIG
 
 // eslint-disable-next-line antfu/no-import-dist
-import { defineConfig } from './dist/src/index.js';
-// import { defineConfig } from '@siberiacancode/apicraft';
+import { apicraft } from './dist/src/index.js';
+// import { apicraft } from '@siberiacancode/apicraft';
 
-const apicraftConfig = defineConfig([
+const apicraftConfig = apicraft([
   {
     input: './example-apiV1.yaml',
-    output: './generated/apiV1',
+    output: './generated/apiV1typesOnly',
+    types: true
+  },
+  {
+    input: './example-apiV1.yaml',
+    output: './generated/apiV1typesWithAxios',
     types: true,
     axios: true
   },
   {
     input: './example-apiV2.yaml',
     output: './generated/apiV2',
-    types: true,
+    // TODO: if pass axios, heyapi generate types anyway, so 'types' flag seems useless.
     axios: true
   }
 ]);
