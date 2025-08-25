@@ -42,7 +42,6 @@ export const apicraftOptionSchema = z
           .optional()
       })
     ),
-    types: z.boolean().optional(),
     axios: z.boolean().optional()
   })
   .strict();

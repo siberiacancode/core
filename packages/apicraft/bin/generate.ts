@@ -24,11 +24,6 @@ export const generate = {
         type: 'string',
         description: 'Path to output folder'
       })
-      .option('types', {
-        alias: 't',
-        type: 'boolean',
-        description: 'Generate typescript types or not'
-      })
       .option('axios', {
         alias: 'a',
         type: 'boolean',
@@ -36,30 +31,27 @@ export const generate = {
       }),
   handler: async (argv: GenerateApicraftOption) => {
     try {
-      let apis: ApicraftOption[];
+      let options: ApicraftOption[];
 
-      const useConfig = !argv.input && !argv.output && !argv.types && !argv.axios;
+      const useConfig = !argv.input && !argv.output && !argv.axios;
       if (useConfig) {
-        apis = await getConfig();
+        options = await getConfig();
       } else {
-        apis = [
+        options = [
           apicraftOptionSchema.parse({
             input: argv.input,
             output: argv.output,
-            types: argv.types,
             axios: argv.axios
           })
         ];
       }
 
-      for (const api of apis) {
-        const plugins = [];
-        if (api.types) plugins.push('@hey-api/typescript');
-        if (api.axios) plugins.push('@hey-api/client-axios');
-        // TODO: if plugins is [], no files will be generated with no error. we can pass ['@hey-api/typescript'] as default and delete 'types' flag
+      for (const option of options) {
+        const plugins = ['@hey-api/typescript'];
+        if (option.axios) plugins.push('@hey-api/client-axios');
         await createClient({
-          input: api.input,
-          output: api.output,
+          input: option.input,
+          output: option.output,
           plugins: plugins as UserConfig['plugins']
         });
       }

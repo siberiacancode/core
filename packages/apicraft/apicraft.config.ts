@@ -7,19 +7,11 @@ import { apicraft } from './dist/src/index.js';
 const apicraftConfig = apicraft([
   {
     input: './example-apiV1.yaml',
-    output: './generated/apiV1typesOnly',
-    types: true
+    output: './generated/apiV1types'
   },
   {
     input: './example-apiV1.yaml',
-    output: './generated/apiV1typesWithAxios',
-    types: true,
-    axios: true
-  },
-  {
-    input: './example-apiV2.yaml',
-    output: './generated/apiV2',
-    // TODO: if pass axios, heyapi generate types anyway, so 'types' flag seems useless.
+    output: './generated/apiV1axios',
     axios: true
   }
 ]);
