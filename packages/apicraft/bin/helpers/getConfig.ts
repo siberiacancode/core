@@ -1,6 +1,6 @@
 import { cosmiconfig } from 'cosmiconfig';
 
-import { configSchema } from '../types';
+import { apicraftConfigSchema } from '../schemas';
 
 export const getConfig = async () => {
   const explorer = cosmiconfig('apicraft', {
@@ -9,8 +9,10 @@ export const getConfig = async () => {
 
   try {
     const configResult = (await explorer.search())!;
-    return configSchema.parse(configResult.config);
+    return apicraftConfigSchema.parse(configResult.config);
   } catch (error) {
-    throw new Error(`Invalid configuration found in ./apicraft.config.(js|ts). Error - ${error}`);
+    throw new Error(
+      `Invalid configuration apicraft.config.(js|ts) found in ${process.cwd()}. Error - ${error}`
+    );
   }
 };

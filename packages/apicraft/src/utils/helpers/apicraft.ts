@@ -1,3 +1,3 @@
-import type { Config } from '@/bin/utils/types';
+import type { ApicraftConfig } from '@/bin/schemas';
 
-export const apicraft = (config: Config): Config => config;
+export const apicraft = (config: ApicraftConfig): ApicraftConfig => config;

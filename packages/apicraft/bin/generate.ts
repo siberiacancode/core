@@ -3,15 +3,15 @@ import type { Argv } from 'yargs';
 
 import { createClient } from '@hey-api/openapi-ts';
 
-import { getConfig } from '@/bin/utils/helpers';
+import { getConfig } from '@/bin/helpers';
 
-import type { Api, ArrayElement, GenerateOptions } from './utils/types';
+import type { ApicraftOption, GenerateApicraftOption } from './schemas';
 
-import { apiSchema } from './utils/types';
+import { apicraftOptionSchema } from './schemas';
 
 export const generate = {
   command: ['$0', 'generate'],
-  describe: 'Generate types, requests and hooks',
+  describe: 'Generate rest api content',
   builder: (yargs: Argv) =>
     yargs
       .option('input', {
@@ -34,16 +34,16 @@ export const generate = {
         type: 'boolean',
         description: 'Generate axios requests or not'
       }),
-  handler: async (argv: GenerateOptions) => {
+  handler: async (argv: GenerateApicraftOption) => {
     try {
-      let apis: Api[];
+      let apis: ApicraftOption[];
 
       const useConfig = !argv.input && !argv.output && !argv.types && !argv.axios;
       if (useConfig) {
         apis = await getConfig();
       } else {
         apis = [
-          apiSchema.parse({
+          apicraftOptionSchema.parse({
             input: argv.input,
             output: argv.output,
             types: argv.types,
@@ -53,24 +53,20 @@ export const generate = {
       }
 
       for (const api of apis) {
-        const plugins: ArrayElement<UserConfig['plugins']>[] = [];
-        if (api.types) {
-          plugins.push('@hey-api/typescript');
-        }
-        if (api.axios) {
-          plugins.push('@hey-api/client-axios');
-        }
+        const plugins = [];
+        if (api.types) plugins.push('@hey-api/typescript');
+        if (api.axios) plugins.push('@hey-api/client-axios');
         // TODO: if plugins is [], no files will be generated with no error. we can pass ['@hey-api/typescript'] as default and delete 'types' flag
         await createClient({
           input: api.input,
           output: api.output,
-          plugins
+          plugins: plugins as UserConfig['plugins']
         });
       }
 
       console.info('\n🎉  Generation done! Thanks for using apicraft! 🎉');
-    } catch (cancelled: any) {
-      console.info(cancelled?.message);
+    } catch (error: any) {
+      console.info(error.message);
       process.exit(1);
     }
   }

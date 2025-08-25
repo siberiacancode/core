@@ -1,9 +1,6 @@
 import * as z from 'zod';
 
-export type ArrayElement<ArrayType> =
-  ArrayType extends ReadonlyArray<infer ElementType> ? ElementType : never;
-
-export const apiSchema = z
+export const apicraftOptionSchema = z
   .object({
     input: z.string().or(
       z.object({
@@ -49,10 +46,10 @@ export const apiSchema = z
     axios: z.boolean().optional()
   })
   .strict();
-export type Api = z.infer<typeof apiSchema>;
+export type ApicraftOption = z.infer<typeof apicraftOptionSchema>;
 
-export const configSchema = z.array(apiSchema);
-export type Config = z.infer<typeof configSchema>;
+export const apicraftConfigSchema = z.array(apicraftOptionSchema);
+export type ApicraftConfig = z.infer<typeof apicraftConfigSchema>;
 
-export const generateOptionsSchema = apiSchema.partial();
-export type GenerateOptions = z.infer<typeof generateOptionsSchema>;
+export const generateApicraftOptionSchema = apicraftOptionSchema.partial();
+export type GenerateApicraftOption = z.infer<typeof generateApicraftOptionSchema>;

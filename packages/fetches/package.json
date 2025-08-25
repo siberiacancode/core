@@ -50,11 +50,7 @@
     "vite-plugin-dts": "^4.5.4"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "*.ts": [
+    "*.{js,ts}": [
       "prettier --write",
       "eslint --fix"
     ]
