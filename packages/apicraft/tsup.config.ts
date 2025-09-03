@@ -7,6 +7,7 @@ export default defineConfig({
   format: ['esm'],
   sourcemap: true,
   minify: true,
+  external: ['typescript', 'fs'],
   target: 'esnext',
   outDir: 'dist'
 });
