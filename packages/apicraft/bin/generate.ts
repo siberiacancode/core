@@ -7,6 +7,7 @@ import { getConfig } from '@/bin/helpers';
 
 import type { ApicraftOption, GenerateApicraftOption } from './schemas';
 
+import { defineConfig } from './plugin/fetches';
 import { apicraftOptionSchema } from './schemas';
 
 export const generate = {
@@ -47,8 +48,11 @@ export const generate = {
       }
 
       for (const option of options) {
-        const plugins = ['@hey-api/typescript'];
-        if (option.axios) plugins.push('@hey-api/client-axios');
+        const plugins: any[] = ['@hey-api/typescript'];
+
+        if (option.axios) {
+          plugins.push(defineConfig({ myOption: true }));
+        }
         await createClient({
           input: option.input,
           output: option.output,

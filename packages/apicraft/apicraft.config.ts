@@ -7,11 +7,11 @@ import { apicraft } from './dist/src/index.js';
 const apicraftConfig = apicraft([
   {
     input: './example-apiV1.yaml',
-    output: './generated/apiV1types'
+    output: './generated'
   },
   {
     input: './example-apiV1.yaml',
-    output: './generated/apiV1axios',
+    output: './generated',
     axios: true
   }
 ]);
