@@ -19,18 +19,24 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
       path: `${plugin.output}/${operationName}`
     });
 
-    const importAxios = ts.factory.createImportDeclaration(
+    // --- import fetches, { ApiFetchesRequest } from '@siberiacancode/fetches';
+    const importFetches = ts.factory.createImportDeclaration(
       undefined,
       ts.factory.createImportClause(
         false,
-        undefined,
+        ts.factory.createIdentifier('fetches'),
         ts.factory.createNamedImports([
-          ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier('axios'))
+          ts.factory.createImportSpecifier(
+            false,
+            undefined,
+            ts.factory.createIdentifier('ApiFetchesRequest')
+          )
         ])
       ),
-      ts.factory.createStringLiteral('axios')
+      ts.factory.createStringLiteral('@siberiacancode/fetches')
     );
 
+    // --- import { FooData, FooResponse } from 'generated/types.gen';
     const importTypes = ts.factory.createImportDeclaration(
       undefined,
       ts.factory.createImportClause(
@@ -49,83 +55,94 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
           )
         ])
       ),
-      ts.factory.createStringLiteral(`generated/types.gen`)
+      ts.factory.createStringLiteral('generated/types.gen')
     );
 
-    const funcDecl = ts.factory.createFunctionDeclaration(
-      [
-        ts.factory.createModifier(ts.SyntaxKind.ExportKeyword),
-        ts.factory.createModifier(ts.SyntaxKind.AsyncKeyword)
-      ],
-      undefined,
-      ts.factory.createIdentifier(operationName),
-      undefined,
-      [
-        ts.factory.createParameterDeclaration(
-          undefined,
-          undefined,
-          ts.factory.createIdentifier('data'),
-          undefined,
-          ts.factory.createTypeReferenceNode(`${firstCapitalLetter(operationName)}Data`, undefined)
-        )
-      ],
-      ts.factory.createTypeReferenceNode('Promise', [
-        ts.factory.createTypeReferenceNode(
-          `${firstCapitalLetter(operationName)}Response`,
-          undefined
-        )
-      ]),
-      ts.factory.createBlock(
+    // --- export const getUserByName: ApiFetchesRequest<FooData, FooResponse> = ({ params, config }) => ...
+    const funcDecl = ts.factory.createVariableStatement(
+      [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+      ts.factory.createVariableDeclarationList(
         [
-          ts.factory.createVariableStatement(
+          ts.factory.createVariableDeclaration(
+            ts.factory.createIdentifier(operationName),
             undefined,
-            ts.factory.createVariableDeclarationList(
+            ts.factory.createTypeReferenceNode('ApiFetchesRequest', [
+              ts.factory.createTypeReferenceNode(
+                `${firstCapitalLetter(operationName)}Data`,
+                undefined
+              ),
+              ts.factory.createTypeReferenceNode(
+                `${firstCapitalLetter(operationName)}Response`,
+                undefined
+              )
+            ]),
+            ts.factory.createArrowFunction(
+              undefined,
+              undefined,
               [
-                ts.factory.createVariableDeclaration(
-                  ts.factory.createIdentifier('res'),
+                ts.factory.createParameterDeclaration(
                   undefined,
                   undefined,
-                  ts.factory.createAwaitExpression(
-                    ts.factory.createCallExpression(
-                      ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier('axios'),
-                        ts.factory.createIdentifier(operation.method.toLowerCase())
-                      ),
+                  ts.factory.createObjectBindingPattern([
+                    ts.factory.createBindingElement(
                       undefined,
-                      operation.method.toLowerCase() === 'get'
-                        ? [
-                            ts.factory.createStringLiteral(operation.path),
-                            ts.factory.createObjectLiteralExpression([
-                              ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier('params'),
-                                ts.factory.createIdentifier('data')
-                              )
-                            ])
-                          ]
-                        : [
-                            ts.factory.createStringLiteral(operation.path),
-                            ts.factory.createIdentifier('data')
-                          ]
+                      undefined,
+                      ts.factory.createIdentifier('params'),
+                      undefined
+                    ),
+                    ts.factory.createBindingElement(
+                      undefined,
+                      undefined,
+                      ts.factory.createIdentifier('config'),
+                      undefined
                     )
-                  )
+                  ]),
+                  undefined,
+                  undefined
                 )
               ],
-              ts.NodeFlags.Const
-            )
-          ),
-          ts.factory.createReturnStatement(
-            ts.factory.createPropertyAccessExpression(
-              ts.factory.createIdentifier('res'),
-              ts.factory.createIdentifier('data')
+              undefined,
+              ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+              ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                  ts.factory.createIdentifier('fetches'),
+                  ts.factory.createIdentifier(operation.method.toLowerCase())
+                ),
+                undefined,
+                [
+                  ts.factory.createStringLiteral(operation.path),
+                  ts.factory.createObjectLiteralExpression(
+                    [
+                      ts.factory.createSpreadAssignment(ts.factory.createIdentifier('config')),
+                      ts.factory.createPropertyAssignment(
+                        ts.factory.createIdentifier('params'),
+                        ts.factory.createObjectLiteralExpression(
+                          [
+                            ts.factory.createSpreadAssignment(
+                              ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier('config'),
+                                ts.factory.createIdentifier('params')
+                              )
+                            ),
+                            ts.factory.createSpreadAssignment(ts.factory.createIdentifier('params'))
+                          ],
+                          true
+                        )
+                      )
+                    ],
+                    true
+                  )
+                ]
+              )
             )
           )
         ],
-        true
+        ts.NodeFlags.Const
       )
     );
 
-    // add nodes
-    file.add(importAxios);
+    // Add nodes
+    file.add(importFetches);
     file.add(importTypes);
     file.add(funcDecl);
   });
