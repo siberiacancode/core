@@ -1,5 +1,12 @@
 import * as z from 'zod';
 
+export const instancePluginNameSchema = z.enum(['fetches', 'axios']);
+
+export const instancePluginSchema = z.object({
+  name: instancePluginNameSchema,
+  runtimeInstancePath: z.string().optional()
+});
+
 export const apicraftOptionSchema = z
   .object({
     input: z.string().or(
@@ -42,7 +49,7 @@ export const apicraftOptionSchema = z
           .optional()
       })
     ),
-    axios: z.boolean().optional()
+    plugins: z.array(z.union([instancePluginNameSchema, instancePluginSchema])).optional()
   })
   .strict();
 export type ApicraftOption = z.infer<typeof apicraftOptionSchema>;
@@ -52,3 +59,5 @@ export type ApicraftConfig = z.infer<typeof apicraftConfigSchema>;
 
 export const generateApicraftOptionSchema = apicraftOptionSchema.partial();
 export type GenerateApicraftOption = z.infer<typeof generateApicraftOptionSchema>;
+
+export type InstancePluginNameSchema = z.infer<typeof instancePluginNameSchema>;

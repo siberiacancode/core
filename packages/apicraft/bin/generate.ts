@@ -3,11 +3,11 @@ import type { Argv } from 'yargs';
 
 import { createClient } from '@hey-api/openapi-ts';
 
-import { getConfig } from '@/bin/helpers';
+import { findPluginConfig, getConfig } from '@/bin/helpers';
 
 import type { ApicraftOption, GenerateApicraftOption } from './schemas';
 
-import { defineConfig } from './plugin/fetches';
+import { defineFetchesPlugin } from './plugins/fetches';
 import { apicraftOptionSchema } from './schemas';
 
 export const generate = {
@@ -34,15 +34,14 @@ export const generate = {
     try {
       let options: ApicraftOption[];
 
-      const useConfig = !argv.input && !argv.output && !argv.axios;
+      const useConfig = !argv.input && !argv.output;
       if (useConfig) {
         options = await getConfig();
       } else {
         options = [
           apicraftOptionSchema.parse({
             input: argv.input,
-            output: argv.output,
-            axios: argv.axios
+            output: argv.output
           })
         ];
       }
@@ -50,9 +49,24 @@ export const generate = {
       for (const option of options) {
         const plugins: any[] = ['@hey-api/typescript'];
 
-        if (option.axios) {
-          plugins.push(defineConfig({ myOption: true }));
+        const axiosPluginConfig = findPluginConfig(option.plugins, 'axios');
+        if (axiosPluginConfig) {
+          plugins.push('@hey-api/client-axios');
         }
+
+        const fetchesPluginConfig = findPluginConfig(option.plugins, 'fetches');
+        if (fetchesPluginConfig) {
+          plugins.push(
+            defineFetchesPlugin({
+              generateOutput:
+                typeof option.output === 'string' ? option.output : option.output.path,
+              ...(typeof fetchesPluginConfig === 'object' && {
+                runtimeInstancePath: fetchesPluginConfig.runtimeInstancePath
+              })
+            })
+          );
+        }
+
         await createClient({
           input: option.input,
           output: option.output,

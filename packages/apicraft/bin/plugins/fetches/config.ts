@@ -6,15 +6,12 @@ import { handler } from './plugin';
 
 export const defaultConfig: FetchesPlugin['Config'] = {
   config: {
-    myOption: false // implements default value from types
+    generateOutput: ''
   },
   dependencies: ['@hey-api/typescript'],
   handler,
-  name: 'fetches-plugin',
-  output: 'fetches-plugin'
+  name: 'fetches',
+  output: 'fetches'
 };
 
-/**
- * Type helper for `my-plugin` plugin, returns {@link Plugin.Config} object
- */
-export const defineConfig = definePluginConfig(defaultConfig);
+export const defineFetchesPlugin = definePluginConfig(defaultConfig);
