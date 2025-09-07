@@ -6,9 +6,10 @@ import { firstCapitalLetter, getRequestName } from '../helpers';
 import { addInstanceFile, getRequestUrl } from './helpers';
 
 export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
+  if (!plugin.config.runtimeInstancePath) addInstanceFile(plugin);
+
   plugin.forEach('operation', (event) => {
     if (event.type !== 'operation') return;
-    if (!plugin.config.runtimeInstancePath) addInstanceFile(plugin);
 
     const request = event.operation;
     const requestName = getRequestName(request.path, request.method);
