@@ -1,6 +1,6 @@
-import { firstCapitalLetter } from './firstCapitalLetter';
+import { capitalize } from './capitalize';
 
-export const getRequestName = (path: string, method: string): string => {
+export const generateRequestName = (method: string, path: string) => {
   const pathParts = path.split('/');
 
   const nameParts: string[] = [];
@@ -10,7 +10,7 @@ export const getRequestName = (path: string, method: string): string => {
     const isParam = pathPart.startsWith('{') && pathPart.endsWith('}');
 
     if (!isParam) {
-      nameParts.push(firstCapitalLetter(pathPart));
+      nameParts.push(capitalize(pathPart));
       prevPart = pathPart;
 
       continue;
@@ -23,7 +23,7 @@ export const getRequestName = (path: string, method: string): string => {
     }
 
     const paramName = pathPart.slice(1, -1);
-    nameParts.push(`By${firstCapitalLetter(paramName)}`);
+    nameParts.push(`By${capitalize(paramName)}`);
 
     prevPart = pathPart;
   }

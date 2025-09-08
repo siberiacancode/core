@@ -13,7 +13,8 @@ const apicraftConfig = apicraft([
   {
     input: 'example-apiV2.yaml',
     output: 'generated/apiV2',
-    plugins: ['fetches']
+    plugins: ['fetches'],
+    exclude: ['GET /users/{username}']
   }
 ]);
 

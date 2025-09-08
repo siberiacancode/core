@@ -58,6 +58,8 @@ export const generate = {
         if (fetchesPluginConfig) {
           plugins.push(
             defineFetchesPlugin({
+              include: option.include,
+              exclude: option.exclude,
               generateOutput:
                 typeof option.output === 'string' ? option.output : option.output.path,
               ...(typeof fetchesPluginConfig === 'object' && {
@@ -68,6 +70,7 @@ export const generate = {
         }
 
         await createClient({
+          parser: { filters: { operations: { include: option.include, exclude: option.exclude } } },
           input: option.input,
           output: option.output,
           plugins: plugins as UserConfig['plugins']

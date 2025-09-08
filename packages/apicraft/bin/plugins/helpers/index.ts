@@ -1,2 +1,3 @@
-export * from './firstCapitalLetter';
-export * from './getRequestName';
+export * from './capitalize';
+export * from './generateRequestName';
+export * from './isRequestIncluded';

@@ -6,62 +6,62 @@
 export type Email = string;
 
 export type User = {
-    /**
-     * User supplied username
-     */
-    username?: string;
-    /**
-     * User first name
-     */
-    firstName?: string;
-    /**
-     * User last name
-     */
-    lastName?: string;
-    email?: Email;
+  /**
+   * User supplied username
+   */
+  username?: string;
+  /**
+   * User first name
+   */
+  firstName?: string;
+  /**
+   * User last name
+   */
+  lastName?: string;
+  email?: Email;
 };
 
 export type GetUserByNameData = {
-    body?: never;
-    path: {
-        /**
-         * The name that needs to be fetched
-         */
-        username: string;
-    };
-    query?: {
-        /**
-         * Pretty print response
-         */
-        pretty_print?: boolean;
-        /**
-         * Filter users without email
-         */
-        with_email?: boolean;
-    };
-    url: '/users/{username}';
+  body?: never;
+  path: {
+    /**
+     * The name that needs to be fetched
+     */
+    username: string;
+  };
+  query?: {
+    /**
+     * Pretty print response
+     */
+    pretty_print?: boolean;
+    /**
+     * Filter users without email
+     */
+    with_email?: boolean;
+  };
+  url: '/users/{username}';
 };
 
 export type GetUserByNameErrors = {
-    /**
-     * Forbidden
-     */
-    403: unknown;
-    /**
-     * User not found
-     */
-    404: unknown;
+  /**
+   * Forbidden
+   */
+  403: unknown;
+  /**
+   * User not found
+   */
+  404: unknown;
 };
 
 export type GetUserByNameResponses = {
-    /**
-     * Success
-     */
-    200: User;
+  /**
+   * Success
+   */
+  200: User;
 };
 
 export type GetUserByNameResponse = GetUserByNameResponses[keyof GetUserByNameResponses];
 
 export type ClientOptions = {
-    baseUrl: 'http://example.com/api/v1' | 'https://example.com/api/v1' | (string & {});
+  baseUrl: 'http://example.com/api/v1' | 'https://example.com/api/v1' | (string & {});
 };

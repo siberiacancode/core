@@ -2,7 +2,7 @@ import ts from 'typescript';
 
 import type { FetchesPlugin } from './types';
 
-import { firstCapitalLetter, getRequestName } from '../helpers';
+import { capitalize, generateRequestName, isRequestIncluded } from '../helpers';
 import { addInstanceFile, getRequestUrl } from './helpers';
 
 export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
@@ -12,18 +12,29 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
     if (event.type !== 'operation') return;
 
     const request = event.operation;
-    const requestName = getRequestName(request.path, request.method);
+    if (
+      !isRequestIncluded({
+        method: request.method,
+        path: request.path,
+        include: plugin.config.include,
+        exclude: plugin.config.exclude
+      })
+    ) {
+      return;
+    }
+
+    const requestName = generateRequestName(request.method, request.path);
     const requestFile = plugin.createFile({
       id: requestName,
       path: `${plugin.output}${request.path}/${request.method.toLowerCase()}`
     });
 
-    const requestParamsTypeName = `${firstCapitalLetter(requestName)}RequestParams`;
-    const requestDataTypeName = `${firstCapitalLetter(request.id)}Data`;
-    const requestResponseTypeName = `${firstCapitalLetter(request.id)}Response`;
+    const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
+    const requestDataTypeName = `${capitalize(request.id)}Data`;
+    const requestResponseTypeName = `${capitalize(request.id)}Response`;
 
-    // import type { RequestConfig } from '@siberiacancode/fetches';
-    const importFetches = ts.factory.createImportDeclaration(
+    // import type { FetchesRequestParams } from '@siberiacancode/apicraft';
+    const importFetchesRequestParams = ts.factory.createImportDeclaration(
       undefined,
       ts.factory.createImportClause(
         true,
@@ -32,11 +43,11 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
           ts.factory.createImportSpecifier(
             false,
             undefined,
-            ts.factory.createIdentifier('RequestConfig')
+            ts.factory.createIdentifier('FetchesRequestParams')
           )
         ])
       ),
-      ts.factory.createStringLiteral('@siberiacancode/fetches')
+      ts.factory.createStringLiteral('@siberiacancode/apicraft')
     );
 
     // import type { RequestData, RequestResponse } from 'generated/types.gen';
@@ -82,27 +93,16 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
       )
     );
 
-    // type RequestParams = RequestData & { config: RequestConfig };
+    // type RequestParams = FetchesRequestParams<RequestData>;
     const requestParamsType = ts.factory.createTypeAliasDeclaration(
       undefined,
       ts.factory.createIdentifier(requestParamsTypeName),
       undefined,
-      ts.factory.createIntersectionTypeNode([
+      ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('FetchesRequestParams'), [
         ts.factory.createTypeReferenceNode(
           ts.factory.createIdentifier(requestDataTypeName),
           undefined
-        ),
-        ts.factory.createTypeLiteralNode([
-          ts.factory.createPropertySignature(
-            undefined,
-            ts.factory.createIdentifier('config'),
-            undefined,
-            ts.factory.createTypeReferenceNode(
-              ts.factory.createIdentifier('RequestConfig'),
-              undefined
-            )
-          )
-        ])
+        )
       ])
     );
 
@@ -128,21 +128,30 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                     ts.factory.createBindingElement(
                       undefined,
                       undefined,
-                      ts.factory.createIdentifier('body'),
-                      undefined
-                    ),
-                    ts.factory.createBindingElement(
-                      undefined,
-                      undefined,
-                      ts.factory.createIdentifier('query'),
-                      undefined
-                    ),
-                    ts.factory.createBindingElement(
-                      undefined,
-                      undefined,
                       ts.factory.createIdentifier('config'),
                       undefined
                     ),
+                    ...(request.body
+                      ? [
+                          ts.factory.createBindingElement(
+                            undefined,
+                            undefined,
+                            ts.factory.createIdentifier('body'),
+                            undefined
+                          )
+                        ]
+                      : []),
+                    ...(request.parameters?.query
+                      ? [
+                          ts.factory.createBindingElement(
+                            undefined,
+                            undefined,
+                            ts.factory.createIdentifier('query'),
+                            undefined
+                          )
+                        ]
+                      : []),
+
                     ...(requestHasUrlParams
                       ? [
                           ts.factory.createBindingElement(
@@ -186,14 +195,22 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                         ts.factory.createIdentifier('url'),
                         getRequestUrl(request.path, requestHasUrlParams)
                       ),
-                      ts.factory.createShorthandPropertyAssignment(
-                        ts.factory.createIdentifier('body'),
-                        undefined
-                      ),
-                      ts.factory.createShorthandPropertyAssignment(
-                        ts.factory.createIdentifier('query'),
-                        undefined
-                      ),
+                      ...(request.body
+                        ? [
+                            ts.factory.createShorthandPropertyAssignment(
+                              ts.factory.createIdentifier('body'),
+                              undefined
+                            )
+                          ]
+                        : []),
+                      ...(request.parameters?.query
+                        ? [
+                            ts.factory.createShorthandPropertyAssignment(
+                              ts.factory.createIdentifier('query'),
+                              undefined
+                            )
+                          ]
+                        : []),
                       ts.factory.createSpreadAssignment(ts.factory.createIdentifier('config'))
                     ],
                     true
@@ -207,7 +224,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
       )
     );
 
-    requestFile.add(importFetches);
+    requestFile.add(importFetchesRequestParams);
     requestFile.add(importTypes);
     requestFile.add(importInstance);
     requestFile.add(requestParamsType);

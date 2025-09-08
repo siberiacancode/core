@@ -49,6 +49,8 @@ export const apicraftOptionSchema = z
           .optional()
       })
     ),
+    include: z.array(z.string()).optional(),
+    exclude: z.array(z.string()).optional(),
     plugins: z.array(z.union([instancePluginNameSchema, instancePluginSchema])).optional()
   })
   .strict();
