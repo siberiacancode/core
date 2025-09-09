@@ -3,9 +3,9 @@ import type { Argv } from 'yargs';
 
 import { createClient } from '@hey-api/openapi-ts';
 
-import { findPluginConfig, getConfig } from '@/bin/helpers';
+import { getConfig } from '@/bin/helpers';
 
-import type { ApicraftOption, GenerateApicraftOption } from './schemas';
+import type { ApicraftOption, GenerateApicraftOption, InstanceName } from './schemas';
 
 import { defineFetchesPlugin } from './plugins/fetches';
 import { apicraftOptionSchema } from './schemas';
@@ -24,11 +24,6 @@ export const generate = {
         alias: 'o',
         type: 'string',
         description: 'Path to output folder'
-      })
-      .option('axios', {
-        alias: 'a',
-        type: 'boolean',
-        description: 'Generate axios requests or not'
       }),
   handler: async (argv: GenerateApicraftOption) => {
     try {
@@ -49,21 +44,24 @@ export const generate = {
       for (const option of options) {
         const plugins: any[] = ['@hey-api/typescript'];
 
-        const axiosPluginConfig = findPluginConfig(option.plugins, 'axios');
-        if (axiosPluginConfig) {
+        const matchInstance = (name: InstanceName) =>
+          option.instance === name ||
+          (typeof option.instance === 'object' && option.instance.name === name);
+
+        if (matchInstance('axios')) {
+          // TODO
           plugins.push('@hey-api/client-axios');
         }
 
-        const fetchesPluginConfig = findPluginConfig(option.plugins, 'fetches');
-        if (fetchesPluginConfig) {
+        if (matchInstance('fetches')) {
           plugins.push(
             defineFetchesPlugin({
               include: option.include,
               exclude: option.exclude,
               generateOutput:
                 typeof option.output === 'string' ? option.output : option.output.path,
-              ...(typeof fetchesPluginConfig === 'object' && {
-                runtimeInstancePath: fetchesPluginConfig.runtimeInstancePath
+              ...(typeof option.instance === 'object' && {
+                runtimeInstancePath: option.instance.runtimeInstancePath
               })
             })
           );

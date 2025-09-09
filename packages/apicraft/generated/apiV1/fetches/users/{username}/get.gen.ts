@@ -4,7 +4,7 @@ import type { FetchesRequestParams } from '@siberiacancode/apicraft';
 
 import type { GetUserByNameData, GetUserByNameResponse } from 'generated/apiV1/types.gen';
 
-import { instance } from 'src/instance';
+import { instance } from 'generated/apiV1/fetches/instance.gen';
 
 type GetUserByUsernameRequestParams = FetchesRequestParams<GetUserByNameData>;
 

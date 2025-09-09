@@ -2,12 +2,18 @@ import ts from 'typescript';
 
 import type { FetchesPlugin } from './types';
 
-import { capitalize, generateRequestName, isRequestIncluded } from '../helpers';
-import { addInstanceFile, getRequestUrl } from './helpers';
+import {
+  capitalize,
+  generateRequestName,
+  getRequestUrlWithParams,
+  isRequestIncluded
+} from '../helpers';
+import { addInstanceFile } from './helpers';
 
 export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
   if (!plugin.config.runtimeInstancePath) addInstanceFile(plugin);
-
+  console.log('#plugin.output', plugin.output);
+  console.log('#plugin.generateOutput', plugin.config.generateOutput);
   plugin.forEach('operation', (event) => {
     if (event.type !== 'operation') return;
 
@@ -193,7 +199,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                       ),
                       ts.factory.createPropertyAssignment(
                         ts.factory.createIdentifier('url'),
-                        getRequestUrl(request.path, requestHasUrlParams)
+                        getRequestUrlWithParams(request.path, requestHasUrlParams)
                       ),
                       ...(request.body
                         ? [

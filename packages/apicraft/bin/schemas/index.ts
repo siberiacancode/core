@@ -1,17 +1,18 @@
 import * as z from 'zod';
 
-export const instancePluginNameSchema = z.enum(['fetches', 'axios']);
-
-export const instancePluginSchema = z.object({
-  name: instancePluginNameSchema,
+const instanceNameSchema = z.enum(['fetches', 'axios']);
+const instanceSchema = z.object({
+  name: instanceNameSchema,
   runtimeInstancePath: z.string().optional()
 });
 
+const pathSchema = z.string().regex(/^[^/.].*[^/]$/, 'Path must be absolute');
+
 export const apicraftOptionSchema = z
   .object({
-    input: z.string().or(
+    input: pathSchema.or(
       z.object({
-        path: z.string().or(z.record(z.unknown())),
+        path: pathSchema.or(z.record(z.unknown())),
         fetch: z.record(z.any()).optional(),
         watch: z
           .boolean()
@@ -26,9 +27,9 @@ export const apicraftOptionSchema = z
           .optional()
       })
     ),
-    output: z.string().or(
+    output: pathSchema.or(
       z.object({
-        path: z.string(),
+        path: pathSchema,
         case: z
           .union([
             z.literal('camelCase'),
@@ -51,7 +52,7 @@ export const apicraftOptionSchema = z
     ),
     include: z.array(z.string()).optional(),
     exclude: z.array(z.string()).optional(),
-    plugins: z.array(z.union([instancePluginNameSchema, instancePluginSchema])).optional()
+    instance: z.union([instanceNameSchema, instanceSchema]).optional()
   })
   .strict();
 export type ApicraftOption = z.infer<typeof apicraftOptionSchema>;
@@ -62,4 +63,4 @@ export type ApicraftConfig = z.infer<typeof apicraftConfigSchema>;
 export const generateApicraftOptionSchema = apicraftOptionSchema.partial();
 export type GenerateApicraftOption = z.infer<typeof generateApicraftOptionSchema>;
 
-export type InstancePluginNameSchema = z.infer<typeof instancePluginNameSchema>;
+export type InstanceName = z.infer<typeof instanceNameSchema>;

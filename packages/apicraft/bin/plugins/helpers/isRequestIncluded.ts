@@ -15,7 +15,7 @@ export const isRequestIncluded = ({
 
   const requestKey = `${method.toUpperCase()} ${path}`;
 
-  const matches = (patterns: string[]) =>
+  const matchPattern = (patterns: string[]) =>
     patterns.some((pattern) => {
       if (pattern.startsWith('/') && pattern.endsWith('/')) {
         return new RegExp(pattern.slice(1, -1)).test(requestKey);
@@ -24,5 +24,7 @@ export const isRequestIncluded = ({
       return pattern === requestKey;
     });
 
-  return (!!exclude?.length && !matches(exclude)) || (!!include?.length && matches(include));
+  return (
+    (!!exclude?.length && !matchPattern(exclude)) || (!!include?.length && matchPattern(include))
+  );
 };
