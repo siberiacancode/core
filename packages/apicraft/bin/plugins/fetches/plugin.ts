@@ -12,8 +12,7 @@ import { addInstanceFile } from './helpers';
 
 export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
   if (!plugin.config.runtimeInstancePath) addInstanceFile(plugin);
-  console.log('#plugin.output', plugin.output);
-  console.log('#plugin.generateOutput', plugin.config.generateOutput);
+
   plugin.forEach('operation', (event) => {
     if (event.type !== 'operation') return;
 
