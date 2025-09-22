@@ -1,3 +1,3 @@
 import type { RequestConfig } from '@siberiacancode/fetches';
 
-export type FetchesRequestParams<Data> = Data & { config: RequestConfig };
+export type FetchesRequestParams<Params> = Params & { config: RequestConfig };

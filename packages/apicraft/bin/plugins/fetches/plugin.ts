@@ -2,12 +2,7 @@ import ts from 'typescript';
 
 import type { FetchesPlugin } from './types';
 
-import {
-  capitalize,
-  generateRequestName,
-  getRequestUrlWithParams,
-  isRequestIncluded
-} from '../helpers';
+import { capitalize, generateRequestName, getRequestUrlWithParams } from '../helpers';
 import { addInstanceFile } from './helpers';
 
 export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
@@ -17,21 +12,10 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
     if (event.type !== 'operation') return;
 
     const request = event.operation;
-    if (
-      !isRequestIncluded({
-        method: request.method,
-        path: request.path,
-        include: plugin.config.include,
-        exclude: plugin.config.exclude
-      })
-    ) {
-      return;
-    }
-
     const requestName = generateRequestName(request.method, request.path);
     const requestFile = plugin.createFile({
       id: requestName,
-      path: `${plugin.output}${request.path}/${request.method.toLowerCase()}`
+      path: `${plugin.output}/requests/${request.path}/${request.method.toLowerCase()}`
     });
 
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
@@ -78,7 +62,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
       ts.factory.createStringLiteral(`${plugin.config.generateOutput}/types.gen`)
     );
 
-    // import { instance } from "./instance.gen";
+    // import { instance } from "generated/instance.gen";
     const importInstance = ts.factory.createImportDeclaration(
       undefined,
       ts.factory.createImportClause(

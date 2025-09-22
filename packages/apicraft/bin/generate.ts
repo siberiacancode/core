@@ -49,15 +49,12 @@ export const generate = {
           (typeof option.instance === 'object' && option.instance.name === name);
 
         if (matchInstance('axios')) {
-          // TODO
           plugins.push('@hey-api/client-axios');
         }
 
         if (matchInstance('fetches')) {
           plugins.push(
             defineFetchesPlugin({
-              include: option.include,
-              exclude: option.exclude,
               generateOutput:
                 typeof option.output === 'string' ? option.output : option.output.path,
               ...(typeof option.instance === 'object' && {
@@ -68,7 +65,7 @@ export const generate = {
         }
 
         await createClient({
-          parser: { filters: { operations: { include: option.include, exclude: option.exclude } } },
+          parser: { filters: option.filters },
           input: option.input,
           output: option.output,
           plugins: plugins as UserConfig['plugins']
