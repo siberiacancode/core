@@ -8,7 +8,8 @@ export default eslint(
     name: 'siberiacancode/apicraft/rewrite',
     rules: {
       'no-console': ['warn', { allow: ['info', 'dir', 'warn', 'error'] }],
-      'node/prefer-global/process': 'off'
+      'node/prefer-global/process': 'off',
+      'no-template-curly-in-string': 'off'
     }
   },
   {

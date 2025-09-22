@@ -2,7 +2,7 @@ import ts from 'typescript';
 
 import type { FetchesPlugin } from './types';
 
-import { capitalize, generateRequestName, getRequestUrlWithParams } from '../helpers';
+import { capitalize, generateRequestName, replacePathWithParams } from '../helpers';
 import { addInstanceFile } from './helpers';
 
 export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
@@ -58,7 +58,6 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
           )
         ])
       ),
-      // TODO resolve paths correctly
       ts.factory.createStringLiteral(`${plugin.config.generateOutput}/types.gen`)
     );
 
@@ -182,7 +181,11 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                       ),
                       ts.factory.createPropertyAssignment(
                         ts.factory.createIdentifier('url'),
-                        getRequestUrlWithParams(request.path, requestHasUrlParams)
+                        requestHasUrlParams
+                          ? ts.factory.createNoSubstitutionTemplateLiteral(
+                              replacePathWithParams(request.path)
+                            )
+                          : ts.factory.createStringLiteral(request.path)
                       ),
                       ...(request.body
                         ? [
