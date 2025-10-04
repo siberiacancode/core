@@ -2,7 +2,7 @@ import ts from 'typescript';
 
 import type { FetchesPlugin } from './types';
 
-import { capitalize, generateRequestName, replacePathWithParams } from '../helpers';
+import { capitalize, generateRequestName, replaceParamsPath } from '../helpers';
 import { addInstanceFile } from './helpers';
 
 export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
@@ -183,7 +183,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                         ts.factory.createIdentifier('url'),
                         requestHasUrlParams
                           ? ts.factory.createNoSubstitutionTemplateLiteral(
-                              replacePathWithParams(request.path)
+                              replaceParamsPath(request.path)
                             )
                           : ts.factory.createStringLiteral(request.path)
                       ),

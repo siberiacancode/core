@@ -1,3 +1,3 @@
 export * from './capitalize';
 export * from './generateRequestName';
-export * from './replacePathWithParams';
+export * from './replaceParamsPath';
