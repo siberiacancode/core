@@ -5,8 +5,9 @@ import { createClient } from '@hey-api/openapi-ts';
 
 import { getConfig } from '@/bin/helpers';
 
-import type { ApicraftOption, GenerateApicraftOption } from './schemas';
+import type { ApicraftOption, GenerateApicraftOption, InstanceName } from './schemas';
 
+import { defineFetchesPlugin } from './plugins/fetches';
 import { apicraftOptionSchema } from './schemas';
 
 export const generate = {
@@ -23,33 +24,48 @@ export const generate = {
         alias: 'o',
         type: 'string',
         description: 'Path to output folder'
-      })
-      .option('axios', {
-        alias: 'a',
-        type: 'boolean',
-        description: 'Generate axios requests or not'
       }),
   handler: async (argv: GenerateApicraftOption) => {
     try {
       let options: ApicraftOption[];
 
-      const useConfig = !argv.input && !argv.output && !argv.axios;
+      const useConfig = !argv.input && !argv.output;
       if (useConfig) {
         options = await getConfig();
       } else {
         options = [
           apicraftOptionSchema.parse({
             input: argv.input,
-            output: argv.output,
-            axios: argv.axios
+            output: argv.output
           })
         ];
       }
 
       for (const option of options) {
-        const plugins = ['@hey-api/typescript'];
-        if (option.axios) plugins.push('@hey-api/client-axios');
+        const plugins: any[] = ['@hey-api/typescript'];
+
+        const matchInstance = (name: InstanceName) =>
+          option.instance === name ||
+          (typeof option.instance === 'object' && option.instance.name === name);
+
+        if (matchInstance('axios')) {
+          plugins.push('@hey-api/client-axios');
+        }
+
+        if (matchInstance('fetches')) {
+          plugins.push(
+            defineFetchesPlugin({
+              generateOutput:
+                typeof option.output === 'string' ? option.output : option.output.path,
+              ...(typeof option.instance === 'object' && {
+                runtimeInstancePath: option.instance.runtimeInstancePath
+              })
+            })
+          );
+        }
+
         await createClient({
+          parser: { filters: option.filters },
           input: option.input,
           output: option.output,
           plugins: plugins as UserConfig['plugins']

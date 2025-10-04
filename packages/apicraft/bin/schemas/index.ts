@@ -1,10 +1,18 @@
 import * as z from 'zod';
 
+const instanceNameSchema = z.enum(['fetches', 'axios']);
+const instanceSchema = z.object({
+  name: instanceNameSchema,
+  runtimeInstancePath: z.string().optional()
+});
+
+const pathSchema = z.string().regex(/^[^/.].*[^/]$/, 'Path must be absolute');
+
 export const apicraftOptionSchema = z
   .object({
-    input: z.string().or(
+    input: pathSchema.or(
       z.object({
-        path: z.string().or(z.record(z.unknown())),
+        path: pathSchema.or(z.record(z.unknown())),
         fetch: z.record(z.any()).optional(),
         watch: z
           .boolean()
@@ -19,9 +27,9 @@ export const apicraftOptionSchema = z
           .optional()
       })
     ),
-    output: z.string().or(
+    output: pathSchema.or(
       z.object({
-        path: z.string(),
+        path: pathSchema,
         case: z
           .union([
             z.literal('camelCase'),
@@ -42,7 +50,48 @@ export const apicraftOptionSchema = z
           .optional()
       })
     ),
-    axios: z.boolean().optional()
+    filters: z.object({
+      deprecated: z.boolean().default(true).optional(),
+      operations: z
+        .object({
+          exclude: z.array(z.string()).readonly().optional(),
+          include: z.array(z.string()).readonly().optional()
+        })
+        .optional(),
+      orphans: z.boolean().default(false).optional(),
+      parameters: z
+        .object({
+          exclude: z.array(z.string()).readonly().optional(),
+          include: z.array(z.string()).readonly().optional()
+        })
+        .optional(),
+      preserveOrder: z.boolean().default(false).optional(),
+      requestBodies: z
+        .object({
+          exclude: z.array(z.string()).readonly().optional(),
+          include: z.array(z.string()).readonly().optional()
+        })
+        .optional(),
+      responses: z
+        .object({
+          exclude: z.array(z.string()).readonly().optional(),
+          include: z.array(z.string()).readonly().optional()
+        })
+        .optional(),
+      schemas: z
+        .object({
+          exclude: z.array(z.string()).readonly().optional(),
+          include: z.array(z.string()).readonly().optional()
+        })
+        .optional(),
+      tags: z
+        .object({
+          exclude: z.array(z.string()).readonly().optional(),
+          include: z.array(z.string()).readonly().optional()
+        })
+        .optional()
+    }),
+    instance: z.union([instanceNameSchema, instanceSchema]).optional()
   })
   .strict();
 export type ApicraftOption = z.infer<typeof apicraftOptionSchema>;
@@ -52,3 +101,5 @@ export type ApicraftConfig = z.infer<typeof apicraftConfigSchema>;
 
 export const generateApicraftOptionSchema = apicraftOptionSchema.partial();
 export type GenerateApicraftOption = z.infer<typeof generateApicraftOptionSchema>;
+
+export type InstanceName = z.infer<typeof instanceNameSchema>;

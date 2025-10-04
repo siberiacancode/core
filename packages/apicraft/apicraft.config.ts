@@ -6,13 +6,14 @@ import { apicraft } from './dist/src/index.js';
 
 const apicraftConfig = apicraft([
   {
-    input: './example-apiV1.yaml',
-    output: './generated/apiV1types'
-  },
-  {
-    input: './example-apiV1.yaml',
-    output: './generated/apiV1axios',
-    axios: true
+    input: 'example-apiV2.yaml',
+    output: 'generated/apiV2',
+    instance: 'fetches',
+    filters: {
+      operations: {
+        exclude: ['POST /echo']
+      }
+    }
   }
 ]);
 
