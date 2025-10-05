@@ -2,7 +2,7 @@ import ts from 'typescript';
 
 import type { FetchesPlugin } from './types';
 
-import { capitalize, generateRequestName, replaceParamsPath } from '../helpers';
+import { buildRequestParamsPath, capitalize, generateRequestName, normalizePath } from '../helpers';
 import { addInstanceFile } from './helpers';
 
 export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
@@ -15,7 +15,9 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
     const requestName = generateRequestName(request.method, request.path);
     const requestFile = plugin.createFile({
       id: requestName,
-      path: `${plugin.output}/requests/${request.path}/${request.method.toLowerCase()}`
+      path: normalizePath(
+        `${plugin.output}/requests/${request.path}/${request.method.toLowerCase()}`
+      )
     });
 
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
@@ -39,6 +41,9 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
       ts.factory.createStringLiteral('@siberiacancode/apicraft')
     );
 
+    const requestHasResponse = Object.values(request.responses ?? {}).some(
+      (response) => response?.schema.$ref || response?.schema.type !== 'unknown'
+    );
     // import type { RequestData, RequestResponse } from 'generated/types.gen';
     const importTypes = ts.factory.createImportDeclaration(
       undefined,
@@ -51,14 +56,18 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
             undefined,
             ts.factory.createIdentifier(requestDataTypeName)
           ),
-          ts.factory.createImportSpecifier(
-            false,
-            undefined,
-            ts.factory.createIdentifier(requestResponseTypeName)
-          )
+          ...(requestHasResponse
+            ? [
+                ts.factory.createImportSpecifier(
+                  false,
+                  undefined,
+                  ts.factory.createIdentifier(requestResponseTypeName)
+                )
+              ]
+            : [])
         ])
       ),
-      ts.factory.createStringLiteral(`${plugin.config.generateOutput}/types.gen`)
+      ts.factory.createStringLiteral(normalizePath(`${plugin.config.generateOutput}/types.gen`))
     );
 
     // import { instance } from "generated/instance.gen";
@@ -77,13 +86,13 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
       ),
       ts.factory.createStringLiteral(
         plugin.config.runtimeInstancePath ??
-          `${plugin.config.generateOutput}/${plugin.output}/instance.gen`
+          normalizePath(`${plugin.config.generateOutput}/${plugin.output}/instance.gen`)
       )
     );
 
     // type RequestParams = FetchesRequestParams<RequestData>;
     const requestParamsType = ts.factory.createTypeAliasDeclaration(
-      undefined,
+      [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
       ts.factory.createIdentifier(requestParamsTypeName),
       undefined,
       ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('FetchesRequestParams'), [
@@ -166,15 +175,18 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                   ts.factory.createIdentifier('instance'),
                   ts.factory.createIdentifier('call')
                 ),
-                [
-                  ts.factory.createTypeReferenceNode(
-                    ts.factory.createIdentifier(requestResponseTypeName),
-                    undefined
-                  )
-                ],
+                requestHasResponse
+                  ? [
+                      ts.factory.createTypeReferenceNode(
+                        ts.factory.createIdentifier(requestResponseTypeName),
+                        undefined
+                      )
+                    ]
+                  : undefined,
                 [
                   ts.factory.createObjectLiteralExpression(
                     [
+                      ts.factory.createSpreadAssignment(ts.factory.createIdentifier('config')),
                       ts.factory.createPropertyAssignment(
                         ts.factory.createIdentifier('method'),
                         ts.factory.createStringLiteral(request.method.toUpperCase())
@@ -182,9 +194,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                       ts.factory.createPropertyAssignment(
                         ts.factory.createIdentifier('url'),
                         requestHasUrlParams
-                          ? ts.factory.createNoSubstitutionTemplateLiteral(
-                              replaceParamsPath(request.path)
-                            )
+                          ? buildRequestParamsPath(request.path)
                           : ts.factory.createStringLiteral(request.path)
                       ),
                       ...(request.body
@@ -202,8 +212,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                               undefined
                             )
                           ]
-                        : []),
-                      ts.factory.createSpreadAssignment(ts.factory.createIdentifier('config'))
+                        : [])
                     ],
                     true
                   )

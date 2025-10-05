@@ -2,10 +2,12 @@ import type { DefinePlugin } from '@hey-api/openapi-ts';
 
 import ts from 'typescript';
 
+import { normalizePath } from '../../helpers';
+
 export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
   const instanceFile = plugin.createFile({
     id: 'fetchesInstance',
-    path: `${plugin.output}/instance`
+    path: normalizePath(`${plugin.output}/instance`)
   });
 
   // import fetches from '@siberiacancode/fetches';
