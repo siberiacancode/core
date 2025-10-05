@@ -1,6 +1,7 @@
 import type { DefinePlugin } from '@hey-api/openapi-ts';
 
 export interface FetchesPluginConfig {
+  exportFromIndex: boolean;
   generateOutput: string;
   name: 'fetches';
   output?: string;

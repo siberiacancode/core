@@ -6,7 +6,8 @@ import { handler } from './plugin';
 
 export const defaultConfig: FetchesPlugin['Config'] = {
   config: {
-    generateOutput: ''
+    generateOutput: '',
+    exportFromIndex: true
   },
   dependencies: ['@hey-api/typescript'],
   handler,

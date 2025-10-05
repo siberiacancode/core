@@ -54,7 +54,7 @@ servers:
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL.
 paths:
-  '/users/profiles/{username}/ids/{id}': # path parameter in curly braces
+  '/users/{username}': # path parameter in curly braces
     # parameters list that are used with each operation for this path
     parameters:
       - name: pretty_print
@@ -80,12 +80,6 @@ paths:
       # list of parameters for the operation
       parameters:
         - name: username
-          in: path
-          description: The name that needs to be fetched
-          required: true
-          schema:
-            type: string
-        - name: id
           in: path
           description: The name that needs to be fetched
           required: true
