@@ -184,19 +184,13 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                     ]
                   : undefined,
                 [
+                  ts.factory.createStringLiteral(request.method.toUpperCase()),
+                  requestHasUrlParams
+                    ? buildRequestParamsPath(request.path)
+                    : ts.factory.createStringLiteral(request.path),
                   ts.factory.createObjectLiteralExpression(
                     [
                       ts.factory.createSpreadAssignment(ts.factory.createIdentifier('config')),
-                      ts.factory.createPropertyAssignment(
-                        ts.factory.createIdentifier('method'),
-                        ts.factory.createStringLiteral(request.method.toUpperCase())
-                      ),
-                      ts.factory.createPropertyAssignment(
-                        ts.factory.createIdentifier('url'),
-                        requestHasUrlParams
-                          ? buildRequestParamsPath(request.path)
-                          : ts.factory.createStringLiteral(request.path)
-                      ),
                       ...(request.body
                         ? [
                             ts.factory.createShorthandPropertyAssignment(

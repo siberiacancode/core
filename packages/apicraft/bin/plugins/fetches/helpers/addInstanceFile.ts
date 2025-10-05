@@ -32,17 +32,7 @@ export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
               ts.factory.createIdentifier('create')
             ),
             undefined,
-            [
-              ts.factory.createObjectLiteralExpression(
-                [
-                  ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier('baseURL'),
-                    ts.factory.createStringLiteral('/')
-                  )
-                ],
-                true
-              )
-            ]
+            undefined
           )
         )
       ],
