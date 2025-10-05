@@ -59,7 +59,8 @@ export const generate = {
                 typeof option.output === 'string' ? option.output : option.output.path,
               ...(typeof option.instance === 'object' && {
                 runtimeInstancePath: option.instance.runtimeInstancePath
-              })
+              }),
+              exportFromIndex: true
             })
           );
         }

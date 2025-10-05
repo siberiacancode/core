@@ -1,3 +1,4 @@
+export * from './buildRequestParamsPath';
 export * from './capitalize';
 export * from './generateRequestName';
-export * from './replaceParamsPath';
+export * from './normalizePath';
