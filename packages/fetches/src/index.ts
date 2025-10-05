@@ -29,6 +29,7 @@ export type RequestConfig = RequestInit & {
   headers?: Record<string, string>;
   query?: RequestSearchParams;
   parse?: ResponseParse;
+  body?: RequestBody;
 };
 
 export interface FetchesParams {
@@ -419,8 +420,12 @@ class Fetches {
     return this.request<Data, Response>(endpoint, 'PATCH', options);
   }
 
-  call<Data, Response = FetchesResponse<Data>>(options: RequestConfig) {
-    return this.request<Data, Response>(options.url, options.method, options);
+  call<Data, Response = FetchesResponse<Data>>(
+    method: RequestMethod,
+    url: string,
+    options: RequestOptions
+  ) {
+    return this.request<Data, Response>(url, method, options);
   }
 }
 
