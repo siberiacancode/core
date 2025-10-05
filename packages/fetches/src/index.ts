@@ -29,7 +29,6 @@ export type RequestConfig = RequestInit & {
   headers?: Record<string, string>;
   query?: RequestSearchParams;
   parse?: ResponseParse;
-  body?: RequestBody;
 };
 
 export interface FetchesParams {
