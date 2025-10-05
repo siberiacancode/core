@@ -17,7 +17,7 @@ export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
     ts.factory.createStringLiteral('@siberiacancode/fetches')
   );
 
-  // export const instance = fetches.create({ baseURL: '/' });
+  // export const instance = fetches.create();
   const createInstance = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
