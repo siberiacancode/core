@@ -1,6 +1,6 @@
 import { capitalize } from './capitalize';
 
-export const generateRequestName = (method: string, path: string) => {
+export const generatePathRequestName = (method: string, path: string) => {
   const pathParts = path.split('/');
 
   const nameParts: string[] = [];

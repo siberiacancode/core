@@ -60,7 +60,9 @@ export const generate = {
               ...(typeof option.instance === 'object' && {
                 runtimeInstancePath: option.instance.runtimeInstancePath
               }),
-              exportFromIndex: true
+              exportFromIndex: true,
+              nameBy: option.nameBy,
+              groupBy: option.groupBy
             })
           );
         }
