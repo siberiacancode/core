@@ -2,7 +2,13 @@ import ts from 'typescript';
 
 import type { FetchesPlugin } from './types';
 
-import { buildRequestParamsPath, capitalize, generateRequestName, normalizePath } from '../helpers';
+import {
+  buildRequestParamsPath,
+  capitalize,
+  generatePathRequestName,
+  lowercase,
+  normalizePath
+} from '../helpers';
 import { addInstanceFile } from './helpers';
 
 export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
@@ -12,12 +18,23 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
     if (event.type !== 'operation') return;
 
     const request = event.operation;
-    const requestName = generateRequestName(request.method, request.path);
+    const requestName =
+      plugin.config.nameBy === 'operationId' && request.operationId
+        ? lowercase(request.operationId)
+        : generatePathRequestName(request.method, request.path);
+
+    const requestTag = request.tags?.[0];
+    // todo check if tag is in english
+    const requestFilePath =
+      plugin.config.groupBy === 'tag' && requestTag
+        ? normalizePath(`${plugin.output}/requests/${lowercase(requestTag)}/${requestName}`)
+        : normalizePath(
+            `${plugin.output}/requests/${request.path}/${request.method.toLowerCase()}`
+          );
+
     const requestFile = plugin.createFile({
       id: requestName,
-      path: normalizePath(
-        `${plugin.output}/requests/${request.path}/${request.method.toLowerCase()}`
-      )
+      path: requestFilePath
     });
 
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
