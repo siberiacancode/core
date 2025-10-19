@@ -25,6 +25,6 @@
     "tsconfig.node.json"
   ],
   "peerDependencies": {
-    "typescript": "^4.9.5 || ^5.0.0"
+    "typescript": "^5"
   }
 }

@@ -22,7 +22,7 @@ export interface RequestOptions extends Omit<RequestInit, 'body' | 'method'> {
   query?: RequestSearchParams;
 }
 
-type RequestConfig = RequestInit & {
+export type RequestConfig = RequestInit & {
   url: string;
   _retry?: boolean;
   method: RequestMethod;
@@ -47,9 +47,9 @@ export interface FetchesResponse<Data> {
   url: string;
 }
 
-export type SuccessResponseFunction = <T = any>(
-  response: FetchesResponse<T>
-) => FetchesResponse<T> | Promise<FetchesResponse<T>>;
+export type SuccessResponseFunction = <Data = any>(
+  response: FetchesResponse<Data>
+) => FetchesResponse<Data> | Promise<FetchesResponse<Data>>;
 export type SuccessRequestFunction = (
   config: RequestConfig
 ) => Promise<RequestConfig> | RequestConfig;
@@ -419,8 +419,12 @@ class Fetches {
     return this.request<Data, Response>(endpoint, 'PATCH', options);
   }
 
-  call<Data, Response = FetchesResponse<Data>>(options: RequestConfig) {
-    return this.request<Data, Response>(options.url, options.method, options);
+  call<Data, Response = FetchesResponse<Data>>(
+    method: RequestMethod,
+    url: string,
+    options: RequestOptions
+  ) {
+    return this.request<Data, Response>(url, method, options);
   }
 }
 
