@@ -1498,27 +1498,28 @@
     "@eslint/core" "^0.16.0"
     levn "^0.4.1"
 
-"@hey-api/json-schema-ref-parser@1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@hey-api/json-schema-ref-parser/-/json-schema-ref-parser-1.0.6.tgz#3c415fc265846aff8455039bb90e4283e0cc30c0"
-  integrity sha512-yktiFZoWPtEW8QKS65eqKwA5MTKp88CyiL8q72WynrBs/73SAaxlSWlA2zW/DZlywZ5hX1OYzrCC0wFdvO9c2w==
+"@hey-api/json-schema-ref-parser@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@hey-api/json-schema-ref-parser/-/json-schema-ref-parser-1.0.7.tgz#a241d5dc555be3b875cb5be535a672cc352772fc"
+  integrity sha512-XYZIDkzp16pf5d5ADLgoT2efuuIzkIGCtGVXNlexzxQaOIgYAwWON+7Tt77ChXMC/2Cq0qe57hSx1x6KwZyWcA==
   dependencies:
     "@jsdevtools/ono" "^7.1.3"
     "@types/json-schema" "^7.0.15"
     js-yaml "^4.1.0"
     lodash "^4.17.21"
 
-"@hey-api/openapi-ts@0.80.8":
-  version "0.80.8"
-  resolved "https://registry.yarnpkg.com/@hey-api/openapi-ts/-/openapi-ts-0.80.8.tgz#bb5f5e14648e3819f4d88c2d4893fe88a3a17dd6"
-  integrity sha512-mCTHtZRoQiSGywwdA9IeeiB5r0LmyZEe560HpziOUmyEbzL6V4jQ4iiHf0DHWa+Jx8MvTyWbNZR0xKRCLvJUHw==
+"@hey-api/openapi-ts@0.82.0":
+  version "0.82.0"
+  resolved "https://registry.yarnpkg.com/@hey-api/openapi-ts/-/openapi-ts-0.82.0.tgz#ad27a772c05525040839984de7efb1bf04f42478"
+  integrity sha512-0LuPg4MRifswpbipG2bZSZL1qI+F4+IboA4Cn0nIdC/MIfO/4mWJUSfOskcIAB2xqb7Kuzxtgid8o5JwucfhvQ==
   dependencies:
-    "@hey-api/json-schema-ref-parser" "1.0.6"
+    "@hey-api/json-schema-ref-parser" "1.0.7"
     ansi-colors "4.1.3"
     c12 "2.0.1"
     color-support "1.1.3"
     commander "13.0.0"
     handlebars "4.7.8"
+    js-yaml "4.1.0"
     open "10.1.2"
     semver "7.7.2"
 
@@ -5953,6 +5954,13 @@ js-tokens@^9.0.1:
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-9.0.1.tgz#2ec43964658435296f6761b34e10671c2d9527f4"
   integrity sha512-mxa9E9ITFOt0ban3j6L5MpjwegGz6lBQmM1IJkWeBZGcMxto50+eWdjC/52xDbS2vy0k7vIMK0Fe2wfL9OQSpQ==
 
+js-yaml@4.1.0, js-yaml@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.1.0.tgz#c1fb65f8f5017901cdd2c951864ba18458a10602"
+  integrity sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==
+  dependencies:
+    argparse "^2.0.1"
+
 js-yaml@^3.13.1:
   version "3.14.1"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.14.1.tgz#dae812fdb3825fa306609a8717383c50c36a0537"
@@ -5960,13 +5968,6 @@ js-yaml@^3.13.1:
   dependencies:
     argparse "^1.0.7"
     esprima "^4.0.0"
-
-js-yaml@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.1.0.tgz#c1fb65f8f5017901cdd2c951864ba18458a10602"
-  integrity sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==
-  dependencies:
-    argparse "^2.0.1"
 
 jsdoc-type-pratt-parser@^4.0.0:
   version "4.8.0"
