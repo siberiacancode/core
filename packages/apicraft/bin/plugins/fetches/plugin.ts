@@ -213,8 +213,8 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
       )
     );
 
-    if (plugin.config.groupBy === 'tag') {
-      request.tags?.forEach((tag) => {
+    if (plugin.config.groupBy === 'tag' && request.tags?.length) {
+      request.tags.forEach((tag) => {
         const requestFile = plugin.createFile({
           id: `${requestName}${tag}`,
           path: normalizePath(`${plugin.output}/requests/${tag}/${requestName}`)
