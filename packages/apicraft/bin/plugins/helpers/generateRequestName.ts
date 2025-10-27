@@ -1,32 +1,15 @@
-import { capitalize } from './capitalize';
+import type { IR } from '@hey-api/openapi-ts';
 
-export const generateRequestName = (method: string, path: string) => {
-  const pathParts = path.split('/');
+import type { ApicraftOption } from '@/bin/schemas';
 
-  const nameParts: string[] = [];
-  let prevPart: string | undefined;
+import { generatePathRequestName } from './generatePathRequestName';
 
-  for (const pathPart of pathParts) {
-    const isParam = pathPart.startsWith('{') && pathPart.endsWith('}');
+export const generateRequestName = (
+  request: IR.OperationObject,
+  nameBy: ApicraftOption['nameBy']
+) => {
+  if (nameBy === 'operationId' && request.operationId) return request.operationId;
+  if (nameBy === 'path') return generatePathRequestName(request.method, request.path);
 
-    if (!isParam) {
-      nameParts.push(capitalize(pathPart));
-      prevPart = pathPart;
-
-      continue;
-    }
-
-    // TODO determine how we handle params
-    if (prevPart?.endsWith('s')) {
-      nameParts[nameParts.length - 1] =
-        prevPart.slice(0, -1).charAt(0).toUpperCase() + prevPart.slice(1, -1);
-    }
-
-    const paramName = pathPart.slice(1, -1);
-    nameParts.push(`By${capitalize(paramName)}`);
-
-    prevPart = pathPart;
-  }
-
-  return method.toLowerCase() + nameParts.join('');
+  throw new Error(`Unsupported nameBy option ${nameBy} for ${request.method} ${request.path}`);
 };

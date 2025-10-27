@@ -12,13 +12,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
     if (event.type !== 'operation') return;
 
     const request = event.operation;
-    const requestName = generateRequestName(request.method, request.path);
-    const requestFile = plugin.createFile({
-      id: requestName,
-      path: normalizePath(
-        `${plugin.output}/requests/${request.path}/${request.method.toLowerCase()}`
-      )
-    });
+    const requestName = generateRequestName(request, plugin.config.nameBy);
 
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
     const requestDataTypeName = `${capitalize(request.id)}Data`;
@@ -219,10 +213,34 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
       )
     );
 
-    requestFile.add(importFetchesRequestParams);
-    requestFile.add(importTypes);
-    requestFile.add(importInstance);
-    requestFile.add(requestParamsType);
-    requestFile.add(requestFunction);
+    if (plugin.config.groupBy === 'tag' && request.tags?.length) {
+      request.tags.forEach((tag) => {
+        const requestFile = plugin.createFile({
+          id: `${requestName}${tag}`,
+          path: normalizePath(`${plugin.output}/requests/${tag}/${requestName}`)
+        });
+
+        requestFile.add(importFetchesRequestParams);
+        requestFile.add(importTypes);
+        requestFile.add(importInstance);
+        requestFile.add(requestParamsType);
+        requestFile.add(requestFunction);
+      });
+    }
+
+    if (plugin.config.groupBy === 'path') {
+      const requestFile = plugin.createFile({
+        id: requestName,
+        path: normalizePath(
+          `${plugin.output}/requests/${request.path}/${request.method.toLowerCase()}`
+        )
+      });
+
+      requestFile.add(importFetchesRequestParams);
+      requestFile.add(importTypes);
+      requestFile.add(importInstance);
+      requestFile.add(requestParamsType);
+      requestFile.add(requestFunction);
+    }
   });
 };

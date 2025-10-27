@@ -9,11 +9,8 @@ const apicraftConfig = apicraft([
     input: 'example-apiV2.yaml',
     output: 'generated/apiV2',
     instance: 'fetches',
-    filters: {
-      operations: {
-        exclude: ['POST /echo']
-      }
-    }
+    nameBy: 'path',
+    groupBy: 'tag'
   }
 ]);
 
