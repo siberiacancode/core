@@ -59,7 +59,7 @@
   "devDependencies": {
     "@siberiacancode/eslint": "*",
     "@siberiacancode/prettier": "*",
-    "@types/node": "^24.6.2",
+    "@types/node": "^24.9.1",
     "@types/yargs": "^17.0.33",
     "tsup": "^8.5.0",
     "typescript": "^5.9.3"

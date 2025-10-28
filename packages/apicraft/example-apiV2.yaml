@@ -63,9 +63,6 @@ paths:
         schema:
           type: boolean
     get: # documentation for GET operation for this path
-      tags:
-        - User
-
       # summary is up to 120 symbold but we recommend to be shortest as possible
       summary: Get user by user name
 
