@@ -15,7 +15,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
     const request = event.operation;
     const requestName = generateRequestName(request, plugin.config.nameBy);
 
-    const requestFilePaths = [];
+    const requestFilePaths: string[] = [];
     if (plugin.config.groupBy === 'tag') {
       const tags = request.tags ?? ['default'];
 
