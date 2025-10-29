@@ -50,7 +50,7 @@
     "pretty": "yarn type && yarn lint && yarn format"
   },
   "dependencies": {
-    "@hey-api/openapi-ts": "0.82.0",
+    "@hey-api/openapi-ts": "0.82.5",
     "@siberiacancode/fetches": "^1.13.1",
     "cosmiconfig": "^9.0.0",
     "yargs": "^18.0.0",
