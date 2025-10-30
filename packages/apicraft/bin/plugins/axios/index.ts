@@ -1,2 +1,2 @@
-export * from './plugin';
-export * from './types';
+export { defineAxiosPlugin } from './config';
+export type { AxiosPlugin } from './types';

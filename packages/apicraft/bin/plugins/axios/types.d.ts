@@ -1,9 +1,15 @@
 import type { DefinePlugin } from '@hey-api/openapi-ts';
 
-export interface UserConfig {
-  myOption?: boolean;
-  name: 'axios-plugin';
+import type { ApicraftOption } from '@/bin/schemas';
+
+export interface AxiosPluginConfig {
+  exportFromIndex: boolean;
+  generateOutput: string;
+  groupBy?: ApicraftOption['groupBy'];
+  name: 'axios';
+  nameBy?: ApicraftOption['nameBy'];
   output?: string;
+  runtimeInstancePath?: string;
 }
 
-export type AxiosPlugin = DefinePlugin<UserConfig>;
+export type AxiosPlugin = DefinePlugin<FetchesPluginConfig>;

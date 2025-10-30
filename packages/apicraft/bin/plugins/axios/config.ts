@@ -6,12 +6,13 @@ import { handler } from './plugin';
 
 export const defaultConfig: AxiosPlugin['Config'] = {
   config: {
-    myOption: false
+    generateOutput: '',
+    exportFromIndex: true
   },
   dependencies: ['@hey-api/typescript'],
   handler,
-  name: 'axios-plugin',
-  output: 'axios-plugin'
+  name: 'axios',
+  output: ''
 };
 
-export const defineConfig = definePluginConfig(defaultConfig);
+export const defineAxiosPlugin = definePluginConfig(defaultConfig);

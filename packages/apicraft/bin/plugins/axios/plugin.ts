@@ -2,12 +2,11 @@ import ts from 'typescript';
 
 import type { AxiosPlugin } from './types';
 
+import { firstCapital, methodTakesBody } from './helpers';
+
 // TODO: rename constants
 // TODO: remove any
 // TODO: rename func's param name's
-
-const firstCapital = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
-const methodTakesBody = (m: string) => /^(?:post|put|patch)$/i.test(m);
 
 const emitApiInstance = (plugin: any) => {
   const id = 'API_INSTANCE';
