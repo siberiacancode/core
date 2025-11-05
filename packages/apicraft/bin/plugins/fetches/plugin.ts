@@ -129,7 +129,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
         ])
       );
 
-      const requestHasUrlParams = !!Object.keys(request.parameters?.path ?? {}).length;
+      const requestHasPathParams = !!Object.keys(request.parameters?.path ?? {}).length;
       const requestHasRequiredParams = requestHasRequiredParam(request);
 
       // --- export const request = ({ path, body, query, config }) => ...
@@ -176,7 +176,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                           ]
                         : []),
 
-                      ...(requestHasUrlParams
+                      ...(requestHasPathParams
                         ? [
                             ts.factory.createBindingElement(
                               undefined,
@@ -214,7 +214,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                     : undefined,
                   [
                     ts.factory.createStringLiteral(request.method.toUpperCase()),
-                    requestHasUrlParams
+                    requestHasPathParams
                       ? buildRequestParamsPath(request.path)
                       : ts.factory.createStringLiteral(request.path),
                     ts.factory.createObjectLiteralExpression(

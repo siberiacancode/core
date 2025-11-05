@@ -104,6 +104,7 @@ export const generateMutationHookFile = ({
             ],
             undefined,
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+            // mutationKey: ['getUserByUsername', settings?.request?.path?.username],
             ts.factory.createCallExpression(ts.factory.createIdentifier('useMutation'), undefined, [
               ts.factory.createObjectLiteralExpression(
                 [
@@ -131,6 +132,7 @@ export const generateMutationHookFile = ({
                       false
                     )
                   ),
+                  // mutationFn: async (params) => getUserByUsername({ ...settings?.request, ...params }),
                   ts.factory.createPropertyAssignment(
                     ts.factory.createIdentifier('mutationFn'),
                     ts.factory.createArrowFunction(
@@ -168,6 +170,7 @@ export const generateMutationHookFile = ({
                       )
                     )
                   ),
+                  // ...settings?.mutation
                   ts.factory.createSpreadAssignment(
                     ts.factory.createPropertyAccessChain(
                       ts.factory.createIdentifier('settings'),
