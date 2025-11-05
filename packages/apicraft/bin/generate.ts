@@ -8,6 +8,7 @@ import { getConfig } from '@/bin/helpers';
 import type { ApicraftOption, GenerateApicraftOption, InstanceName } from './schemas';
 
 import { defineFetchesPlugin } from './plugins/fetches';
+import { defineTanstackPlugin } from './plugins/tanstack';
 import { apicraftOptionSchema } from './schemas';
 
 export const generate = {
@@ -52,14 +53,27 @@ export const generate = {
           plugins.push('@hey-api/client-axios');
         }
 
+        const generateOutput =
+          typeof option.output === 'string' ? option.output : option.output.path;
+
         if (matchInstance('fetches')) {
           plugins.push(
             defineFetchesPlugin({
-              generateOutput:
-                typeof option.output === 'string' ? option.output : option.output.path,
+              generateOutput,
               ...(typeof option.instance === 'object' && {
                 runtimeInstancePath: option.instance.runtimeInstancePath
               }),
+              exportFromIndex: true,
+              nameBy: option.nameBy,
+              groupBy: option.groupBy
+            })
+          );
+        }
+
+        if (option.hooks === 'tanstack') {
+          plugins.push(
+            defineTanstackPlugin({
+              generateOutput,
               exportFromIndex: true,
               nameBy: option.nameBy,
               groupBy: option.groupBy

@@ -3,7 +3,13 @@ import ts from 'typescript';
 
 import type { FetchesPlugin } from './types';
 
-import { buildRequestParamsPath, capitalize, generateRequestName, normalizePath } from '../helpers';
+import {
+  buildRequestParamsPath,
+  capitalize,
+  generateRequestName,
+  getRequestFilePaths,
+  requestHasRequiredParam
+} from '../helpers';
 import { addInstanceFile } from './helpers';
 
 export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
@@ -15,19 +21,12 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
     const request = event.operation;
     const requestName = generateRequestName(request, plugin.config.nameBy);
 
-    const requestFilePaths: string[] = [];
-    if (plugin.config.groupBy === 'tag') {
-      const tags = request.tags ?? ['default'];
-
-      tags.forEach((tag) => {
-        requestFilePaths.push(normalizePath(`${plugin.output}/requests/${tag}/${requestName}`));
-      });
-    }
-    if (plugin.config.groupBy === 'path') {
-      requestFilePaths.push(
-        normalizePath(`${plugin.output}/requests/${request.path}/${request.method.toLowerCase()}`)
-      );
-    }
+    const requestFilePaths = getRequestFilePaths({
+      groupBy: plugin.config.groupBy,
+      output: plugin.output,
+      requestName,
+      request
+    });
 
     requestFilePaths.forEach((requestFilePath) => {
       const requestFile = plugin.createFile({
@@ -89,7 +88,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
         ts.factory.createStringLiteral(
           nodePath.relative(
             requestFolderPath,
-            normalizePath(`${plugin.config.generateOutput}/types.gen`)
+            nodePath.normalize(`${plugin.config.generateOutput}/types.gen`)
           )
         )
       );
@@ -112,7 +111,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
           nodePath.relative(
             requestFolderPath,
             plugin.config.runtimeInstancePath ??
-              normalizePath(`${plugin.config.generateOutput}/${plugin.output}/instance.gen`)
+              nodePath.normalize(`${plugin.config.generateOutput}/${plugin.output}/instance.gen`)
           )
         )
       );
@@ -130,7 +129,8 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
         ])
       );
 
-      const requestHasUrlParams = /\{\w+\}/.test(request.path);
+      const requestHasUrlParams = !!Object.keys(request.parameters?.path ?? {}).length;
+      const requestHasRequiredParams = requestHasRequiredParam(request);
 
       // --- export const request = ({ path, body, query, config }) => ...
       const requestFunction = ts.factory.createVariableStatement(
@@ -192,7 +192,9 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                       ts.factory.createIdentifier(requestParamsTypeName),
                       undefined
                     ),
-                    undefined
+                    !requestHasRequiredParams
+                      ? ts.factory.createObjectLiteralExpression([], false)
+                      : undefined
                   )
                 ],
                 undefined,
