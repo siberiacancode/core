@@ -21,12 +21,12 @@ export const generateMutationHookFile = ({
   requestName,
   requestFilePath
 }: GenerateMutationHookFileParams) => {
-  const requestFolderPath = nodePath.dirname(requestFilePath);
-  const hookName = `use${capitalize(requestName)}Mutation`;
+  const hookFolderPath = nodePath.dirname(requestFilePath).replace('requests', 'hooks');
+  const hookName = `use${capitalize(requestName)}Query`;
 
   const hookFile = plugin.createFile({
-    id: `${requestFolderPath}/${hookName}`,
-    path: `${requestFolderPath}/${hookName}`
+    id: `${hookFolderPath}/${hookName}`,
+    path: `${hookFolderPath}/${hookName}`
   });
 
   // import { useMutation } from '@tanstack/react-query';
@@ -73,7 +73,7 @@ export const generateMutationHookFile = ({
         ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier(requestName))
       ])
     ),
-    ts.factory.createStringLiteral(`./${nodePath.basename(requestFilePath)}.gen`)
+    ts.factory.createStringLiteral(nodePath.relative(hookFolderPath, `${requestFilePath}.gen`))
   );
 
   const requestPathParams = getRequestPathParams(request);

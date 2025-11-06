@@ -4,9 +4,9 @@ import { useMutation } from '@tanstack/react-query';
 
 import type { TanstackMutationSettings } from '@siberiacancode/apicraft';
 
-import { getUserByUsername } from './get.gen';
+import { getUserByUsername } from '../../../requests/users/{username}/get.gen';
 
-export const useGetUserByUsernameMutation = (
+export const useGetUserByUsernameQuery = (
   settings?: TanstackMutationSettings<typeof getUserByUsername>
 ) =>
   useMutation({
