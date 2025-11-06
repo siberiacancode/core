@@ -6,9 +6,9 @@ import type { FetchesPlugin } from './types';
 import {
   buildRequestParamsPath,
   capitalize,
+  checkRequestHasRequiredParam,
   generateRequestName,
-  getRequestFilePaths,
-  requestHasRequiredParam
+  getRequestFilePaths
 } from '../helpers';
 import { addInstanceFile } from './helpers';
 
@@ -129,8 +129,8 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
         ])
       );
 
-      const requestHasPathParams = !!Object.keys(request.parameters?.path ?? {}).length;
-      const requestHasRequiredParams = requestHasRequiredParam(request);
+      const requestHasPathParam = !!Object.keys(request.parameters?.path ?? {}).length;
+      const requestHasRequiredParam = checkRequestHasRequiredParam(request);
 
       // --- export const request = ({ path, body, query, config }) => ...
       const requestFunction = ts.factory.createVariableStatement(
@@ -176,7 +176,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                           ]
                         : []),
 
-                      ...(requestHasPathParams
+                      ...(requestHasPathParam
                         ? [
                             ts.factory.createBindingElement(
                               undefined,
@@ -192,7 +192,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                       ts.factory.createIdentifier(requestParamsTypeName),
                       undefined
                     ),
-                    !requestHasRequiredParams
+                    !requestHasRequiredParam
                       ? ts.factory.createObjectLiteralExpression([], false)
                       : undefined
                   )
@@ -214,7 +214,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                     : undefined,
                   [
                     ts.factory.createStringLiteral(request.method.toUpperCase()),
-                    requestHasPathParams
+                    requestHasPathParam
                       ? buildRequestParamsPath(request.path)
                       : ts.factory.createStringLiteral(request.path),
                     ts.factory.createObjectLiteralExpression(
