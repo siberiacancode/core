@@ -62,7 +62,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
         `${plugin.config.generateOutput}/${requestFilePath}`
       );
 
-      // import type { RequestData, RequestResponse } from 'generated/types.gen';
+      // import type { RequestNameData, RequestNameResponse } from 'generated/types.gen';
       const importTypes = ts.factory.createImportDeclaration(
         undefined,
         ts.factory.createImportClause(
@@ -116,7 +116,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
         )
       );
 
-      // type RequestParams = FetchesRequestParams<RequestData>;
+      // type RequestNameParams = FetchesRequestParams<RequestNameData>;
       const requestParamsType = ts.factory.createTypeAliasDeclaration(
         [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
         ts.factory.createIdentifier(requestParamsTypeName),
@@ -132,7 +132,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
       const requestHasPathParam = !!Object.keys(request.parameters?.path ?? {}).length;
       const requestHasRequiredParam = checkRequestHasRequiredParam(request);
 
-      // --- export const request = ({ path, body, query, config }) => ...
+      // --- export const requestName = ({ path, body, query, config }) => ...
       const requestFunction = ts.factory.createVariableStatement(
         [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
         ts.factory.createVariableDeclarationList(

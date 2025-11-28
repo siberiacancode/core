@@ -96,7 +96,7 @@ export const apicraftOptionSchema = z
     instance: z.union([instanceNameSchema, instanceSchema]).optional(),
     nameBy: z.enum(['path', 'operationId']).optional(),
     groupBy: z.enum(['path', 'tag']).optional(),
-    hooks: z.enum(['tanstack']).optional()
+    plugins: z.array(z.enum(['tanstack'])).optional()
   })
   .strict();
 export type ApicraftOption = z.infer<typeof apicraftOptionSchema>;

@@ -70,7 +70,7 @@ export const generate = {
           );
         }
 
-        if (option.hooks === 'tanstack') {
+        if (option.plugins?.includes('tanstack')) {
           plugins.push(
             defineTanstackPlugin({
               generateOutput,

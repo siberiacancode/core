@@ -6,7 +6,7 @@ import ts from 'typescript';
 import type { TanstackPluginConfig } from '../types';
 
 import { capitalize } from '../../helpers';
-import { getRequestPathParams } from './getRequestPathParams';
+import { getRequestParamsHookKeys } from './getRequestParamsHookKeys';
 
 interface GenerateMutationHookFileParams {
   plugin: Parameters<DefinePlugin<TanstackPluginConfig>['Handler']>[0]['plugin'];
@@ -22,7 +22,7 @@ export const generateMutationHookFile = ({
   requestFilePath
 }: GenerateMutationHookFileParams) => {
   const hookFolderPath = nodePath.dirname(requestFilePath).replace('requests', 'hooks');
-  const hookName = `use${capitalize(requestName)}Query`;
+  const hookName = `use${capitalize(requestName)}Mutation`;
 
   const hookFile = plugin.createFile({
     id: `${hookFolderPath}/${hookName}`,
@@ -63,7 +63,7 @@ export const generateMutationHookFile = ({
     ts.factory.createStringLiteral('@siberiacancode/apicraft')
   );
 
-  // import type { getUserByUsername } from './getUserByUsername.gen';
+  // import type { requestName } from './requestName.gen';
   const importRequest = ts.factory.createImportDeclaration(
     undefined,
     ts.factory.createImportClause(
@@ -76,9 +76,9 @@ export const generateMutationHookFile = ({
     ts.factory.createStringLiteral(nodePath.relative(hookFolderPath, `${requestFilePath}.gen`))
   );
 
-  const requestPathParams = getRequestPathParams(request);
+  const requestParamsHookKeys = getRequestParamsHookKeys(request);
 
-  // const useGetUserByUsernameMutation = (settings: TanstackMutationSettings<typeof getUserByUsername>) => useMutation
+  // const useMethodRequestNameMutation = (settings: TanstackMutationSettings<typeof requestName>) => useMutation
   const hookFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -104,7 +104,7 @@ export const generateMutationHookFile = ({
             ],
             undefined,
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-            // mutationKey: ['getUserByUsername', settings?.request?.path?.username],
+            // mutationKey: ['requestName', settings?.request?.path?.pathPart, settings?.request?.query?.someQuery],
             ts.factory.createCallExpression(ts.factory.createIdentifier('useMutation'), undefined, [
               ts.factory.createObjectLiteralExpression(
                 [
@@ -113,7 +113,7 @@ export const generateMutationHookFile = ({
                     ts.factory.createArrayLiteralExpression(
                       [
                         ts.factory.createStringLiteral(requestName),
-                        ...requestPathParams.map((requestPathParam) =>
+                        ...requestParamsHookKeys.path.map((requestPathParam) =>
                           ts.factory.createPropertyAccessChain(
                             ts.factory.createPropertyAccessChain(
                               ts.factory.createPropertyAccessChain(
@@ -127,12 +127,27 @@ export const generateMutationHookFile = ({
                             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                             ts.factory.createIdentifier(requestPathParam)
                           )
+                        ),
+                        ...requestParamsHookKeys.query.map((requestQueryParam) =>
+                          ts.factory.createPropertyAccessChain(
+                            ts.factory.createPropertyAccessChain(
+                              ts.factory.createPropertyAccessChain(
+                                ts.factory.createIdentifier('settings'),
+                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                ts.factory.createIdentifier('request')
+                              ),
+                              ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                              ts.factory.createIdentifier('query')
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                            ts.factory.createIdentifier(requestQueryParam)
+                          )
                         )
                       ],
                       false
                     )
                   ),
-                  // mutationFn: async (params) => getUserByUsername({ ...settings?.request, ...params }),
+                  // mutationFn: async (params) => requestName({ ...settings?.request, ...params }),
                   ts.factory.createPropertyAssignment(
                     ts.factory.createIdentifier('mutationFn'),
                     ts.factory.createArrowFunction(
@@ -170,12 +185,12 @@ export const generateMutationHookFile = ({
                       )
                     )
                   ),
-                  // ...settings?.mutation
+                  // ...settings?.params
                   ts.factory.createSpreadAssignment(
                     ts.factory.createPropertyAccessChain(
                       ts.factory.createIdentifier('settings'),
                       ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                      ts.factory.createIdentifier('mutation')
+                      ts.factory.createIdentifier('params')
                     )
                   )
                 ],

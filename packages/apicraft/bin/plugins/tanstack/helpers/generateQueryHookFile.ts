@@ -6,7 +6,7 @@ import ts from 'typescript';
 import type { TanstackPluginConfig } from '../types';
 
 import { capitalize, checkRequestHasRequiredParam } from '../../helpers';
-import { getRequestPathParams } from './getRequestPathParams';
+import { getRequestParamsHookKeys } from './getRequestParamsHookKeys';
 
 interface GenerateQueryHookParams {
   plugin: Parameters<DefinePlugin<TanstackPluginConfig>['Handler']>[0]['plugin'];
@@ -59,7 +59,7 @@ export const generateQueryHookFile = ({
     ts.factory.createStringLiteral('@siberiacancode/apicraft')
   );
 
-  // import type { getUserByUsername } from './getUserByUsername.gen';
+  // import type { requestName } from './requestName.gen';
   const importRequest = ts.factory.createImportDeclaration(
     undefined,
     ts.factory.createImportClause(
@@ -72,10 +72,10 @@ export const generateQueryHookFile = ({
     ts.factory.createStringLiteral(nodePath.relative(hookFolderPath, `${requestFilePath}.gen`))
   );
 
-  const requestPathParams = getRequestPathParams(request);
+  const requestParamsHookKeys = getRequestParamsHookKeys(request);
   const requestHasRequiredParam = checkRequestHasRequiredParam(request);
 
-  // const useGetUserByUsernameQuery = (settings: TanstackQuerySettings<typeof getUserByUsername>) => useQuery
+  // const useMethodRequestNameQuery = (settings: TanstackQuerySettings<typeof requestName>) => useQuery
   const hookFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -106,13 +106,13 @@ export const generateQueryHookFile = ({
             ts.factory.createCallExpression(ts.factory.createIdentifier('useQuery'), undefined, [
               ts.factory.createObjectLiteralExpression(
                 [
-                  // queryKey: ['getUserByUsername', settings.request.path.username]
+                  // queryKey: ['requestName', settings.request.path.pathPart]
                   ts.factory.createPropertyAssignment(
                     ts.factory.createIdentifier('queryKey'),
                     ts.factory.createArrayLiteralExpression(
                       [
                         ts.factory.createStringLiteral(requestName),
-                        ...requestPathParams.map((requestPathParam) =>
+                        ...requestParamsHookKeys.path.map((requestPathParam) =>
                           ts.factory.createPropertyAccessChain(
                             ts.factory.createPropertyAccessChain(
                               ts.factory.createPropertyAccessChain(
@@ -130,12 +130,31 @@ export const generateQueryHookFile = ({
                             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                             ts.factory.createIdentifier(requestPathParam)
                           )
+                        ),
+                        ...requestParamsHookKeys.query.map((requestQueryParam) =>
+                          ts.factory.createPropertyAccessChain(
+                            ts.factory.createPropertyAccessChain(
+                              ts.factory.createPropertyAccessChain(
+                                ts.factory.createIdentifier('settings'),
+                                !requestHasRequiredParam
+                                  ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
+                                  : undefined,
+                                ts.factory.createIdentifier('request')
+                              ),
+                              !requestHasRequiredParam
+                                ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
+                                : undefined,
+                              ts.factory.createIdentifier('query')
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                            ts.factory.createIdentifier(requestQueryParam)
+                          )
                         )
                       ],
                       false
                     )
                   ),
-                  // queryFn: async () => getUserByUsername({ ...settings.request })
+                  // queryFn: async () => requestName({ ...settings.request })
                   ts.factory.createPropertyAssignment(
                     ts.factory.createIdentifier('queryFn'),
                     ts.factory.createArrowFunction(
@@ -166,14 +185,14 @@ export const generateQueryHookFile = ({
                       )
                     )
                   ),
-                  // ...settings.query
+                  // ...settings.params
                   ts.factory.createSpreadAssignment(
                     ts.factory.createPropertyAccessChain(
                       ts.factory.createIdentifier('settings'),
                       !requestHasRequiredParam
                         ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                         : undefined,
-                      ts.factory.createIdentifier('query')
+                      ts.factory.createIdentifier('params')
                     )
                   )
                 ],
