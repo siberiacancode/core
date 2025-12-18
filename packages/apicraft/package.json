@@ -59,9 +59,10 @@
   "devDependencies": {
     "@siberiacancode/eslint": "*",
     "@siberiacancode/prettier": "*",
-    "@types/node": "^24.9.1",
-    "@types/yargs": "^17.0.33",
-    "tsup": "^8.5.0",
+    "@types/node": "^25.0.3",
+    "@types/yargs": "^17.0.35",
+    "axios": "^1.13.2",
+    "tsup": "^8.5.1",
     "typescript": "^5.9.3"
   },
   "lint-staged": {

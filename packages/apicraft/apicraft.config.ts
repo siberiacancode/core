@@ -10,7 +10,7 @@ const apicraftConfig = apicraft([
     output: 'generated/apiV2',
     instance: 'fetches',
     nameBy: 'path',
-    groupBy: 'tag'
+    groupBy: 'path'
   }
 ]);
 
