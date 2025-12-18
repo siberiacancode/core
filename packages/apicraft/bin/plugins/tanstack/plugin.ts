@@ -1,7 +1,11 @@
 import type { TanstackPlugin } from './types';
 
 import { generateRequestName, getRequestFilePaths } from '../helpers';
-import { generateMutationHookFile, generateQueryHookFile } from './helpers';
+import {
+  generateMutationHookFile,
+  generateQueryHookFile,
+  generateSuspenseQueryHookFile
+} from './helpers';
 
 export const handler: TanstackPlugin['Handler'] = ({ plugin }) => {
   plugin.forEach('operation', (event) => {
@@ -19,6 +23,7 @@ export const handler: TanstackPlugin['Handler'] = ({ plugin }) => {
 
     requestFilePaths.forEach((requestFilePath) => {
       generateQueryHookFile({ plugin, requestFilePath, request, requestName });
+      generateSuspenseQueryHookFile({ plugin, requestFilePath, request, requestName });
       generateMutationHookFile({ plugin, requestFilePath, request, requestName });
     });
   });

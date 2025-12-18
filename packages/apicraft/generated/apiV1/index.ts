@@ -3,4 +3,5 @@ export * from './types.gen';
 export * from './instance.gen';
 export * from './requests/users/{username}/get.gen';
 export * from './hooks/users/{username}/useGetUserByUsernameQuery.gen';
+export * from './hooks/users/{username}/useGetUserByUsernameSuspenseQuery.gen';
 export * from './hooks/users/{username}/useGetUserByUsernameMutation.gen';

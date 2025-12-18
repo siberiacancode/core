@@ -75,7 +75,7 @@ export const generateQueryHookFile = ({
   const requestParamsHookKeys = getRequestParamsHookKeys(request);
   const requestHasRequiredParam = checkRequestHasRequiredParam(request);
 
-  // const useMethodRequestNameQuery = (settings: TanstackQuerySettings<typeof requestName>) => useQuery
+  // const useRequestNameQuery = (settings: TanstackQuerySettings<typeof requestName>) => useQuery
   const hookFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(

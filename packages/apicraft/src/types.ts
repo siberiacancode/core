@@ -1,5 +1,9 @@
 import type { RequestConfig } from '@siberiacancode/fetches';
-import type { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
+import type {
+  UseMutationOptions,
+  UseQueryOptions,
+  UseSuspenseQueryOptions
+} from '@tanstack/react-query';
 
 export type FetchesRequestParams<Params> = Omit<Params, 'url'> & {
   config?: Partial<RequestConfig>;
@@ -10,6 +14,12 @@ export type IsParamsRequired<TFunc extends (...args: any[]) => any> =
 
 export type TanstackQuerySettings<TFunc extends (...args: any[]) => Promise<any>> = {
   params?: Omit<UseQueryOptions<Awaited<ReturnType<TFunc>>, never>, 'queryKey'>;
+} & (IsParamsRequired<TFunc> extends true
+  ? { request: NonNullable<Parameters<TFunc>[0]> }
+  : { request?: NonNullable<Parameters<TFunc>[0]> });
+
+export type TanstackSuspenseQuerySettings<TFunc extends (...args: any[]) => Promise<any>> = {
+  params?: Omit<UseSuspenseQueryOptions<Awaited<ReturnType<TFunc>>, never>, 'queryKey'>;
 } & (IsParamsRequired<TFunc> extends true
   ? { request: NonNullable<Parameters<TFunc>[0]> }
   : { request?: NonNullable<Parameters<TFunc>[0]> });

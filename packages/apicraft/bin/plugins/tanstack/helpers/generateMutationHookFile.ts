@@ -78,7 +78,7 @@ export const generateMutationHookFile = ({
 
   const requestParamsHookKeys = getRequestParamsHookKeys(request);
 
-  // const useMethodRequestNameMutation = (settings: TanstackMutationSettings<typeof requestName>) => useMutation
+  // const useRequestNameMutation = (settings: TanstackMutationSettings<typeof requestName>) => useMutation
   const hookFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
