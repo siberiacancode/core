@@ -21,9 +21,11 @@
     "access": "public"
   },
   "files": [
-    ".prettierrc.js"
+    "index.js",
+    "index.d.ts"
   ],
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "format": "prettier --write \"*.js\""
   },
