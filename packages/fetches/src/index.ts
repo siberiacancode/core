@@ -265,8 +265,9 @@ class Fetches {
     ]) {
       try {
         if (!initialResponse.ok)
-          throw new Error(initialResponse.statusText, {
-            cause: { config: initialConfig, response }
+          throw new ResponseError(initialResponse.statusText, {
+            request: initialConfig,
+            response
           });
         if (!onSuccess) continue;
         response = await onSuccess(response);

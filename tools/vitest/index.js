@@ -1,2 +1,5 @@
-const vitest = require('./vitest.config.js');
-module.exports = { vitest };
+/** @type {import('vitest/node').InlineConfig} */
+export const vitest = {
+  globals: true,
+  environment: 'jsdom'
+};

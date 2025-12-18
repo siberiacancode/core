@@ -1,5 +1,2 @@
-/** @type {import('vitest/node').InlineConfig} */
-module.exports = {
-  globals: true,
-  environment: 'jsdom'
-};
+import { vitest } from './index.js';
+export default vitest;
