@@ -207,8 +207,8 @@ public
 .cache
 gatsby-types.d.ts
 
-# Card standard
-generated
+# Generated
+!generated
 
 # Turbo
 .turbo
