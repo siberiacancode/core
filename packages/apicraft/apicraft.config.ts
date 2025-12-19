@@ -6,11 +6,12 @@ import { apicraft } from './dist/src/index.js';
 
 const apicraftConfig = apicraft([
   {
-    input: 'example-apiV2.yaml',
-    output: 'generated/apiV2',
+    input: 'example-apiV1.yaml',
+    output: 'generated/apiV1',
     instance: 'fetches',
     nameBy: 'path',
-    groupBy: 'path'
+    groupBy: 'tag',
+    plugins: ['tanstack']
   }
 ]);
 

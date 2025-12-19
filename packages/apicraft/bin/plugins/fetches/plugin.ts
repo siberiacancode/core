@@ -3,7 +3,13 @@ import ts from 'typescript';
 
 import type { FetchesPlugin } from './types';
 
-import { buildRequestParamsPath, capitalize, generateRequestName, normalizePath } from '../helpers';
+import {
+  buildRequestParamsPath,
+  capitalize,
+  checkRequestHasRequiredParam,
+  generateRequestName,
+  getRequestFilePaths
+} from '../helpers';
 import { addInstanceFile } from './helpers';
 
 export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
@@ -15,19 +21,12 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
     const request = event.operation;
     const requestName = generateRequestName(request, plugin.config.nameBy);
 
-    const requestFilePaths: string[] = [];
-    if (plugin.config.groupBy === 'tag') {
-      const tags = request.tags ?? ['default'];
-
-      tags.forEach((tag) => {
-        requestFilePaths.push(normalizePath(`${plugin.output}/requests/${tag}/${requestName}`));
-      });
-    }
-    if (plugin.config.groupBy === 'path') {
-      requestFilePaths.push(
-        normalizePath(`${plugin.output}/requests/${request.path}/${request.method.toLowerCase()}`)
-      );
-    }
+    const requestFilePaths = getRequestFilePaths({
+      groupBy: plugin.config.groupBy,
+      output: plugin.output,
+      requestName,
+      request
+    });
 
     requestFilePaths.forEach((requestFilePath) => {
       const requestFile = plugin.createFile({
@@ -63,7 +62,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
         `${plugin.config.generateOutput}/${requestFilePath}`
       );
 
-      // import type { RequestData, RequestResponse } from 'generated/types.gen';
+      // import type { RequestNameData, RequestNameResponse } from 'generated/types.gen';
       const importTypes = ts.factory.createImportDeclaration(
         undefined,
         ts.factory.createImportClause(
@@ -89,7 +88,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
         ts.factory.createStringLiteral(
           nodePath.relative(
             requestFolderPath,
-            normalizePath(`${plugin.config.generateOutput}/types.gen`)
+            nodePath.normalize(`${plugin.config.generateOutput}/types.gen`)
           )
         )
       );
@@ -112,12 +111,12 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
           nodePath.relative(
             requestFolderPath,
             plugin.config.runtimeInstancePath ??
-              normalizePath(`${plugin.config.generateOutput}/${plugin.output}/instance.gen`)
+              nodePath.normalize(`${plugin.config.generateOutput}/${plugin.output}/instance.gen`)
           )
         )
       );
 
-      // type RequestParams = FetchesRequestParams<RequestData>;
+      // type RequestNameParams = FetchesRequestParams<RequestNameData>;
       const requestParamsType = ts.factory.createTypeAliasDeclaration(
         [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
         ts.factory.createIdentifier(requestParamsTypeName),
@@ -130,9 +129,10 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
         ])
       );
 
-      const requestHasUrlParams = /\{\w+\}/.test(request.path);
+      const requestHasPathParam = !!Object.keys(request.parameters?.path ?? {}).length;
+      const requestHasRequiredParam = checkRequestHasRequiredParam(request);
 
-      // --- export const request = ({ path, body, query, config }) => ...
+      // --- export const requestName = ({ path, body, query, config }) => ...
       const requestFunction = ts.factory.createVariableStatement(
         [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
         ts.factory.createVariableDeclarationList(
@@ -176,7 +176,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                           ]
                         : []),
 
-                      ...(requestHasUrlParams
+                      ...(requestHasPathParam
                         ? [
                             ts.factory.createBindingElement(
                               undefined,
@@ -192,7 +192,9 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                       ts.factory.createIdentifier(requestParamsTypeName),
                       undefined
                     ),
-                    undefined
+                    !requestHasRequiredParam
+                      ? ts.factory.createObjectLiteralExpression([], false)
+                      : undefined
                   )
                 ],
                 undefined,
@@ -212,7 +214,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
                     : undefined,
                   [
                     ts.factory.createStringLiteral(request.method.toUpperCase()),
-                    requestHasUrlParams
+                    requestHasPathParam
                       ? buildRequestParamsPath(request.path)
                       : ts.factory.createStringLiteral(request.path),
                     ts.factory.createObjectLiteralExpression(

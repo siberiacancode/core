@@ -9,6 +9,7 @@ import type { ApicraftOption, GenerateApicraftOption, InstanceName } from './sch
 
 import { defineAxiosPlugin } from './plugins/axios';
 import { defineFetchesPlugin } from './plugins/fetches';
+import { defineTanstackPlugin } from './plugins/tanstack';
 import { apicraftOptionSchema } from './schemas';
 
 export const generate = {
@@ -43,7 +44,7 @@ export const generate = {
       }
 
       for (const option of options) {
-        const plugins: any[] = ['@hey-api/typescript'];
+        const plugins: any[] = ['@hey-api/typescript', ...(option.plugins ?? [])];
 
         const matchInstance = (name: InstanceName) =>
           option.instance === name ||
@@ -64,11 +65,13 @@ export const generate = {
           );
         }
 
+        const generateOutput =
+          typeof option.output === 'string' ? option.output : option.output.path;
+
         if (matchInstance('fetches')) {
           plugins.push(
             defineFetchesPlugin({
-              generateOutput:
-                typeof option.output === 'string' ? option.output : option.output.path,
+              generateOutput,
               ...(typeof option.instance === 'object' && {
                 runtimeInstancePath: option.instance.runtimeInstancePath
               }),
@@ -77,6 +80,18 @@ export const generate = {
               groupBy: option.groupBy
             })
           );
+        }
+
+        const tanstackPluginIndex = plugins.findIndex(
+          (plugin) => plugin === 'tanstack' || plugin.name === 'tanstack'
+        );
+        if (~tanstackPluginIndex) {
+          plugins[tanstackPluginIndex] = defineTanstackPlugin({
+            generateOutput,
+            exportFromIndex: true,
+            nameBy: option.nameBy,
+            groupBy: option.groupBy
+          });
         }
 
         await createClient({

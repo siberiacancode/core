@@ -1,13 +1,12 @@
 import type { DefinePlugin } from '@hey-api/openapi-ts';
 
+import * as nodePath from 'node:path';
 import ts from 'typescript';
-
-import { normalizePath } from '../../helpers';
 
 export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
   const instanceFile = plugin.createFile({
     id: 'axiosInstance',
-    path: normalizePath(`${plugin.output}/instance`)
+    path: nodePath.normalize(`${plugin.output}/instance`)
   });
 
   // import axios from 'axios';

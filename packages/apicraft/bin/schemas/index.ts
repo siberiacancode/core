@@ -8,6 +8,34 @@ const instanceSchema = z.object({
 
 const pathSchema = z.string().regex(/^[^/.].*[^/]$/, 'Path must be absolute');
 
+const pluginNameSchema = z.enum([
+  '@hey-api/client-angular',
+  '@hey-api/client-axios',
+  '@hey-api/client-fetch',
+  '@hey-api/client-next',
+  '@hey-api/client-nuxt',
+  'legacy/angular',
+  'legacy/axios',
+  'legacy/fetch',
+  'legacy/node',
+  'legacy/xhr',
+  '@angular/common',
+  '@hey-api/schemas',
+  '@hey-api/sdk',
+  '@hey-api/transformers',
+  '@hey-api/typescript',
+  '@pinia/colada',
+  '@tanstack/angular-query-experimental',
+  '@tanstack/react-query',
+  '@tanstack/solid-query',
+  '@tanstack/svelte-query',
+  '@tanstack/vue-query',
+  'fastify',
+  'valibot',
+  'tanstack',
+  'zod'
+]);
+
 export const apicraftOptionSchema = z
   .object({
     input: pathSchema.or(
@@ -95,7 +123,10 @@ export const apicraftOptionSchema = z
       .optional(),
     instance: z.union([instanceNameSchema, instanceSchema]).optional(),
     nameBy: z.enum(['path', 'operationId']).optional(),
-    groupBy: z.enum(['path', 'tag']).optional()
+    groupBy: z.enum(['path', 'tag']).optional(),
+    plugins: z
+      .array(pluginNameSchema.or(z.object({ name: pluginNameSchema }).passthrough()))
+      .optional()
   })
   .strict();
 export type ApicraftOption = z.infer<typeof apicraftOptionSchema>;

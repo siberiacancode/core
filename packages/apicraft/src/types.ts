@@ -1,4 +1,9 @@
 import type { RequestConfig } from '@siberiacancode/fetches';
+import type {
+  UseMutationOptions,
+  UseQueryOptions,
+  UseSuspenseQueryOptions
+} from '@tanstack/react-query';
 import type { AxiosRequestConfig } from 'axios';
 
 export type FetchesRequestParams<Params> = Omit<Params, 'url'> & {
@@ -8,3 +13,22 @@ export type FetchesRequestParams<Params> = Omit<Params, 'url'> & {
 export type AxiosRequestParams<Params> = Omit<Params, 'url'> & {
   config?: Partial<AxiosRequestConfig>;
 };
+export type IsParamsRequired<TFunc extends (...args: any[]) => any> =
+  Parameters<TFunc> extends [infer P] ? (undefined extends P ? false : true) : false;
+
+export type TanstackQuerySettings<TFunc extends (...args: any[]) => Promise<any>> = {
+  params?: Omit<UseQueryOptions<Awaited<ReturnType<TFunc>>, never>, 'queryKey'>;
+} & (IsParamsRequired<TFunc> extends true
+  ? { request: NonNullable<Parameters<TFunc>[0]> }
+  : { request?: NonNullable<Parameters<TFunc>[0]> });
+
+export type TanstackSuspenseQuerySettings<TFunc extends (...args: any[]) => Promise<any>> = {
+  params?: Omit<UseSuspenseQueryOptions<Awaited<ReturnType<TFunc>>, never>, 'queryKey'>;
+} & (IsParamsRequired<TFunc> extends true
+  ? { request: NonNullable<Parameters<TFunc>[0]> }
+  : { request?: NonNullable<Parameters<TFunc>[0]> });
+
+export interface TanstackMutationSettings<TFunc extends (...args: any[]) => Promise<any>> {
+  params?: UseMutationOptions<Awaited<ReturnType<TFunc>>, never, Parameters<TFunc>[0], unknown>;
+  request?: NonNullable<Parameters<TFunc>[0]>;
+}
