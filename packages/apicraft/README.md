@@ -26,8 +26,10 @@ export default apicraft([
 ]);
 ```
 
+Then use:
+
 ```bash
-apicraft generate
+npx apicraft generate
 ```
 
 ## CLI
@@ -35,7 +37,7 @@ apicraft generate
 ### generate
 
 ```bash
-apicraft generate
+npx apicraft generate
 ```
 
 - `--input, -i` - Path to input OpenAPI specification file (YAML or JSON)
