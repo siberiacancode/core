@@ -82,16 +82,18 @@ export const generate = {
           );
         }
 
-        const tanstackPluginIndex = plugins.findIndex(
+        const tanstackPlugin = plugins.find(
           (plugin) => plugin === 'tanstack' || plugin.name === 'tanstack'
         );
-        if (~tanstackPluginIndex) {
-          plugins[tanstackPluginIndex] = defineTanstackPlugin({
-            generateOutput,
-            exportFromIndex: true,
-            nameBy: option.nameBy,
-            groupBy: option.groupBy
-          });
+        if (tanstackPlugin) {
+          plugins.push(
+            defineTanstackPlugin({
+              generateOutput,
+              exportFromIndex: true,
+              nameBy: option.nameBy,
+              groupBy: option.groupBy
+            })
+          );
         }
 
         await createClient({
