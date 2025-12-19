@@ -1,0 +1,1 @@
+export { addInstanceFile } from './addInstanceFile';

@@ -7,6 +7,7 @@ import { getConfig } from '@/bin/helpers';
 
 import type { ApicraftOption, GenerateApicraftOption, InstanceName } from './schemas';
 
+import { defineAxiosPlugin } from './plugins/axios';
 import { defineFetchesPlugin } from './plugins/fetches';
 import { defineTanstackPlugin } from './plugins/tanstack';
 import { apicraftOptionSchema } from './schemas';
@@ -50,7 +51,18 @@ export const generate = {
           (typeof option.instance === 'object' && option.instance.name === name);
 
         if (matchInstance('axios')) {
-          plugins.push('@hey-api/client-axios');
+          plugins.push(
+            defineAxiosPlugin({
+              generateOutput:
+                typeof option.output === 'string' ? option.output : option.output.path,
+              ...(typeof option.instance === 'object' && {
+                runtimeInstancePath: option.instance.runtimeInstancePath
+              }),
+              exportFromIndex: true,
+              nameBy: option.nameBy,
+              groupBy: option.groupBy
+            })
+          );
         }
 
         const generateOutput =
@@ -70,16 +82,18 @@ export const generate = {
           );
         }
 
-        const tanstackPluginIndex = plugins.findIndex(
-          (plugin) => plugin === '@tanstack/react-query' || plugin.name === '@tanstack/react-query'
+        const tanstackPlugin = plugins.find(
+          (plugin) => plugin === 'tanstack' || plugin.name === 'tanstack'
         );
-        if (tanstackPluginIndex !== -1) {
-          plugins[tanstackPluginIndex] = defineTanstackPlugin({
-            generateOutput,
-            exportFromIndex: true,
-            nameBy: option.nameBy,
-            groupBy: option.groupBy
-          });
+        if (tanstackPlugin) {
+          plugins.push(
+            defineTanstackPlugin({
+              generateOutput,
+              exportFromIndex: true,
+              nameBy: option.nameBy,
+              groupBy: option.groupBy
+            })
+          );
         }
 
         await createClient({

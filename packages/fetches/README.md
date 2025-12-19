@@ -1,6 +1,6 @@
 # 🔮 fetches
 
-A lightweight and flexible HTTP client for making API requests, inspired by Axios.
+A lightweight and flexible HTTP client for making API requests.
 
 ## Installation
 

@@ -26,23 +26,20 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "deploy": "turbo run deploy",
-    "lint": "turbo run lint",
-    "format": "turbo run format",
-    "stylelint": "turbo run stylelint",
-    "unit-test": "turbo run unit-test",
+    "dev": "yarn workspaces run dev",
+    "build": "yarn workspaces run build",
+    "deploy": "yarn workspaces run deploy",
+    "lint": "yarn workspaces run lint",
+    "format": "yarn workspaces run format",
+    "stylelint": "yarn workspaces run stylelint",
+    "unit-test": "yarn workspaces run unit-test",
     "lint-staged": "lint-staged",
-    "change": "beachball change --no-commit",
-    "release": "beachball publish --yes",
     "prepare": "husky"
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "lint-staged": "^16.1.5",
-    "prettier": "^3.6.2",
-    "turbo": "^2.5.6",
-    "typescript": "^5.9.2"
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.7.4",
+    "typescript": "^5.9.3"
   }
 }

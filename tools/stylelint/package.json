@@ -31,12 +31,12 @@
     "*.js": "prettier --write"
   },
   "peerDependencies": {
-    "stylelint": "^16.16.0"
+    "stylelint": "^16.26.1"
   },
   "dependencies": {
-    "stylelint": "^16.21.0",
+    "stylelint": "^16.26.1",
     "stylelint-config-idiomatic-order": "^10.0.0",
-    "stylelint-config-standard-scss": "^15.0.1",
+    "stylelint-config-standard-scss": "^16.0.0",
     "stylelint-order": "^7.0.0"
   },
   "devDependencies": {
