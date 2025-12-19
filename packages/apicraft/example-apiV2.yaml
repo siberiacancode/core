@@ -54,14 +54,7 @@ servers:
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL.
 paths:
-  '/users/{username}': # path parameter in curly braces
-    # parameters list that are used with each operation for this path
-    parameters:
-      - name: pretty_print
-        in: query
-        description: Pretty print response
-        schema:
-          type: boolean
+  '/users':
     get: # documentation for GET operation for this path
       # summary is up to 120 symbold but we recommend to be shortest as possible
       summary: Get user by user name
@@ -76,12 +69,6 @@ paths:
 
       # list of parameters for the operation
       parameters:
-        - name: username
-          in: path
-          description: The name that needs to be fetched
-          required: true
-          schema:
-            type: string
         - name: with_email
           in: query
           description: Filter users without email
@@ -107,6 +94,15 @@ paths:
           description: Forbidden
         '404':
           description: User not found
+  '/users/{username}': # path parameter in curly braces
+    # parameters list that are used with each operation for this path
+    parameters:
+      - name: pretty_print
+        in: query
+        description: Pretty print response
+        schema:
+          type: boolean
+
     # documentation for PUT operation for this path
     put:
       tags:
