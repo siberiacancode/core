@@ -87,7 +87,7 @@ export const generateSuspenseQueryHookFile = ({
 
   // const requestNameOptions = queryOptions({...})
   const optionsFunction = ts.factory.createVariableStatement(
-    undefined,
+    [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
       [
         ts.factory.createVariableDeclaration(

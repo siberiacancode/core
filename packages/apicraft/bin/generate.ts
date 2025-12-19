@@ -43,7 +43,7 @@ export const generate = {
       }
 
       for (const option of options) {
-        const plugins: any[] = ['@hey-api/typescript'];
+        const plugins: any[] = ['@hey-api/typescript', ...(option.plugins ?? [])];
 
         const matchInstance = (name: InstanceName) =>
           option.instance === name ||
@@ -70,15 +70,16 @@ export const generate = {
           );
         }
 
-        if (option.plugins?.includes('tanstack')) {
-          plugins.push(
-            defineTanstackPlugin({
-              generateOutput,
-              exportFromIndex: true,
-              nameBy: option.nameBy,
-              groupBy: option.groupBy
-            })
-          );
+        const tanstackPluginIndex = plugins.findIndex(
+          (plugin) => plugin === '@tanstack/react-query' || plugin.name === '@tanstack/react-query'
+        );
+        if (tanstackPluginIndex !== -1) {
+          plugins[tanstackPluginIndex] = defineTanstackPlugin({
+            generateOutput,
+            exportFromIndex: true,
+            nameBy: option.nameBy,
+            groupBy: option.groupBy
+          });
         }
 
         await createClient({

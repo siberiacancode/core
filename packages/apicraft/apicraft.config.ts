@@ -11,7 +11,7 @@ const apicraftConfig = apicraft([
     instance: 'fetches',
     nameBy: 'path',
     groupBy: 'path',
-    plugins: ['tanstack']
+    plugins: ['@tanstack/react-query']
   }
 ]);
 
