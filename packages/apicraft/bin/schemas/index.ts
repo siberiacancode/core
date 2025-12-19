@@ -32,6 +32,7 @@ const pluginNameSchema = z.enum([
   '@tanstack/vue-query',
   'fastify',
   'valibot',
+  'tanstack',
   'zod'
 ]);
 

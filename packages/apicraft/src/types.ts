@@ -4,11 +4,15 @@ import type {
   UseQueryOptions,
   UseSuspenseQueryOptions
 } from '@tanstack/react-query';
+import type { AxiosRequestConfig } from 'axios';
 
 export type FetchesRequestParams<Params> = Omit<Params, 'url'> & {
   config?: Partial<RequestConfig>;
 };
 
+export type AxiosRequestParams<Params> = Omit<Params, 'url'> & {
+  config?: Partial<AxiosRequestConfig>;
+};
 export type IsParamsRequired<TFunc extends (...args: any[]) => any> =
   Parameters<TFunc> extends [infer P] ? (undefined extends P ? false : true) : false;
 

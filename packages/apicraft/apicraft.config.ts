@@ -10,8 +10,8 @@ const apicraftConfig = apicraft([
     output: 'generated/apiV1',
     instance: 'fetches',
     nameBy: 'path',
-    groupBy: 'path',
-    plugins: ['@tanstack/react-query']
+    groupBy: 'tag',
+    plugins: ['tanstack']
   }
 ]);
 
