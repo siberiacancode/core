@@ -166,7 +166,7 @@ class Fetches {
   }
 
   private prepareBody(body?: RequestBody) {
-    if (body instanceof FormData || body instanceof Blob) return body;
+    if (body instanceof FormData || body instanceof Blob || typeof body === 'string') return body;
     return JSON.stringify(body);
   }
 
@@ -330,7 +330,7 @@ class Fetches {
       headers: {
         ...this.headers,
         ...(body &&
-          !(body instanceof FormData || options.body instanceof Blob) && {
+          !(body instanceof FormData || body instanceof Blob || typeof body === 'string') && {
             'content-type': 'application/json'
           }),
         ...(!!options?.headers && options.headers)
