@@ -22,15 +22,25 @@
   },
   "files": [
     "index.js",
+    "index.mjs",
     "index.d.ts"
   ],
   "main": "index.js",
+  "module": "index.mjs",
   "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    }
+  },
   "scripts": {
-    "format": "prettier --write \"*.js\""
+    "format": "prettier --write \"*.{js,mjs}\""
   },
   "lint-staged": {
-    "*.js": "prettier --write"
+    "*.{js,mjs}": "prettier --write"
   },
   "peerDependencies": {
     "prettier": "^3.7.4"

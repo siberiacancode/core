@@ -1,5 +1,5 @@
 /** @type {import('prettier').Config} */
-const prettier = {
+export const prettier = {
   printWidth: 100,
   singleQuote: true,
   jsxSingleQuote: true,
@@ -10,5 +10,3 @@ const prettier = {
   endOfLine: 'lf',
   arrowParens: 'always'
 };
-
-module.exports = { prettier };
