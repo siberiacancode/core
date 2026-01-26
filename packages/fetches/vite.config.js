@@ -1,33 +1,20 @@
-import fs from 'node:fs/promises';
+import { copyFileSync } from 'node:fs';
 import path from 'node:path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 
 import pkg from './package.json';
 
-const typesDir = path.resolve(__dirname, 'dist/types');
-const typesEntry = path.join(typesDir, 'index.d.ts');
-
-const dualTypesPlugin = () => ({
-  name: 'dual-types',
-  async closeBundle() {
-    const typesContent = await fs.readFile(typesEntry, 'utf8');
-    await Promise.all([
-      fs.writeFile(path.join(typesDir, 'index.d.mts'), typesContent),
-      fs.writeFile(path.join(typesDir, 'index.d.cts'), typesContent)
-    ]);
-    await fs.unlink(typesEntry);
-  }
-});
-
 export default defineConfig({
   plugins: [
     dts({
+      afterBuild: () => {
+        copyFileSync('dist/types/index.d.ts', 'dist/types/index.d.mts');
+      },
       entryRoot: 'src',
       outDir: 'dist/types',
       tsconfigPath: './tsconfig.json'
-    }),
-    dualTypesPlugin()
+    })
   ],
   build: {
     lib: {

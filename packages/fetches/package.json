@@ -29,14 +29,14 @@
         "default": "./dist/esm/index.mjs"
       },
       "require": {
-        "types": "./dist/types/index.d.cts",
+        "types": "./dist/types/index.d.ts",
         "default": "./dist/cjs/index.cjs"
       }
     }
   },
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.mjs",
-  "types": "dist/types/index.d.cts",
+  "types": "dist/types/index.d.ts",
   "files": [
     "dist/**/*"
   ],
