@@ -6,7 +6,7 @@ const instanceSchema = z.object({
   runtimeInstancePath: z.string().optional()
 });
 
-const pathSchema = z.string().regex(/^[^/.].*[^/]$/, 'Path must be absolute');
+const pathSchema = z.string();
 
 const pluginNameSchema = z.enum([
   '@hey-api/client-angular',

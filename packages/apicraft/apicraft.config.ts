@@ -9,7 +9,6 @@ const apicraftConfig = apicraft([
     input: 'example-apiV1.yaml',
     output: 'generated/apiV1',
     instance: 'fetches',
-    nameBy: 'path',
     groupBy: 'tag',
     plugins: ['tanstack']
   }

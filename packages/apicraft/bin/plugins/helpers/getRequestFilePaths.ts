@@ -5,7 +5,7 @@ import * as nodePath from 'node:path';
 import type { ApicraftOption } from '@/bin/schemas';
 
 interface GetRequestFilePathsParams {
-  groupBy: ApicraftOption['groupBy'];
+  groupBy: NonNullable<ApicraftOption['groupBy']>;
   output: string;
   request: IR.OperationObject;
   requestName: string;

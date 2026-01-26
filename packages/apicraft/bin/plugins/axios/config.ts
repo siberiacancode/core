@@ -7,7 +7,9 @@ import { handler } from './plugin';
 export const defaultConfig: AxiosPlugin['Config'] = {
   config: {
     generateOutput: '',
-    exportFromIndex: true
+    exportFromIndex: true,
+    nameBy: 'path',
+    groupBy: 'path'
   },
   dependencies: ['@hey-api/typescript'],
   handler,

@@ -6,7 +6,7 @@ import { generatePathRequestName } from './generatePathRequestName';
 
 export const generateRequestName = (
   request: IR.OperationObject,
-  nameBy: ApicraftOption['nameBy']
+  nameBy: NonNullable<ApicraftOption['nameBy']>
 ) => {
   if (nameBy === 'operationId' && request.operationId) return request.operationId;
   if (nameBy === 'path') return generatePathRequestName(request.method, request.path);

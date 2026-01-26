@@ -59,8 +59,8 @@ export const generate = {
                 runtimeInstancePath: option.instance.runtimeInstancePath
               }),
               exportFromIndex: true,
-              nameBy: option.nameBy,
-              groupBy: option.groupBy
+              nameBy: option.nameBy ?? 'path',
+              groupBy: option.groupBy ?? 'path'
             })
           );
         }
@@ -76,8 +76,8 @@ export const generate = {
                 runtimeInstancePath: option.instance.runtimeInstancePath
               }),
               exportFromIndex: true,
-              nameBy: option.nameBy,
-              groupBy: option.groupBy
+              nameBy: option.nameBy ?? 'path',
+              groupBy: option.groupBy ?? 'path'
             })
           );
         }
@@ -90,8 +90,8 @@ export const generate = {
             defineTanstackPlugin({
               generateOutput,
               exportFromIndex: true,
-              nameBy: option.nameBy,
-              groupBy: option.groupBy
+              nameBy: option.nameBy ?? 'path',
+              groupBy: option.groupBy ?? 'path'
             })
           );
         }

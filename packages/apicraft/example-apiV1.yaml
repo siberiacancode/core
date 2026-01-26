@@ -54,7 +54,7 @@ servers:
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL.
 paths:
-  '/users/{username}': # path parameter in curly braces
+  '/users-reset--test---/{username}': # path parameter in curly braces
     # parameters list that are used with each operation for this path
     parameters:
       - name: pretty_print

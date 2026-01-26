@@ -1,4 +1,5 @@
 import * as nodePath from 'node:path';
+import process from 'node:process';
 import ts from 'typescript';
 
 import type { AxiosPlugin } from './types';
@@ -59,7 +60,7 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
         (response) => response?.schema.$ref || response?.schema.type !== 'unknown'
       );
       const requestFolderPath = nodePath.dirname(
-        `${plugin.config.generateOutput}/${requestFilePath}`
+        `${process.cwd()}/${plugin.config.generateOutput}/${requestFilePath}`
       );
 
       // import type { RequestData, RequestResponse } from 'generated/types.gen';
@@ -88,7 +89,7 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
         ts.factory.createStringLiteral(
           nodePath.relative(
             requestFolderPath,
-            nodePath.normalize(`${plugin.config.generateOutput}/types.gen`)
+            nodePath.normalize(`${process.cwd()}/${plugin.config.generateOutput}/types.gen`)
           )
         )
       );
@@ -111,7 +112,9 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
           nodePath.relative(
             requestFolderPath,
             plugin.config.runtimeInstancePath ??
-              nodePath.normalize(`${plugin.config.generateOutput}/${plugin.output}/instance.gen`)
+              nodePath.normalize(
+                `${process.cwd()}/${plugin.config.generateOutput}/${plugin.output}/instance.gen`
+              )
           )
         )
       );

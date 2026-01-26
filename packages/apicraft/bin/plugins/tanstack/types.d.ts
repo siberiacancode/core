@@ -5,9 +5,9 @@ import type { ApicraftOption } from '@/bin/schemas';
 export interface TanstackPluginConfig {
   exportFromIndex: boolean;
   generateOutput: string;
-  groupBy?: ApicraftOption['groupBy'];
+  groupBy: NonNullable<ApicraftOption['groupBy']>;
   name: 'tanstack';
-  nameBy?: ApicraftOption['nameBy'];
+  nameBy: NonNullable<ApicraftOption['nameBy']>;
   output?: string;
 }
 
