@@ -7,7 +7,7 @@ import {
   generateSuspenseQueryHookFile
 } from './helpers';
 
-export const handler: TanstackPlugin['Handler'] = ({ plugin }) => {
+export const handler: TanstackPlugin['Handler'] = ({ plugin }) =>
   plugin.forEach('operation', (event) => {
     if (event.type !== 'operation') return;
 
@@ -27,4 +27,3 @@ export const handler: TanstackPlugin['Handler'] = ({ plugin }) => {
       generateMutationHookFile({ plugin, requestFilePath, request, requestName });
     });
   });
-};
