@@ -26,21 +26,34 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "index.js",
-  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.cjs",
+      "default": "./dist/cjs/index.cjs"
+    }
+  },
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/esm/index.mjs",
+  "types": "dist/types/index.d.ts",
   "files": [
-    "index.d.ts",
-    "index.js"
+    "dist/**/*"
   ],
   "scripts": {
-    "format": "prettier --write \"*.js\"",
+    "prepublishOnly": "yarn type && yarn build",
+    "build": "shx rm -rf dist && vite build",
     "lint": "eslint . --fix",
-    "lint-inspector": "npx @eslint/config-inspector"
+    "lint-inspector": "npx @eslint/config-inspector",
+    "type": "tsc --noEmit",
+    "format": "prettier --write .",
+    "pretty": "yarn type && yarn lint && yarn format"
   },
   "dependencies": {
     "@antfu/eslint-config": "6.7.1",
     "@eslint-react/eslint-plugin": "2.3.13",
     "@next/eslint-plugin-next": "16.0.10",
+    "@types/eslint-plugin-jsx-a11y": "^6.10.1",
     "@vue/compiler-sfc": "3.5.25",
     "eslint": "9.39.2",
     "eslint-plugin-jsx-a11y": "6.10.2",
@@ -49,12 +62,14 @@
     "eslint-plugin-react-refresh": "0.4.26"
   },
   "devDependencies": {
-    "@siberiacancode/prettier": "*"
+    "@siberiacancode/prettier": "*",
+    "vite": "^7.1.9",
+    "vite-plugin-dts": "^4.5.4"
   },
   "lint-staged": {
     "*.{js,ts}": [
-      "prettier --write",
-      "eslint --fix"
+      "eslint --fix",
+      "prettier --write"
     ]
   }
 }
