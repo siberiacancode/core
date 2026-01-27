@@ -1,4 +1,4 @@
-import { prettier } from './index.js';
+const { prettier } = require('@siberiacancode/prettier');
 
 /** @type {import('@siberiacancode/prettier').Prettier} */
-export default prettier;
+module.exports = prettier;

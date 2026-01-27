@@ -1,5 +1,6 @@
-/** @type {import('prettier').Config} */
-export const prettier = {
+import type { Config } from 'prettier';
+
+export const prettier: Config = {
   printWidth: 100,
   singleQuote: true,
   jsxSingleQuote: true,
