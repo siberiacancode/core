@@ -1,5 +1,11 @@
-import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from '@antfu/eslint-config';
+import type {
+  Awaitable,
+  ConfigNames,
+  OptionsConfig,
+  TypedFlatConfigItem
+} from '@antfu/eslint-config';
 import type { Linter } from 'eslint';
+import type { FlatConfigComposer } from 'eslint-flat-config-utils';
 
 import antfu from '@antfu/eslint-config';
 import pluginNext from '@next/eslint-plugin-next';
@@ -15,15 +21,17 @@ type EslintOptions = OptionsConfig &
 export type Eslint = (
   options?: EslintOptions,
   ...userConfigs: Awaitable<
-    Linter.Config[] | ReturnType<typeof antfu> | TypedFlatConfigItem | TypedFlatConfigItem[]
+    FlatConfigComposer<any, any> | Linter.Config[] | TypedFlatConfigItem | TypedFlatConfigItem[]
   >[]
-) => ReturnType<typeof antfu>;
+) => FlatConfigComposer<TypedFlatConfigItem, ConfigNames>;
 
 export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) => {
   const { jsxA11y = false, next = false, ...options } = inputOptions;
   const stylistic = options?.stylistic ?? false;
 
   if (next) {
+    // ✅ important:
+    // need to set type explicitly because the plugin is typed with the wrong type
     const nextRules = (pluginNext as { configs: { recommended: { rules: Linter.RulesRecord } } })
       .configs.recommended.rules;
 
@@ -42,6 +50,8 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
   }
 
   if (jsxA11y) {
+    // ✅ important:
+    // need to set type explicitly because the plugin is typed with the wrong type
     const jsxA11yRules = (
       pluginJsxA11y as { flatConfigs: { recommended: { rules: Linter.RulesRecord } } }
     ).flatConfigs.recommended.rules;
@@ -61,19 +71,19 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
   }
 
   if (options.react) {
-    const reactRules = (pluginReact as { configs: { recommended: { rules: Linter.RulesRecord } } })
-      .configs.recommended.rules;
-
     configs.unshift({
       name: 'siberiacancode/react',
       plugins: {
         'siberiacancode-react': pluginReact
       },
       rules: {
-        ...Object.entries(reactRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
-          acc[key.replace('react', 'siberiacancode-react')] = value;
-          return acc;
-        }, {}),
+        ...Object.entries(pluginReact.configs.recommended.rules).reduce<Linter.RulesRecord>(
+          (acc, [key, value]) => {
+            acc[key.replace('react', 'siberiacancode-react')] = value;
+            return acc;
+          },
+          {}
+        ),
         'siberiacancode-react/function-component-definition': [
           'error',
           {
