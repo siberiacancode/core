@@ -1,5 +1,5 @@
-import { eslint } from '@siberiacancode/eslint';
+const { eslint } = require('@siberiacancode/eslint');
 
-export default eslint({
+module.exports = eslint({
   typescript: true
 });
