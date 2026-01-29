@@ -1,5 +1,6 @@
 {
   "name": "@siberiacancode/prettier",
+  "type": "module",
   "version": "1.5.1",
   "description": "prettier configs",
   "author": {
