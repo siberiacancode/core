@@ -1,4 +1,4 @@
-import { prettier } from './index.js';
+import { prettier } from '@siberiacancode/prettier';
 
 /** @type {import('@siberiacancode/prettier').Prettier} */
 export default prettier;
