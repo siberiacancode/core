@@ -23,21 +23,25 @@
   },
   "exports": {
     ".": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/esm/index.mjs",
-      "require": "./dist/cjs/index.cjs",
-      "default": "./dist/cjs/index.cjs"
+      "import": {
+        "types": "./dist/esm/index.d.mts",
+        "default": "./dist/esm/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.cts",
+        "default": "./dist/cjs/index.cjs"
+      }
     }
   },
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.mjs",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/esm/index.d.mts",
   "files": [
     "dist/**/*"
   ],
   "scripts": {
     "prepublishOnly": "yarn type && yarn build",
-    "build": "shx rm -rf dist && vite build",
+    "build": "tsdown",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector",
     "type": "tsc --noEmit",
@@ -52,8 +56,7 @@
   },
   "devDependencies": {
     "@siberiacancode/eslint": "*",
-    "vite": "^7.3.1",
-    "vite-plugin-dts": "^4.5.4"
+    "tsdown": "^0.20.3"
   },
   "lint-staged": {
     "*.{js,ts}": [
