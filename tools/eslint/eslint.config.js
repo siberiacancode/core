@@ -1,4 +1,4 @@
-import { eslint } from './index.js';
+import { eslint } from '@siberiacancode/eslint';
 
 /** @type {import('@siberiacancode/eslint').Eslint} */
 export default eslint({

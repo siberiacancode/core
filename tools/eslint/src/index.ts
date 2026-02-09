@@ -1,44 +1,71 @@
+import type {
+  Awaitable,
+  ConfigNames,
+  OptionsConfig,
+  TypedFlatConfigItem
+} from '@antfu/eslint-config';
+import type { Linter } from 'eslint';
+import type { FlatConfigComposer } from 'eslint-flat-config-utils';
+
 import antfu from '@antfu/eslint-config';
 import pluginNext from '@next/eslint-plugin-next';
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginReact from 'eslint-plugin-react';
 
-/** @type {import('@siberiacancode/eslint').Eslint} */
-export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs) => {
+type EslintOptions = OptionsConfig &
+  TypedFlatConfigItem & {
+    jsxA11y?: boolean;
+    next?: boolean;
+  };
+
+export type Eslint = (
+  options?: EslintOptions,
+  ...userConfigs: Awaitable<
+    FlatConfigComposer<any, any> | Linter.Config[] | TypedFlatConfigItem | TypedFlatConfigItem[]
+  >[]
+) => FlatConfigComposer<TypedFlatConfigItem, ConfigNames>;
+
+export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) => {
+  const { jsxA11y = false, next = false, ...options } = inputOptions;
   const stylistic = options?.stylistic ?? false;
 
   if (next) {
+    // ✅ important:
+    // need to set type explicitly because the plugin is typed with the wrong type
+    const nextRules = (pluginNext as { configs: { recommended: { rules: Linter.RulesRecord } } })
+      .configs.recommended.rules;
+
     configs.unshift({
       name: 'siberiacancode/next',
       plugins: {
         'siberiacancode-next': pluginNext
       },
       rules: {
-        ...Object.entries({ ...pluginNext.configs.recommended.rules }).reduce(
-          (acc, [key, value]) => {
-            acc[key.replace('@next/next', 'siberiacancode-next')] = value;
-            return acc;
-          },
-          {}
-        )
+        ...Object.entries(nextRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
+          acc[key.replace('@next/next', 'siberiacancode-next')] = value;
+          return acc;
+        }, {})
       }
     });
   }
 
   if (jsxA11y) {
+    // ✅ important:
+    // need to set type explicitly because the plugin is typed with the wrong type
+    const jsxA11yRules = (
+      pluginJsxA11y as { flatConfigs: { recommended: { rules: Linter.RulesRecord } } }
+    ).flatConfigs.recommended.rules;
+
     configs.unshift({
       name: 'siberiacancode/jsx-a11y',
       plugins: {
         'siberiacancode-jsx-a11y': pluginJsxA11y
       },
       rules: {
-        ...Object.entries(pluginJsxA11y.flatConfigs.recommended.rules).reduce(
-          (acc, [key, value]) => {
-            acc[key.replace('jsx-a11y', 'siberiacancode-jsx-a11y')] = value;
-            return acc;
-          },
-          {}
-        )
+        ...Object.entries(jsxA11yRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
+          acc[key.replace('jsx-a11y', 'siberiacancode-jsx-a11y')] = value;
+          return acc;
+        }, {})
       }
     });
   }
@@ -50,10 +77,13 @@ export const eslint = ({ jsxA11y = false, next = false, ...options }, ...configs
         'siberiacancode-react': pluginReact
       },
       rules: {
-        ...Object.entries(pluginReact.configs.recommended.rules).reduce((acc, [key, value]) => {
-          acc[key.replace('react', 'siberiacancode-react')] = value;
-          return acc;
-        }, {}),
+        ...Object.entries(pluginReact.configs.recommended.rules).reduce<Linter.RulesRecord>(
+          (acc, [key, value]) => {
+            acc[key.replace('react', 'siberiacancode-react')] = value;
+            return acc;
+          },
+          {}
+        ),
         'siberiacancode-react/function-component-definition': [
           'error',
           {
