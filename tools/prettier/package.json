@@ -1,7 +1,7 @@
 {
   "name": "@siberiacancode/prettier",
   "type": "module",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "prettier configs",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -45,14 +45,14 @@
     "pretty": "yarn type && yarn lint && yarn format"
   },
   "peerDependencies": {
-    "prettier": "^3.7.4"
+    "prettier": "^3.8.1"
   },
   "dependencies": {
-    "prettier": "^3.7.4"
+    "prettier": "^3.8.1"
   },
   "devDependencies": {
     "@siberiacancode/eslint": "*",
-    "vite": "^7.1.9",
+    "vite": "^7.3.1",
     "vite-plugin-dts": "^4.5.4"
   },
   "lint-staged": {

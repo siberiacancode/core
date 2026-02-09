@@ -30,10 +30,7 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
   const stylistic = options?.stylistic ?? false;
 
   if (next) {
-    // ✅ important:
-    // need to set type explicitly because the plugin is typed with the wrong type
-    const nextRules = (pluginNext as { configs: { recommended: { rules: Linter.RulesRecord } } })
-      .configs.recommended.rules;
+    const nextRules = (pluginNext.configs.recommended.rules as Linter.RulesRecord) ?? {};
 
     configs.unshift({
       name: 'siberiacancode/next',
@@ -50,11 +47,7 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
   }
 
   if (jsxA11y) {
-    // ✅ important:
-    // need to set type explicitly because the plugin is typed with the wrong type
-    const jsxA11yRules = (
-      pluginJsxA11y as { flatConfigs: { recommended: { rules: Linter.RulesRecord } } }
-    ).flatConfigs.recommended.rules;
+    const jsxA11yRules = pluginJsxA11y.flatConfigs.recommended.rules as Linter.RulesRecord;
 
     configs.unshift({
       name: 'siberiacancode/jsx-a11y',
@@ -162,19 +155,18 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
           'error',
           {
             groups: [
-              'type',
-              ['builtin', 'external'],
-              'internal-type',
-              ['internal'],
-              ['parent-type', 'sibling-type', 'index-type'],
-              ['parent', 'sibling', 'index'],
-              'object',
-              'style',
+              'type-import',
+              ['value-builtin', 'value-external'],
+              'type-internal',
+              'value-internal',
+              ['type-parent', 'type-sibling', 'type-index'],
+              ['value-parent', 'value-sibling', 'value-index'],
+              'side-effect',
               'side-effect-style',
               'unknown'
             ],
             internalPattern: ['^~/.*', '^@/.*'],
-            newlinesBetween: 'always',
+            newlinesBetween: 1,
             order: 'asc',
             type: 'natural'
           }
@@ -190,10 +182,16 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
         'perfectionist/sort-jsx-props': [
           'error',
           {
-            customGroups: {
-              callback: 'on*',
-              reserved: ['key', 'ref']
-            },
+            customGroups: [
+              {
+                groupName: 'reserved',
+                elementNamePattern: '^(key|ref)$'
+              },
+              {
+                groupName: 'callback',
+                elementNamePattern: '^on[A-Z].*'
+              }
+            ],
             groups: ['shorthand', 'reserved', 'multiline', 'unknown', 'callback'],
             order: 'asc',
             type: 'alphabetical'
