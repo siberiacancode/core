@@ -174,7 +174,7 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
         'perfectionist/sort-interfaces': [
           'error',
           {
-            groups: ['unknown', 'method', 'multiline'],
+            groups: ['property', 'member', 'method', 'index-signature'],
             order: 'asc',
             type: 'alphabetical'
           }
