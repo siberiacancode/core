@@ -1,41 +1,64 @@
 {
   "name": "@siberiacancode/prettier",
-  "description": "prettier configs",
-  "license": "MIT",
+  "type": "module",
   "version": "1.5.1",
-  "keywords": [
-    "prettier"
-  ],
+  "description": "prettier configs",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
     "url": "https://github.com/siberiacancode"
   },
-  "bugs": {
-    "url": "https://github.com/siberiacancode/core/issues"
-  },
+  "license": "MIT",
   "homepage": "https://github.com/siberiacancode/core",
   "repository": {
     "url": "https://github.com/siberiacancode/core"
   },
+  "bugs": {
+    "url": "https://github.com/siberiacancode/core/issues"
+  },
+  "keywords": [
+    "prettier"
+  ],
   "publishConfig": {
     "access": "public"
   },
-  "files": [
-    "index.js",
-    "index.d.ts"
-  ],
-  "main": "index.js",
-  "types": "index.d.ts",
-  "scripts": {
-    "format": "prettier --write \"*.js\""
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.cjs",
+      "default": "./dist/cjs/index.cjs"
+    }
   },
-  "lint-staged": {
-    "*.js": "prettier --write"
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/esm/index.mjs",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "prepublishOnly": "yarn type && yarn build",
+    "build": "shx rm -rf dist && vite build",
+    "lint": "eslint . --fix",
+    "lint-inspector": "npx @eslint/config-inspector",
+    "type": "tsc --noEmit",
+    "format": "prettier --write .",
+    "pretty": "yarn type && yarn lint && yarn format"
   },
   "peerDependencies": {
     "prettier": "^3.7.4"
   },
   "dependencies": {
     "prettier": "^3.7.4"
+  },
+  "devDependencies": {
+    "@siberiacancode/eslint": "*",
+    "vite": "^7.1.9",
+    "vite-plugin-dts": "^4.5.4"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }
