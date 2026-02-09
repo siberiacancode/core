@@ -192,7 +192,7 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
                 elementNamePattern: '^on[A-Z].*'
               }
             ],
-            groups: ['shorthand', 'reserved', 'multiline', 'unknown', 'callback'],
+            groups: ['shorthand-prop', 'reserved', 'multiline-prop', 'unknown', 'callback'],
             order: 'asc',
             type: 'alphabetical'
           }
