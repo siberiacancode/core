@@ -42,7 +42,7 @@
   "module": "dist/esm/index.mjs",
   "types": "dist/esm/index.d.mts",
   "files": [
-    "dist/**/*"
+    "dist"
   ],
   "scripts": {
     "prepublishOnly": "yarn type && yarn build",
