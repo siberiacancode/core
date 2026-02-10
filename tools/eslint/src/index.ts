@@ -8,14 +8,12 @@ import type { Linter } from 'eslint';
 import type { FlatConfigComposer } from 'eslint-flat-config-utils';
 
 import antfu from '@antfu/eslint-config';
-import pluginNext from '@next/eslint-plugin-next';
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginReact from 'eslint-plugin-react';
 
 type EslintOptions = OptionsConfig &
   TypedFlatConfigItem & {
     jsxA11y?: boolean;
-    next?: boolean;
   };
 
 export type Eslint = (
@@ -26,25 +24,8 @@ export type Eslint = (
 ) => FlatConfigComposer<TypedFlatConfigItem, ConfigNames>;
 
 export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) => {
-  const { jsxA11y = false, next = false, ...options } = inputOptions;
+  const { jsxA11y = false, ...options } = inputOptions;
   const stylistic = options?.stylistic ?? false;
-
-  if (next) {
-    const nextRules = (pluginNext.configs.recommended.rules as Linter.RulesRecord) ?? {};
-
-    configs.unshift({
-      name: 'siberiacancode/next',
-      plugins: {
-        'siberiacancode-next': pluginNext
-      },
-      rules: {
-        ...Object.entries(nextRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
-          acc[key.replace('@next/next', 'siberiacancode-next')] = value;
-          return acc;
-        }, {})
-      }
-    });
-  }
 
   if (jsxA11y) {
     const jsxA11yRules = pluginJsxA11y.flatConfigs.recommended.rules as Linter.RulesRecord;

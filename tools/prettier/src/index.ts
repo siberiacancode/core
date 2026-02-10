@@ -1,6 +1,6 @@
-import type { Config } from 'prettier';
+import type { Config as Prettier } from 'prettier';
 
-export const prettier: Config = {
+export const prettier: Prettier = {
   printWidth: 100,
   singleQuote: true,
   jsxSingleQuote: true,
