@@ -40,8 +40,8 @@ export const apicraftOptionSchema = z
   .object({
     input: pathSchema.or(
       z.object({
-        path: pathSchema.or(z.record(z.unknown())),
-        fetch: z.record(z.any()).optional(),
+        path: pathSchema.or(z.record(z.string(), z.unknown())),
+        fetch: z.record(z.string(), z.any()).optional(),
         watch: z
           .boolean()
           .or(z.number())
