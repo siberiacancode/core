@@ -1,4 +1,5 @@
 import { cosmiconfig } from 'cosmiconfig';
+import process from 'node:process';
 
 import { apicraftConfigSchema } from '../schemas';
 

@@ -12,7 +12,7 @@ export const defaultConfig: AxiosPlugin['Config'] = {
   dependencies: ['@hey-api/typescript'],
   handler,
   name: 'axios',
-  output: ''
+  output: '.'
 };
 
 export const defineAxiosPlugin = definePluginConfig(defaultConfig);

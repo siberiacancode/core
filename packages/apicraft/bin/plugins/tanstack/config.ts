@@ -12,7 +12,7 @@ export const defaultConfig: TanstackPlugin['Config'] = {
   dependencies: ['@hey-api/typescript'],
   handler,
   name: 'tanstack',
-  output: ''
+  output: '.'
 };
 
 export const defineTanstackPlugin = definePluginConfig(defaultConfig);

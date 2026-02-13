@@ -122,13 +122,14 @@ export const apicraftOptionSchema = z
       })
       .optional(),
     instance: z.union([instanceNameSchema, instanceSchema]).optional(),
-    nameBy: z.enum(['path', 'operationId']).optional(),
-    groupBy: z.enum(['path', 'tag']).optional(),
+    nameBy: z.enum(['path', 'operationId']).default('operationId').optional(),
+    groupBy: z.enum(['path', 'tag']).default('tag').optional(),
     plugins: z
       .array(pluginNameSchema.or(z.object({ name: pluginNameSchema }).passthrough()))
       .optional()
   })
   .strict();
+
 export type ApicraftOption = z.infer<typeof apicraftOptionSchema>;
 
 export const apicraftConfigSchema = z.array(apicraftOptionSchema);

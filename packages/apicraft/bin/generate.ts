@@ -2,6 +2,7 @@ import type { UserConfig } from '@hey-api/openapi-ts';
 import type { Argv } from 'yargs';
 
 import { createClient } from '@hey-api/openapi-ts';
+import process from 'node:process';
 
 import { getConfig } from '@/bin/helpers';
 
@@ -10,7 +11,7 @@ import type { ApicraftOption, GenerateApicraftOption, InstanceName } from './sch
 import { defineAxiosPlugin } from './plugins/axios';
 import { defineFetchesPlugin } from './plugins/fetches';
 import { defineTanstackPlugin } from './plugins/tanstack';
-import { apicraftOptionSchema } from './schemas';
+import { apicraftConfigSchema, apicraftOptionSchema } from './schemas';
 
 export const generate = {
   command: ['$0', 'generate'],
@@ -33,7 +34,7 @@ export const generate = {
 
       const useConfig = !argv.input && !argv.output;
       if (useConfig) {
-        options = await getConfig();
+        options = apicraftConfigSchema.parse(await getConfig());
       } else {
         options = [
           apicraftOptionSchema.parse({

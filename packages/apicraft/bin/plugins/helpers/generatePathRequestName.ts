@@ -6,7 +6,8 @@ export const generatePathRequestName = (method: string, path: string) => {
   const nameParts: string[] = [];
   let prevPart: string | undefined;
 
-  for (const pathPart of pathParts) {
+  for (let pathPart of pathParts) {
+    pathPart = pathPart.split('-').filter(Boolean).map(capitalize).join('');
     const isParam = pathPart.startsWith('{') && pathPart.endsWith('}');
 
     if (!isParam) {

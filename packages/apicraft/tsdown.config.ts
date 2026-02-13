@@ -3,7 +3,7 @@ import { defineConfig } from 'tsdown';
 export default defineConfig([
   {
     clean: true,
-    entry: ['src/index.ts'],
+    entry: ['bin/bin.ts', 'src/index.ts'],
     fixedExtension: true,
     format: 'es',
     outDir: 'dist/esm',

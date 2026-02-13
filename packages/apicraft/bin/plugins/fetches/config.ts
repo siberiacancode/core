@@ -12,7 +12,7 @@ export const defaultConfig: FetchesPlugin['Config'] = {
   dependencies: ['@hey-api/typescript'],
   handler,
   name: 'fetches',
-  output: ''
+  output: '.'
 };
 
 export const defineFetchesPlugin = definePluginConfig(defaultConfig);
