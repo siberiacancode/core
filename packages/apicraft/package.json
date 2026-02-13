@@ -1,7 +1,7 @@
 {
   "name": "@siberiacancode/apicraft",
   "type": "module",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Generate rest api for your api with one command",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -41,7 +41,7 @@
   "module": "dist/esm/index.mjs",
   "types": "dist/esm/index.d.mts",
   "bin": {
-    "apicraft": "dist/bin/bin.js"
+    "apicraft": "dist/esm/bin/bin.mjs"
   },
   "files": [
     "dist"
