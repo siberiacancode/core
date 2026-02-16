@@ -1,4 +1,6 @@
-import type { InlineConfig as Vitest } from 'vitest/node';
+import type { InlineConfig } from 'vitest/node';
+
+export type Vitest = InlineConfig;
 
 export const vitest: Vitest = {
   globals: true,
@@ -7,5 +9,3 @@ export const vitest: Vitest = {
   restoreMocks: true,
   mockReset: true
 };
-
-export default vitest;
