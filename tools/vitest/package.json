@@ -1,36 +1,51 @@
 {
   "name": "@siberiacancode/vitest",
+  "type": "module",
+  "version": "2.4.0",
   "description": "vitest config",
-  "license": "MIT",
-  "version": "2.3.0",
-  "keywords": [
-    "vitest"
-  ],
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
     "url": "https://github.com/siberiacancode"
   },
-  "bugs": {
-    "url": "https://github.com/siberiacancode/core/issues"
-  },
+  "license": "MIT",
   "homepage": "https://github.com/siberiacancode/core",
   "repository": {
     "url": "https://github.com/siberiacancode/core"
   },
+  "bugs": {
+    "url": "https://github.com/siberiacancode/core/issues"
+  },
+  "keywords": [
+    "vitest"
+  ],
   "publishConfig": {
     "access": "public"
   },
-  "files": [
-    "index.js",
-    "index.d.ts"
-  ],
-  "main": "index.js",
-  "types": "index.d.ts",
-  "scripts": {
-    "format": "prettier --write \"*.js\""
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.mts",
+        "default": "./dist/esm/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.cts",
+        "default": "./dist/cjs/index.cjs"
+      }
+    }
   },
-  "lint-staged": {
-    "*.js": "prettier --write"
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/esm/index.mjs",
+  "types": "dist/esm/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepublishOnly": "yarn type && yarn build",
+    "build": "tsdown",
+    "type": "tsc --noEmit",
+    "lint": "eslint . --fix",
+    "format": "prettier --write .",
+    "pretty": "yarn type && yarn lint && yarn format"
   },
   "peerDependencies": {
     "jsdom": "27.3.0",
@@ -41,6 +56,13 @@
     "vitest": "4.0.16"
   },
   "devDependencies": {
+    "@siberiacancode/eslint": "*",
     "@siberiacancode/prettier": "*"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }

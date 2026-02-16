@@ -1,7 +1,7 @@
 // TEST CONFIG
 
 // eslint-disable-next-line antfu/no-import-dist
-import { apicraft } from './dist/esm/src/index.mjs';
+import { apicraft } from './dist/esm/index.mjs';
 // import { apicraft } from '@siberiacancode/apicraft';
 
 const apicraftConfig = apicraft([

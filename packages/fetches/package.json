@@ -52,8 +52,7 @@
   },
   "devDependencies": {
     "@siberiacancode/eslint": "*",
-    "@siberiacancode/prettier": "*",
-    "tsdown": "^0.20.3"
+    "@siberiacancode/prettier": "*"
   },
   "lint-staged": {
     "*.{js,ts}": [

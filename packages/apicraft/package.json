@@ -69,8 +69,7 @@
     "@siberiacancode/prettier": "*",
     "@types/node": "^25.2.3",
     "@types/yargs": "^17.0.35",
-    "axios": "^1.13.5",
-    "tsdown": "^0.20.3"
+    "axios": "^1.13.5"
   },
   "lint-staged": {
     "*.{js,ts}": [
