@@ -1,7 +1,7 @@
 {
   "name": "@siberiacancode/apicraft",
   "type": "module",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Generate rest api for your api with one command",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -61,6 +61,7 @@
     "@siberiacancode/fetches": "^1.13.2",
     "@tanstack/react-query": "^5.90.5",
     "cosmiconfig": "^9.0.0",
+    "typescript": "^5.9.3",
     "yargs": "^18.0.0",
     "zod": "^4.3.6"
   },

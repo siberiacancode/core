@@ -1,1 +1,48 @@
-{"name":"siberiacancode-core","license":"MIT","type":"module","version":"1.0.0","keywords":["prettier","eslint","tsconfig","builder","jest","stylelint"],"private":true,"author":{"name":"SIBERIA CAN CODE 🧊","url":"https://github.com/siberiacancode"},"bugs":{"url":"https://github.com/siberiacancode/core/issues"},"repository":{"url":"https://github.com/siberiacancode/core"},"workspaces":["tools/*","packages/*"],"scripts":{"dev":"yarn workspaces run dev","build":"yarn workspaces run build","deploy":"yarn workspaces run deploy","lint":"yarn workspaces run lint","format":"yarn workspaces run format","stylelint":"yarn workspaces run stylelint","unit-test":"yarn workspaces run unit-test","lint-staged":"lint-staged","prepare":"husky"},"devDependencies":{"husky":"^9.1.7","lint-staged":"^16.2.7","prettier":"^3.8.1","typescript":"^5.9.3","shx":"0.4.0","tsdown":"^0.20.3"}}
+{
+  "name": "siberiacancode-core",
+  "license": "MIT",
+  "type": "module",
+  "version": "1.0.0",
+  "keywords": [
+    "prettier",
+    "eslint",
+    "tsconfig",
+    "builder",
+    "jest",
+    "stylelint"
+  ],
+  "private": true,
+  "author": {
+    "name": "SIBERIA CAN CODE 🧊",
+    "url": "https://github.com/siberiacancode"
+  },
+  "bugs": {
+    "url": "https://github.com/siberiacancode/core/issues"
+  },
+  "repository": {
+    "url": "https://github.com/siberiacancode/core"
+  },
+  "workspaces": [
+    "tools/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "yarn workspaces run dev",
+    "build": "yarn workspaces run build",
+    "deploy": "yarn workspaces run deploy",
+    "lint": "yarn workspaces run lint",
+    "format": "yarn workspaces run format",
+    "stylelint": "yarn workspaces run stylelint",
+    "unit-test": "yarn workspaces run unit-test",
+    "lint-staged": "lint-staged",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.3",
+    "shx": "0.4.0",
+    "tsdown": "^0.20.3"
+  }
+}

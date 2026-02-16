@@ -4,8 +4,9 @@ export default defineConfig([
   {
     clean: true,
     entry: ['bin/bin.ts'],
-    format: 'es',
     outDir: 'dist/bin',
+    format: 'es',
+    sourcemap: true,
     target: 'esnext'
   },
   {
@@ -16,6 +17,7 @@ export default defineConfig([
     outDir: 'dist/esm',
     platform: 'neutral',
     sourcemap: true,
+    minify: true,
     target: 'esnext'
   },
   {
