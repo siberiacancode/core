@@ -11,7 +11,14 @@ const apicraftConfig = apicraft([
     instance: 'fetches',
     nameBy: 'path',
     groupBy: 'tag',
-    plugins: ['tanstack']
+    plugins: ['tanstack'],
+    parser: {
+      filters: {
+        parameters: {
+          exclude: ['Authorization']
+        }
+      }
+    }
   }
 ]);
 
