@@ -112,23 +112,28 @@ const pluginNameSchema = z.enum([
 
 export const apicraftOptionSchema = z
   .object({
-    input: pathSchema.or(
-      z.object({
-        path: pathSchema.or(z.record(z.string(), z.unknown())),
-        fetch: z.record(z.string(), z.any()).optional(),
-        watch: z
-          .boolean()
-          .or(z.number())
-          .or(
-            z.object({
-              enabled: z.boolean().optional(),
-              interval: z.number().optional(),
-              timeout: z.number().optional()
-            })
-          )
-          .optional()
-      })
-    ),
+    input: z
+      .function()
+      .output(z.any())
+      .or(
+        pathSchema.or(
+          z.object({
+            path: pathSchema.or(z.record(z.string(), z.unknown())),
+            fetch: z.record(z.string(), z.any()).optional(),
+            watch: z
+              .boolean()
+              .or(z.number())
+              .or(
+                z.object({
+                  enabled: z.boolean().optional(),
+                  interval: z.number().optional(),
+                  timeout: z.number().optional()
+                })
+              )
+              .optional()
+          })
+        )
+      ),
     output: pathSchema.or(
       z.object({
         path: pathSchema,
