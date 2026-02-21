@@ -4,11 +4,15 @@ import ts from 'typescript';
 import type { AxiosPlugin } from './types';
 
 import {
-  buildRequestParamsPath,
   capitalize,
-  checkRequestHasRequiredParam,
   generateRequestName,
-  getRequestFilePaths
+  getAxiosRequestCallExpression,
+  getAxiosRequestParameterDeclaration,
+  getAxiosRequestParamsType,
+  getImportAxiosRequestParams,
+  getImportInstance,
+  getRequestFilePaths,
+  getRequestInfo
 } from '../helpers';
 import { addInstanceFile } from './helpers';
 
@@ -19,6 +23,7 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
     if (event.type !== 'operation') return;
 
     const request = event.operation;
+    const requestInfo = getRequestInfo({ request });
     const requestName = generateRequestName(request, plugin.config.nameBy);
 
     const requestFilePaths = getRequestFilePaths({
@@ -39,25 +44,7 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
       const requestResponseTypeName = `${capitalize(request.id)}Response`;
 
       // import type { AxiosRequestParams } from '@siberiacancode/apicraft';
-      const importAxiosRequestParams = ts.factory.createImportDeclaration(
-        undefined,
-        ts.factory.createImportClause(
-          true,
-          undefined,
-          ts.factory.createNamedImports([
-            ts.factory.createImportSpecifier(
-              false,
-              undefined,
-              ts.factory.createIdentifier('AxiosRequestParams')
-            )
-          ])
-        ),
-        ts.factory.createStringLiteral('@siberiacancode/apicraft')
-      );
-
-      const requestHasResponse = Object.values(request.responses ?? {}).some(
-        (response) => response?.schema.$ref || response?.schema.type !== 'unknown'
-      );
+      const importAxiosRequestParams = getImportAxiosRequestParams();
       const requestFolderPath = nodePath.dirname(
         `${plugin.config.generateOutput}/${requestFilePath}`
       );
@@ -74,7 +61,7 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
               undefined,
               ts.factory.createIdentifier(requestDataTypeName)
             ),
-            ...(requestHasResponse
+            ...(requestInfo.hasResponse
               ? [
                   ts.factory.createImportSpecifier(
                     false,
@@ -93,44 +80,19 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
         )
       );
 
-      // import { instance } from "generated/instance.gen";
-      const importInstance = ts.factory.createImportDeclaration(
-        undefined,
-        ts.factory.createImportClause(
-          false,
-          undefined,
-          ts.factory.createNamedImports([
-            ts.factory.createImportSpecifier(
-              false,
-              undefined,
-              ts.factory.createIdentifier('instance')
-            )
-          ])
-        ),
-        ts.factory.createStringLiteral(
-          nodePath.relative(
-            requestFolderPath,
-            plugin.config.runtimeInstancePath ??
-              nodePath.normalize(`${plugin.config.generateOutput}/${plugin.output}/instance.gen`)
-          )
-        )
-      );
+      // import { instance } from "../../instance.gen";
+      const importInstance = getImportInstance({
+        folderPath: requestFolderPath,
+        output: plugin.output,
+        generateOutput: plugin.config.generateOutput,
+        runtimeInstancePath: plugin.config.runtimeInstancePath
+      });
 
       // type RequestParams = AxiosRequestParams<RequestData>;
-      const requestParamsType = ts.factory.createTypeAliasDeclaration(
-        [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
-        ts.factory.createIdentifier(requestParamsTypeName),
-        undefined,
-        ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('AxiosRequestParams'), [
-          ts.factory.createTypeReferenceNode(
-            ts.factory.createIdentifier(requestDataTypeName),
-            undefined
-          )
-        ])
-      );
-
-      const requestHasPathParam = !!Object.keys(request.parameters?.path ?? {}).length;
-      const requestHasRequiredParam = checkRequestHasRequiredParam(request);
+      const requestParamsType = getAxiosRequestParamsType({
+        requestDataTypeName,
+        requestParamsTypeName
+      });
 
       // --- export const request = ({ path, body, query, config }) => ...
       const requestFunction = ts.factory.createVariableStatement(
@@ -145,108 +107,22 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
                 undefined,
                 undefined,
                 [
-                  ts.factory.createParameterDeclaration(
-                    undefined,
-                    undefined,
-                    ts.factory.createObjectBindingPattern([
-                      ts.factory.createBindingElement(
-                        undefined,
-                        undefined,
-                        ts.factory.createIdentifier('config'),
-                        undefined
-                      ),
-                      ...(request.body
-                        ? [
-                            ts.factory.createBindingElement(
-                              undefined,
-                              undefined,
-                              ts.factory.createIdentifier('body'),
-                              undefined
-                            )
-                          ]
-                        : []),
-                      ...(request.parameters?.query
-                        ? [
-                            ts.factory.createBindingElement(
-                              undefined,
-                              undefined,
-                              ts.factory.createIdentifier('query'),
-                              undefined
-                            )
-                          ]
-                        : []),
-
-                      ...(requestHasPathParam
-                        ? [
-                            ts.factory.createBindingElement(
-                              undefined,
-                              undefined,
-                              ts.factory.createIdentifier('path'),
-                              undefined
-                            )
-                          ]
-                        : [])
-                    ]),
-                    undefined,
-                    ts.factory.createTypeReferenceNode(
-                      ts.factory.createIdentifier(requestParamsTypeName),
-                      undefined
-                    ),
-                    !requestHasRequiredParam
-                      ? ts.factory.createObjectLiteralExpression([], false)
-                      : undefined
-                  )
+                  // ({ path, body, query, config }: RequestParams)
+                  getAxiosRequestParameterDeclaration({
+                    request,
+                    requestInfo,
+                    requestParamsTypeName
+                  })
                 ],
                 undefined,
                 ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                ts.factory.createCallExpression(
-                  ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier('instance'),
-                    ts.factory.createIdentifier('request')
-                  ),
-                  requestHasResponse
-                    ? [
-                        ts.factory.createTypeReferenceNode(
-                          ts.factory.createIdentifier(requestResponseTypeName),
-                          undefined
-                        )
-                      ]
-                    : undefined,
-                  [
-                    ts.factory.createObjectLiteralExpression(
-                      [
-                        ts.factory.createPropertyAssignment(
-                          ts.factory.createIdentifier('method'),
-                          ts.factory.createStringLiteral(request.method.toUpperCase())
-                        ),
-                        ts.factory.createPropertyAssignment(
-                          ts.factory.createIdentifier('url'),
-                          requestHasPathParam
-                            ? buildRequestParamsPath(request.path)
-                            : ts.factory.createStringLiteral(request.path)
-                        ),
-                        ...(request.body
-                          ? [
-                              ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier('data'),
-                                ts.factory.createIdentifier('body')
-                              )
-                            ]
-                          : []),
-                        ...(request.parameters?.query
-                          ? [
-                              ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier('params'),
-                                ts.factory.createIdentifier('query')
-                              )
-                            ]
-                          : []),
-                        ts.factory.createSpreadAssignment(ts.factory.createIdentifier('config'))
-                      ],
-                      true
-                    )
-                  ]
-                )
+                // instance.request({ method, url, data, params })
+                getAxiosRequestCallExpression({
+                  request,
+                  requestInfo,
+                  requestResponseTypeName,
+                  instanceVariant: 'function'
+                })
               )
             )
           ],

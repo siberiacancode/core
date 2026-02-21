@@ -2,14 +2,14 @@ import type { DefinePlugin } from '@hey-api/openapi-ts';
 
 import type { ApicraftOption } from '@/bin/schemas';
 
-export interface TanstackPluginConfig {
+export interface AxiosClassPluginConfig {
   exportFromIndex: boolean;
   generateOutput: string;
   groupBy?: ApicraftOption['groupBy'];
-  instanceVariant: 'class' | 'function';
-  name: 'tanstack';
+  name: 'axiosClass';
   nameBy?: ApicraftOption['nameBy'];
   output?: string;
+  runtimeInstancePath?: string;
 }
 
-export type TanstackPlugin = DefinePlugin<TanstackPluginConfig>;
+export type AxiosClassPlugin = DefinePlugin<AxiosClassPluginConfig>;

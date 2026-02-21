@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-const instanceNameSchema = z.enum(['fetches', 'axios']);
+const instanceNameSchema = z.enum(['fetches', 'axios', 'fetches/class', 'axios/class']);
 const instanceSchema = z.object({
   name: instanceNameSchema,
   runtimeInstancePath: z.string().optional()

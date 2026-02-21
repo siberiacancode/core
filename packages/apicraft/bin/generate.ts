@@ -9,6 +9,7 @@ import { getConfig } from '@/bin/helpers';
 import type { ApicraftOption, GenerateApicraftOption, InstanceName } from './schemas';
 
 import { defineAxiosPlugin } from './plugins/axios';
+import { defineAxiosClassPlugin } from './plugins/axiosClass';
 import { defineFetchesPlugin } from './plugins/fetches';
 import { defineTanstackPlugin } from './plugins/tanstack';
 import { apicraftConfigSchema, apicraftOptionSchema } from './schemas';
@@ -51,14 +52,16 @@ export const generate = {
           option.instance === name ||
           (typeof option.instance === 'object' && option.instance.name === name);
 
+        const generateOutput =
+          typeof option.output === 'string' ? option.output : option.output.path;
+        const runtimeInstancePath =
+          typeof option.instance === 'object' ? option.instance.runtimeInstancePath : undefined;
+
         if (matchInstance('axios')) {
           plugins.push(
             defineAxiosPlugin({
-              generateOutput:
-                typeof option.output === 'string' ? option.output : option.output.path,
-              ...(typeof option.instance === 'object' && {
-                runtimeInstancePath: option.instance.runtimeInstancePath
-              }),
+              generateOutput,
+              runtimeInstancePath,
               exportFromIndex: true,
               nameBy: option.nameBy,
               groupBy: option.groupBy
@@ -66,16 +69,23 @@ export const generate = {
           );
         }
 
-        const generateOutput =
-          typeof option.output === 'string' ? option.output : option.output.path;
+        if (matchInstance('axios/class')) {
+          plugins.push(
+            defineAxiosClassPlugin({
+              generateOutput,
+              runtimeInstancePath,
+              exportFromIndex: true,
+              nameBy: option.nameBy,
+              groupBy: option.groupBy
+            })
+          );
+        }
 
         if (matchInstance('fetches')) {
           plugins.push(
             defineFetchesPlugin({
               generateOutput,
-              ...(typeof option.instance === 'object' && {
-                runtimeInstancePath: option.instance.runtimeInstancePath
-              }),
+              runtimeInstancePath,
               exportFromIndex: true,
               nameBy: option.nameBy,
               groupBy: option.groupBy
@@ -92,7 +102,11 @@ export const generate = {
               generateOutput,
               exportFromIndex: true,
               nameBy: option.nameBy,
-              groupBy: option.groupBy
+              groupBy: option.groupBy,
+              instanceVariant:
+                matchInstance('axios/class') || matchInstance('fetches/class')
+                  ? 'class'
+                  : 'function'
             })
           );
         }

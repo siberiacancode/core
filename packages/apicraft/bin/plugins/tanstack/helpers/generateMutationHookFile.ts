@@ -3,9 +3,10 @@ import type { DefinePlugin, IR } from '@hey-api/openapi-ts';
 import * as nodePath from 'node:path';
 import ts from 'typescript';
 
+import { capitalize, getImportInstance, getImportRequest } from '@/bin/plugins/helpers';
+
 import type { TanstackPluginConfig } from '../types';
 
-import { capitalize } from '../../helpers';
 import { getRequestParamsHookKeys } from './getRequestParamsHookKeys';
 
 interface GenerateMutationHookFileParams {
@@ -21,12 +22,12 @@ export const generateMutationHookFile = ({
   requestName,
   requestFilePath
 }: GenerateMutationHookFileParams) => {
-  const hookFolderPath = nodePath.dirname(requestFilePath).replace('requests', 'hooks');
   const hookName = `use${capitalize(requestName)}Mutation`;
-
+  const hookFilePath = `${nodePath.dirname(requestFilePath).replace('requests', 'hooks')}/${hookName}`;
+  const hookFolderPath = nodePath.dirname(`${plugin.config.generateOutput}/${hookFilePath}`);
   const hookFile = plugin.createFile({
-    id: `${hookFolderPath}/${hookName}`,
-    path: `${hookFolderPath}/${hookName}`
+    id: hookName,
+    path: hookFilePath
   });
 
   // import { useMutation } from '@tanstack/react-query';
@@ -63,19 +64,6 @@ export const generateMutationHookFile = ({
     ts.factory.createStringLiteral('@siberiacancode/apicraft')
   );
 
-  // import type { requestName } from './requestName.gen';
-  const importRequest = ts.factory.createImportDeclaration(
-    undefined,
-    ts.factory.createImportClause(
-      false,
-      undefined,
-      ts.factory.createNamedImports([
-        ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier(requestName))
-      ])
-    ),
-    ts.factory.createStringLiteral(nodePath.relative(hookFolderPath, `${requestFilePath}.gen`))
-  );
-
   const requestParamsHookKeys = getRequestParamsHookKeys(request);
 
   // const useRequestNameMutation = (settings: TanstackMutationSettings<typeof requestName>) => useMutation
@@ -98,7 +86,16 @@ export const generateMutationHookFile = ({
                 ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                 ts.factory.createTypeReferenceNode(
                   ts.factory.createIdentifier('TanstackMutationSettings'),
-                  [ts.factory.createTypeQueryNode(ts.factory.createIdentifier(requestName))]
+                  [
+                    ts.factory.createTypeQueryNode(
+                      plugin.config.instanceVariant === 'class'
+                        ? ts.factory.createQualifiedName(
+                            ts.factory.createIdentifier('instance'),
+                            ts.factory.createIdentifier(requestName)
+                          )
+                        : ts.factory.createIdentifier(requestName)
+                    )
+                  ]
                 )
               )
             ],
@@ -163,7 +160,12 @@ export const generateMutationHookFile = ({
                       undefined,
                       ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
                       ts.factory.createCallExpression(
-                        ts.factory.createIdentifier(requestName),
+                        plugin.config.instanceVariant === 'class'
+                          ? ts.factory.createPropertyAccessExpression(
+                              ts.factory.createIdentifier('instance'),
+                              ts.factory.createIdentifier(requestName)
+                            )
+                          : ts.factory.createIdentifier(requestName),
                         undefined,
                         [
                           ts.factory.createObjectLiteralExpression(
@@ -206,6 +208,28 @@ export const generateMutationHookFile = ({
 
   hookFile.add(importUseMutation);
   hookFile.add(importTanstackMutationSettings);
-  hookFile.add(importRequest);
+
+  if (plugin.config.instanceVariant === 'function') {
+    // import type { requestName } from './requestName.gen';
+    hookFile.add(
+      getImportRequest({
+        folderPath: hookFolderPath,
+        requestFilePath,
+        requestName,
+        generateOutput: plugin.config.generateOutput
+      })
+    );
+  }
+  if (plugin.config.instanceVariant === 'class') {
+    // import { instance } from '../../instance.gen';
+    hookFile.add(
+      getImportInstance({
+        output: plugin.output,
+        folderPath: hookFolderPath,
+        generateOutput: plugin.config.generateOutput
+      })
+    );
+  }
+
   hookFile.add(hookFunction);
 };
