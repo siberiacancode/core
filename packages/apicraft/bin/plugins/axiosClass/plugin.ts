@@ -217,18 +217,18 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
   classFile.add(importTypes);
   classFile.add(importAxiosTypes);
 
-  if (!plugin.config.runtimeInstancePath) {
-    // import axios from 'axios';
-    classFile.add(getImportAxios());
-  }
   if (plugin.config.runtimeInstancePath) {
     // import { instance as runtimeInstance } from runtimeInstancePath;
     classFile.add(
       getImportRuntimeInstance({
-        classFolderPath,
+        folderPath: classFolderPath,
         runtimeInstancePath: plugin.config.runtimeInstancePath
       })
     );
+  }
+  if (!plugin.config.runtimeInstancePath) {
+    // import axios from 'axios';
+    classFile.add(getImportAxios());
   }
 
   typeStatements.forEach((alias) => classFile.add(alias));

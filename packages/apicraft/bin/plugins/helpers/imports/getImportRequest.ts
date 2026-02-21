@@ -2,15 +2,15 @@ import nodePath from 'node:path';
 import ts from 'typescript';
 
 interface GetImportRequestParams {
+  folderPath: string;
   generateOutput: string;
-  hookFolderPath: string;
   requestFilePath: string;
   requestName: string;
 }
 
 // import type { requestName } from './requestName.gen';
 export const getImportRequest = ({
-  hookFolderPath,
+  folderPath,
   requestFilePath,
   requestName,
   generateOutput
@@ -25,6 +25,6 @@ export const getImportRequest = ({
       ])
     ),
     ts.factory.createStringLiteral(
-      nodePath.relative(hookFolderPath, `${generateOutput}/${requestFilePath}.gen`)
+      nodePath.relative(folderPath, `${generateOutput}/${requestFilePath}.gen`)
     )
   );

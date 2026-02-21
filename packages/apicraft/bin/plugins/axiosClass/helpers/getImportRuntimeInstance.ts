@@ -2,13 +2,13 @@ import nodePath from 'node:path';
 import ts from 'typescript';
 
 interface GetImportRuntimeInstanceParams {
-  classFolderPath: string;
+  folderPath: string;
   runtimeInstancePath: string;
 }
 
 // import { instance as runtimeInstance } from runtimeInstancePath;
 export const getImportRuntimeInstance = ({
-  classFolderPath,
+  folderPath,
   runtimeInstancePath
 }: GetImportRuntimeInstanceParams) =>
   ts.factory.createImportDeclaration(
@@ -24,6 +24,6 @@ export const getImportRuntimeInstance = ({
         )
       ])
     ),
-    ts.factory.createStringLiteral(nodePath.relative(classFolderPath, runtimeInstancePath)),
+    ts.factory.createStringLiteral(nodePath.relative(folderPath, runtimeInstancePath)),
     undefined
   );

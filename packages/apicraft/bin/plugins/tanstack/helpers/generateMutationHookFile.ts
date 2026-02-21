@@ -213,7 +213,7 @@ export const generateMutationHookFile = ({
     // import type { requestName } from './requestName.gen';
     hookFile.add(
       getImportRequest({
-        hookFolderPath,
+        folderPath: hookFolderPath,
         requestFilePath,
         requestName,
         generateOutput: plugin.config.generateOutput
