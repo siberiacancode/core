@@ -8,6 +8,7 @@ import {
   capitalize,
   checkRequestHasRequiredParam,
   generateRequestName,
+  getImportInstance,
   getRequestFilePaths
 } from '../helpers';
 import { addInstanceFile } from './helpers';
@@ -58,9 +59,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
       const requestHasResponse = Object.values(request.responses ?? {}).some(
         (response) => response?.schema.$ref || response?.schema.type !== 'unknown'
       );
-      const requestFolderPath = nodePath.dirname(
-        `${plugin.config.generateOutput}/${requestFilePath}`
-      );
+      const requestFolderPath = nodePath.dirname(requestFilePath);
 
       // import type { RequestNameData, RequestNameResponse } from 'generated/types.gen';
       const importTypes = ts.factory.createImportDeclaration(
@@ -86,35 +85,16 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
           ])
         ),
         ts.factory.createStringLiteral(
-          nodePath.relative(
-            requestFolderPath,
-            nodePath.normalize(`${plugin.config.generateOutput}/types.gen`)
-          )
+          nodePath.relative(requestFolderPath, nodePath.normalize('types.gen'))
         )
       );
 
-      // import { instance } from "generated/instance.gen";
-      const importInstance = ts.factory.createImportDeclaration(
-        undefined,
-        ts.factory.createImportClause(
-          false,
-          undefined,
-          ts.factory.createNamedImports([
-            ts.factory.createImportSpecifier(
-              false,
-              undefined,
-              ts.factory.createIdentifier('instance')
-            )
-          ])
-        ),
-        ts.factory.createStringLiteral(
-          nodePath.relative(
-            requestFolderPath,
-            plugin.config.runtimeInstancePath ??
-              nodePath.normalize(`${plugin.config.generateOutput}/${plugin.output}/instance.gen`)
-          )
-        )
-      );
+      // import { instance } from "../../instance.gen";
+      const importInstance = getImportInstance({
+        folderPath: requestFolderPath,
+        output: plugin.output,
+        runtimeInstancePath: plugin.config.runtimeInstancePath
+      });
 
       // type RequestNameParams = FetchesRequestParams<RequestNameData>;
       const requestParamsType = ts.factory.createTypeAliasDeclaration(

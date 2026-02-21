@@ -4,10 +4,10 @@ import { useMutation } from "@tanstack/react-query";
 
 import type { TanstackMutationSettings } from "@siberiacancode/apicraft";
 
-import { putUserByUsername } from "../../requests/User/putUserByUsername.gen";
+import { instance } from "../../instance.gen";
 
-export const usePutUserByUsernameMutation = (settings?: TanstackMutationSettings<typeof putUserByUsername>) => useMutation({
+export const usePutUserByUsernameMutation = (settings?: TanstackMutationSettings<typeof instance.putUserByUsername>) => useMutation({
     mutationKey: ["putUserByUsername", settings?.request?.path?.username],
-    mutationFn: async (params) => putUserByUsername({ ...settings?.request, ...params }),
+    mutationFn: async (params) => instance.putUserByUsername({ ...settings?.request, ...params }),
     ...settings?.params
 });

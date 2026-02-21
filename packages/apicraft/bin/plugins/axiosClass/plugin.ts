@@ -1,9 +1,5 @@
-import type { IR } from '@hey-api/openapi-ts';
-
 import * as nodePath from 'node:path';
 import ts from 'typescript';
-
-import {} from '@/bin/helpers';
 
 import type { AxiosClassPlugin } from './types';
 
@@ -17,39 +13,24 @@ import {
   getRequestInfo
 } from '../helpers';
 
-interface RequestMeta {
-  request: IR.OperationObject;
-  requestName: string;
-}
-
 const CLASS_NAME = 'ApiInstance';
 
 export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
-  const requests: RequestMeta[] = [];
-
-  plugin.forEach('operation', (event) => {
-    if (event.type !== 'operation') return;
-
-    const request = event.operation;
-    const requestName = generateRequestName(request, plugin.config.nameBy);
-
-    requests.push({ request, requestName });
-  });
-  if (!requests.length) return;
-
   const classFilePath = nodePath.normalize(`${plugin.output}/instance`);
   const classFile = plugin.createFile({
     id: 'axiosInstance',
     path: classFilePath
   });
 
-  const classFolderPath = nodePath.dirname(`${plugin.config.generateOutput}/${classFilePath}`);
-
   const typeImportNames = new Set<string>();
-  const typeAliases: ts.Statement[] = [];
-  const classMembers: ts.ClassElement[] = [];
+  const typeStatements: ts.Statement[] = [];
+  const classElements: ts.ClassElement[] = [];
 
-  requests.forEach(({ request, requestName }) => {
+  plugin.forEach('operation', (event) => {
+    if (event.type !== 'operation') return;
+
+    const request = event.operation;
+    const requestName = generateRequestName(request, plugin.config.nameBy);
     const requestInfo = getRequestInfo({ request });
 
     const requestDataTypeName = `${capitalize(request.id)}Data`;
@@ -59,7 +40,7 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
     if (requestInfo.hasResponse) typeImportNames.add(requestResponseTypeName);
 
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
-    typeAliases.push(
+    typeStatements.push(
       getAxiosRequestParamsType({
         requestDataTypeName,
         requestParamsTypeName
@@ -86,7 +67,7 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
       true
     );
 
-    classMembers.push(
+    classElements.push(
       ts.factory.createMethodDeclaration(
         undefined,
         undefined,
@@ -102,25 +83,26 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
 
   const importAxiosRequestParams = getImportAxiosRequestParams();
 
+  // import type { RequestData, RequestResponse, ... } from './types.gen';
   const importTypes = ts.factory.createImportDeclaration(
     undefined,
     ts.factory.createImportClause(
       true,
       undefined,
       ts.factory.createNamedImports(
-        Array.from(typeImportNames).map((specifier) =>
-          ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier(specifier))
+        Array.from(typeImportNames).map((typeImportName) =>
+          ts.factory.createImportSpecifier(
+            false,
+            undefined,
+            ts.factory.createIdentifier(typeImportName)
+          )
         )
       )
     ),
-    ts.factory.createStringLiteral(
-      nodePath.relative(
-        classFolderPath,
-        nodePath.normalize(`${plugin.config.generateOutput}/types.gen`)
-      )
-    )
+    ts.factory.createStringLiteral('./types.gen')
   );
 
+  // import axios, { AxiosInstance, CreateAxiosDefaults } from 'axios';
   const importAxios = ts.factory.createImportDeclaration(
     undefined,
     ts.factory.createImportClause(
@@ -131,12 +113,18 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
           false,
           undefined,
           ts.factory.createIdentifier('AxiosInstance')
+        ),
+        ts.factory.createImportSpecifier(
+          false,
+          undefined,
+          ts.factory.createIdentifier('CreateAxiosDefaults')
         )
       ])
     ),
     ts.factory.createStringLiteral('axios')
   );
 
+  // private instance: AxiosInstance;
   const classInstanceProperty = ts.factory.createPropertyDeclaration(
     [ts.factory.createModifier(ts.SyntaxKind.PrivateKeyword)],
     ts.factory.createIdentifier('instance'),
@@ -145,9 +133,22 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
     undefined
   );
 
+  // constructor(config?: CreateAxiosDefaults) { this.instance = axios.create(config); }
   const constructorDeclaration = ts.factory.createConstructorDeclaration(
     undefined,
-    [],
+    [
+      ts.factory.createParameterDeclaration(
+        undefined,
+        undefined,
+        ts.factory.createIdentifier('config'),
+        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+        ts.factory.createTypeReferenceNode(
+          ts.factory.createIdentifier('CreateAxiosDefaults'),
+          undefined
+        ),
+        undefined
+      )
+    ],
     ts.factory.createBlock(
       [
         ts.factory.createExpressionStatement(
@@ -163,7 +164,7 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
                 ts.factory.createIdentifier('create')
               ),
               undefined,
-              undefined
+              [ts.factory.createIdentifier('config')]
             )
           )
         )
@@ -172,14 +173,16 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
     )
   );
 
+  // export class ApiInstance {...}
   const classDeclaration = ts.factory.createClassDeclaration(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createIdentifier(CLASS_NAME),
     undefined,
     undefined,
-    [classInstanceProperty, constructorDeclaration, ...classMembers]
+    [classInstanceProperty, constructorDeclaration, ...classElements]
   );
 
+  // export const instance = new ApiInstance();
   const classInstance = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -198,7 +201,7 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
   classFile.add(importAxiosRequestParams);
   classFile.add(importTypes);
   classFile.add(importAxios);
-  typeAliases.forEach((alias) => classFile.add(alias));
+  typeStatements.forEach((alias) => classFile.add(alias));
   classFile.add(classDeclaration);
   classFile.add(classInstance);
 };

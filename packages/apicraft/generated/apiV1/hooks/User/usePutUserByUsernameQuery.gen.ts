@@ -4,10 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 
 import type { TanstackQuerySettings } from "@siberiacancode/apicraft";
 
-import { putUserByUsername } from "../../requests/User/putUserByUsername.gen";
+import { instance } from "../../instance.gen";
 
-export const usePutUserByUsernameQuery = (settings: TanstackQuerySettings<typeof putUserByUsername>) => useQuery({
+export const usePutUserByUsernameQuery = (settings: TanstackQuerySettings<typeof instance.putUserByUsername>) => useQuery({
     queryKey: ["putUserByUsername", settings.request.path?.username],
-    queryFn: async () => putUserByUsername({ ...settings.request }),
+    queryFn: async () => instance.putUserByUsername({ ...settings.request }),
     ...settings.params
 });

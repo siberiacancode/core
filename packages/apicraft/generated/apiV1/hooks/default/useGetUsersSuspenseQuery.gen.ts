@@ -4,11 +4,11 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
 import type { TanstackSuspenseQuerySettings } from "@siberiacancode/apicraft";
 
-import { getUsers } from "../../requests/default/getUsers.gen";
+import { instance } from "../../instance.gen";
 
-export const getUsersOptions = (settings?: TanstackSuspenseQuerySettings<typeof getUsers>) => queryOptions({
+export const getUsersOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.getUsers>) => queryOptions({
     queryKey: ["getUsers"],
-    queryFn: async () => getUsers({ ...settings?.request }),
+    queryFn: async () => instance.getUsers({ ...settings?.request }),
     ...settings?.params
 });
 

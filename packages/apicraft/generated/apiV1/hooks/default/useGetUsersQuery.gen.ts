@@ -4,10 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 
 import type { TanstackQuerySettings } from "@siberiacancode/apicraft";
 
-import { getUsers } from "../../requests/default/getUsers.gen";
+import { instance } from "../../instance.gen";
 
-export const useGetUsersQuery = (settings?: TanstackQuerySettings<typeof getUsers>) => useQuery({
+export const useGetUsersQuery = (settings?: TanstackQuerySettings<typeof instance.getUsers>) => useQuery({
     queryKey: ["getUsers"],
-    queryFn: async () => getUsers({ ...settings?.request }),
+    queryFn: async () => instance.getUsers({ ...settings?.request }),
     ...settings?.params
 });

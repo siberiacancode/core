@@ -7,7 +7,8 @@ import { handler } from './plugin';
 export const defaultConfig: TanstackPlugin['Config'] = {
   config: {
     generateOutput: '',
-    exportFromIndex: true
+    exportFromIndex: true,
+    instanceVariant: 'function'
   },
   dependencies: ['@hey-api/typescript'],
   handler,

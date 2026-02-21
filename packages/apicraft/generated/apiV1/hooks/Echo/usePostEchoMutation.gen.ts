@@ -4,10 +4,10 @@ import { useMutation } from "@tanstack/react-query";
 
 import type { TanstackMutationSettings } from "@siberiacancode/apicraft";
 
-import { postEcho } from "../../requests/Echo/postEcho.gen";
+import { instance } from "../../instance.gen";
 
-export const usePostEchoMutation = (settings?: TanstackMutationSettings<typeof postEcho>) => useMutation({
+export const usePostEchoMutation = (settings?: TanstackMutationSettings<typeof instance.postEcho>) => useMutation({
     mutationKey: ["postEcho"],
-    mutationFn: async (params) => postEcho({ ...settings?.request, ...params }),
+    mutationFn: async (params) => instance.postEcho({ ...settings?.request, ...params }),
     ...settings?.params
 });

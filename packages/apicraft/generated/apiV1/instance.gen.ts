@@ -10,7 +10,7 @@ import type {
   EchoResponse
 } from './types.gen';
 
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, CreateAxiosDefaults } from 'axios';
 
 export type GetUsersRequestParams = AxiosRequestParams<GetUserByNameData>;
 
@@ -20,8 +20,8 @@ export type PostEchoRequestParams = AxiosRequestParams<EchoData>;
 
 export class ApiInstance {
   private instance: AxiosInstance;
-  constructor() {
-    this.instance = axios.create();
+  constructor(config?: CreateAxiosDefaults) {
+    this.instance = axios.create(config);
   }
   getUsers({ config, query }: GetUsersRequestParams = {}) {
     return this.instance.request<GetUserByNameResponse>({

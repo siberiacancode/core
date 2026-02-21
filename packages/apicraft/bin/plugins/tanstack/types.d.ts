@@ -6,9 +6,11 @@ export interface TanstackPluginConfig {
   exportFromIndex: boolean;
   generateOutput: string;
   groupBy?: ApicraftOption['groupBy'];
+  instanceVariant: 'class' | 'function';
   name: 'tanstack';
   nameBy?: ApicraftOption['nameBy'];
   output?: string;
+  runtimeInstancePath?: string;
 }
 
 export type TanstackPlugin = DefinePlugin<TanstackPluginConfig>;

@@ -105,7 +105,11 @@ export const generate = {
               generateOutput,
               exportFromIndex: true,
               nameBy: option.nameBy,
-              groupBy: option.groupBy
+              groupBy: option.groupBy,
+              ...(typeof option.instance === 'object' && {
+                runtimeInstancePath: option.instance.runtimeInstancePath
+              }),
+              instanceVariant: matchInstance('axios/class') ? 'class' : 'function'
             })
           );
         }

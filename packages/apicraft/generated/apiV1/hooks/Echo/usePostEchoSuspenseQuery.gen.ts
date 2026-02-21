@@ -4,11 +4,11 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
 import type { TanstackSuspenseQuerySettings } from "@siberiacancode/apicraft";
 
-import { postEcho } from "../../requests/Echo/postEcho.gen";
+import { instance } from "../../instance.gen";
 
-export const postEchoOptions = (settings: TanstackSuspenseQuerySettings<typeof postEcho>) => queryOptions({
+export const postEchoOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.postEcho>) => queryOptions({
     queryKey: ["postEcho"],
-    queryFn: async () => postEcho({ ...settings.request }),
+    queryFn: async () => instance.postEcho({ ...settings.request }),
     ...settings.params
 });
 

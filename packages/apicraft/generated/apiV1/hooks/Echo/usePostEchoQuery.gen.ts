@@ -4,10 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 
 import type { TanstackQuerySettings } from "@siberiacancode/apicraft";
 
-import { postEcho } from "../../requests/Echo/postEcho.gen";
+import { instance } from "../../instance.gen";
 
-export const usePostEchoQuery = (settings: TanstackQuerySettings<typeof postEcho>) => useQuery({
+export const usePostEchoQuery = (settings: TanstackQuerySettings<typeof instance.postEcho>) => useQuery({
     queryKey: ["postEcho"],
-    queryFn: async () => postEcho({ ...settings.request }),
+    queryFn: async () => instance.postEcho({ ...settings.request }),
     ...settings.params
 });

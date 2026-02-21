@@ -4,11 +4,11 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
 import type { TanstackSuspenseQuerySettings } from "@siberiacancode/apicraft";
 
-import { putUserByUsername } from "../../requests/User/putUserByUsername.gen";
+import { instance } from "../../instance.gen";
 
-export const putUserByUsernameOptions = (settings: TanstackSuspenseQuerySettings<typeof putUserByUsername>) => queryOptions({
+export const putUserByUsernameOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.putUserByUsername>) => queryOptions({
     queryKey: ["putUserByUsername", settings.request.path?.username],
-    queryFn: async () => putUserByUsername({ ...settings.request }),
+    queryFn: async () => instance.putUserByUsername({ ...settings.request }),
     ...settings.params
 });
 
