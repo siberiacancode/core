@@ -7,10 +7,10 @@ import type { GetRequestInfoResult } from '../getRequestInfo';
 import { buildRequestParamsPath } from '../buildRequestParamsPath';
 
 interface GetAxiosRequestCallExpressionParams {
+  instanceVariant: 'class' | 'function';
   request: IR.OperationObject;
   requestInfo: GetRequestInfoResult;
   requestResponseTypeName: string;
-  variant: 'class' | 'function';
 }
 
 // instance.request({ method, url, data, params })
@@ -18,10 +18,10 @@ export const getAxiosRequestCallExpression = ({
   request,
   requestInfo,
   requestResponseTypeName,
-  variant
+  instanceVariant
 }: GetAxiosRequestCallExpressionParams) =>
   ts.factory.createCallExpression(
-    variant === 'class'
+    instanceVariant === 'class'
       ? ts.factory.createPropertyAccessExpression(
           ts.factory.createPropertyAccessExpression(
             ts.factory.createThis(),

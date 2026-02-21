@@ -5,9 +5,9 @@ import ts from 'typescript';
 
 import {
   capitalize,
-  checkRequestHasRequiredParam,
   getImportInstance,
-  getImportRequest
+  getImportRequest,
+  getRequestInfo
 } from '@/bin/plugins/helpers';
 
 import type { TanstackPluginConfig } from '../types';
@@ -27,6 +27,8 @@ export const generateSuspenseQueryHookFile = ({
   requestName,
   requestFilePath
 }: GenerateSuspenseQueryHookParams) => {
+  const requestInfo = getRequestInfo({ request });
+
   const hookFolderPath = nodePath.dirname(requestFilePath).replace('requests', 'hooks');
   const hookName = `use${capitalize(requestName)}SuspenseQuery`;
   const hookFile = plugin.createFile({
@@ -75,7 +77,6 @@ export const generateSuspenseQueryHookFile = ({
 
   const optionsFunctionName = `${requestName}Options`;
   const requestParamsHookKeys = getRequestParamsHookKeys(request);
-  const requestHasRequiredParam = checkRequestHasRequiredParam(request);
 
   // const requestNameOptions = queryOptions({...})
   const optionsFunction = ts.factory.createVariableStatement(
@@ -94,7 +95,7 @@ export const generateSuspenseQueryHookFile = ({
                 undefined,
                 undefined,
                 ts.factory.createIdentifier('settings'),
-                !requestHasRequiredParam
+                !requestInfo.hasRequiredParam
                   ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
                   : undefined,
                 ts.factory.createTypeReferenceNode(
@@ -131,12 +132,12 @@ export const generateSuspenseQueryHookFile = ({
                               ts.factory.createPropertyAccessChain(
                                 ts.factory.createPropertyAccessChain(
                                   ts.factory.createIdentifier('settings'),
-                                  !requestHasRequiredParam
+                                  !requestInfo.hasRequiredParam
                                     ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                                     : undefined,
                                   ts.factory.createIdentifier('request')
                                 ),
-                                !requestHasRequiredParam
+                                !requestInfo.hasRequiredParam
                                   ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                                   : undefined,
                                 ts.factory.createIdentifier('path')
@@ -150,12 +151,12 @@ export const generateSuspenseQueryHookFile = ({
                               ts.factory.createPropertyAccessChain(
                                 ts.factory.createPropertyAccessChain(
                                   ts.factory.createIdentifier('settings'),
-                                  !requestHasRequiredParam
+                                  !requestInfo.hasRequiredParam
                                     ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                                     : undefined,
                                   ts.factory.createIdentifier('request')
                                 ),
-                                !requestHasRequiredParam
+                                !requestInfo.hasRequiredParam
                                   ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                                   : undefined,
                                 ts.factory.createIdentifier('query')
@@ -191,7 +192,7 @@ export const generateSuspenseQueryHookFile = ({
                                 ts.factory.createSpreadAssignment(
                                   ts.factory.createPropertyAccessChain(
                                     ts.factory.createIdentifier('settings'),
-                                    !requestHasRequiredParam
+                                    !requestInfo.hasRequiredParam
                                       ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                                       : undefined,
                                     ts.factory.createIdentifier('request')
@@ -208,7 +209,7 @@ export const generateSuspenseQueryHookFile = ({
                     ts.factory.createSpreadAssignment(
                       ts.factory.createPropertyAccessChain(
                         ts.factory.createIdentifier('settings'),
-                        !requestHasRequiredParam
+                        !requestInfo.hasRequiredParam
                           ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                           : undefined,
                         ts.factory.createIdentifier('params')

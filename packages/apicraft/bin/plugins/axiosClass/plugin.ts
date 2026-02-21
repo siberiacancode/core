@@ -47,6 +47,7 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
       })
     );
 
+    // ({ path, body, query, config }: RequestParams)
     const requestParameter = getAxiosRequestParameterDeclaration({
       request,
       requestInfo,
@@ -56,11 +57,12 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
     const requestBody = ts.factory.createBlock(
       [
         ts.factory.createReturnStatement(
+          // instance.request({ method, url, data, params })
           getAxiosRequestCallExpression({
             request,
             requestInfo,
             requestResponseTypeName,
-            variant: 'class'
+            instanceVariant: 'class'
           })
         )
       ],
@@ -81,6 +83,7 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
     );
   });
 
+  // import type { AxiosRequestParams } from '@siberiacancode/apicraft';
   const importAxiosRequestParams = getImportAxiosRequestParams();
 
   // import type { RequestData, RequestResponse, ... } from './types.gen';

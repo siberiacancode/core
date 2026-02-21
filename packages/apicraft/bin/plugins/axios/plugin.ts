@@ -43,6 +43,7 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
       const requestDataTypeName = `${capitalize(request.id)}Data`;
       const requestResponseTypeName = `${capitalize(request.id)}Response`;
 
+      // import type { AxiosRequestParams } from '@siberiacancode/apicraft';
       const importAxiosRequestParams = getImportAxiosRequestParams();
       const requestFolderPath = nodePath.dirname(requestFilePath);
 
@@ -81,6 +82,7 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
         runtimeInstancePath: plugin.config.runtimeInstancePath
       });
 
+      // type RequestParams = AxiosRequestParams<RequestData>;
       const requestParamsType = getAxiosRequestParamsType({
         requestDataTypeName,
         requestParamsTypeName
@@ -99,6 +101,7 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
                 undefined,
                 undefined,
                 [
+                  // ({ path, body, query, config }: RequestParams)
                   getAxiosRequestParameterDeclaration({
                     request,
                     requestInfo,
@@ -107,11 +110,12 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
                 ],
                 undefined,
                 ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                // instance.request({ method, url, data, params })
                 getAxiosRequestCallExpression({
                   request,
                   requestInfo,
                   requestResponseTypeName,
-                  variant: 'function'
+                  instanceVariant: 'function'
                 })
               )
             )

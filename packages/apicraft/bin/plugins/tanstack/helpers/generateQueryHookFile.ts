@@ -5,9 +5,9 @@ import ts from 'typescript';
 
 import {
   capitalize,
-  checkRequestHasRequiredParam,
   getImportInstance,
-  getImportRequest
+  getImportRequest,
+  getRequestInfo
 } from '@/bin/plugins/helpers';
 
 import type { TanstackPluginConfig } from '../types';
@@ -27,6 +27,8 @@ export const generateQueryHookFile = ({
   requestName,
   requestFilePath
 }: GenerateQueryHookParams) => {
+  const requestInfo = getRequestInfo({ request });
+
   const hookFolderPath = nodePath.dirname(requestFilePath).replace('requests', 'hooks');
   const hookName = `use${capitalize(requestName)}Query`;
   const hookFile = plugin.createFile({
@@ -65,7 +67,6 @@ export const generateQueryHookFile = ({
   );
 
   const requestParamsHookKeys = getRequestParamsHookKeys(request);
-  const requestHasRequiredParam = checkRequestHasRequiredParam(request);
 
   // const useRequestNameQuery = (settings: TanstackQuerySettings<typeof requestName>) => useQuery
   const hookFunction = ts.factory.createVariableStatement(
@@ -84,7 +85,7 @@ export const generateQueryHookFile = ({
                 undefined,
                 undefined,
                 ts.factory.createIdentifier('settings'),
-                !requestHasRequiredParam
+                !requestInfo.hasRequiredParam
                   ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
                   : undefined,
                 ts.factory.createTypeReferenceNode(
@@ -118,12 +119,12 @@ export const generateQueryHookFile = ({
                             ts.factory.createPropertyAccessChain(
                               ts.factory.createPropertyAccessChain(
                                 ts.factory.createIdentifier('settings'),
-                                !requestHasRequiredParam
+                                !requestInfo.hasRequiredParam
                                   ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                                   : undefined,
                                 ts.factory.createIdentifier('request')
                               ),
-                              !requestHasRequiredParam
+                              !requestInfo.hasRequiredParam
                                 ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                                 : undefined,
                               ts.factory.createIdentifier('path')
@@ -137,12 +138,12 @@ export const generateQueryHookFile = ({
                             ts.factory.createPropertyAccessChain(
                               ts.factory.createPropertyAccessChain(
                                 ts.factory.createIdentifier('settings'),
-                                !requestHasRequiredParam
+                                !requestInfo.hasRequiredParam
                                   ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                                   : undefined,
                                 ts.factory.createIdentifier('request')
                               ),
-                              !requestHasRequiredParam
+                              !requestInfo.hasRequiredParam
                                 ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                                 : undefined,
                               ts.factory.createIdentifier('query')
@@ -178,7 +179,7 @@ export const generateQueryHookFile = ({
                               ts.factory.createSpreadAssignment(
                                 ts.factory.createPropertyAccessChain(
                                   ts.factory.createIdentifier('settings'),
-                                  !requestHasRequiredParam
+                                  !requestInfo.hasRequiredParam
                                     ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                                     : undefined,
                                   ts.factory.createIdentifier('request')
@@ -195,7 +196,7 @@ export const generateQueryHookFile = ({
                   ts.factory.createSpreadAssignment(
                     ts.factory.createPropertyAccessChain(
                       ts.factory.createIdentifier('settings'),
-                      !requestHasRequiredParam
+                      !requestInfo.hasRequiredParam
                         ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                         : undefined,
                       ts.factory.createIdentifier('params')

@@ -109,7 +109,10 @@ export const generate = {
               ...(typeof option.instance === 'object' && {
                 runtimeInstancePath: option.instance.runtimeInstancePath
               }),
-              instanceVariant: matchInstance('axios/class') ? 'class' : 'function'
+              instanceVariant:
+                matchInstance('axios/class') || matchInstance('fetches/class')
+                  ? 'class'
+                  : 'function'
             })
           );
         }
