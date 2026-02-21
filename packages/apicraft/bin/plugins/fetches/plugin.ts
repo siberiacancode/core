@@ -57,7 +57,9 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
         ts.factory.createStringLiteral('@siberiacancode/apicraft')
       );
 
-      const requestFolderPath = nodePath.dirname(requestFilePath);
+      const requestFolderPath = nodePath.dirname(
+        `${plugin.config.generateOutput}/${requestFilePath}`
+      );
 
       // import type { RequestNameData, RequestNameResponse } from 'generated/types.gen';
       const importTypes = ts.factory.createImportDeclaration(
@@ -83,7 +85,10 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
           ])
         ),
         ts.factory.createStringLiteral(
-          nodePath.relative(requestFolderPath, nodePath.normalize('types.gen'))
+          nodePath.relative(
+            requestFolderPath,
+            nodePath.normalize(`${plugin.config.generateOutput}/types.gen`)
+          )
         )
       );
 
@@ -91,6 +96,7 @@ export const handler: FetchesPlugin['Handler'] = ({ plugin }) => {
       const importInstance = getImportInstance({
         folderPath: requestFolderPath,
         output: plugin.output,
+        generateOutput: plugin.config.generateOutput,
         runtimeInstancePath: plugin.config.runtimeInstancePath
       });
 

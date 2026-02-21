@@ -29,11 +29,12 @@ export const generateSuspenseQueryHookFile = ({
 }: GenerateSuspenseQueryHookParams) => {
   const requestInfo = getRequestInfo({ request });
 
-  const hookFolderPath = nodePath.dirname(requestFilePath).replace('requests', 'hooks');
   const hookName = `use${capitalize(requestName)}SuspenseQuery`;
+  const hookFilePath = `${nodePath.dirname(requestFilePath).replace('requests', 'hooks')}/${hookName}`;
+  const hookFolderPath = nodePath.dirname(`${plugin.config.generateOutput}/${hookFilePath}`);
   const hookFile = plugin.createFile({
-    id: `${hookFolderPath}/${hookName}`,
-    path: `${hookFolderPath}/${hookName}`
+    id: hookName,
+    path: hookFilePath
   });
 
   // import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
@@ -278,7 +279,8 @@ export const generateSuspenseQueryHookFile = ({
       getImportRequest({
         hookFolderPath,
         requestFilePath,
-        requestName
+        requestName,
+        generateOutput: plugin.config.generateOutput
       })
     );
   }
@@ -288,7 +290,7 @@ export const generateSuspenseQueryHookFile = ({
       getImportInstance({
         output: plugin.output,
         folderPath: hookFolderPath,
-        runtimeInstancePath: plugin.config.runtimeInstancePath
+        generateOutput: plugin.config.generateOutput
       })
     );
   }

@@ -45,7 +45,9 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
 
       // import type { AxiosRequestParams } from '@siberiacancode/apicraft';
       const importAxiosRequestParams = getImportAxiosRequestParams();
-      const requestFolderPath = nodePath.dirname(requestFilePath);
+      const requestFolderPath = nodePath.dirname(
+        `${plugin.config.generateOutput}/${requestFilePath}`
+      );
 
       // import type { RequestData, RequestResponse } from 'generated/types.gen';
       const importTypes = ts.factory.createImportDeclaration(
@@ -71,7 +73,10 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
           ])
         ),
         ts.factory.createStringLiteral(
-          nodePath.relative(requestFolderPath, nodePath.normalize('types.gen'))
+          nodePath.relative(
+            requestFolderPath,
+            nodePath.normalize(`${plugin.config.generateOutput}/types.gen`)
+          )
         )
       );
 
@@ -79,6 +84,7 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
       const importInstance = getImportInstance({
         folderPath: requestFolderPath,
         output: plugin.output,
+        generateOutput: plugin.config.generateOutput,
         runtimeInstancePath: plugin.config.runtimeInstancePath
       });
 

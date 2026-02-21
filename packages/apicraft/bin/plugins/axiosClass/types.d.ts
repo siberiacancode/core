@@ -9,6 +9,7 @@ export interface AxiosClassPluginConfig {
   name: 'axiosClass';
   nameBy?: ApicraftOption['nameBy'];
   output?: string;
+  runtimeInstancePath?: string;
 }
 
 export type AxiosClassPlugin = DefinePlugin<AxiosClassPluginConfig>;

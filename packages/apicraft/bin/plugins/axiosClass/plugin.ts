@@ -9,14 +9,17 @@ import {
   getAxiosRequestCallExpression,
   getAxiosRequestParameterDeclaration,
   getAxiosRequestParamsType,
+  getImportAxios,
   getImportAxiosRequestParams,
   getRequestInfo
 } from '../helpers';
+import { getImportRuntimeInstance } from './helpers';
 
 const CLASS_NAME = 'ApiInstance';
 
 export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
   const classFilePath = nodePath.normalize(`${plugin.output}/instance`);
+  const classFolderPath = nodePath.dirname(`${plugin.config.generateOutput}/${classFilePath}`);
   const classFile = plugin.createFile({
     id: 'axiosInstance',
     path: classFilePath
@@ -105,26 +108,31 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
     ts.factory.createStringLiteral('./types.gen')
   );
 
-  // import axios, { AxiosInstance, CreateAxiosDefaults } from 'axios';
-  const importAxios = ts.factory.createImportDeclaration(
+  // import type { AxiosInstance, CreateAxiosDefaults } from 'axios';
+  const importAxiosTypes = ts.factory.createImportDeclaration(
     undefined,
     ts.factory.createImportClause(
-      false,
-      ts.factory.createIdentifier('axios'),
+      true,
+      undefined,
       ts.factory.createNamedImports([
         ts.factory.createImportSpecifier(
           false,
           undefined,
           ts.factory.createIdentifier('AxiosInstance')
         ),
-        ts.factory.createImportSpecifier(
-          false,
-          undefined,
-          ts.factory.createIdentifier('CreateAxiosDefaults')
-        )
+        ...(!plugin.config.runtimeInstancePath
+          ? [
+              ts.factory.createImportSpecifier(
+                false,
+                undefined,
+                ts.factory.createIdentifier('CreateAxiosDefaults')
+              )
+            ]
+          : [])
       ])
     ),
-    ts.factory.createStringLiteral('axios')
+    ts.factory.createStringLiteral('axios'),
+    undefined
   );
 
   // private instance: AxiosInstance;
@@ -139,19 +147,21 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
   // constructor(config?: CreateAxiosDefaults) { this.instance = axios.create(config); }
   const constructorDeclaration = ts.factory.createConstructorDeclaration(
     undefined,
-    [
-      ts.factory.createParameterDeclaration(
-        undefined,
-        undefined,
-        ts.factory.createIdentifier('config'),
-        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-        ts.factory.createTypeReferenceNode(
-          ts.factory.createIdentifier('CreateAxiosDefaults'),
-          undefined
-        ),
-        undefined
-      )
-    ],
+    !plugin.config.runtimeInstancePath
+      ? [
+          ts.factory.createParameterDeclaration(
+            undefined,
+            undefined,
+            ts.factory.createIdentifier('config'),
+            ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+            ts.factory.createTypeReferenceNode(
+              ts.factory.createIdentifier('CreateAxiosDefaults'),
+              undefined
+            ),
+            undefined
+          )
+        ]
+      : [],
     ts.factory.createBlock(
       [
         ts.factory.createExpressionStatement(
@@ -161,14 +171,16 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
               ts.factory.createIdentifier('instance')
             ),
             ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-            ts.factory.createCallExpression(
-              ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier('axios'),
-                ts.factory.createIdentifier('create')
-              ),
-              undefined,
-              [ts.factory.createIdentifier('config')]
-            )
+            plugin.config.runtimeInstancePath
+              ? ts.factory.createIdentifier('runtimeInstance')
+              : ts.factory.createCallExpression(
+                  ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier('axios'),
+                    ts.factory.createIdentifier('create')
+                  ),
+                  undefined,
+                  !plugin.config.runtimeInstancePath ? [ts.factory.createIdentifier('config')] : []
+                )
           )
         )
       ],
@@ -203,7 +215,22 @@ export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
 
   classFile.add(importAxiosRequestParams);
   classFile.add(importTypes);
-  classFile.add(importAxios);
+  classFile.add(importAxiosTypes);
+
+  if (!plugin.config.runtimeInstancePath) {
+    // import axios from 'axios';
+    classFile.add(getImportAxios());
+  }
+  if (plugin.config.runtimeInstancePath) {
+    // import { instance as runtimeInstance } from runtimeInstancePath;
+    classFile.add(
+      getImportRuntimeInstance({
+        classFolderPath,
+        runtimeInstancePath: plugin.config.runtimeInstancePath
+      })
+    );
+  }
+
   typeStatements.forEach((alias) => classFile.add(alias));
   classFile.add(classDeclaration);
   classFile.add(classInstance);

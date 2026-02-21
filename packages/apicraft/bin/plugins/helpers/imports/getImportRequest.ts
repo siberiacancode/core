@@ -2,6 +2,7 @@ import nodePath from 'node:path';
 import ts from 'typescript';
 
 interface GetImportRequestParams {
+  generateOutput: string;
   hookFolderPath: string;
   requestFilePath: string;
   requestName: string;
@@ -11,7 +12,8 @@ interface GetImportRequestParams {
 export const getImportRequest = ({
   hookFolderPath,
   requestFilePath,
-  requestName
+  requestName,
+  generateOutput
 }: GetImportRequestParams) =>
   ts.factory.createImportDeclaration(
     undefined,
@@ -22,5 +24,7 @@ export const getImportRequest = ({
         ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier(requestName))
       ])
     ),
-    ts.factory.createStringLiteral(nodePath.relative(hookFolderPath, `${requestFilePath}.gen`))
+    ts.factory.createStringLiteral(
+      nodePath.relative(hookFolderPath, `${generateOutput}/${requestFilePath}.gen`)
+    )
   );

@@ -29,11 +29,12 @@ export const generateQueryHookFile = ({
 }: GenerateQueryHookParams) => {
   const requestInfo = getRequestInfo({ request });
 
-  const hookFolderPath = nodePath.dirname(requestFilePath).replace('requests', 'hooks');
   const hookName = `use${capitalize(requestName)}Query`;
+  const hookFilePath = `${nodePath.dirname(requestFilePath).replace('requests', 'hooks')}/${hookName}`;
+  const hookFolderPath = nodePath.dirname(`${plugin.config.generateOutput}/${hookFilePath}`);
   const hookFile = plugin.createFile({
-    id: `${hookFolderPath}/${hookName}`,
-    path: `${hookFolderPath}/${hookName}`
+    id: hookName,
+    path: hookFilePath
   });
 
   // import { useQuery } from '@tanstack/react-query';
@@ -222,7 +223,8 @@ export const generateQueryHookFile = ({
       getImportRequest({
         hookFolderPath,
         requestFilePath,
-        requestName
+        requestName,
+        generateOutput: plugin.config.generateOutput
       })
     );
   }
@@ -232,7 +234,7 @@ export const generateQueryHookFile = ({
       getImportInstance({
         output: plugin.output,
         folderPath: hookFolderPath,
-        runtimeInstancePath: plugin.config.runtimeInstancePath
+        generateOutput: plugin.config.generateOutput
       })
     );
   }

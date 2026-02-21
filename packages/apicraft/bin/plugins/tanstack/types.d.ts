@@ -10,7 +10,6 @@ export interface TanstackPluginConfig {
   name: 'tanstack';
   nameBy?: ApicraftOption['nameBy'];
   output?: string;
-  runtimeInstancePath?: string;
 }
 
 export type TanstackPlugin = DefinePlugin<TanstackPluginConfig>;

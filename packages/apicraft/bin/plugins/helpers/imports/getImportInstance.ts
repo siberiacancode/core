@@ -3,6 +3,7 @@ import ts from 'typescript';
 
 interface GetImportInstanceParams {
   folderPath: string;
+  generateOutput: string;
   output: string;
   runtimeInstancePath?: string;
 }
@@ -10,6 +11,7 @@ interface GetImportInstanceParams {
 // import { instance } from '../../instance.gen';
 export const getImportInstance = ({
   output,
+  generateOutput,
   runtimeInstancePath,
   folderPath
 }: GetImportInstanceParams) =>
@@ -25,7 +27,7 @@ export const getImportInstance = ({
     ts.factory.createStringLiteral(
       nodePath.relative(
         folderPath,
-        runtimeInstancePath ?? nodePath.normalize(`${output}/instance.gen`)
+        runtimeInstancePath ?? nodePath.normalize(`${generateOutput}/${output}/instance.gen`)
       )
     )
   );
