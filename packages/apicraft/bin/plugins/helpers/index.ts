@@ -1,4 +1,3 @@
-export * from './axios';
 export * from './buildRequestParamsPath';
 export * from './capitalize';
 export * from './generatePathRequestName';

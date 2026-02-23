@@ -2,7 +2,7 @@ import { definePluginConfig } from '@hey-api/openapi-ts';
 
 import type { AxiosPlugin } from './types';
 
-import { handler } from './plugin';
+import { handler } from './composed/plugin';
 
 export const defaultConfig: AxiosPlugin['Config'] = {
   config: {

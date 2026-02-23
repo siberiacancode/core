@@ -9,7 +9,6 @@ import { getConfig } from '@/bin/helpers';
 import type { ApicraftOption, GenerateApicraftOption, InstanceName } from './schemas';
 
 import { defineAxiosPlugin } from './plugins/axios';
-import { defineAxiosClassPlugin } from './plugins/axiosClass';
 import { defineFetchesPlugin } from './plugins/fetches';
 import { defineTanstackPlugin } from './plugins/tanstack';
 import { apicraftConfigSchema, apicraftOptionSchema } from './schemas';
@@ -69,18 +68,6 @@ export const generate = {
           );
         }
 
-        if (matchInstance('axios/class')) {
-          plugins.push(
-            defineAxiosClassPlugin({
-              generateOutput,
-              runtimeInstancePath,
-              exportFromIndex: true,
-              nameBy: option.nameBy,
-              groupBy: option.groupBy
-            })
-          );
-        }
-
         if (matchInstance('fetches')) {
           plugins.push(
             defineFetchesPlugin({
@@ -102,11 +89,7 @@ export const generate = {
               generateOutput,
               exportFromIndex: true,
               nameBy: option.nameBy,
-              groupBy: option.groupBy,
-              instanceVariant:
-                matchInstance('axios/class') || matchInstance('fetches/class')
-                  ? 'class'
-                  : 'function'
+              groupBy: option.groupBy
             })
           );
         }

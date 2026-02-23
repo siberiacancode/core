@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-const instanceNameSchema = z.enum(['fetches', 'axios', 'fetches/class', 'axios/class']);
+const instanceNameSchema = z.enum(['fetches', 'axios']);
 const instanceSchema = z.object({
   name: instanceNameSchema,
   runtimeInstancePath: z.string().optional()
@@ -123,7 +123,7 @@ export const apicraftOptionSchema = z
       .optional(),
     instance: z.union([instanceNameSchema, instanceSchema]).optional(),
     nameBy: z.enum(['path', 'operationId']).default('operationId').optional(),
-    groupBy: z.enum(['path', 'tag']).default('tag').optional(),
+    groupBy: z.enum(['paths', 'tags', 'class']).default('tags').optional(),
     plugins: z
       .array(pluginNameSchema.or(z.object({ name: pluginNameSchema }).passthrough()))
       .optional()

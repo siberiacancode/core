@@ -1,23 +1,22 @@
 import * as nodePath from 'node:path';
 import ts from 'typescript';
 
-import type { AxiosClassPlugin } from './types';
+import { capitalize, generateRequestName, getRequestInfo } from '@/bin/plugins/helpers';
+
+import type { AxiosPlugin } from '../types';
 
 import {
-  capitalize,
-  generateRequestName,
   getAxiosRequestCallExpression,
   getAxiosRequestParameterDeclaration,
   getAxiosRequestParamsType,
   getImportAxios,
   getImportAxiosRequestParams,
-  getRequestInfo
+  getImportRuntimeInstance
 } from '../helpers';
-import { getImportRuntimeInstance } from './helpers';
 
 const CLASS_NAME = 'ApiInstance';
 
-export const handler: AxiosClassPlugin['Handler'] = ({ plugin }) => {
+export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
   const classFilePath = nodePath.normalize(`${plugin.output}/instance`);
   const classFolderPath = nodePath.dirname(`${plugin.config.generateOutput}/${classFilePath}`);
   const classFile = plugin.createFile({

@@ -93,7 +93,7 @@ export const generateQueryHookFile = ({
                   ts.factory.createIdentifier('TanstackQuerySettings'),
                   [
                     ts.factory.createTypeQueryNode(
-                      plugin.config.instanceVariant === 'class'
+                      plugin.config.groupBy === 'class'
                         ? ts.factory.createQualifiedName(
                             ts.factory.createIdentifier('instance'),
                             ts.factory.createIdentifier(requestName)
@@ -167,7 +167,7 @@ export const generateQueryHookFile = ({
                       undefined,
                       ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
                       ts.factory.createCallExpression(
-                        plugin.config.instanceVariant === 'class'
+                        plugin.config.groupBy === 'class'
                           ? ts.factory.createPropertyAccessExpression(
                               ts.factory.createIdentifier('instance'),
                               ts.factory.createIdentifier(requestName)
@@ -217,23 +217,23 @@ export const generateQueryHookFile = ({
   hookFile.add(importUseQuery);
   hookFile.add(importTanstackQuerySettings);
 
-  if (plugin.config.instanceVariant === 'function') {
+  if (plugin.config.groupBy === 'class') {
+    // import { instance } from '../../instance.gen';
+    hookFile.add(
+      getImportInstance({
+        output: plugin.output,
+        folderPath: hookFolderPath,
+        generateOutput: plugin.config.generateOutput
+      })
+    );
+  }
+  if (plugin.config.groupBy !== 'class') {
     // import type { requestName } from './requestName.gen';
     hookFile.add(
       getImportRequest({
         folderPath: hookFolderPath,
         requestFilePath,
         requestName,
-        generateOutput: plugin.config.generateOutput
-      })
-    );
-  }
-  if (plugin.config.instanceVariant === 'class') {
-    // import { instance } from '../../instance.gen';
-    hookFile.add(
-      getImportInstance({
-        output: plugin.output,
-        folderPath: hookFolderPath,
         generateOutput: plugin.config.generateOutput
       })
     );
