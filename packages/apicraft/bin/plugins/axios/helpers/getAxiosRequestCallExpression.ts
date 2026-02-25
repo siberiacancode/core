@@ -2,9 +2,9 @@ import type { IR } from '@hey-api/openapi-ts';
 
 import ts from 'typescript';
 
-import type { GetRequestInfoResult } from '../getRequestInfo';
+import type { GetRequestInfoResult } from '@/bin/plugins/helpers';
 
-import { buildRequestParamsPath } from '../buildRequestParamsPath';
+import { buildRequestParamsPath } from '@/bin/plugins/helpers';
 
 interface GetAxiosRequestCallExpressionParams {
   instanceVariant: 'class' | 'function';

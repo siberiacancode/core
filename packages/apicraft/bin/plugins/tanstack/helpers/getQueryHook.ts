@@ -1,75 +1,38 @@
-import type { DefinePlugin, IR } from '@hey-api/openapi-ts';
+import type { IR } from '@hey-api/openapi-ts';
 
-import * as nodePath from 'node:path';
 import ts from 'typescript';
 
-import {
-  capitalize,
-  getImportInstance,
-  getImportRequest,
-  getRequestInfo
-} from '@/bin/plugins/helpers';
+import type { TanstackPlugin } from '../types';
 
-import type { TanstackPluginConfig } from '../types';
+import { getRequestInfo } from '../../helpers';
 
-import { getRequestParamsHookKeys } from './getRequestParamsHookKeys';
-
-interface GenerateQueryHookParams {
-  plugin: Parameters<DefinePlugin<TanstackPluginConfig>['Handler']>[0]['plugin'];
+interface GetQueryHookParams {
+  hookName: string;
+  plugin: TanstackPlugin['Instance'];
   request: IR.OperationObject;
-  requestFilePath: string;
   requestName: string;
 }
 
-export const generateQueryHookFile = ({
-  plugin,
-  request,
-  requestName,
-  requestFilePath
-}: GenerateQueryHookParams) => {
+// const useRequestNameQuery = (settings: TanstackQuerySettings<typeof requestName>) => useQuery
+export const getQueryHook = ({ hookName, request, plugin, requestName }: GetQueryHookParams) => {
   const requestInfo = getRequestInfo({ request });
 
-  const hookName = `use${capitalize(requestName)}Query`;
-  const hookFilePath = `${nodePath.dirname(requestFilePath).replace('requests', 'hooks')}/${hookName}`;
-  const hookFolderPath = nodePath.dirname(`${plugin.config.generateOutput}/${hookFilePath}`);
-  const hookFile = plugin.createFile({
-    id: hookName,
-    path: hookFilePath
-  });
-
-  // import { useQuery } from '@tanstack/react-query';
-  const importUseQuery = ts.factory.createImportDeclaration(
-    undefined,
-    ts.factory.createImportClause(
-      false,
-      undefined,
-      ts.factory.createNamedImports([
-        ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier('useQuery'))
-      ])
-    ),
-    ts.factory.createStringLiteral('@tanstack/react-query')
-  );
-
-  // import type { TanstackQuerySettings } from '@siberiacancode/apicraft';
-  const importTanstackQuerySettings = ts.factory.createImportDeclaration(
-    undefined,
-    ts.factory.createImportClause(
-      true,
-      undefined,
-      ts.factory.createNamedImports([
-        ts.factory.createImportSpecifier(
-          false,
+  // export const requestNameQueryKey = requestName;
+  const queryKey = ts.factory.createVariableStatement(
+    [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+    ts.factory.createVariableDeclarationList(
+      [
+        ts.factory.createVariableDeclaration(
+          ts.factory.createIdentifier(`${requestName}QueryKey`),
           undefined,
-          ts.factory.createIdentifier('TanstackQuerySettings')
+          undefined,
+          ts.factory.createStringLiteral(requestName)
         )
-      ])
-    ),
-    ts.factory.createStringLiteral('@siberiacancode/apicraft')
+      ],
+      ts.NodeFlags.Const
+    )
   );
 
-  const requestParamsHookKeys = getRequestParamsHookKeys(request);
-
-  // const useRequestNameQuery = (settings: TanstackQuerySettings<typeof requestName>) => useQuery
   const hookFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -114,43 +77,20 @@ export const generateQueryHookFile = ({
                     ts.factory.createIdentifier('queryKey'),
                     ts.factory.createArrayLiteralExpression(
                       [
-                        ts.factory.createStringLiteral(requestName),
-                        ...requestParamsHookKeys.path.map((requestPathParam) =>
+                        ts.factory.createStringLiteral(`${requestName}QueryKey`),
+                        ...['path', 'query', 'body'].map((field) =>
                           ts.factory.createPropertyAccessChain(
                             ts.factory.createPropertyAccessChain(
-                              ts.factory.createPropertyAccessChain(
-                                ts.factory.createIdentifier('settings'),
-                                !requestInfo.hasRequiredParam
-                                  ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
-                                  : undefined,
-                                ts.factory.createIdentifier('request')
-                              ),
+                              ts.factory.createIdentifier('settings'),
                               !requestInfo.hasRequiredParam
                                 ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                                 : undefined,
-                              ts.factory.createIdentifier('path')
+                              ts.factory.createIdentifier('request')
                             ),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                            ts.factory.createIdentifier(requestPathParam)
-                          )
-                        ),
-                        ...requestParamsHookKeys.query.map((requestQueryParam) =>
-                          ts.factory.createPropertyAccessChain(
-                            ts.factory.createPropertyAccessChain(
-                              ts.factory.createPropertyAccessChain(
-                                ts.factory.createIdentifier('settings'),
-                                !requestInfo.hasRequiredParam
-                                  ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
-                                  : undefined,
-                                ts.factory.createIdentifier('request')
-                              ),
-                              !requestInfo.hasRequiredParam
-                                ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
-                                : undefined,
-                              ts.factory.createIdentifier('query')
-                            ),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                            ts.factory.createIdentifier(requestQueryParam)
+                            !requestInfo.hasRequiredParam
+                              ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
+                              : undefined,
+                            ts.factory.createIdentifier(field)
                           )
                         )
                       ],
@@ -214,30 +154,5 @@ export const generateQueryHookFile = ({
     )
   );
 
-  hookFile.add(importUseQuery);
-  hookFile.add(importTanstackQuerySettings);
-
-  if (plugin.config.groupBy === 'class') {
-    // import { instance } from '../../instance.gen';
-    hookFile.add(
-      getImportInstance({
-        output: plugin.output,
-        folderPath: hookFolderPath,
-        generateOutput: plugin.config.generateOutput
-      })
-    );
-  }
-  if (plugin.config.groupBy !== 'class') {
-    // import type { requestName } from './requestName.gen';
-    hookFile.add(
-      getImportRequest({
-        folderPath: hookFolderPath,
-        requestFilePath,
-        requestName,
-        generateOutput: plugin.config.generateOutput
-      })
-    );
-  }
-
-  hookFile.add(hookFunction);
+  return [queryKey, hookFunction];
 };

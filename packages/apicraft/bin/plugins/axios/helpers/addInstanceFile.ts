@@ -3,7 +3,7 @@ import type { DefinePlugin } from '@hey-api/openapi-ts';
 import * as nodePath from 'node:path';
 import ts from 'typescript';
 
-import { getImportAxios } from '@/bin/plugins/helpers';
+import { getImportAxios } from './getImportAxios';
 
 export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
   const instanceFile = plugin.createFile({
