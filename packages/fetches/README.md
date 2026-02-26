@@ -103,3 +103,39 @@ const response = await fetches.get('/users', { context: 'data' });
 
 console.log('response', response.options.context); // 'data'
 ```
+
+## Validate status
+
+By default, only HTTP status codes in the range 2xx are considered successful. Set `validateStatus` when creating the instance (or with `setValidateStatus`): if it returns `true`, the response is treated as success and no error is thrown.
+
+```typescript
+// Treat 2xx and 3xx as success
+const api = fetches.create({
+  baseURL: '/api',
+  validateStatus: (status) => status >= 200 && status < 400
+});
+
+// Accept 404 as success (e.g. “not found” as valid empty result)
+const api = fetches.create({
+  baseURL: '/api',
+  validateStatus: (status) => (status >= 200 && status < 300) || status === 404
+});
+```
+
+## Global error handling
+
+You can handle errors globally by setting the response interceptors.
+
+```typescript
+const api = fetches.create({
+  baseURL: '/api'
+});
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error(error);
+    return Promise.reject(error);
+  }
+);
+```

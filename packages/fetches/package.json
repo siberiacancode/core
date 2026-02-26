@@ -42,8 +42,10 @@
     "dist"
   ],
   "scripts": {
+    "test": "vitest run",
     "prepublishOnly": "yarn type && yarn build",
     "build": "tsdown",
+    "unit-test": "vitest",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector",
     "type": "tsc --noEmit",
@@ -52,7 +54,9 @@
   },
   "devDependencies": {
     "@siberiacancode/eslint": "*",
-    "@siberiacancode/prettier": "*"
+    "@siberiacancode/prettier": "*",
+    "@siberiacancode/vitest": "*",
+    "vitest": "4.0.16"
   },
   "lint-staged": {
     "*.{js,ts}": [
