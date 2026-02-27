@@ -47,6 +47,8 @@ tags:
     description: Example echo operations
   - name: User
     description: Operations about user
+  - name: countries v3.0
+    description: Countries
 servers:
   - url: 'http://example.com/api/v1'
   - url: 'https://example.com/api/v1'
@@ -111,6 +113,37 @@ paths:
         '404':
           description: User not found
 
+  '/api/countries':
+    get:
+      tags:
+        - countries v3.0
+      summary: Получить выборку с информацией о странах.
+      description: Запрос используется для получения списка стран
+      operationId: getCountries
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: "'Bearer {access_token}'"
+          schema:
+            type: string
+            pattern: '^Bearer .*$'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCountryeV30'
+        '400':
+          description: BadRequest
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+
 # An object to hold reusable parts that can be used across the definition
 components:
   schemas:
@@ -139,6 +172,19 @@ components:
           example: Smith
         email:
           $ref: '#/components/schemas/Email'
+    GetCountryeV30:
+      type: object
+      description: Country (v3.0)
+      properties:
+        id:
+          type: string
+          example: '1'
+        name:
+          type: string
+          example: Russia
+        code:
+          type: string
+          example: RU
   headers:
     ExpiresAfter:
       description: date in UTC when token expires

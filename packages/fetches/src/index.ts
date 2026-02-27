@@ -9,6 +9,11 @@ export type RequestBody = BodyInit | Record<string, any> | null | undefined;
 export interface RequestSearchParams {
   [key: string]: boolean | number | string | number[] | string[] | null | undefined;
 }
+
+export type ValidateStatus = (status: number) => boolean;
+
+export const DEFAULT_VALIDATE_STATUS: ValidateStatus = (status) => status >= 200 && status < 300;
+
 export interface RequestOptions extends Omit<RequestInit, 'body' | 'method'> {
   baseURL?: BaseUrl;
   body?: RequestBody;
@@ -32,9 +37,10 @@ export type RequestConfig = RequestInit & {
 };
 
 export interface FetchesParams {
-  baseURL: BaseUrl;
+  baseURL?: BaseUrl;
   headers?: Record<string, string>;
   parse?: ResponseParse;
+  validateStatus?: ValidateStatus;
 }
 
 export interface FetchesResponse<Data> {
@@ -102,6 +108,7 @@ class Fetches {
 
   public headers: Record<string, string>;
   public parse?: ResponseParse;
+  public validateStatus: ValidateStatus;
 
   readonly interceptorHandlers: Interceptors;
 
@@ -123,10 +130,16 @@ class Fetches {
   };
 
   constructor(params?: FetchesParams) {
-    const { baseURL = '', headers = {}, parse } = params ?? {};
+    const {
+      baseURL = '',
+      headers = {},
+      parse,
+      validateStatus = DEFAULT_VALIDATE_STATUS
+    } = params ?? {};
     this.baseURL = baseURL ?? '';
     this.headers = headers;
     this.parse = parse;
+    this.validateStatus = validateStatus;
     this.interceptorHandlers = { request: [], response: [] };
 
     this.interceptors = {
@@ -163,6 +176,10 @@ class Fetches {
 
   setParse(parse: ResponseParse) {
     this.parse = parse;
+  }
+
+  setValidateStatus(validateStatus: ValidateStatus) {
+    this.validateStatus = validateStatus;
   }
 
   private prepareBody(body?: RequestBody) {
@@ -247,24 +264,51 @@ class Fetches {
     initialConfig: RequestConfig,
     requestOptions: RequestOptions
   ) {
-    const data = await this.parseResponse<Data>(initialResponse);
+    const data = await this.parseResponse<Data>(initialResponse, initialConfig.parse);
     let response = {
       data,
       url: initialResponse.url,
       headers: initialResponse.headers,
       status: initialResponse.status,
       statusText: initialResponse.statusText,
-      config: initialConfig
+      config: initialConfig,
+      options: requestOptions
     } as FetchesResponse<Data>;
 
-    if (!this.interceptorHandlers.response?.length) return response;
+    if (!this.interceptorHandlers.response?.length) {
+      if (!this.validateStatus(initialResponse.status)) {
+        const errorResponse = {
+          data,
+          url: response.url,
+          headers: response.headers,
+          status: response.status,
+          statusText: response.statusText,
+          config: initialConfig,
+          options: requestOptions
+        } as FetchesResponse<Data>;
+
+        throw new ResponseError(response.statusText, {
+          request: initialConfig,
+          response: errorResponse
+        });
+      }
+
+      return response;
+    }
 
     for (const { onSuccess, onFailure } of [
-      { onSuccess: requestOptions.onResponseSuccess, onFailure: requestOptions.onResponseFailure },
-      ...this.interceptorHandlers.response
+      ...this.interceptorHandlers.response,
+      ...(requestOptions.onResponseSuccess || requestOptions.onResponseFailure
+        ? [
+            {
+              onSuccess: requestOptions.onResponseSuccess,
+              onFailure: requestOptions.onResponseFailure
+            }
+          ]
+        : [])
     ]) {
       try {
-        if (!initialResponse.ok)
+        if (!this.validateStatus(initialResponse.status))
           throw new ResponseError(initialResponse.statusText, {
             request: initialConfig,
             response
@@ -292,8 +336,15 @@ class Fetches {
     if (!this.interceptorHandlers.request?.length) return config;
 
     for (const { onSuccess, onFailure } of [
-      { onSuccess: requestOptions.onRequestSuccess, onFailure: requestOptions.onRequestFailure },
-      ...this.interceptorHandlers.request
+      ...this.interceptorHandlers.request,
+      ...(requestOptions.onRequestSuccess || requestOptions.onRequestFailure
+        ? [
+            {
+              onSuccess: requestOptions.onRequestSuccess,
+              onFailure: requestOptions.onRequestFailure
+            }
+          ]
+        : [])
     ]) {
       try {
         if (!onSuccess) continue;
@@ -326,7 +377,7 @@ class Fetches {
       ...(body && { body: this.prepareBody(body) }),
       url,
       method,
-      parse,
+      parse: parse ?? this.parse,
       headers: {
         ...this.headers,
         ...(body &&
@@ -341,35 +392,7 @@ class Fetches {
 
     const response: Response = await fetch(config.url, config);
 
-    if (this.interceptorHandlers.response?.length) {
-      return this.runResponseInterceptors<Data>(response, config, options) as R;
-    }
-
-    const data = await this.parseResponse<Data>(response, config.parse);
-
-    if (response.status >= 400) {
-      const errorResponse = {
-        data,
-        url: response.url,
-        headers: response.headers,
-        status: response.status,
-        statusText: response.statusText,
-        config,
-        options
-      } as FetchesResponse<Data>;
-
-      throw new ResponseError(response.statusText, { request: config, response: errorResponse });
-    }
-
-    return {
-      config,
-      options,
-      data,
-      url: response.url,
-      headers: response.headers,
-      status: response.status,
-      statusText: response.statusText
-    } as R;
+    return this.runResponseInterceptors<Data>(response, config, options) as R;
   }
 
   get<Data, Response = FetchesResponse<Data>>(
@@ -423,7 +446,7 @@ class Fetches {
   call<Data, Response = FetchesResponse<Data>>(
     method: RequestMethod,
     url: string,
-    options: RequestOptions
+    options?: RequestOptions
   ) {
     return this.request<Data, Response>(url, method, options);
   }

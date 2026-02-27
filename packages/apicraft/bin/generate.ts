@@ -98,8 +98,8 @@ export const generate = {
         }
 
         await createClient({
-          parser: { filters: option.filters },
-          input: option.input,
+          ...(option.parser && { parser: option.parser as UserConfig['parser'] }),
+          input: typeof option.input === 'function' ? await option.input() : option.input,
           output: option.output,
           plugins: plugins as UserConfig['plugins']
         });
