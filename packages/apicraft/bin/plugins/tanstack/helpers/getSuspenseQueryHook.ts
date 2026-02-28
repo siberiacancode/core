@@ -1,89 +1,44 @@
-import type { DefinePlugin, IR } from '@hey-api/openapi-ts';
+import type { IR } from '@hey-api/openapi-ts';
 
-import * as nodePath from 'node:path';
 import ts from 'typescript';
 
-import type { TanstackPluginConfig } from '../types';
+import type { TanstackPlugin } from '../types';
 
-import { capitalize, checkRequestHasRequiredParam } from '../../helpers';
-import { getRequestParamsHookKeys } from './getRequestParamsHookKeys';
+import { getRequestInfo } from '../../helpers';
 
-interface GenerateSuspenseQueryHookParams {
-  plugin: Parameters<DefinePlugin<TanstackPluginConfig>['Handler']>[0]['plugin'];
+interface GetSuspenseQueryHookParams {
+  hookName: string;
+  optionsFunctionName: string;
+  plugin: TanstackPlugin['Instance'];
   request: IR.OperationObject;
-  requestFilePath: string;
   requestName: string;
 }
 
-export const generateSuspenseQueryHookFile = ({
+// const useRequestNameSuspenseQuery = (settings: TanstackSuspenseQuerySettings<typeof requestName>) => useSuspenseQuery
+export const getSuspenseQueryHook = ({
   plugin,
+  optionsFunctionName,
   request,
-  requestName,
-  requestFilePath
-}: GenerateSuspenseQueryHookParams) => {
-  const hookFolderPath = nodePath.dirname(requestFilePath).replace('requests', 'hooks');
-  const hookName = `use${capitalize(requestName)}SuspenseQuery`;
+  hookName,
+  requestName
+}: GetSuspenseQueryHookParams) => {
+  const requestInfo = getRequestInfo({ request });
 
-  const hookFile = plugin.createFile({
-    id: `${hookFolderPath}/${hookName}`,
-    path: `${hookFolderPath}/${hookName}`
-  });
-
-  // import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
-  const importUseSuspenseQuery = ts.factory.createImportDeclaration(
-    undefined,
-    ts.factory.createImportClause(
-      false,
-      undefined,
-      ts.factory.createNamedImports([
-        ts.factory.createImportSpecifier(
-          false,
+  // export const requestNameSuspenseQueryKey = requestName;
+  const suspenseQueryKey = ts.factory.createVariableStatement(
+    [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+    ts.factory.createVariableDeclarationList(
+      [
+        ts.factory.createVariableDeclaration(
+          ts.factory.createIdentifier(`${requestName}SuspenseQueryKey`),
           undefined,
-          ts.factory.createIdentifier('queryOptions')
-        ),
-        ts.factory.createImportSpecifier(
-          false,
           undefined,
-          ts.factory.createIdentifier('useSuspenseQuery')
+          ts.factory.createStringLiteral(requestName)
         )
-      ])
-    ),
-    ts.factory.createStringLiteral('@tanstack/react-query')
+      ],
+      ts.NodeFlags.Const
+    )
   );
-
-  // import type { TanstackSuspenseQuerySettings } from '@siberiacancode/apicraft';
-  const importTanstackSuspenseQuerySettings = ts.factory.createImportDeclaration(
-    undefined,
-    ts.factory.createImportClause(
-      true,
-      undefined,
-      ts.factory.createNamedImports([
-        ts.factory.createImportSpecifier(
-          false,
-          undefined,
-          ts.factory.createIdentifier('TanstackSuspenseQuerySettings')
-        )
-      ])
-    ),
-    ts.factory.createStringLiteral('@siberiacancode/apicraft')
-  );
-
-  // import type { requestName } from './requestName.gen';
-  const importRequest = ts.factory.createImportDeclaration(
-    undefined,
-    ts.factory.createImportClause(
-      false,
-      undefined,
-      ts.factory.createNamedImports([
-        ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier(requestName))
-      ])
-    ),
-    ts.factory.createStringLiteral(nodePath.relative(hookFolderPath, `${requestFilePath}.gen`))
-  );
-
-  const optionsFunctionName = `${requestName}Options`;
-  const requestParamsHookKeys = getRequestParamsHookKeys(request);
-  const requestHasRequiredParam = checkRequestHasRequiredParam(request);
 
   // const requestNameOptions = queryOptions({...})
   const optionsFunction = ts.factory.createVariableStatement(
@@ -102,12 +57,21 @@ export const generateSuspenseQueryHookFile = ({
                 undefined,
                 undefined,
                 ts.factory.createIdentifier('settings'),
-                !requestHasRequiredParam
+                !requestInfo.hasRequiredParam
                   ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
                   : undefined,
                 ts.factory.createTypeReferenceNode(
                   ts.factory.createIdentifier('TanstackSuspenseQuerySettings'),
-                  [ts.factory.createTypeQueryNode(ts.factory.createIdentifier(requestName))]
+                  [
+                    ts.factory.createTypeQueryNode(
+                      plugin.config.groupBy === 'class'
+                        ? ts.factory.createQualifiedName(
+                            ts.factory.createIdentifier('instance'),
+                            ts.factory.createIdentifier(requestName)
+                          )
+                        : ts.factory.createIdentifier(requestName)
+                    )
+                  ]
                 )
               )
             ],
@@ -119,48 +83,25 @@ export const generateSuspenseQueryHookFile = ({
               [
                 ts.factory.createObjectLiteralExpression(
                   [
-                    // queryKey: ['requestName', settings.request.path.pathPart]
+                    // queryKey: [requestNameSuspenseQueryKey, settings.request.path, settings.request.query, settings.request.body]
                     ts.factory.createPropertyAssignment(
                       ts.factory.createIdentifier('queryKey'),
                       ts.factory.createArrayLiteralExpression(
                         [
-                          ts.factory.createStringLiteral(requestName),
-                          ...requestParamsHookKeys.path.map((requestPathParam) =>
+                          ts.factory.createStringLiteral(`${requestName}SuspenseQueryKey`),
+                          ...['path', 'query', 'body'].map((field) =>
                             ts.factory.createPropertyAccessChain(
                               ts.factory.createPropertyAccessChain(
-                                ts.factory.createPropertyAccessChain(
-                                  ts.factory.createIdentifier('settings'),
-                                  !requestHasRequiredParam
-                                    ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
-                                    : undefined,
-                                  ts.factory.createIdentifier('request')
-                                ),
-                                !requestHasRequiredParam
+                                ts.factory.createIdentifier('settings'),
+                                !requestInfo.hasRequiredParam
                                   ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                                   : undefined,
-                                ts.factory.createIdentifier('path')
+                                ts.factory.createIdentifier('request')
                               ),
-                              ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                              ts.factory.createIdentifier(requestPathParam)
-                            )
-                          ),
-                          ...requestParamsHookKeys.query.map((requestQueryParam) =>
-                            ts.factory.createPropertyAccessChain(
-                              ts.factory.createPropertyAccessChain(
-                                ts.factory.createPropertyAccessChain(
-                                  ts.factory.createIdentifier('settings'),
-                                  !requestHasRequiredParam
-                                    ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
-                                    : undefined,
-                                  ts.factory.createIdentifier('request')
-                                ),
-                                !requestHasRequiredParam
-                                  ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
-                                  : undefined,
-                                ts.factory.createIdentifier('query')
-                              ),
-                              ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                              ts.factory.createIdentifier(requestQueryParam)
+                              !requestInfo.hasRequiredParam
+                                ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
+                                : undefined,
+                              ts.factory.createIdentifier(field)
                             )
                           )
                         ],
@@ -177,7 +118,12 @@ export const generateSuspenseQueryHookFile = ({
                         undefined,
                         ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
                         ts.factory.createCallExpression(
-                          ts.factory.createIdentifier(requestName),
+                          plugin.config.groupBy === 'class'
+                            ? ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier('instance'),
+                                ts.factory.createIdentifier(requestName)
+                              )
+                            : ts.factory.createIdentifier(requestName),
                           undefined,
                           [
                             ts.factory.createObjectLiteralExpression(
@@ -185,7 +131,7 @@ export const generateSuspenseQueryHookFile = ({
                                 ts.factory.createSpreadAssignment(
                                   ts.factory.createPropertyAccessChain(
                                     ts.factory.createIdentifier('settings'),
-                                    !requestHasRequiredParam
+                                    !requestInfo.hasRequiredParam
                                       ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                                       : undefined,
                                     ts.factory.createIdentifier('request')
@@ -202,7 +148,7 @@ export const generateSuspenseQueryHookFile = ({
                     ts.factory.createSpreadAssignment(
                       ts.factory.createPropertyAccessChain(
                         ts.factory.createIdentifier('settings'),
-                        !requestHasRequiredParam
+                        !requestInfo.hasRequiredParam
                           ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                           : undefined,
                         ts.factory.createIdentifier('params')
@@ -220,6 +166,7 @@ export const generateSuspenseQueryHookFile = ({
     )
   );
 
+  // const useRequestNameSuspenseQuery = (settings: TanstackSuspenseQuerySettings<typeof requestName>) => useSuspenseQuery
   const hookFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -262,9 +209,5 @@ export const generateSuspenseQueryHookFile = ({
     )
   );
 
-  hookFile.add(importUseSuspenseQuery);
-  hookFile.add(importTanstackSuspenseQuerySettings);
-  hookFile.add(importRequest);
-  hookFile.add(optionsFunction);
-  hookFile.add(hookFunction);
+  return [suspenseQueryKey, optionsFunction, hookFunction];
 };
