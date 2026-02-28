@@ -7,12 +7,12 @@ export const generatePathRequestName = (method: string, path: string) => {
   let prevPart: string | undefined;
 
   for (let pathPart of pathParts) {
+    const isParam = pathPart.startsWith('{') && pathPart.endsWith('}');
     pathPart = pathPart
-      .split(/[-_.*@]/)
+      .split(/[^a-z0-9]+/i)
       .filter(Boolean)
       .map(capitalize)
       .join('');
-    const isParam = pathPart.startsWith('{') && pathPart.endsWith('}');
 
     if (!isParam) {
       nameParts.push(capitalize(pathPart));
@@ -27,9 +27,7 @@ export const generatePathRequestName = (method: string, path: string) => {
         prevPart.slice(0, -1).charAt(0).toUpperCase() + prevPart.slice(1, -1);
     }
 
-    const paramName = pathPart.slice(1, -1);
-    nameParts.push(`By${capitalize(paramName)}`);
-
+    nameParts.push(`By${capitalize(pathPart)}`);
     prevPart = pathPart;
   }
 
