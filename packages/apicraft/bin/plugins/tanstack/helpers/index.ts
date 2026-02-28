@@ -1,4 +1,3 @@
-export * from './getApicraftTypeImport';
 export * from './getMutationHook';
 export * from './getQueryHook';
 export * from './getSuspenseQueryHook';

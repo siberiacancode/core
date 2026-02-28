@@ -1,7 +1,12 @@
 import * as nodePath from 'node:path';
 import ts from 'typescript';
 
-import { capitalize, generateRequestName, getRequestInfo } from '@/bin/plugins/helpers';
+import {
+  capitalize,
+  generateRequestName,
+  getImportRuntimeInstance,
+  getRequestInfo
+} from '@/bin/plugins/helpers';
 
 import type { AxiosPlugin } from '../types';
 
@@ -10,8 +15,7 @@ import {
   getAxiosRequestParameterDeclaration,
   getAxiosRequestParamsType,
   getImportAxios,
-  getImportAxiosRequestParams,
-  getImportRuntimeInstance
+  getImportAxiosRequestParams
 } from '../helpers';
 
 const CLASS_NAME = 'ApiInstance';

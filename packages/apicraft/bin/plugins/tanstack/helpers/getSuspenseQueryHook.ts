@@ -83,7 +83,7 @@ export const getSuspenseQueryHook = ({
               [
                 ts.factory.createObjectLiteralExpression(
                   [
-                    // queryKey: ['requestName', settings.request.path.pathPart]
+                    // queryKey: [requestNameSuspenseQueryKey, settings.request.path, settings.request.query, settings.request.body]
                     ts.factory.createPropertyAssignment(
                       ts.factory.createIdentifier('queryKey'),
                       ts.factory.createArrayLiteralExpression(

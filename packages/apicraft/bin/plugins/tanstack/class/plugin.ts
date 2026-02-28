@@ -1,16 +1,15 @@
 import type ts from 'typescript';
 
-import { capitalize, generateRequestName, getImportInstance } from '@/bin/plugins/helpers';
+import {
+  capitalize,
+  generateRequestName,
+  getApicraftTypeImport,
+  getImportInstance
+} from '@/bin/plugins/helpers';
 
 import type { TanstackPlugin } from '../types';
 
-import {
-  getApicraftTypeImport,
-  getMutationHook,
-  getQueryHook,
-  getSuspenseQueryHook,
-  getTanstackImport
-} from '../helpers';
+import { getMutationHook, getQueryHook, getSuspenseQueryHook, getTanstackImport } from '../helpers';
 
 export const classHandler: TanstackPlugin['Handler'] = ({ plugin }) => {
   const hooksFile = plugin.createFile({

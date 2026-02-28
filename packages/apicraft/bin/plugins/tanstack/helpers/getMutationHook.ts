@@ -60,27 +60,14 @@ export const getMutationHook = ({ hookName, plugin, requestName }: GetMutationHo
             ],
             undefined,
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-            // mutationKey: ['requestName', settings?.request?.path?.pathPart, settings?.request?.query?.someQuery],
+            // mutationKey: [requestNameMutationKey],
             ts.factory.createCallExpression(ts.factory.createIdentifier('useMutation'), undefined, [
               ts.factory.createObjectLiteralExpression(
                 [
                   ts.factory.createPropertyAssignment(
                     ts.factory.createIdentifier('mutationKey'),
                     ts.factory.createArrayLiteralExpression(
-                      [
-                        ts.factory.createStringLiteral(`${requestName}MutationKey`),
-                        ...['path', 'query', 'body'].map((field) =>
-                          ts.factory.createPropertyAccessChain(
-                            ts.factory.createPropertyAccessChain(
-                              ts.factory.createIdentifier('settings'),
-                              ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                              ts.factory.createIdentifier('request')
-                            ),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                            ts.factory.createIdentifier(field)
-                          )
-                        )
-                      ],
+                      [ts.factory.createStringLiteral(`${requestName}MutationKey`)],
                       false
                     )
                   ),

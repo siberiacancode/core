@@ -2,12 +2,13 @@ import type { IR } from '@hey-api/openapi-ts';
 
 import * as nodePath from 'node:path';
 
-import { capitalize, getImportInstance, getImportRequest } from '@/bin/plugins/helpers';
 import {
+  capitalize,
   getApicraftTypeImport,
-  getQueryHook,
-  getTanstackImport
-} from '@/bin/plugins/tanstack/helpers';
+  getImportInstance,
+  getImportRequest
+} from '@/bin/plugins/helpers';
+import { getQueryHook, getTanstackImport } from '@/bin/plugins/tanstack/helpers';
 
 import type { TanstackPlugin } from '../../types';
 
@@ -48,7 +49,7 @@ export const generateQueryHookFile = ({
       })
     );
   }
-  if (plugin.config.groupBy !== 'class') {
+  if (plugin.config.groupBy === 'paths' || plugin.config.groupBy === 'tags') {
     // import type { requestName } from './requestName.gen';
     hookFile.add(
       getImportRequest({

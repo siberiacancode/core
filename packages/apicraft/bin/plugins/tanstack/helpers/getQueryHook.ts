@@ -72,7 +72,7 @@ export const getQueryHook = ({ hookName, request, plugin, requestName }: GetQuer
             ts.factory.createCallExpression(ts.factory.createIdentifier('useQuery'), undefined, [
               ts.factory.createObjectLiteralExpression(
                 [
-                  // queryKey: ['requestName', settings.request.path.pathPart]
+                  // queryKey: [requestNameQueryKey, settings.request.path, settings.request.query, settings.request.body]
                   ts.factory.createPropertyAssignment(
                     ts.factory.createIdentifier('queryKey'),
                     ts.factory.createArrayLiteralExpression(

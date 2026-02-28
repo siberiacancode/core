@@ -2,11 +2,16 @@ import type { DefinePlugin } from '@hey-api/openapi-ts';
 
 import * as nodePath from 'node:path';
 
-import { capitalize, getImportInstance, getImportRequest } from '@/bin/plugins/helpers';
+import {
+  capitalize,
+  getApicraftTypeImport,
+  getImportInstance,
+  getImportRequest
+} from '@/bin/plugins/helpers';
 
 import type { TanstackPluginConfig } from '../../types';
 
-import { getApicraftTypeImport, getMutationHook, getTanstackImport } from '../../helpers';
+import { getMutationHook, getTanstackImport } from '../../helpers';
 
 interface GenerateMutationHookFileParams {
   plugin: Parameters<DefinePlugin<TanstackPluginConfig>['Handler']>[0]['plugin'];
@@ -43,7 +48,7 @@ export const generateMutationHookFile = ({
       })
     );
   }
-  if (plugin.config.groupBy !== 'class') {
+  if (plugin.config.groupBy === 'paths' || plugin.config.groupBy === 'tags') {
     // import type { requestName } from './requestName.gen';
     hookFile.add(
       getImportRequest({

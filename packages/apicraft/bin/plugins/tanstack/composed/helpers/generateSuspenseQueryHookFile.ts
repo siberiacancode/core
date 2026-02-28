@@ -2,11 +2,16 @@ import type { DefinePlugin, IR } from '@hey-api/openapi-ts';
 
 import * as nodePath from 'node:path';
 
-import { capitalize, getImportInstance, getImportRequest } from '@/bin/plugins/helpers';
+import {
+  capitalize,
+  getApicraftTypeImport,
+  getImportInstance,
+  getImportRequest
+} from '@/bin/plugins/helpers';
 
 import type { TanstackPluginConfig } from '../../types';
 
-import { getApicraftTypeImport, getSuspenseQueryHook, getTanstackImport } from '../../helpers';
+import { getSuspenseQueryHook, getTanstackImport } from '../../helpers';
 
 interface GenerateSuspenseQueryHookParams {
   plugin: Parameters<DefinePlugin<TanstackPluginConfig>['Handler']>[0]['plugin'];
@@ -45,7 +50,7 @@ export const generateSuspenseQueryHookFile = ({
       })
     );
   }
-  if (plugin.config.groupBy !== 'class') {
+  if (plugin.config.groupBy === 'paths' || plugin.config.groupBy === 'tags') {
     // import type { requestName } from './requestName.gen';
     hookFile.add(
       getImportRequest({
