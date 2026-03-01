@@ -5,15 +5,13 @@ import { apicraftConfigSchema } from '../schemas';
 
 export const getConfig = async (path?: string) => {
   const explorer = cosmiconfig('apicraft', {
-    searchPlaces: path ? [path] : ['apicraft.config.js', 'apicraft.config.ts']
+    searchPlaces: ['apicraft.config.js', 'apicraft.config.ts']
   });
 
   try {
-    const configResult = (await explorer.search())!;
+    const configResult = (await (path ? explorer.load(path) : explorer.search()))!;
     return apicraftConfigSchema.parse(configResult.config);
   } catch (error) {
-    throw new Error(
-      `Invalid configuration apicraft.config.(js|ts) found in ${process.cwd()}. Error - ${error}`
-    );
+    throw new Error(`Error loading configuration file in ${process.cwd()}. Error - ${error}`);
   }
 };
