@@ -14,7 +14,7 @@ import type { TanstackPluginConfig } from '../../types';
 import { getSuspenseQueryHook, getTanstackImport } from '../../helpers';
 
 interface GenerateSuspenseQueryHookParams {
-  plugin: Parameters<DefinePlugin<TanstackPluginConfig>['Handler']>[0]['plugin'];
+  plugin: DefinePlugin<TanstackPluginConfig>['Instance'];
   request: IR.OperationObject;
   requestFilePath: string;
   requestName: string;

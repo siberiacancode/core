@@ -2,9 +2,9 @@ import type { IR } from '@hey-api/openapi-ts';
 
 import ts from 'typescript';
 
-import type { TanstackPlugin } from '../types';
+import { getRequestInfo } from '@/bin/plugins/helpers';
 
-import { getRequestInfo } from '../../helpers';
+import type { TanstackPlugin } from '../types';
 
 interface GetSuspenseQueryHookParams {
   hookName: string;
@@ -14,6 +14,8 @@ interface GetSuspenseQueryHookParams {
   requestName: string;
 }
 
+// export const requestNameSuspenseQueryKey = requestName
+// const requestNameOptions = queryOptions({...})
 // const useRequestNameSuspenseQuery = (settings: TanstackSuspenseQuerySettings<typeof requestName>) => useSuspenseQuery
 export const getSuspenseQueryHook = ({
   plugin,
@@ -24,7 +26,7 @@ export const getSuspenseQueryHook = ({
 }: GetSuspenseQueryHookParams) => {
   const requestInfo = getRequestInfo({ request });
 
-  // export const requestNameSuspenseQueryKey = requestName;
+  // export const requestNameSuspenseQueryKey = requestName
   const suspenseQueryKey = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(

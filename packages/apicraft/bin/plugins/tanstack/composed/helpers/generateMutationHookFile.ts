@@ -14,7 +14,7 @@ import type { TanstackPluginConfig } from '../../types';
 import { getMutationHook, getTanstackImport } from '../../helpers';
 
 interface GenerateMutationHookFileParams {
-  plugin: Parameters<DefinePlugin<TanstackPluginConfig>['Handler']>[0]['plugin'];
+  plugin: DefinePlugin<TanstackPluginConfig>['Instance'];
   requestFilePath: string;
   requestName: string;
 }

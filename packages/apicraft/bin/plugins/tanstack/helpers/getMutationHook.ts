@@ -8,6 +8,7 @@ interface GetMutationHookParams {
   requestName: string;
 }
 
+// export const requestNameMutationKey = requestName
 // const useRequestNameMutation = (settings: TanstackMutationSettings<typeof requestName>) => useMutation
 export const getMutationHook = ({ hookName, plugin, requestName }: GetMutationHookParams) => {
   // export const requestNameMutationKey = requestName;
@@ -26,6 +27,7 @@ export const getMutationHook = ({ hookName, plugin, requestName }: GetMutationHo
     )
   );
 
+  // const useRequestNameMutation = (settings: TanstackMutationSettings<typeof requestName>) => useMutation
   const hookFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(

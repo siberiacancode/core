@@ -208,7 +208,7 @@ public
 gatsby-types.d.ts
 
 # Generated
-!generated
+generated
 
 # Turbo
 .turbo

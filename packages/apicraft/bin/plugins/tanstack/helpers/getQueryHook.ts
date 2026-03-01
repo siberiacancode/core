@@ -2,9 +2,9 @@ import type { IR } from '@hey-api/openapi-ts';
 
 import ts from 'typescript';
 
-import type { TanstackPlugin } from '../types';
+import { getRequestInfo } from '@/bin/plugins/helpers/';
 
-import { getRequestInfo } from '../../helpers';
+import type { TanstackPlugin } from '../types';
 
 interface GetQueryHookParams {
   hookName: string;
@@ -13,6 +13,7 @@ interface GetQueryHookParams {
   requestName: string;
 }
 
+// const requestNameQueryKey = requestName;
 // const useRequestNameQuery = (settings: TanstackQuerySettings<typeof requestName>) => useQuery
 export const getQueryHook = ({ hookName, request, plugin, requestName }: GetQueryHookParams) => {
   const requestInfo = getRequestInfo({ request });
@@ -33,6 +34,7 @@ export const getQueryHook = ({ hookName, request, plugin, requestName }: GetQuer
     )
   );
 
+  // const useRequestNameQuery = (settings: TanstackQuerySettings<typeof requestName>) => useQuery
   const hookFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(

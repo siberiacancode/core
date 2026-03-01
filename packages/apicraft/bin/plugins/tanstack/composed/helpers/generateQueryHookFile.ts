@@ -8,9 +8,10 @@ import {
   getImportInstance,
   getImportRequest
 } from '@/bin/plugins/helpers';
-import { getQueryHook, getTanstackImport } from '@/bin/plugins/tanstack/helpers';
 
 import type { TanstackPlugin } from '../../types';
+
+import { getQueryHook, getTanstackImport } from '../../helpers';
 
 interface GenerateQueryHookParams {
   plugin: TanstackPlugin['Instance'];
