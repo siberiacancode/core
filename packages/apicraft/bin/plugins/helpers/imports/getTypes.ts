@@ -2,11 +2,7 @@ import * as nodePath from 'node:path';
 import ts from 'typescript';
 
 // import type { Type } from './<relativePath>/types.gen';
-export const getImportTypesFromTypesGen = (
-  typeNames: string[],
-  folderPath: string,
-  generateOutput: string
-) =>
+export const getTypes = (typeNames: string[], folderPath: string, generateOutput: string) =>
   ts.factory.createImportDeclaration(
     undefined,
     ts.factory.createImportClause(

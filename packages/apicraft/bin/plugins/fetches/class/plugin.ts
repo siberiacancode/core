@@ -6,8 +6,8 @@ import {
   generateRequestName,
   getApicraftTypeImport,
   getImportRuntimeInstance,
-  getImportTypesFromTypesGen,
-  getRequestInfo
+  getRequestInfo,
+  getTypes
 } from '@/bin/plugins/helpers';
 
 import type { FetchesPlugin } from '../types';
@@ -91,7 +91,7 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
   });
 
   // import type { RequestData, RequestResponse, ... } from './types.gen';
-  const importTypes = getImportTypesFromTypesGen(
+  const importTypes = getTypes(
     Array.from(typeImportNames),
     classFolderPath,
     plugin.config.generateOutput

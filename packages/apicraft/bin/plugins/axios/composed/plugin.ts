@@ -6,9 +6,9 @@ import {
   generateRequestName,
   getApicraftTypeImport,
   getImportInstance,
-  getImportTypesFromTypesGen,
   getRequestFilePaths,
-  getRequestInfo
+  getRequestInfo,
+  getTypes
 } from '@/bin/plugins/helpers';
 
 import type { AxiosPlugin } from '../types';
@@ -54,7 +54,7 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
       // import type { AxiosRequestParams } from '@siberiacancode/apicraft';
       const importAxiosRequestParams = getApicraftTypeImport('AxiosRequestParams');
       // import type { RequestData, RequestResponse } from 'generated/types.gen';
-      const importTypes = getImportTypesFromTypesGen(
+      const importTypes = getTypes(
         [requestDataTypeName, ...(requestInfo.hasResponse ? [requestResponseTypeName] : [])],
         requestFolderPath,
         plugin.config.generateOutput

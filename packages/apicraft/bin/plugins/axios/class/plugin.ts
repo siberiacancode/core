@@ -6,8 +6,8 @@ import {
   generateRequestName,
   getApicraftTypeImport,
   getImportRuntimeInstance,
-  getImportTypesFromTypesGen,
-  getRequestInfo
+  getRequestInfo,
+  getTypes
 } from '@/bin/plugins/helpers';
 
 import type { AxiosPlugin } from '../types';
@@ -94,7 +94,7 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
   const importAxiosRequestParams = getApicraftTypeImport('AxiosRequestParams');
 
   // import type { RequestData, RequestResponse, ... } from './types.gen';
-  const importTypes = getImportTypesFromTypesGen(
+  const importTypes = getTypes(
     Array.from(typeImportNames),
     classFolderPath,
     plugin.config.generateOutput
