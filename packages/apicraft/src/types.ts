@@ -1,3 +1,4 @@
+import type { AsyncDataOptions, AsyncOptions } from '@reatom/core';
 import type { RequestConfig } from '@siberiacancode/fetches';
 import type {
   UseMutationOptions,
@@ -30,5 +31,21 @@ export type TanstackSuspenseQuerySettings<TFunc extends (...args: any[]) => Prom
 
 export interface TanstackMutationSettings<TFunc extends (...args: any[]) => Promise<any>> {
   params?: UseMutationOptions<Awaited<ReturnType<TFunc>>, never, Parameters<TFunc>[0], unknown>;
+  request?: NonNullable<Parameters<TFunc>[0]>;
+}
+
+export interface ReatomAsyncDataSettings<TFunc extends (...args: any[]) => Promise<any>> {
+  params?: AsyncDataOptions<
+    Awaited<ReturnType<TFunc>>,
+    Parameters<TFunc>,
+    Awaited<ReturnType<TFunc>>,
+    Error,
+    undefined
+  >;
+  request?: NonNullable<Parameters<TFunc>[0]>;
+}
+
+export interface ReatomAsyncSettings<TFunc extends (...args: any[]) => Promise<any>> {
+  params?: AsyncOptions<Error, undefined>;
   request?: NonNullable<Parameters<TFunc>[0]>;
 }

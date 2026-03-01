@@ -10,6 +10,7 @@ import type { ApicraftOption, GenerateApicraftOption, InstanceName } from './sch
 
 import { defineAxiosPlugin } from './plugins/axios';
 import { defineFetchesPlugin } from './plugins/fetches';
+import { defineReatomPlugin } from './plugins/reatom';
 import { defineTanstackPlugin } from './plugins/tanstack';
 import { apicraftConfigSchema, apicraftOptionSchema } from './schemas';
 
@@ -86,6 +87,20 @@ export const generate = {
         if (tanstackPlugin) {
           plugins.push(
             defineTanstackPlugin({
+              generateOutput,
+              exportFromIndex: true,
+              nameBy: option.nameBy,
+              groupBy: option.groupBy
+            })
+          );
+        }
+
+        const reatomPlugin = plugins.find(
+          (plugin) => plugin === 'reatom' || plugin.name === 'reatom'
+        );
+        if (reatomPlugin) {
+          plugins.push(
+            defineReatomPlugin({
               generateOutput,
               exportFromIndex: true,
               nameBy: option.nameBy,

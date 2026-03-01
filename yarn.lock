@@ -907,6 +907,15 @@
   dependencies:
     quansync "^1.0.0"
 
+"@reatom/core@^1000.10.0":
+  version "1000.15.1"
+  resolved "https://registry.yarnpkg.com/@reatom/core/-/core-1000.15.1.tgz#4bf1151c99dc7b0713df245bc37810c7ec36aa76"
+  integrity sha512-5KKwjD7teOfHNXUj9aJxFYR+DLWiaE0xZwy1tpWlSE+cx3VI5VwJZJuhvZ887pdrMbgwyOypcz/V9p1v3YSWPg==
+  dependencies:
+    "@standard-schema/spec" "^1.0.0"
+  optionalDependencies:
+    idb-keyval "^6.2.2"
+
 "@rolldown/binding-android-arm64@1.0.0-rc.3":
   version "1.0.0-rc.3"
   resolved "https://registry.yarnpkg.com/@rolldown/binding-android-arm64/-/binding-android-arm64-1.0.0-rc.3.tgz#223d0624c748ab2bcf20159e4baa17c6f03fe8a6"
@@ -3616,6 +3625,11 @@ iconv-lite@0.6.3:
   integrity sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==
   dependencies:
     safer-buffer ">= 2.1.2 < 3.0.0"
+
+idb-keyval@^6.2.2:
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/idb-keyval/-/idb-keyval-6.2.2.tgz#b0171b5f73944854a3291a5cdba8e12768c4854a"
+  integrity sha512-yjD9nARJ/jb1g+CvD0tlhUHOrJ9Sy0P8T9MF3YaLlHnSRpwPfpTX0XIvpmw3gAJUmEu3FiICLBDPXVwyEvrleg==
 
 ignore@^5.2.0, ignore@^5.3.2:
   version "5.3.2"

@@ -11,7 +11,7 @@ const apicraftConfig = apicraft([
     instance: 'axios',
     nameBy: 'path',
     groupBy: 'paths',
-    plugins: ['tanstack']
+    plugins: ['reatom', 'tanstack']
   }
 ]);
 

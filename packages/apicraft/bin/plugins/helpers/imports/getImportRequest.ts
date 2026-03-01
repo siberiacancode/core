@@ -25,6 +25,6 @@ export const getImportRequest = ({
       ])
     ),
     ts.factory.createStringLiteral(
-      nodePath.relative(folderPath, `${generateOutput}/${requestFilePath}.gen`)
+      nodePath.relative(folderPath, `${generateOutput}/${requestFilePath}.gen`).replace(/\\/g, '/')
     )
   );

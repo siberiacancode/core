@@ -2,7 +2,7 @@ import type { IR } from '@hey-api/openapi-ts';
 
 import ts from 'typescript';
 
-import type { GetRequestInfoResult } from '../getRequestInfo';
+import type { GetRequestInfoResult } from '@/bin/plugins/helpers';
 
 interface GetAxiosRequestParameterDeclarationParams {
   request: IR.OperationObject;
