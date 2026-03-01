@@ -1,9 +1,7 @@
 import * as nodePath from 'node:path';
 import ts from 'typescript';
 
-const TYPES_GEN = 'types.gen';
-
-// import type { Type } from '<relativePath>/types.gen';
+// import type { Type } from './<relativePath>/types.gen';
 export const getImportTypesFromTypesGen = (
   typeNames: string[],
   folderPath: string,
@@ -20,8 +18,6 @@ export const getImportTypesFromTypesGen = (
         )
       )
     ),
-    ts.factory.createStringLiteral(
-      nodePath.relative(folderPath, nodePath.normalize(`${generateOutput}/${TYPES_GEN}`))
-    ),
+    ts.factory.createStringLiteral(nodePath.relative(folderPath, `./${generateOutput}/types.gen`)),
     undefined
   );

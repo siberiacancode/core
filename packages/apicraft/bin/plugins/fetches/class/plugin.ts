@@ -97,19 +97,31 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
     plugin.config.generateOutput
   );
 
-  // type FetchesInstance = ReturnType<typeof fetches.create>;
-  const fetchesInstanceTypeAlias = ts.factory.createTypeAliasDeclaration(
+  // import type { FetchesInstance, FetchesParams? } from '@siberiacancode/fetches';
+  const importFetchesTypes = ts.factory.createImportDeclaration(
     undefined,
-    ts.factory.createIdentifier('FetchesInstance'),
-    undefined,
-    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('ReturnType'), [
-      ts.factory.createTypeQueryNode(
-        ts.factory.createQualifiedName(
-          ts.factory.createIdentifier('fetches'),
-          ts.factory.createIdentifier('create')
-        )
-      )
-    ])
+    ts.factory.createImportClause(
+      true,
+      undefined,
+      ts.factory.createNamedImports([
+        ts.factory.createImportSpecifier(
+          false,
+          undefined,
+          ts.factory.createIdentifier('FetchesInstance')
+        ),
+        ...(!plugin.config.runtimeInstancePath
+          ? [
+              ts.factory.createImportSpecifier(
+                false,
+                undefined,
+                ts.factory.createIdentifier('FetchesParams')
+              )
+            ]
+          : [])
+      ])
+    ),
+    ts.factory.createStringLiteral('@siberiacancode/fetches'),
+    undefined
   );
 
   // private instance: FetchesInstance;
@@ -205,29 +217,7 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
       })
     );
   }
-  if (!plugin.config.runtimeInstancePath) {
-    // import type { FetchesParams } from '@siberiacancode/fetches';
-    classFile.add(
-      ts.factory.createImportDeclaration(
-        undefined,
-        ts.factory.createImportClause(
-          true,
-          undefined,
-          ts.factory.createNamedImports([
-            ts.factory.createImportSpecifier(
-              false,
-              undefined,
-              ts.factory.createIdentifier('FetchesParams')
-            )
-          ])
-        ),
-        ts.factory.createStringLiteral('@siberiacancode/fetches'),
-        undefined
-      )
-    );
-  }
-
-  classFile.add(fetchesInstanceTypeAlias);
+  classFile.add(importFetchesTypes);
 
   typeStatements.forEach((alias) => classFile.add(alias));
   classFile.add(classDeclaration);

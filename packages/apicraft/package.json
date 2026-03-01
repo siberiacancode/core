@@ -58,8 +58,8 @@
   },
   "dependencies": {
     "@hey-api/openapi-ts": "0.82.5",
-    "@siberiacancode/fetches": "^1.13.2",
-    "@tanstack/react-query": "^5.90.5",
+    "@siberiacancode/fetches": "^1.14.1",
+    "@tanstack/react-query": "^5.90.21",
     "cosmiconfig": "^9.0.0",
     "typescript": "^5.9.3",
     "yargs": "^18.0.0",
@@ -68,9 +68,9 @@
   "devDependencies": {
     "@siberiacancode/eslint": "*",
     "@siberiacancode/prettier": "*",
-    "@types/node": "^25.2.3",
+    "@types/node": "^25.3.3",
     "@types/yargs": "^17.0.35",
-    "axios": "^1.13.5"
+    "axios": "^1.13.6"
   },
   "lint-staged": {
     "*.{js,ts}": [

@@ -100,7 +100,7 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
     plugin.config.generateOutput
   );
 
-  // import type { AxiosInstance, CreateAxiosDefaults } from 'axios';
+  // import type { AxiosInstance, CreateAxiosDefaults? } from 'axios';
   const importAxiosTypes = ts.factory.createImportDeclaration(
     undefined,
     ts.factory.createImportClause(
