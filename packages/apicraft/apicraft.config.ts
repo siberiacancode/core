@@ -12,14 +12,6 @@ const apicraftConfig = apicraft([
     nameBy: 'path',
     groupBy: 'paths',
     plugins: ['tanstack']
-  },
-  {
-    input: 'example-apiV2.yaml',
-    output: 'generated/apiV2-class-runtime-instance',
-    instance: { name: 'axios', runtimeInstancePath: 'src/test-runtime' },
-    nameBy: 'path',
-    groupBy: 'class',
-    plugins: ['tanstack']
   }
 ]);
 
