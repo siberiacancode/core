@@ -4,7 +4,9 @@ import ts from 'typescript';
 import {
   capitalize,
   generateRequestName,
+  getApicraftTypeImport,
   getImportRuntimeInstance,
+  getImportTypesFromTypesGen,
   getRequestInfo
 } from '@/bin/plugins/helpers';
 
@@ -14,8 +16,7 @@ import {
   getAxiosRequestCallExpression,
   getAxiosRequestParameterDeclaration,
   getAxiosRequestParamsType,
-  getImportAxios,
-  getImportAxiosRequestParams
+  getImportAxios
 } from '../helpers';
 
 const CLASS_NAME = 'ApiInstance';
@@ -90,25 +91,13 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
   });
 
   // import type { AxiosRequestParams } from '@siberiacancode/apicraft';
-  const importAxiosRequestParams = getImportAxiosRequestParams();
+  const importAxiosRequestParams = getApicraftTypeImport('AxiosRequestParams');
 
   // import type { RequestData, RequestResponse, ... } from './types.gen';
-  const importTypes = ts.factory.createImportDeclaration(
-    undefined,
-    ts.factory.createImportClause(
-      true,
-      undefined,
-      ts.factory.createNamedImports(
-        Array.from(typeImportNames).map((typeImportName) =>
-          ts.factory.createImportSpecifier(
-            false,
-            undefined,
-            ts.factory.createIdentifier(typeImportName)
-          )
-        )
-      )
-    ),
-    ts.factory.createStringLiteral('./types.gen')
+  const importTypes = getImportTypesFromTypesGen(
+    Array.from(typeImportNames),
+    classFolderPath,
+    plugin.config.generateOutput
   );
 
   // import type { AxiosInstance, CreateAxiosDefaults } from 'axios';

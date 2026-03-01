@@ -4,7 +4,9 @@ import ts from 'typescript';
 import {
   capitalize,
   generateRequestName,
+  getApicraftTypeImport,
   getImportInstance,
+  getImportTypesFromTypesGen,
   getRequestFilePaths,
   getRequestInfo
 } from '@/bin/plugins/helpers';
@@ -15,8 +17,7 @@ import {
   addInstanceFile,
   getAxiosRequestCallExpression,
   getAxiosRequestParameterDeclaration,
-  getAxiosRequestParamsType,
-  getImportAxiosRequestParams
+  getAxiosRequestParamsType
 } from '../helpers';
 
 export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
@@ -46,41 +47,17 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
       const requestDataTypeName = `${capitalize(request.id)}Data`;
       const requestResponseTypeName = `${capitalize(request.id)}Response`;
 
-      // import type { AxiosRequestParams } from '@siberiacancode/apicraft';
-      const importAxiosRequestParams = getImportAxiosRequestParams();
       const requestFolderPath = nodePath.dirname(
         `${plugin.config.generateOutput}/${requestFilePath}`
       );
 
+      // import type { AxiosRequestParams } from '@siberiacancode/apicraft';
+      const importAxiosRequestParams = getApicraftTypeImport('AxiosRequestParams');
       // import type { RequestData, RequestResponse } from 'generated/types.gen';
-      const importTypes = ts.factory.createImportDeclaration(
-        undefined,
-        ts.factory.createImportClause(
-          true,
-          undefined,
-          ts.factory.createNamedImports([
-            ts.factory.createImportSpecifier(
-              false,
-              undefined,
-              ts.factory.createIdentifier(requestDataTypeName)
-            ),
-            ...(requestInfo.hasResponse
-              ? [
-                  ts.factory.createImportSpecifier(
-                    false,
-                    undefined,
-                    ts.factory.createIdentifier(requestResponseTypeName)
-                  )
-                ]
-              : [])
-          ])
-        ),
-        ts.factory.createStringLiteral(
-          nodePath.relative(
-            requestFolderPath,
-            nodePath.normalize(`${plugin.config.generateOutput}/types.gen`)
-          )
-        )
+      const importTypes = getImportTypesFromTypesGen(
+        [requestDataTypeName, ...(requestInfo.hasResponse ? [requestResponseTypeName] : [])],
+        requestFolderPath,
+        plugin.config.generateOutput
       );
 
       // import { instance } from "../../instance.gen";
