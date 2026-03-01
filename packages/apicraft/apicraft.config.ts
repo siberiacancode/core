@@ -8,9 +8,9 @@ const apicraftConfig = apicraft([
   {
     input: 'example-apiV2.yaml',
     output: 'generated/apiV2-class',
-    instance: 'axios',
+    instance: 'fetches',
     nameBy: 'path',
-    groupBy: 'paths',
+    groupBy: 'class',
     plugins: ['tanstack']
   }
 ]);
