@@ -27,6 +27,11 @@ export const generate = {
         alias: 'o',
         type: 'string',
         description: 'Path to output folder'
+      })
+      .option('config', {
+        alias: 'c',
+        type: 'string',
+        description: 'Path to config file'
       }),
   handler: async (argv: GenerateApicraftOption) => {
     try {
@@ -34,7 +39,7 @@ export const generate = {
 
       const useConfig = !argv.input && !argv.output;
       if (useConfig) {
-        options = apicraftConfigSchema.parse(await getConfig());
+        options = apicraftConfigSchema.parse(await getConfig(argv.config));
       } else {
         options = [
           apicraftOptionSchema.parse({

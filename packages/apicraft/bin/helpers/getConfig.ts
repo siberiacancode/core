@@ -3,9 +3,9 @@ import process from 'node:process';
 
 import { apicraftConfigSchema } from '../schemas';
 
-export const getConfig = async () => {
+export const getConfig = async (path?: string) => {
   const explorer = cosmiconfig('apicraft', {
-    searchPlaces: ['apicraft.config.js', 'apicraft.config.ts']
+    searchPlaces: path ? [path] : ['apicraft.config.js', 'apicraft.config.ts']
   });
 
   try {

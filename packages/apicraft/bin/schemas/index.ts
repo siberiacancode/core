@@ -135,7 +135,11 @@ export type ApicraftOption = z.infer<typeof apicraftOptionSchema>;
 export const apicraftConfigSchema = z.array(apicraftOptionSchema);
 export type ApicraftConfig = z.infer<typeof apicraftConfigSchema>;
 
-export const generateApicraftOptionSchema = apicraftOptionSchema.partial();
+export const generateApicraftOptionSchema = z.object({
+  input: pathSchema.optional(),
+  output: pathSchema.optional(),
+  config: pathSchema.optional()
+});
 export type GenerateApicraftOption = z.infer<typeof generateApicraftOptionSchema>;
 
 export type InstanceName = z.infer<typeof instanceNameSchema>;
