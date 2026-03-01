@@ -6,11 +6,11 @@ import { apicraft } from './dist/esm/index.mjs';
 
 const apicraftConfig = apicraft([
   {
-    input: 'example-apiV1.yaml',
-    output: 'generated/apiV1',
-    instance: 'fetches',
+    input: 'example-apiV2.yaml',
+    output: 'generated/apiV2-class',
+    instance: 'axios',
     nameBy: 'path',
-    groupBy: 'tag',
+    groupBy: 'paths',
     plugins: ['tanstack']
   }
 ]);
