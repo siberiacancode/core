@@ -8,6 +8,8 @@ export const collectGeneratedFiles = async (folderPath: string) => {
     const entries = await nodeFs.promises.readdir(path, { withFileTypes: true });
 
     for (const entry of entries) {
+      if (entry.name === 'types.gen.ts') continue;
+
       const fullPath = nodePath.join(path, entry.name);
 
       if (entry.isDirectory()) {
