@@ -29,7 +29,7 @@ export const getImportTypes = ({
       )
     ),
     ts.factory.createStringLiteral(
-      groupBy === 'class'
+      groupBy === 'paths' || groupBy === 'tags'
         ? nodePath.relative(folderPath, `${generateOutput}/types.gen`)
         : './types.gen'
     ),
