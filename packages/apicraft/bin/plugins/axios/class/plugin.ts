@@ -97,7 +97,8 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
   const importTypes = getTypes(
     Array.from(typeImportNames),
     classFolderPath,
-    plugin.config.generateOutput
+    plugin.config.generateOutput,
+    'class'
   );
 
   // import type { AxiosInstance, CreateAxiosDefaults? } from 'axios';

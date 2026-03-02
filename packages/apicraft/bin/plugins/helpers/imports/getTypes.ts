@@ -1,9 +1,14 @@
 import * as nodePath from 'node:path';
 import ts from 'typescript';
 
-// import type { Type } from './<relativePath>/types.gen';
-export const getTypes = (typeNames: string[], folderPath: string, generateOutput: string) =>
-  ts.factory.createImportDeclaration(
+// import type { Type } from '<relativePath>/types.gen';
+export const getTypes = (
+  typeNames: string[],
+  folderPath: string,
+  generateOutput: string,
+  instanceVariant: 'class' | 'function'
+) => {
+  return ts.factory.createImportDeclaration(
     undefined,
     ts.factory.createImportClause(
       true,
@@ -14,6 +19,11 @@ export const getTypes = (typeNames: string[], folderPath: string, generateOutput
         )
       )
     ),
-    ts.factory.createStringLiteral(nodePath.relative(folderPath, `./${generateOutput}/types.gen`)),
+    ts.factory.createStringLiteral(
+      instanceVariant === 'function'
+        ? nodePath.relative(folderPath, `${generateOutput}/types.gen`)
+        : './types.gen'
+    ),
     undefined
   );
+};

@@ -94,7 +94,8 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
   const importTypes = getTypes(
     Array.from(typeImportNames),
     classFolderPath,
-    plugin.config.generateOutput
+    plugin.config.generateOutput,
+    'class'
   );
 
   // import type { FetchesInstance, FetchesParams? } from '@siberiacancode/fetches';

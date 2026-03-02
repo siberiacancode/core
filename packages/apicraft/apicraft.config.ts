@@ -10,7 +10,7 @@ const apicraftConfig = apicraft([
     output: 'generated/apiV2-class',
     instance: 'fetches',
     nameBy: 'path',
-    groupBy: 'class'
+    groupBy: 'paths'
   },
   {
     input: 'example-apiV2.yaml',

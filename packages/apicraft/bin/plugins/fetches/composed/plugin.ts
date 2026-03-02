@@ -57,7 +57,8 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
       const importTypes = getTypes(
         [requestDataTypeName, ...(requestInfo.hasResponse ? [requestResponseTypeName] : [])],
         requestFolderPath,
-        plugin.config.generateOutput
+        plugin.config.generateOutput,
+        'function'
       );
 
       // import { instance } from "../../instance.gen";
