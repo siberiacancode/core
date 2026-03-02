@@ -1,43 +1,26 @@
-import type { ApicraftInstanceName, ApicraftOption } from '@/bin/schemas';
+import type { ApicraftOption } from '@/bin/schemas';
 
-// eslint-disable-next-line antfu/no-import-dist
 import { apicraft } from '../../dist/esm/index.mjs';
 
-interface ScenarioConfig {
-  groupBy: ApicraftOption['groupBy'];
-  instance: ApicraftInstanceName;
-  nameBy: ApicraftOption['nameBy'];
-  runtimeInstance: boolean;
-}
-
-export const configs: ScenarioConfig[] = [];
+export const options: ApicraftOption[] = [];
 for (const instance of ['axios', 'fetches'] as const) {
   for (const runtimeInstance of [true, false]) {
     for (const groupBy of ['paths', 'tags', 'class'] as const) {
       for (const nameBy of ['operationId', 'path'] as const) {
-        configs.push({
-          instance,
-          runtimeInstance,
+        options.push({
+          input: 'spec.yaml',
+          output: `generated/${instance}${runtimeInstance ? '/runtime' : ''}/${groupBy}/${nameBy}`,
+          instance: {
+            name: instance,
+            ...(runtimeInstance && { runtimeInstancePath: '' })
+          },
           groupBy,
-          nameBy
+          nameBy,
+          plugins: ['tanstack']
         });
       }
     }
   }
 }
 
-const apicraftConfig = apicraft(
-  configs.map((config) => ({
-    input: 'spec.yaml',
-    output: `generated/${config.instance}${config.runtimeInstance ? '/runtime' : ''}/${config.groupBy}/${config.nameBy}`,
-    instance: {
-      name: config.instance,
-      ...(config.runtimeInstance && { runtimeInstancePath: '' })
-    },
-    groupBy: config.groupBy,
-    nameBy: config.nameBy,
-    plugins: ['tanstack']
-  }))
-);
-
-export default apicraftConfig;
+export default apicraft(options);
