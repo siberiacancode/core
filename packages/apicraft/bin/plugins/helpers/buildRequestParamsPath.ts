@@ -1,6 +1,6 @@
 import ts from 'typescript';
 
-export function buildRequestParamsPath(path: string) {
+export const buildRequestParamsPath = (path: string) => {
   const parts = path.split(/\{([^}]+)\}/g);
   const head = ts.factory.createTemplateHead(parts[0]);
   const spans: ts.TemplateSpan[] = [];
@@ -20,4 +20,4 @@ export function buildRequestParamsPath(path: string) {
   }
 
   return ts.factory.createTemplateExpression(head, spans);
-}
+};

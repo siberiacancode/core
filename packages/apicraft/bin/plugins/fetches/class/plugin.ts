@@ -10,22 +10,22 @@ import {
   getRequestInfo
 } from '@/bin/plugins/helpers';
 
-import type { AxiosPlugin } from '../types';
+import type { FetchesPlugin } from '../types';
 
 import {
-  getAxiosRequestCallExpression,
-  getAxiosRequestParameterDeclaration,
-  getAxiosRequestParamsType,
-  getImportAxios
+  getFetchesRequestCallExpression,
+  getFetchesRequestParameterDeclaration,
+  getFetchesRequestParamsType,
+  getImportFetches
 } from '../helpers';
 
 const CLASS_NAME = 'ApiInstance';
 
-export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
+export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
   const classFilePath = nodePath.normalize(`${plugin.output}/instance`);
   const classFolderPath = nodePath.dirname(`${plugin.config.generateOutput}/${classFilePath}`);
   const classFile = plugin.createFile({
-    id: 'axiosInstance',
+    id: 'fetchesInstance',
     path: classFilePath
   });
 
@@ -48,14 +48,14 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
 
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
     typeStatements.push(
-      getAxiosRequestParamsType({
+      getFetchesRequestParamsType({
         requestDataTypeName,
         requestParamsTypeName
       })
     );
 
     // ({ path, body, query, config }: RequestParams)
-    const requestParameter = getAxiosRequestParameterDeclaration({
+    const requestParameter = getFetchesRequestParameterDeclaration({
       request,
       requestInfo,
       requestParamsTypeName
@@ -64,8 +64,8 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
     const requestBody = ts.factory.createBlock(
       [
         ts.factory.createReturnStatement(
-          // instance.request({ method, url, data, params })
-          getAxiosRequestCallExpression({
+          // this.instance.call(method, url, { body?, query?, ...config })
+          getFetchesRequestCallExpression({
             request,
             requestInfo,
             requestResponseTypeName,
@@ -90,9 +90,6 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
     );
   });
 
-  // import type { AxiosRequestParams } from '@siberiacancode/apicraft';
-  const importAxiosRequestParams = getApicraftTypeImport('AxiosRequestParams');
-
   // import type { RequestData, RequestResponse, ... } from './types.gen';
   const importTypes = getImportTypes({
     typeNames: Array.from(typeImportNames),
@@ -101,8 +98,11 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
     groupBy: plugin.config.groupBy
   });
 
-  // import type { AxiosInstance, CreateAxiosDefaults } from 'axios';
-  const importAxiosTypes = ts.factory.createImportDeclaration(
+  // import type { FetchesRequestParams } from '@siberiacancode/apicraft';
+  const importFetchesRequestParams = getApicraftTypeImport('FetchesRequestParams');
+
+  // import type { FetchesInstance, FetchesParams } from '@siberiacancode/fetches';
+  const importFetchesTypes = ts.factory.createImportDeclaration(
     undefined,
     ts.factory.createImportClause(
       true,
@@ -111,33 +111,33 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
         ts.factory.createImportSpecifier(
           false,
           undefined,
-          ts.factory.createIdentifier('AxiosInstance')
+          ts.factory.createIdentifier('FetchesInstance')
         ),
         ...(!plugin.config.runtimeInstancePath
           ? [
               ts.factory.createImportSpecifier(
                 false,
                 undefined,
-                ts.factory.createIdentifier('CreateAxiosDefaults')
+                ts.factory.createIdentifier('FetchesParams')
               )
             ]
           : [])
       ])
     ),
-    ts.factory.createStringLiteral('axios'),
+    ts.factory.createStringLiteral('@siberiacancode/fetches'),
     undefined
   );
 
-  // private instance: AxiosInstance;
+  // private instance: FetchesInstance;
   const classInstanceProperty = ts.factory.createPropertyDeclaration(
     [ts.factory.createModifier(ts.SyntaxKind.PrivateKeyword)],
     ts.factory.createIdentifier('instance'),
     undefined,
-    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('AxiosInstance'), undefined),
+    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('FetchesInstance'), undefined),
     undefined
   );
 
-  // constructor(config?: CreateAxiosDefaults) { this.instance = axios.create(config); }
+  // constructor(config?: FetchesParams) { this.instance = fetches.create(config); }
   const constructorDeclaration = ts.factory.createConstructorDeclaration(
     undefined,
     !plugin.config.runtimeInstancePath
@@ -148,7 +148,7 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
             ts.factory.createIdentifier('config'),
             ts.factory.createToken(ts.SyntaxKind.QuestionToken),
             ts.factory.createTypeReferenceNode(
-              ts.factory.createIdentifier('CreateAxiosDefaults'),
+              ts.factory.createIdentifier('FetchesParams'),
               undefined
             ),
             undefined
@@ -168,7 +168,7 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
               ? ts.factory.createIdentifier('runtimeInstance')
               : ts.factory.createCallExpression(
                   ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier('axios'),
+                    ts.factory.createIdentifier('fetches'),
                     ts.factory.createIdentifier('create')
                   ),
                   undefined,
@@ -206,9 +206,9 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
     )
   );
 
-  classFile.add(importAxiosRequestParams);
+  classFile.add(importFetchesRequestParams);
   classFile.add(importTypes);
-  classFile.add(importAxiosTypes);
+  classFile.add(importFetchesTypes);
 
   if (plugin.config.runtimeInstancePath) {
     // import { instance as runtimeInstance } from runtimeInstancePath;
@@ -220,8 +220,8 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
     );
   }
   if (!plugin.config.runtimeInstancePath) {
-    // import axios from 'axios';
-    classFile.add(getImportAxios());
+    // import fetches from '@siberiacancode/fetches';
+    classFile.add(getImportFetches());
   }
 
   typeStatements.forEach((alias) => classFile.add(alias));

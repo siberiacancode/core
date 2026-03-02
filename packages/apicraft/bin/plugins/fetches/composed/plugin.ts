@@ -11,16 +11,16 @@ import {
   getRequestInfo
 } from '@/bin/plugins/helpers';
 
-import type { AxiosPlugin } from '../types';
+import type { FetchesPlugin } from '../types';
 
 import {
   addInstanceFile,
-  getAxiosRequestCallExpression,
-  getAxiosRequestParameterDeclaration,
-  getAxiosRequestParamsType
+  getFetchesRequestCallExpression,
+  getFetchesRequestParameterDeclaration,
+  getFetchesRequestParamsType
 } from '../helpers';
 
-export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
+export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
   if (!plugin.config.runtimeInstancePath) addInstanceFile(plugin);
 
   plugin.forEach('operation', (event) => {
@@ -51,8 +51,8 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
         `${plugin.config.generateOutput}/${requestFilePath}`
       );
 
-      // import type { AxiosRequestParams } from '@siberiacancode/apicraft';
-      const importAxiosRequestParams = getApicraftTypeImport('AxiosRequestParams');
+      // import type { FetchesRequestParams } from '@siberiacancode/apicraft';
+      const importFetchesRequestParams = getApicraftTypeImport('FetchesRequestParams');
       // import type { RequestData, RequestResponse } from 'generated/types.gen';
       const importTypes = getImportTypes({
         typeNames: [
@@ -72,8 +72,8 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
         runtimeInstancePath: plugin.config.runtimeInstancePath
       });
 
-      // type RequestParams = AxiosRequestParams<RequestData>;
-      const requestParamsType = getAxiosRequestParamsType({
+      // type RequestParams = FetchesRequestParams<RequestData>;
+      const requestParamsType = getFetchesRequestParamsType({
         requestDataTypeName,
         requestParamsTypeName
       });
@@ -92,7 +92,7 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
                 undefined,
                 [
                   // ({ path, body, query, config }: RequestParams)
-                  getAxiosRequestParameterDeclaration({
+                  getFetchesRequestParameterDeclaration({
                     request,
                     requestInfo,
                     requestParamsTypeName
@@ -100,8 +100,8 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
                 ],
                 undefined,
                 ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                // instance.request({ method, url, data, params })
-                getAxiosRequestCallExpression({
+                // instance.call(method, url, { body?, query?, ...config })
+                getFetchesRequestCallExpression({
                   request,
                   requestInfo,
                   requestResponseTypeName,
@@ -114,7 +114,7 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
         )
       );
 
-      requestFile.add(importAxiosRequestParams);
+      requestFile.add(importFetchesRequestParams);
       requestFile.add(importTypes);
       requestFile.add(importInstance);
       requestFile.add(requestParamsType);
