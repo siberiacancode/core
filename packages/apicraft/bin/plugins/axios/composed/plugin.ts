@@ -61,7 +61,7 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
         ],
         folderPath: requestFolderPath,
         generateOutput: plugin.config.generateOutput,
-        instanceVariant: 'function'
+        groupBy: plugin.config.groupBy
       });
 
       // import { instance } from "../../instance.gen";

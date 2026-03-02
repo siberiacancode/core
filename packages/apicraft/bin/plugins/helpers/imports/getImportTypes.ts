@@ -1,10 +1,12 @@
 import * as nodePath from 'node:path';
 import ts from 'typescript';
 
+import type { ApicraftOption } from '@/bin/schemas';
+
 interface GetImportTypesParams {
   folderPath: string;
   generateOutput: string;
-  instanceVariant: 'class' | 'function';
+  groupBy: ApicraftOption['groupBy'];
   typeNames: string[];
 }
 
@@ -13,9 +15,9 @@ export const getImportTypes = ({
   typeNames,
   folderPath,
   generateOutput,
-  instanceVariant
-}: GetImportTypesParams) => {
-  return ts.factory.createImportDeclaration(
+  groupBy
+}: GetImportTypesParams) =>
+  ts.factory.createImportDeclaration(
     undefined,
     ts.factory.createImportClause(
       true,
@@ -27,10 +29,9 @@ export const getImportTypes = ({
       )
     ),
     ts.factory.createStringLiteral(
-      instanceVariant === 'function'
+      groupBy === 'class'
         ? nodePath.relative(folderPath, `${generateOutput}/types.gen`)
         : './types.gen'
     ),
     undefined
   );
-};

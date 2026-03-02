@@ -95,7 +95,7 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
     typeNames: Array.from(typeImportNames),
     folderPath: classFolderPath,
     generateOutput: plugin.config.generateOutput,
-    instanceVariant: 'class'
+    groupBy: plugin.config.groupBy
   });
 
   // import type { FetchesRequestParams } from '@siberiacancode/apicraft';
