@@ -1,5 +1,5 @@
-import * as nodeFs from 'node:fs';
-import * as nodePath from 'node:path';
+import nodeFs from 'node:fs';
+import nodePath from 'node:path';
 
 export const collectGeneratedFiles = async (folderPath: string) => {
   const files: Record<string, string> = {};

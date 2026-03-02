@@ -1,5 +1,6 @@
 import type { ApicraftOption } from '@/bin/schemas';
 
+// eslint-disable-next-line antfu/no-import-dist
 import { apicraft } from '../../dist/esm/index.mjs';
 
 export const options: ApicraftOption[] = [];

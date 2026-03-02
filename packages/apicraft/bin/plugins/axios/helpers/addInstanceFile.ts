@@ -1,6 +1,6 @@
 import type { DefinePlugin } from '@hey-api/openapi-ts';
 
-import * as nodePath from 'node:path';
+import nodePath from 'node:path';
 import ts from 'typescript';
 
 import { getImportAxios } from './getImportAxios';

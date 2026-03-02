@@ -1,6 +1,6 @@
 import type { IR } from '@hey-api/openapi-ts';
 
-import * as nodePath from 'node:path';
+import nodePath from 'node:path';
 
 import type { ApicraftOption } from '@/bin/schemas';
 

@@ -9,8 +9,7 @@ export default eslint(
     rules: {
       'no-console': ['warn', { allow: ['info', 'dir', 'warn', 'error'] }],
       'node/prefer-global/process': 'off',
-      'no-template-curly-in-string': 'off',
-      'antfu/no-import-dist': 'off'
+      'no-template-curly-in-string': 'off'
     }
   },
   {

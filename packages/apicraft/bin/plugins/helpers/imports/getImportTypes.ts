@@ -1,4 +1,4 @@
-import * as nodePath from 'node:path';
+import nodePath from 'node:path';
 import ts from 'typescript';
 
 import type { ApicraftOption } from '@/bin/schemas';
