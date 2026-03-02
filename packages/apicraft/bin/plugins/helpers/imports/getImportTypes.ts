@@ -1,13 +1,20 @@
 import * as nodePath from 'node:path';
 import ts from 'typescript';
 
-// import type { Type } from '<relativePath>/types.gen';
-export const getTypes = (
-  typeNames: string[],
-  folderPath: string,
-  generateOutput: string,
-  instanceVariant: 'class' | 'function'
-) => {
+interface GetImportTypesParams {
+  folderPath: string;
+  generateOutput: string;
+  instanceVariant: 'class' | 'function';
+  typeNames: string[];
+}
+
+// import type { Type } from 'generated/types.gen';
+export const getImportTypes = ({
+  typeNames,
+  folderPath,
+  generateOutput,
+  instanceVariant
+}: GetImportTypesParams) => {
   return ts.factory.createImportDeclaration(
     undefined,
     ts.factory.createImportClause(

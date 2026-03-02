@@ -6,8 +6,8 @@ import {
   generateRequestName,
   getApicraftTypeImport,
   getImportRuntimeInstance,
-  getRequestInfo,
-  getTypes
+  getImportTypes,
+  getRequestInfo
 } from '@/bin/plugins/helpers';
 
 import type { FetchesPlugin } from '../types';
@@ -91,14 +91,17 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
   });
 
   // import type { RequestData, RequestResponse, ... } from './types.gen';
-  const importTypes = getTypes(
-    Array.from(typeImportNames),
-    classFolderPath,
-    plugin.config.generateOutput,
-    'class'
-  );
+  const importTypes = getImportTypes({
+    typeNames: Array.from(typeImportNames),
+    folderPath: classFolderPath,
+    generateOutput: plugin.config.generateOutput,
+    instanceVariant: 'class'
+  });
 
-  // import type { FetchesInstance, FetchesParams? } from '@siberiacancode/fetches';
+  // import type { FetchesRequestParams } from '@siberiacancode/apicraft';
+  const importFetchesRequestParams = getApicraftTypeImport('FetchesRequestParams');
+
+  // import type { FetchesInstance, FetchesParams } from '@siberiacancode/fetches';
   const importFetchesTypes = ts.factory.createImportDeclaration(
     undefined,
     ts.factory.createImportClause(
@@ -203,11 +206,9 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
     )
   );
 
-  // import type { FetchesRequestParams } from '@siberiacancode/apicraft';
-  classFile.add(getApicraftTypeImport('FetchesRequestParams'));
+  classFile.add(importFetchesRequestParams);
   classFile.add(importTypes);
-  // import fetches from '@siberiacancode/fetches';
-  classFile.add(getImportFetches());
+  classFile.add(importFetchesTypes);
 
   if (plugin.config.runtimeInstancePath) {
     // import { instance as runtimeInstance } from runtimeInstancePath;
@@ -218,7 +219,10 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
       })
     );
   }
-  classFile.add(importFetchesTypes);
+  if (!plugin.config.runtimeInstancePath) {
+    // import fetches from '@siberiacancode/fetches';
+    classFile.add(getImportFetches());
+  }
 
   typeStatements.forEach((alias) => classFile.add(alias));
   classFile.add(classDeclaration);

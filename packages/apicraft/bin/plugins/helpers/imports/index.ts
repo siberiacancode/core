@@ -2,4 +2,4 @@ export * from './getApicraftTypeImport';
 export * from './getImportInstance';
 export * from './getImportRequest';
 export * from './getImportRuntimeInstance';
-export * from './getTypes';
+export * from './getImportTypes';
