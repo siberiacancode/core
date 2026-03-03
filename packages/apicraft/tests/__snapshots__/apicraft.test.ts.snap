@@ -12,10 +12,10 @@ import { instance } from "generated/axios/class/operationId/instance.gen";
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
-export const useGetUserByNameQuery = (settings?: TanstackQuerySettings<typeof instance.GetUserByName>) => useQuery({
-    queryKey: ["GetUserByNameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByNameQuery = (settings: TanstackQuerySettings<typeof instance.GetUserByName>) => useQuery({
+    queryKey: ["GetUserByNameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const GetUserByNameMutationKey = "GetUserByName";
@@ -28,20 +28,20 @@ export const useGetUserByNameMutation = (settings?: TanstackMutationSettings<typ
 
 export const GetUserByNameSuspenseQueryKey = "GetUserByName";
 
-export const GetUserByNameOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.GetUserByName>) => queryOptions({
-    queryKey: ["GetUserByNameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const GetUserByNameOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.GetUserByName>) => queryOptions({
+    queryKey: ["GetUserByNameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByNameSuspenseQuery = (...args: Parameters<typeof GetUserByNameOptions>) => useSuspenseQuery(GetUserByNameOptions(...args));
 
 export const CreateUserRecordQueryKey = "CreateUserRecord";
 
-export const useCreateUserRecordQuery = (settings?: TanstackQuerySettings<typeof instance.CreateUserRecord>) => useQuery({
-    queryKey: ["CreateUserRecordQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const useCreateUserRecordQuery = (settings: TanstackQuerySettings<typeof instance.CreateUserRecord>) => useQuery({
+    queryKey: ["CreateUserRecordQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const CreateUserRecordMutationKey = "CreateUserRecord";
@@ -54,20 +54,20 @@ export const useCreateUserRecordMutation = (settings?: TanstackMutationSettings<
 
 export const CreateUserRecordSuspenseQueryKey = "CreateUserRecord";
 
-export const CreateUserRecordOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.CreateUserRecord>) => queryOptions({
-    queryKey: ["CreateUserRecordSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const CreateUserRecordOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.CreateUserRecord>) => queryOptions({
+    queryKey: ["CreateUserRecordSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const useCreateUserRecordSuspenseQuery = (...args: Parameters<typeof CreateUserRecordOptions>) => useSuspenseQuery(CreateUserRecordOptions(...args));
 
 export const UpdateTaskStatusQueryKey = "UpdateTaskStatus";
 
-export const useUpdateTaskStatusQuery = (settings?: TanstackQuerySettings<typeof instance.UpdateTaskStatus>) => useQuery({
-    queryKey: ["UpdateTaskStatusQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const useUpdateTaskStatusQuery = (settings: TanstackQuerySettings<typeof instance.UpdateTaskStatus>) => useQuery({
+    queryKey: ["UpdateTaskStatusQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const UpdateTaskStatusMutationKey = "UpdateTaskStatus";
@@ -80,20 +80,20 @@ export const useUpdateTaskStatusMutation = (settings?: TanstackMutationSettings<
 
 export const UpdateTaskStatusSuspenseQueryKey = "UpdateTaskStatus";
 
-export const UpdateTaskStatusOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.UpdateTaskStatus>) => queryOptions({
-    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const UpdateTaskStatusOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.UpdateTaskStatus>) => queryOptions({
+    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const useUpdateTaskStatusSuspenseQuery = (...args: Parameters<typeof UpdateTaskStatusOptions>) => useSuspenseQuery(UpdateTaskStatusOptions(...args));
 
 export const DeleteReportEntryQueryKey = "DeleteReportEntry";
 
-export const useDeleteReportEntryQuery = (settings?: TanstackQuerySettings<typeof instance.DeleteReportEntry>) => useQuery({
-    queryKey: ["DeleteReportEntryQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportEntryQuery = (settings: TanstackQuerySettings<typeof instance.DeleteReportEntry>) => useQuery({
+    queryKey: ["DeleteReportEntryQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const DeleteReportEntryMutationKey = "DeleteReportEntry";
@@ -106,10 +106,10 @@ export const useDeleteReportEntryMutation = (settings?: TanstackMutationSettings
 
 export const DeleteReportEntrySuspenseQueryKey = "DeleteReportEntry";
 
-export const DeleteReportEntryOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.DeleteReportEntry>) => queryOptions({
-    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const DeleteReportEntryOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.DeleteReportEntry>) => queryOptions({
+    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportEntrySuspenseQuery = (...args: Parameters<typeof DeleteReportEntryOptions>) => useSuspenseQuery(DeleteReportEntryOptions(...args));",
@@ -185,10 +185,10 @@ import { instance } from "generated/axios/class/path/instance.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
-export const useGetUserByUsernameQuery = (settings?: TanstackQuerySettings<typeof instance.getUserByUsername>) => useQuery({
-    queryKey: ["getUserByUsernameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByUsernameQuery = (settings: TanstackQuerySettings<typeof instance.getUserByUsername>) => useQuery({
+    queryKey: ["getUserByUsernameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const getUserByUsernameMutationKey = "getUserByUsername";
@@ -201,20 +201,20 @@ export const useGetUserByUsernameMutation = (settings?: TanstackMutationSettings
 
 export const getUserByUsernameSuspenseQueryKey = "getUserByUsername";
 
-export const getUserByUsernameOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.getUserByUsername>) => queryOptions({
-    queryKey: ["getUserByUsernameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const getUserByUsernameOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.getUserByUsername>) => queryOptions({
+    queryKey: ["getUserByUsernameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByUsernameSuspenseQuery = (...args: Parameters<typeof getUserByUsernameOptions>) => useSuspenseQuery(getUserByUsernameOptions(...args));
 
 export const postUsersQueryKey = "postUsers";
 
-export const usePostUsersQuery = (settings?: TanstackQuerySettings<typeof instance.postUsers>) => useQuery({
-    queryKey: ["postUsersQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.postUsers({ ...settings?.request }),
-    ...settings?.params
+export const usePostUsersQuery = (settings: TanstackQuerySettings<typeof instance.postUsers>) => useQuery({
+    queryKey: ["postUsersQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const postUsersMutationKey = "postUsers";
@@ -227,20 +227,20 @@ export const usePostUsersMutation = (settings?: TanstackMutationSettings<typeof 
 
 export const postUsersSuspenseQueryKey = "postUsers";
 
-export const postUsersOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.postUsers>) => queryOptions({
-    queryKey: ["postUsersSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.postUsers({ ...settings?.request }),
-    ...settings?.params
+export const postUsersOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.postUsers>) => queryOptions({
+    queryKey: ["postUsersSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePostUsersSuspenseQuery = (...args: Parameters<typeof postUsersOptions>) => useSuspenseQuery(postUsersOptions(...args));
 
 export const patchProjectByProjectIdTaskByTaskIdQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings?: TanstackQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => useQuery({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings: TanstackQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => useQuery({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const patchProjectByProjectIdTaskByTaskIdMutationKey = "patchProjectByProjectIdTaskByTaskId";
@@ -253,20 +253,20 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = (settings?: Tansta
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const patchProjectByProjectIdTaskByTaskIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => queryOptions({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const patchProjectByProjectIdTaskByTaskIdOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => queryOptions({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery = (...args: Parameters<typeof patchProjectByProjectIdTaskByTaskIdOptions>) => useSuspenseQuery(patchProjectByProjectIdTaskByTaskIdOptions(...args));
 
 export const deleteReportByReportIdEntrieByEntryIdQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings?: TanstackQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => useQuery({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings: TanstackQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => useQuery({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const deleteReportByReportIdEntrieByEntryIdMutationKey = "deleteReportByReportIdEntrieByEntryId";
@@ -279,10 +279,10 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = (settings?: Tans
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const deleteReportByReportIdEntrieByEntryIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => queryOptions({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const deleteReportByReportIdEntrieByEntryIdOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => queryOptions({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery = (...args: Parameters<typeof deleteReportByReportIdEntrieByEntryIdOptions>) => useSuspenseQuery(deleteReportByReportIdEntrieByEntryIdOptions(...args));",
@@ -373,10 +373,10 @@ import { UpdateTaskStatus } from "../../../../../requests/projects/{projectId}/t
 
 export const UpdateTaskStatusQueryKey = "UpdateTaskStatus";
 
-export const useUpdateTaskStatusQuery = (settings?: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
-    queryKey: ["UpdateTaskStatusQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const useUpdateTaskStatusQuery = (settings: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
+    queryKey: ["UpdateTaskStatusQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });",
   "axios/paths/operationId/hooks/projects/{projectId}/tasks/{task_id}/useUpdateTaskStatusSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -388,10 +388,10 @@ import { UpdateTaskStatus } from "../../../../../requests/projects/{projectId}/t
 
 export const UpdateTaskStatusSuspenseQueryKey = "UpdateTaskStatus";
 
-export const UpdateTaskStatusOptions = (settings?: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
-    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const UpdateTaskStatusOptions = (settings: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
+    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const useUpdateTaskStatusSuspenseQuery = (...args: Parameters<typeof UpdateTaskStatusOptions>) => useSuspenseQuery(UpdateTaskStatusOptions(...args));",
@@ -420,10 +420,10 @@ import { DeleteReportEntry } from "../../../../../requests/reports/{report_id}/e
 
 export const DeleteReportEntryQueryKey = "DeleteReportEntry";
 
-export const useDeleteReportEntryQuery = (settings?: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
-    queryKey: ["DeleteReportEntryQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportEntryQuery = (settings: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
+    queryKey: ["DeleteReportEntryQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });",
   "axios/paths/operationId/hooks/reports/{report_id}/entries/{entry_id}/useDeleteReportEntrySuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -435,10 +435,10 @@ import { DeleteReportEntry } from "../../../../../requests/reports/{report_id}/e
 
 export const DeleteReportEntrySuspenseQueryKey = "DeleteReportEntry";
 
-export const DeleteReportEntryOptions = (settings?: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
-    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const DeleteReportEntryOptions = (settings: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
+    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportEntrySuspenseQuery = (...args: Parameters<typeof DeleteReportEntryOptions>) => useSuspenseQuery(DeleteReportEntryOptions(...args));",
@@ -467,10 +467,10 @@ import { CreateUserRecord } from "../../requests/users/post.gen";
 
 export const CreateUserRecordQueryKey = "CreateUserRecord";
 
-export const useCreateUserRecordQuery = (settings?: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
-    queryKey: ["CreateUserRecordQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const useCreateUserRecordQuery = (settings: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
+    queryKey: ["CreateUserRecordQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });",
   "axios/paths/operationId/hooks/users/useCreateUserRecordSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -482,10 +482,10 @@ import { CreateUserRecord } from "../../requests/users/post.gen";
 
 export const CreateUserRecordSuspenseQueryKey = "CreateUserRecord";
 
-export const CreateUserRecordOptions = (settings?: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
-    queryKey: ["CreateUserRecordSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const CreateUserRecordOptions = (settings: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
+    queryKey: ["CreateUserRecordSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const useCreateUserRecordSuspenseQuery = (...args: Parameters<typeof CreateUserRecordOptions>) => useSuspenseQuery(CreateUserRecordOptions(...args));",
@@ -514,10 +514,10 @@ import { GetUserByName } from "../../../requests/users/{username}/get.gen";
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
-export const useGetUserByNameQuery = (settings?: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
-    queryKey: ["GetUserByNameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByNameQuery = (settings: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
+    queryKey: ["GetUserByNameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });",
   "axios/paths/operationId/hooks/users/{username}/useGetUserByNameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -529,10 +529,10 @@ import { GetUserByName } from "../../../requests/users/{username}/get.gen";
 
 export const GetUserByNameSuspenseQueryKey = "GetUserByName";
 
-export const GetUserByNameOptions = (settings?: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
-    queryKey: ["GetUserByNameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const GetUserByNameOptions = (settings: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
+    queryKey: ["GetUserByNameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByNameSuspenseQuery = (...args: Parameters<typeof GetUserByNameOptions>) => useSuspenseQuery(GetUserByNameOptions(...args));",
@@ -649,10 +649,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../../../../requests/pro
 
 export const patchProjectByProjectIdTaskByTaskIdQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings?: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });",
   "axios/paths/path/hooks/projects/{projectId}/tasks/{task_id}/usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -664,10 +664,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../../../../requests/pro
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const patchProjectByProjectIdTaskByTaskIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const patchProjectByProjectIdTaskByTaskIdOptions = (settings: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery = (...args: Parameters<typeof patchProjectByProjectIdTaskByTaskIdOptions>) => useSuspenseQuery(patchProjectByProjectIdTaskByTaskIdOptions(...args));",
@@ -696,10 +696,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../../../../requests/r
 
 export const deleteReportByReportIdEntrieByEntryIdQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings?: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });",
   "axios/paths/path/hooks/reports/{report_id}/entries/{entry_id}/useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -711,10 +711,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../../../../requests/r
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const deleteReportByReportIdEntrieByEntryIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const deleteReportByReportIdEntrieByEntryIdOptions = (settings: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery = (...args: Parameters<typeof deleteReportByReportIdEntrieByEntryIdOptions>) => useSuspenseQuery(deleteReportByReportIdEntrieByEntryIdOptions(...args));",
@@ -743,10 +743,10 @@ import { postUsers } from "../../requests/users/post.gen";
 
 export const postUsersQueryKey = "postUsers";
 
-export const usePostUsersQuery = (settings?: TanstackQuerySettings<typeof postUsers>) => useQuery({
-    queryKey: ["postUsersQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const usePostUsersQuery = (settings: TanstackQuerySettings<typeof postUsers>) => useQuery({
+    queryKey: ["postUsersQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });",
   "axios/paths/path/hooks/users/usePostUsersSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -758,10 +758,10 @@ import { postUsers } from "../../requests/users/post.gen";
 
 export const postUsersSuspenseQueryKey = "postUsers";
 
-export const postUsersOptions = (settings?: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
-    queryKey: ["postUsersSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const postUsersOptions = (settings: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
+    queryKey: ["postUsersSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePostUsersSuspenseQuery = (...args: Parameters<typeof postUsersOptions>) => useSuspenseQuery(postUsersOptions(...args));",
@@ -790,10 +790,10 @@ import { getUserByUsername } from "../../../requests/users/{username}/get.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
-export const useGetUserByUsernameQuery = (settings?: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
-    queryKey: ["getUserByUsernameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByUsernameQuery = (settings: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
+    queryKey: ["getUserByUsernameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });",
   "axios/paths/path/hooks/users/{username}/useGetUserByUsernameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -805,10 +805,10 @@ import { getUserByUsername } from "../../../requests/users/{username}/get.gen";
 
 export const getUserByUsernameSuspenseQueryKey = "getUserByUsername";
 
-export const getUserByUsernameOptions = (settings?: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
-    queryKey: ["getUserByUsernameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const getUserByUsernameOptions = (settings: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
+    queryKey: ["getUserByUsernameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByUsernameSuspenseQuery = (...args: Parameters<typeof getUserByUsernameOptions>) => useSuspenseQuery(getUserByUsernameOptions(...args));",
@@ -910,10 +910,10 @@ import { instance } from "generated/axios/runtime/class/operationId/instance.gen
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
-export const useGetUserByNameQuery = (settings?: TanstackQuerySettings<typeof instance.GetUserByName>) => useQuery({
-    queryKey: ["GetUserByNameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByNameQuery = (settings: TanstackQuerySettings<typeof instance.GetUserByName>) => useQuery({
+    queryKey: ["GetUserByNameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const GetUserByNameMutationKey = "GetUserByName";
@@ -926,20 +926,20 @@ export const useGetUserByNameMutation = (settings?: TanstackMutationSettings<typ
 
 export const GetUserByNameSuspenseQueryKey = "GetUserByName";
 
-export const GetUserByNameOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.GetUserByName>) => queryOptions({
-    queryKey: ["GetUserByNameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const GetUserByNameOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.GetUserByName>) => queryOptions({
+    queryKey: ["GetUserByNameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByNameSuspenseQuery = (...args: Parameters<typeof GetUserByNameOptions>) => useSuspenseQuery(GetUserByNameOptions(...args));
 
 export const CreateUserRecordQueryKey = "CreateUserRecord";
 
-export const useCreateUserRecordQuery = (settings?: TanstackQuerySettings<typeof instance.CreateUserRecord>) => useQuery({
-    queryKey: ["CreateUserRecordQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const useCreateUserRecordQuery = (settings: TanstackQuerySettings<typeof instance.CreateUserRecord>) => useQuery({
+    queryKey: ["CreateUserRecordQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const CreateUserRecordMutationKey = "CreateUserRecord";
@@ -952,20 +952,20 @@ export const useCreateUserRecordMutation = (settings?: TanstackMutationSettings<
 
 export const CreateUserRecordSuspenseQueryKey = "CreateUserRecord";
 
-export const CreateUserRecordOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.CreateUserRecord>) => queryOptions({
-    queryKey: ["CreateUserRecordSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const CreateUserRecordOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.CreateUserRecord>) => queryOptions({
+    queryKey: ["CreateUserRecordSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const useCreateUserRecordSuspenseQuery = (...args: Parameters<typeof CreateUserRecordOptions>) => useSuspenseQuery(CreateUserRecordOptions(...args));
 
 export const UpdateTaskStatusQueryKey = "UpdateTaskStatus";
 
-export const useUpdateTaskStatusQuery = (settings?: TanstackQuerySettings<typeof instance.UpdateTaskStatus>) => useQuery({
-    queryKey: ["UpdateTaskStatusQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const useUpdateTaskStatusQuery = (settings: TanstackQuerySettings<typeof instance.UpdateTaskStatus>) => useQuery({
+    queryKey: ["UpdateTaskStatusQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const UpdateTaskStatusMutationKey = "UpdateTaskStatus";
@@ -978,20 +978,20 @@ export const useUpdateTaskStatusMutation = (settings?: TanstackMutationSettings<
 
 export const UpdateTaskStatusSuspenseQueryKey = "UpdateTaskStatus";
 
-export const UpdateTaskStatusOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.UpdateTaskStatus>) => queryOptions({
-    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const UpdateTaskStatusOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.UpdateTaskStatus>) => queryOptions({
+    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const useUpdateTaskStatusSuspenseQuery = (...args: Parameters<typeof UpdateTaskStatusOptions>) => useSuspenseQuery(UpdateTaskStatusOptions(...args));
 
 export const DeleteReportEntryQueryKey = "DeleteReportEntry";
 
-export const useDeleteReportEntryQuery = (settings?: TanstackQuerySettings<typeof instance.DeleteReportEntry>) => useQuery({
-    queryKey: ["DeleteReportEntryQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportEntryQuery = (settings: TanstackQuerySettings<typeof instance.DeleteReportEntry>) => useQuery({
+    queryKey: ["DeleteReportEntryQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const DeleteReportEntryMutationKey = "DeleteReportEntry";
@@ -1004,10 +1004,10 @@ export const useDeleteReportEntryMutation = (settings?: TanstackMutationSettings
 
 export const DeleteReportEntrySuspenseQueryKey = "DeleteReportEntry";
 
-export const DeleteReportEntryOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.DeleteReportEntry>) => queryOptions({
-    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const DeleteReportEntryOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.DeleteReportEntry>) => queryOptions({
+    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportEntrySuspenseQuery = (...args: Parameters<typeof DeleteReportEntryOptions>) => useSuspenseQuery(DeleteReportEntryOptions(...args));",
@@ -1083,10 +1083,10 @@ import { instance } from "generated/axios/runtime/class/path/instance.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
-export const useGetUserByUsernameQuery = (settings?: TanstackQuerySettings<typeof instance.getUserByUsername>) => useQuery({
-    queryKey: ["getUserByUsernameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByUsernameQuery = (settings: TanstackQuerySettings<typeof instance.getUserByUsername>) => useQuery({
+    queryKey: ["getUserByUsernameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const getUserByUsernameMutationKey = "getUserByUsername";
@@ -1099,20 +1099,20 @@ export const useGetUserByUsernameMutation = (settings?: TanstackMutationSettings
 
 export const getUserByUsernameSuspenseQueryKey = "getUserByUsername";
 
-export const getUserByUsernameOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.getUserByUsername>) => queryOptions({
-    queryKey: ["getUserByUsernameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const getUserByUsernameOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.getUserByUsername>) => queryOptions({
+    queryKey: ["getUserByUsernameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByUsernameSuspenseQuery = (...args: Parameters<typeof getUserByUsernameOptions>) => useSuspenseQuery(getUserByUsernameOptions(...args));
 
 export const postUsersQueryKey = "postUsers";
 
-export const usePostUsersQuery = (settings?: TanstackQuerySettings<typeof instance.postUsers>) => useQuery({
-    queryKey: ["postUsersQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.postUsers({ ...settings?.request }),
-    ...settings?.params
+export const usePostUsersQuery = (settings: TanstackQuerySettings<typeof instance.postUsers>) => useQuery({
+    queryKey: ["postUsersQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const postUsersMutationKey = "postUsers";
@@ -1125,20 +1125,20 @@ export const usePostUsersMutation = (settings?: TanstackMutationSettings<typeof 
 
 export const postUsersSuspenseQueryKey = "postUsers";
 
-export const postUsersOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.postUsers>) => queryOptions({
-    queryKey: ["postUsersSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.postUsers({ ...settings?.request }),
-    ...settings?.params
+export const postUsersOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.postUsers>) => queryOptions({
+    queryKey: ["postUsersSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePostUsersSuspenseQuery = (...args: Parameters<typeof postUsersOptions>) => useSuspenseQuery(postUsersOptions(...args));
 
 export const patchProjectByProjectIdTaskByTaskIdQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings?: TanstackQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => useQuery({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings: TanstackQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => useQuery({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const patchProjectByProjectIdTaskByTaskIdMutationKey = "patchProjectByProjectIdTaskByTaskId";
@@ -1151,20 +1151,20 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = (settings?: Tansta
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const patchProjectByProjectIdTaskByTaskIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => queryOptions({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const patchProjectByProjectIdTaskByTaskIdOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => queryOptions({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery = (...args: Parameters<typeof patchProjectByProjectIdTaskByTaskIdOptions>) => useSuspenseQuery(patchProjectByProjectIdTaskByTaskIdOptions(...args));
 
 export const deleteReportByReportIdEntrieByEntryIdQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings?: TanstackQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => useQuery({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings: TanstackQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => useQuery({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const deleteReportByReportIdEntrieByEntryIdMutationKey = "deleteReportByReportIdEntrieByEntryId";
@@ -1177,10 +1177,10 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = (settings?: Tans
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const deleteReportByReportIdEntrieByEntryIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => queryOptions({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const deleteReportByReportIdEntrieByEntryIdOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => queryOptions({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery = (...args: Parameters<typeof deleteReportByReportIdEntrieByEntryIdOptions>) => useSuspenseQuery(deleteReportByReportIdEntrieByEntryIdOptions(...args));",
@@ -1271,10 +1271,10 @@ import { UpdateTaskStatus } from "../../../../../requests/projects/{projectId}/t
 
 export const UpdateTaskStatusQueryKey = "UpdateTaskStatus";
 
-export const useUpdateTaskStatusQuery = (settings?: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
-    queryKey: ["UpdateTaskStatusQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const useUpdateTaskStatusQuery = (settings: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
+    queryKey: ["UpdateTaskStatusQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/paths/operationId/hooks/projects/{projectId}/tasks/{task_id}/useUpdateTaskStatusSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -1286,10 +1286,10 @@ import { UpdateTaskStatus } from "../../../../../requests/projects/{projectId}/t
 
 export const UpdateTaskStatusSuspenseQueryKey = "UpdateTaskStatus";
 
-export const UpdateTaskStatusOptions = (settings?: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
-    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const UpdateTaskStatusOptions = (settings: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
+    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const useUpdateTaskStatusSuspenseQuery = (...args: Parameters<typeof UpdateTaskStatusOptions>) => useSuspenseQuery(UpdateTaskStatusOptions(...args));",
@@ -1318,10 +1318,10 @@ import { DeleteReportEntry } from "../../../../../requests/reports/{report_id}/e
 
 export const DeleteReportEntryQueryKey = "DeleteReportEntry";
 
-export const useDeleteReportEntryQuery = (settings?: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
-    queryKey: ["DeleteReportEntryQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportEntryQuery = (settings: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
+    queryKey: ["DeleteReportEntryQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/paths/operationId/hooks/reports/{report_id}/entries/{entry_id}/useDeleteReportEntrySuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -1333,10 +1333,10 @@ import { DeleteReportEntry } from "../../../../../requests/reports/{report_id}/e
 
 export const DeleteReportEntrySuspenseQueryKey = "DeleteReportEntry";
 
-export const DeleteReportEntryOptions = (settings?: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
-    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const DeleteReportEntryOptions = (settings: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
+    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportEntrySuspenseQuery = (...args: Parameters<typeof DeleteReportEntryOptions>) => useSuspenseQuery(DeleteReportEntryOptions(...args));",
@@ -1365,10 +1365,10 @@ import { CreateUserRecord } from "../../requests/users/post.gen";
 
 export const CreateUserRecordQueryKey = "CreateUserRecord";
 
-export const useCreateUserRecordQuery = (settings?: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
-    queryKey: ["CreateUserRecordQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const useCreateUserRecordQuery = (settings: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
+    queryKey: ["CreateUserRecordQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/paths/operationId/hooks/users/useCreateUserRecordSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -1380,10 +1380,10 @@ import { CreateUserRecord } from "../../requests/users/post.gen";
 
 export const CreateUserRecordSuspenseQueryKey = "CreateUserRecord";
 
-export const CreateUserRecordOptions = (settings?: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
-    queryKey: ["CreateUserRecordSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const CreateUserRecordOptions = (settings: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
+    queryKey: ["CreateUserRecordSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const useCreateUserRecordSuspenseQuery = (...args: Parameters<typeof CreateUserRecordOptions>) => useSuspenseQuery(CreateUserRecordOptions(...args));",
@@ -1412,10 +1412,10 @@ import { GetUserByName } from "../../../requests/users/{username}/get.gen";
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
-export const useGetUserByNameQuery = (settings?: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
-    queryKey: ["GetUserByNameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByNameQuery = (settings: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
+    queryKey: ["GetUserByNameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/paths/operationId/hooks/users/{username}/useGetUserByNameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -1427,10 +1427,10 @@ import { GetUserByName } from "../../../requests/users/{username}/get.gen";
 
 export const GetUserByNameSuspenseQueryKey = "GetUserByName";
 
-export const GetUserByNameOptions = (settings?: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
-    queryKey: ["GetUserByNameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const GetUserByNameOptions = (settings: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
+    queryKey: ["GetUserByNameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByNameSuspenseQuery = (...args: Parameters<typeof GetUserByNameOptions>) => useSuspenseQuery(GetUserByNameOptions(...args));",
@@ -1547,10 +1547,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../../../../requests/pro
 
 export const patchProjectByProjectIdTaskByTaskIdQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings?: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/paths/path/hooks/projects/{projectId}/tasks/{task_id}/usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -1562,10 +1562,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../../../../requests/pro
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const patchProjectByProjectIdTaskByTaskIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const patchProjectByProjectIdTaskByTaskIdOptions = (settings: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery = (...args: Parameters<typeof patchProjectByProjectIdTaskByTaskIdOptions>) => useSuspenseQuery(patchProjectByProjectIdTaskByTaskIdOptions(...args));",
@@ -1594,10 +1594,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../../../../requests/r
 
 export const deleteReportByReportIdEntrieByEntryIdQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings?: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/paths/path/hooks/reports/{report_id}/entries/{entry_id}/useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -1609,10 +1609,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../../../../requests/r
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const deleteReportByReportIdEntrieByEntryIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const deleteReportByReportIdEntrieByEntryIdOptions = (settings: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery = (...args: Parameters<typeof deleteReportByReportIdEntrieByEntryIdOptions>) => useSuspenseQuery(deleteReportByReportIdEntrieByEntryIdOptions(...args));",
@@ -1641,10 +1641,10 @@ import { postUsers } from "../../requests/users/post.gen";
 
 export const postUsersQueryKey = "postUsers";
 
-export const usePostUsersQuery = (settings?: TanstackQuerySettings<typeof postUsers>) => useQuery({
-    queryKey: ["postUsersQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const usePostUsersQuery = (settings: TanstackQuerySettings<typeof postUsers>) => useQuery({
+    queryKey: ["postUsersQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/paths/path/hooks/users/usePostUsersSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -1656,10 +1656,10 @@ import { postUsers } from "../../requests/users/post.gen";
 
 export const postUsersSuspenseQueryKey = "postUsers";
 
-export const postUsersOptions = (settings?: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
-    queryKey: ["postUsersSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const postUsersOptions = (settings: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
+    queryKey: ["postUsersSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePostUsersSuspenseQuery = (...args: Parameters<typeof postUsersOptions>) => useSuspenseQuery(postUsersOptions(...args));",
@@ -1688,10 +1688,10 @@ import { getUserByUsername } from "../../../requests/users/{username}/get.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
-export const useGetUserByUsernameQuery = (settings?: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
-    queryKey: ["getUserByUsernameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByUsernameQuery = (settings: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
+    queryKey: ["getUserByUsernameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/paths/path/hooks/users/{username}/useGetUserByUsernameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -1703,10 +1703,10 @@ import { getUserByUsername } from "../../../requests/users/{username}/get.gen";
 
 export const getUserByUsernameSuspenseQueryKey = "getUserByUsername";
 
-export const getUserByUsernameOptions = (settings?: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
-    queryKey: ["getUserByUsernameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const getUserByUsernameOptions = (settings: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
+    queryKey: ["getUserByUsernameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByUsernameSuspenseQuery = (...args: Parameters<typeof getUserByUsernameOptions>) => useSuspenseQuery(getUserByUsernameOptions(...args));",
@@ -1823,10 +1823,10 @@ import { UpdateTaskStatus } from "../../requests/Project/UpdateTaskStatus.gen";
 
 export const UpdateTaskStatusQueryKey = "UpdateTaskStatus";
 
-export const useUpdateTaskStatusQuery = (settings?: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
-    queryKey: ["UpdateTaskStatusQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const useUpdateTaskStatusQuery = (settings: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
+    queryKey: ["UpdateTaskStatusQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/tags/operationId/hooks/Project/useUpdateTaskStatusSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -1838,10 +1838,10 @@ import { UpdateTaskStatus } from "../../requests/Project/UpdateTaskStatus.gen";
 
 export const UpdateTaskStatusSuspenseQueryKey = "UpdateTaskStatus";
 
-export const UpdateTaskStatusOptions = (settings?: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
-    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const UpdateTaskStatusOptions = (settings: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
+    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const useUpdateTaskStatusSuspenseQuery = (...args: Parameters<typeof UpdateTaskStatusOptions>) => useSuspenseQuery(UpdateTaskStatusOptions(...args));",
@@ -1870,10 +1870,10 @@ import { DeleteReportEntry } from "../../requests/Reports-analytics/DeleteReport
 
 export const DeleteReportEntryQueryKey = "DeleteReportEntry";
 
-export const useDeleteReportEntryQuery = (settings?: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
-    queryKey: ["DeleteReportEntryQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportEntryQuery = (settings: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
+    queryKey: ["DeleteReportEntryQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/tags/operationId/hooks/Reports-analytics/useDeleteReportEntrySuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -1885,10 +1885,10 @@ import { DeleteReportEntry } from "../../requests/Reports-analytics/DeleteReport
 
 export const DeleteReportEntrySuspenseQueryKey = "DeleteReportEntry";
 
-export const DeleteReportEntryOptions = (settings?: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
-    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const DeleteReportEntryOptions = (settings: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
+    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportEntrySuspenseQuery = (...args: Parameters<typeof DeleteReportEntryOptions>) => useSuspenseQuery(DeleteReportEntryOptions(...args));",
@@ -1917,10 +1917,10 @@ import { CreateUserRecord } from "../../requests/User/CreateUserRecord.gen";
 
 export const CreateUserRecordQueryKey = "CreateUserRecord";
 
-export const useCreateUserRecordQuery = (settings?: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
-    queryKey: ["CreateUserRecordQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const useCreateUserRecordQuery = (settings: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
+    queryKey: ["CreateUserRecordQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/tags/operationId/hooks/User/useCreateUserRecordSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -1932,10 +1932,10 @@ import { CreateUserRecord } from "../../requests/User/CreateUserRecord.gen";
 
 export const CreateUserRecordSuspenseQueryKey = "CreateUserRecord";
 
-export const CreateUserRecordOptions = (settings?: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
-    queryKey: ["CreateUserRecordSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const CreateUserRecordOptions = (settings: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
+    queryKey: ["CreateUserRecordSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const useCreateUserRecordSuspenseQuery = (...args: Parameters<typeof CreateUserRecordOptions>) => useSuspenseQuery(CreateUserRecordOptions(...args));",
@@ -1964,10 +1964,10 @@ import { GetUserByName } from "../../requests/User/GetUserByName.gen";
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
-export const useGetUserByNameQuery = (settings?: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
-    queryKey: ["GetUserByNameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByNameQuery = (settings: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
+    queryKey: ["GetUserByNameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/tags/operationId/hooks/User/useGetUserByNameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -1979,10 +1979,10 @@ import { GetUserByName } from "../../requests/User/GetUserByName.gen";
 
 export const GetUserByNameSuspenseQueryKey = "GetUserByName";
 
-export const GetUserByNameOptions = (settings?: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
-    queryKey: ["GetUserByNameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const GetUserByNameOptions = (settings: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
+    queryKey: ["GetUserByNameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByNameSuspenseQuery = (...args: Parameters<typeof GetUserByNameOptions>) => useSuspenseQuery(GetUserByNameOptions(...args));",
@@ -2099,10 +2099,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../requests/Project/patc
 
 export const patchProjectByProjectIdTaskByTaskIdQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings?: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/tags/path/hooks/Project/usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -2114,10 +2114,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../requests/Project/patc
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const patchProjectByProjectIdTaskByTaskIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const patchProjectByProjectIdTaskByTaskIdOptions = (settings: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery = (...args: Parameters<typeof patchProjectByProjectIdTaskByTaskIdOptions>) => useSuspenseQuery(patchProjectByProjectIdTaskByTaskIdOptions(...args));",
@@ -2146,10 +2146,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../requests/Reports-an
 
 export const deleteReportByReportIdEntrieByEntryIdQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings?: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/tags/path/hooks/Reports-analytics/useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -2161,10 +2161,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../requests/Reports-an
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const deleteReportByReportIdEntrieByEntryIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const deleteReportByReportIdEntrieByEntryIdOptions = (settings: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery = (...args: Parameters<typeof deleteReportByReportIdEntrieByEntryIdOptions>) => useSuspenseQuery(deleteReportByReportIdEntrieByEntryIdOptions(...args));",
@@ -2193,10 +2193,10 @@ import { getUserByUsername } from "../../requests/User/getUserByUsername.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
-export const useGetUserByUsernameQuery = (settings?: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
-    queryKey: ["getUserByUsernameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByUsernameQuery = (settings: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
+    queryKey: ["getUserByUsernameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/tags/path/hooks/User/useGetUserByUsernameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -2208,10 +2208,10 @@ import { getUserByUsername } from "../../requests/User/getUserByUsername.gen";
 
 export const getUserByUsernameSuspenseQueryKey = "getUserByUsername";
 
-export const getUserByUsernameOptions = (settings?: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
-    queryKey: ["getUserByUsernameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const getUserByUsernameOptions = (settings: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
+    queryKey: ["getUserByUsernameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByUsernameSuspenseQuery = (...args: Parameters<typeof getUserByUsernameOptions>) => useSuspenseQuery(getUserByUsernameOptions(...args));",
@@ -2240,10 +2240,10 @@ import { postUsers } from "../../requests/User/postUsers.gen";
 
 export const postUsersQueryKey = "postUsers";
 
-export const usePostUsersQuery = (settings?: TanstackQuerySettings<typeof postUsers>) => useQuery({
-    queryKey: ["postUsersQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const usePostUsersQuery = (settings: TanstackQuerySettings<typeof postUsers>) => useQuery({
+    queryKey: ["postUsersQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });",
   "axios/runtime/tags/path/hooks/User/usePostUsersSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -2255,10 +2255,10 @@ import { postUsers } from "../../requests/User/postUsers.gen";
 
 export const postUsersSuspenseQueryKey = "postUsers";
 
-export const postUsersOptions = (settings?: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
-    queryKey: ["postUsersSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const postUsersOptions = (settings: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
+    queryKey: ["postUsersSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePostUsersSuspenseQuery = (...args: Parameters<typeof postUsersOptions>) => useSuspenseQuery(postUsersOptions(...args));",
@@ -2375,10 +2375,10 @@ import { UpdateTaskStatus } from "../../requests/Project/UpdateTaskStatus.gen";
 
 export const UpdateTaskStatusQueryKey = "UpdateTaskStatus";
 
-export const useUpdateTaskStatusQuery = (settings?: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
-    queryKey: ["UpdateTaskStatusQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const useUpdateTaskStatusQuery = (settings: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
+    queryKey: ["UpdateTaskStatusQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });",
   "axios/tags/operationId/hooks/Project/useUpdateTaskStatusSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -2390,10 +2390,10 @@ import { UpdateTaskStatus } from "../../requests/Project/UpdateTaskStatus.gen";
 
 export const UpdateTaskStatusSuspenseQueryKey = "UpdateTaskStatus";
 
-export const UpdateTaskStatusOptions = (settings?: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
-    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const UpdateTaskStatusOptions = (settings: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
+    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const useUpdateTaskStatusSuspenseQuery = (...args: Parameters<typeof UpdateTaskStatusOptions>) => useSuspenseQuery(UpdateTaskStatusOptions(...args));",
@@ -2422,10 +2422,10 @@ import { DeleteReportEntry } from "../../requests/Reports-analytics/DeleteReport
 
 export const DeleteReportEntryQueryKey = "DeleteReportEntry";
 
-export const useDeleteReportEntryQuery = (settings?: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
-    queryKey: ["DeleteReportEntryQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportEntryQuery = (settings: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
+    queryKey: ["DeleteReportEntryQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });",
   "axios/tags/operationId/hooks/Reports-analytics/useDeleteReportEntrySuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -2437,10 +2437,10 @@ import { DeleteReportEntry } from "../../requests/Reports-analytics/DeleteReport
 
 export const DeleteReportEntrySuspenseQueryKey = "DeleteReportEntry";
 
-export const DeleteReportEntryOptions = (settings?: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
-    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const DeleteReportEntryOptions = (settings: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
+    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportEntrySuspenseQuery = (...args: Parameters<typeof DeleteReportEntryOptions>) => useSuspenseQuery(DeleteReportEntryOptions(...args));",
@@ -2469,10 +2469,10 @@ import { CreateUserRecord } from "../../requests/User/CreateUserRecord.gen";
 
 export const CreateUserRecordQueryKey = "CreateUserRecord";
 
-export const useCreateUserRecordQuery = (settings?: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
-    queryKey: ["CreateUserRecordQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const useCreateUserRecordQuery = (settings: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
+    queryKey: ["CreateUserRecordQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });",
   "axios/tags/operationId/hooks/User/useCreateUserRecordSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -2484,10 +2484,10 @@ import { CreateUserRecord } from "../../requests/User/CreateUserRecord.gen";
 
 export const CreateUserRecordSuspenseQueryKey = "CreateUserRecord";
 
-export const CreateUserRecordOptions = (settings?: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
-    queryKey: ["CreateUserRecordSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const CreateUserRecordOptions = (settings: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
+    queryKey: ["CreateUserRecordSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const useCreateUserRecordSuspenseQuery = (...args: Parameters<typeof CreateUserRecordOptions>) => useSuspenseQuery(CreateUserRecordOptions(...args));",
@@ -2516,10 +2516,10 @@ import { GetUserByName } from "../../requests/User/GetUserByName.gen";
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
-export const useGetUserByNameQuery = (settings?: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
-    queryKey: ["GetUserByNameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByNameQuery = (settings: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
+    queryKey: ["GetUserByNameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });",
   "axios/tags/operationId/hooks/User/useGetUserByNameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -2531,10 +2531,10 @@ import { GetUserByName } from "../../requests/User/GetUserByName.gen";
 
 export const GetUserByNameSuspenseQueryKey = "GetUserByName";
 
-export const GetUserByNameOptions = (settings?: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
-    queryKey: ["GetUserByNameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const GetUserByNameOptions = (settings: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
+    queryKey: ["GetUserByNameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByNameSuspenseQuery = (...args: Parameters<typeof GetUserByNameOptions>) => useSuspenseQuery(GetUserByNameOptions(...args));",
@@ -2651,10 +2651,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../requests/Project/patc
 
 export const patchProjectByProjectIdTaskByTaskIdQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings?: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });",
   "axios/tags/path/hooks/Project/usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -2666,10 +2666,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../requests/Project/patc
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const patchProjectByProjectIdTaskByTaskIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const patchProjectByProjectIdTaskByTaskIdOptions = (settings: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery = (...args: Parameters<typeof patchProjectByProjectIdTaskByTaskIdOptions>) => useSuspenseQuery(patchProjectByProjectIdTaskByTaskIdOptions(...args));",
@@ -2698,10 +2698,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../requests/Reports-an
 
 export const deleteReportByReportIdEntrieByEntryIdQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings?: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });",
   "axios/tags/path/hooks/Reports-analytics/useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -2713,10 +2713,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../requests/Reports-an
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const deleteReportByReportIdEntrieByEntryIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const deleteReportByReportIdEntrieByEntryIdOptions = (settings: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery = (...args: Parameters<typeof deleteReportByReportIdEntrieByEntryIdOptions>) => useSuspenseQuery(deleteReportByReportIdEntrieByEntryIdOptions(...args));",
@@ -2745,10 +2745,10 @@ import { getUserByUsername } from "../../requests/User/getUserByUsername.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
-export const useGetUserByUsernameQuery = (settings?: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
-    queryKey: ["getUserByUsernameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByUsernameQuery = (settings: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
+    queryKey: ["getUserByUsernameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });",
   "axios/tags/path/hooks/User/useGetUserByUsernameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -2760,10 +2760,10 @@ import { getUserByUsername } from "../../requests/User/getUserByUsername.gen";
 
 export const getUserByUsernameSuspenseQueryKey = "getUserByUsername";
 
-export const getUserByUsernameOptions = (settings?: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
-    queryKey: ["getUserByUsernameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const getUserByUsernameOptions = (settings: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
+    queryKey: ["getUserByUsernameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByUsernameSuspenseQuery = (...args: Parameters<typeof getUserByUsernameOptions>) => useSuspenseQuery(getUserByUsernameOptions(...args));",
@@ -2792,10 +2792,10 @@ import { postUsers } from "../../requests/User/postUsers.gen";
 
 export const postUsersQueryKey = "postUsers";
 
-export const usePostUsersQuery = (settings?: TanstackQuerySettings<typeof postUsers>) => useQuery({
-    queryKey: ["postUsersQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const usePostUsersQuery = (settings: TanstackQuerySettings<typeof postUsers>) => useQuery({
+    queryKey: ["postUsersQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });",
   "axios/tags/path/hooks/User/usePostUsersSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -2807,10 +2807,10 @@ import { postUsers } from "../../requests/User/postUsers.gen";
 
 export const postUsersSuspenseQueryKey = "postUsers";
 
-export const postUsersOptions = (settings?: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
-    queryKey: ["postUsersSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const postUsersOptions = (settings: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
+    queryKey: ["postUsersSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePostUsersSuspenseQuery = (...args: Parameters<typeof postUsersOptions>) => useSuspenseQuery(postUsersOptions(...args));",
@@ -2912,10 +2912,10 @@ import { instance } from "generated/fetches/class/operationId/instance.gen";
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
-export const useGetUserByNameQuery = (settings?: TanstackQuerySettings<typeof instance.GetUserByName>) => useQuery({
-    queryKey: ["GetUserByNameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByNameQuery = (settings: TanstackQuerySettings<typeof instance.GetUserByName>) => useQuery({
+    queryKey: ["GetUserByNameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const GetUserByNameMutationKey = "GetUserByName";
@@ -2928,20 +2928,20 @@ export const useGetUserByNameMutation = (settings?: TanstackMutationSettings<typ
 
 export const GetUserByNameSuspenseQueryKey = "GetUserByName";
 
-export const GetUserByNameOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.GetUserByName>) => queryOptions({
-    queryKey: ["GetUserByNameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const GetUserByNameOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.GetUserByName>) => queryOptions({
+    queryKey: ["GetUserByNameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByNameSuspenseQuery = (...args: Parameters<typeof GetUserByNameOptions>) => useSuspenseQuery(GetUserByNameOptions(...args));
 
 export const CreateUserRecordQueryKey = "CreateUserRecord";
 
-export const useCreateUserRecordQuery = (settings?: TanstackQuerySettings<typeof instance.CreateUserRecord>) => useQuery({
-    queryKey: ["CreateUserRecordQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const useCreateUserRecordQuery = (settings: TanstackQuerySettings<typeof instance.CreateUserRecord>) => useQuery({
+    queryKey: ["CreateUserRecordQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const CreateUserRecordMutationKey = "CreateUserRecord";
@@ -2954,20 +2954,20 @@ export const useCreateUserRecordMutation = (settings?: TanstackMutationSettings<
 
 export const CreateUserRecordSuspenseQueryKey = "CreateUserRecord";
 
-export const CreateUserRecordOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.CreateUserRecord>) => queryOptions({
-    queryKey: ["CreateUserRecordSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const CreateUserRecordOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.CreateUserRecord>) => queryOptions({
+    queryKey: ["CreateUserRecordSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const useCreateUserRecordSuspenseQuery = (...args: Parameters<typeof CreateUserRecordOptions>) => useSuspenseQuery(CreateUserRecordOptions(...args));
 
 export const UpdateTaskStatusQueryKey = "UpdateTaskStatus";
 
-export const useUpdateTaskStatusQuery = (settings?: TanstackQuerySettings<typeof instance.UpdateTaskStatus>) => useQuery({
-    queryKey: ["UpdateTaskStatusQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const useUpdateTaskStatusQuery = (settings: TanstackQuerySettings<typeof instance.UpdateTaskStatus>) => useQuery({
+    queryKey: ["UpdateTaskStatusQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const UpdateTaskStatusMutationKey = "UpdateTaskStatus";
@@ -2980,20 +2980,20 @@ export const useUpdateTaskStatusMutation = (settings?: TanstackMutationSettings<
 
 export const UpdateTaskStatusSuspenseQueryKey = "UpdateTaskStatus";
 
-export const UpdateTaskStatusOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.UpdateTaskStatus>) => queryOptions({
-    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const UpdateTaskStatusOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.UpdateTaskStatus>) => queryOptions({
+    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const useUpdateTaskStatusSuspenseQuery = (...args: Parameters<typeof UpdateTaskStatusOptions>) => useSuspenseQuery(UpdateTaskStatusOptions(...args));
 
 export const DeleteReportEntryQueryKey = "DeleteReportEntry";
 
-export const useDeleteReportEntryQuery = (settings?: TanstackQuerySettings<typeof instance.DeleteReportEntry>) => useQuery({
-    queryKey: ["DeleteReportEntryQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportEntryQuery = (settings: TanstackQuerySettings<typeof instance.DeleteReportEntry>) => useQuery({
+    queryKey: ["DeleteReportEntryQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const DeleteReportEntryMutationKey = "DeleteReportEntry";
@@ -3006,10 +3006,10 @@ export const useDeleteReportEntryMutation = (settings?: TanstackMutationSettings
 
 export const DeleteReportEntrySuspenseQueryKey = "DeleteReportEntry";
 
-export const DeleteReportEntryOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.DeleteReportEntry>) => queryOptions({
-    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const DeleteReportEntryOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.DeleteReportEntry>) => queryOptions({
+    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportEntrySuspenseQuery = (...args: Parameters<typeof DeleteReportEntryOptions>) => useSuspenseQuery(DeleteReportEntryOptions(...args));",
@@ -3077,10 +3077,10 @@ import { instance } from "generated/fetches/class/path/instance.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
-export const useGetUserByUsernameQuery = (settings?: TanstackQuerySettings<typeof instance.getUserByUsername>) => useQuery({
-    queryKey: ["getUserByUsernameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByUsernameQuery = (settings: TanstackQuerySettings<typeof instance.getUserByUsername>) => useQuery({
+    queryKey: ["getUserByUsernameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const getUserByUsernameMutationKey = "getUserByUsername";
@@ -3093,20 +3093,20 @@ export const useGetUserByUsernameMutation = (settings?: TanstackMutationSettings
 
 export const getUserByUsernameSuspenseQueryKey = "getUserByUsername";
 
-export const getUserByUsernameOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.getUserByUsername>) => queryOptions({
-    queryKey: ["getUserByUsernameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const getUserByUsernameOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.getUserByUsername>) => queryOptions({
+    queryKey: ["getUserByUsernameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByUsernameSuspenseQuery = (...args: Parameters<typeof getUserByUsernameOptions>) => useSuspenseQuery(getUserByUsernameOptions(...args));
 
 export const postUsersQueryKey = "postUsers";
 
-export const usePostUsersQuery = (settings?: TanstackQuerySettings<typeof instance.postUsers>) => useQuery({
-    queryKey: ["postUsersQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.postUsers({ ...settings?.request }),
-    ...settings?.params
+export const usePostUsersQuery = (settings: TanstackQuerySettings<typeof instance.postUsers>) => useQuery({
+    queryKey: ["postUsersQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const postUsersMutationKey = "postUsers";
@@ -3119,20 +3119,20 @@ export const usePostUsersMutation = (settings?: TanstackMutationSettings<typeof 
 
 export const postUsersSuspenseQueryKey = "postUsers";
 
-export const postUsersOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.postUsers>) => queryOptions({
-    queryKey: ["postUsersSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.postUsers({ ...settings?.request }),
-    ...settings?.params
+export const postUsersOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.postUsers>) => queryOptions({
+    queryKey: ["postUsersSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePostUsersSuspenseQuery = (...args: Parameters<typeof postUsersOptions>) => useSuspenseQuery(postUsersOptions(...args));
 
 export const patchProjectByProjectIdTaskByTaskIdQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings?: TanstackQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => useQuery({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings: TanstackQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => useQuery({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const patchProjectByProjectIdTaskByTaskIdMutationKey = "patchProjectByProjectIdTaskByTaskId";
@@ -3145,20 +3145,20 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = (settings?: Tansta
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const patchProjectByProjectIdTaskByTaskIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => queryOptions({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const patchProjectByProjectIdTaskByTaskIdOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => queryOptions({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery = (...args: Parameters<typeof patchProjectByProjectIdTaskByTaskIdOptions>) => useSuspenseQuery(patchProjectByProjectIdTaskByTaskIdOptions(...args));
 
 export const deleteReportByReportIdEntrieByEntryIdQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings?: TanstackQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => useQuery({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings: TanstackQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => useQuery({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const deleteReportByReportIdEntrieByEntryIdMutationKey = "deleteReportByReportIdEntrieByEntryId";
@@ -3171,10 +3171,10 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = (settings?: Tans
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const deleteReportByReportIdEntrieByEntryIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => queryOptions({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const deleteReportByReportIdEntrieByEntryIdOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => queryOptions({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery = (...args: Parameters<typeof deleteReportByReportIdEntrieByEntryIdOptions>) => useSuspenseQuery(deleteReportByReportIdEntrieByEntryIdOptions(...args));",
@@ -3257,10 +3257,10 @@ import { UpdateTaskStatus } from "../../../../../requests/projects/{projectId}/t
 
 export const UpdateTaskStatusQueryKey = "UpdateTaskStatus";
 
-export const useUpdateTaskStatusQuery = (settings?: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
-    queryKey: ["UpdateTaskStatusQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const useUpdateTaskStatusQuery = (settings: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
+    queryKey: ["UpdateTaskStatusQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/paths/operationId/hooks/projects/{projectId}/tasks/{task_id}/useUpdateTaskStatusSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -3272,10 +3272,10 @@ import { UpdateTaskStatus } from "../../../../../requests/projects/{projectId}/t
 
 export const UpdateTaskStatusSuspenseQueryKey = "UpdateTaskStatus";
 
-export const UpdateTaskStatusOptions = (settings?: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
-    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const UpdateTaskStatusOptions = (settings: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
+    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const useUpdateTaskStatusSuspenseQuery = (...args: Parameters<typeof UpdateTaskStatusOptions>) => useSuspenseQuery(UpdateTaskStatusOptions(...args));",
@@ -3304,10 +3304,10 @@ import { DeleteReportEntry } from "../../../../../requests/reports/{report_id}/e
 
 export const DeleteReportEntryQueryKey = "DeleteReportEntry";
 
-export const useDeleteReportEntryQuery = (settings?: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
-    queryKey: ["DeleteReportEntryQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportEntryQuery = (settings: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
+    queryKey: ["DeleteReportEntryQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/paths/operationId/hooks/reports/{report_id}/entries/{entry_id}/useDeleteReportEntrySuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -3319,10 +3319,10 @@ import { DeleteReportEntry } from "../../../../../requests/reports/{report_id}/e
 
 export const DeleteReportEntrySuspenseQueryKey = "DeleteReportEntry";
 
-export const DeleteReportEntryOptions = (settings?: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
-    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const DeleteReportEntryOptions = (settings: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
+    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportEntrySuspenseQuery = (...args: Parameters<typeof DeleteReportEntryOptions>) => useSuspenseQuery(DeleteReportEntryOptions(...args));",
@@ -3351,10 +3351,10 @@ import { CreateUserRecord } from "../../requests/users/post.gen";
 
 export const CreateUserRecordQueryKey = "CreateUserRecord";
 
-export const useCreateUserRecordQuery = (settings?: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
-    queryKey: ["CreateUserRecordQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const useCreateUserRecordQuery = (settings: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
+    queryKey: ["CreateUserRecordQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/paths/operationId/hooks/users/useCreateUserRecordSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -3366,10 +3366,10 @@ import { CreateUserRecord } from "../../requests/users/post.gen";
 
 export const CreateUserRecordSuspenseQueryKey = "CreateUserRecord";
 
-export const CreateUserRecordOptions = (settings?: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
-    queryKey: ["CreateUserRecordSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const CreateUserRecordOptions = (settings: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
+    queryKey: ["CreateUserRecordSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const useCreateUserRecordSuspenseQuery = (...args: Parameters<typeof CreateUserRecordOptions>) => useSuspenseQuery(CreateUserRecordOptions(...args));",
@@ -3398,10 +3398,10 @@ import { GetUserByName } from "../../../requests/users/{username}/get.gen";
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
-export const useGetUserByNameQuery = (settings?: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
-    queryKey: ["GetUserByNameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByNameQuery = (settings: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
+    queryKey: ["GetUserByNameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/paths/operationId/hooks/users/{username}/useGetUserByNameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -3413,10 +3413,10 @@ import { GetUserByName } from "../../../requests/users/{username}/get.gen";
 
 export const GetUserByNameSuspenseQueryKey = "GetUserByName";
 
-export const GetUserByNameOptions = (settings?: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
-    queryKey: ["GetUserByNameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const GetUserByNameOptions = (settings: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
+    queryKey: ["GetUserByNameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByNameSuspenseQuery = (...args: Parameters<typeof GetUserByNameOptions>) => useSuspenseQuery(GetUserByNameOptions(...args));",
@@ -3525,10 +3525,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../../../../requests/pro
 
 export const patchProjectByProjectIdTaskByTaskIdQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings?: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/paths/path/hooks/projects/{projectId}/tasks/{task_id}/usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -3540,10 +3540,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../../../../requests/pro
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const patchProjectByProjectIdTaskByTaskIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const patchProjectByProjectIdTaskByTaskIdOptions = (settings: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery = (...args: Parameters<typeof patchProjectByProjectIdTaskByTaskIdOptions>) => useSuspenseQuery(patchProjectByProjectIdTaskByTaskIdOptions(...args));",
@@ -3572,10 +3572,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../../../../requests/r
 
 export const deleteReportByReportIdEntrieByEntryIdQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings?: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/paths/path/hooks/reports/{report_id}/entries/{entry_id}/useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -3587,10 +3587,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../../../../requests/r
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const deleteReportByReportIdEntrieByEntryIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const deleteReportByReportIdEntrieByEntryIdOptions = (settings: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery = (...args: Parameters<typeof deleteReportByReportIdEntrieByEntryIdOptions>) => useSuspenseQuery(deleteReportByReportIdEntrieByEntryIdOptions(...args));",
@@ -3619,10 +3619,10 @@ import { postUsers } from "../../requests/users/post.gen";
 
 export const postUsersQueryKey = "postUsers";
 
-export const usePostUsersQuery = (settings?: TanstackQuerySettings<typeof postUsers>) => useQuery({
-    queryKey: ["postUsersQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const usePostUsersQuery = (settings: TanstackQuerySettings<typeof postUsers>) => useQuery({
+    queryKey: ["postUsersQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/paths/path/hooks/users/usePostUsersSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -3634,10 +3634,10 @@ import { postUsers } from "../../requests/users/post.gen";
 
 export const postUsersSuspenseQueryKey = "postUsers";
 
-export const postUsersOptions = (settings?: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
-    queryKey: ["postUsersSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const postUsersOptions = (settings: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
+    queryKey: ["postUsersSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePostUsersSuspenseQuery = (...args: Parameters<typeof postUsersOptions>) => useSuspenseQuery(postUsersOptions(...args));",
@@ -3666,10 +3666,10 @@ import { getUserByUsername } from "../../../requests/users/{username}/get.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
-export const useGetUserByUsernameQuery = (settings?: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
-    queryKey: ["getUserByUsernameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByUsernameQuery = (settings: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
+    queryKey: ["getUserByUsernameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/paths/path/hooks/users/{username}/useGetUserByUsernameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -3681,10 +3681,10 @@ import { getUserByUsername } from "../../../requests/users/{username}/get.gen";
 
 export const getUserByUsernameSuspenseQueryKey = "getUserByUsername";
 
-export const getUserByUsernameOptions = (settings?: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
-    queryKey: ["getUserByUsernameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const getUserByUsernameOptions = (settings: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
+    queryKey: ["getUserByUsernameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByUsernameSuspenseQuery = (...args: Parameters<typeof getUserByUsernameOptions>) => useSuspenseQuery(getUserByUsernameOptions(...args));",
@@ -3778,10 +3778,10 @@ import { instance } from "generated/fetches/runtime/class/operationId/instance.g
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
-export const useGetUserByNameQuery = (settings?: TanstackQuerySettings<typeof instance.GetUserByName>) => useQuery({
-    queryKey: ["GetUserByNameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByNameQuery = (settings: TanstackQuerySettings<typeof instance.GetUserByName>) => useQuery({
+    queryKey: ["GetUserByNameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const GetUserByNameMutationKey = "GetUserByName";
@@ -3794,20 +3794,20 @@ export const useGetUserByNameMutation = (settings?: TanstackMutationSettings<typ
 
 export const GetUserByNameSuspenseQueryKey = "GetUserByName";
 
-export const GetUserByNameOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.GetUserByName>) => queryOptions({
-    queryKey: ["GetUserByNameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const GetUserByNameOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.GetUserByName>) => queryOptions({
+    queryKey: ["GetUserByNameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByNameSuspenseQuery = (...args: Parameters<typeof GetUserByNameOptions>) => useSuspenseQuery(GetUserByNameOptions(...args));
 
 export const CreateUserRecordQueryKey = "CreateUserRecord";
 
-export const useCreateUserRecordQuery = (settings?: TanstackQuerySettings<typeof instance.CreateUserRecord>) => useQuery({
-    queryKey: ["CreateUserRecordQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const useCreateUserRecordQuery = (settings: TanstackQuerySettings<typeof instance.CreateUserRecord>) => useQuery({
+    queryKey: ["CreateUserRecordQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const CreateUserRecordMutationKey = "CreateUserRecord";
@@ -3820,20 +3820,20 @@ export const useCreateUserRecordMutation = (settings?: TanstackMutationSettings<
 
 export const CreateUserRecordSuspenseQueryKey = "CreateUserRecord";
 
-export const CreateUserRecordOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.CreateUserRecord>) => queryOptions({
-    queryKey: ["CreateUserRecordSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const CreateUserRecordOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.CreateUserRecord>) => queryOptions({
+    queryKey: ["CreateUserRecordSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const useCreateUserRecordSuspenseQuery = (...args: Parameters<typeof CreateUserRecordOptions>) => useSuspenseQuery(CreateUserRecordOptions(...args));
 
 export const UpdateTaskStatusQueryKey = "UpdateTaskStatus";
 
-export const useUpdateTaskStatusQuery = (settings?: TanstackQuerySettings<typeof instance.UpdateTaskStatus>) => useQuery({
-    queryKey: ["UpdateTaskStatusQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const useUpdateTaskStatusQuery = (settings: TanstackQuerySettings<typeof instance.UpdateTaskStatus>) => useQuery({
+    queryKey: ["UpdateTaskStatusQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const UpdateTaskStatusMutationKey = "UpdateTaskStatus";
@@ -3846,20 +3846,20 @@ export const useUpdateTaskStatusMutation = (settings?: TanstackMutationSettings<
 
 export const UpdateTaskStatusSuspenseQueryKey = "UpdateTaskStatus";
 
-export const UpdateTaskStatusOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.UpdateTaskStatus>) => queryOptions({
-    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const UpdateTaskStatusOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.UpdateTaskStatus>) => queryOptions({
+    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const useUpdateTaskStatusSuspenseQuery = (...args: Parameters<typeof UpdateTaskStatusOptions>) => useSuspenseQuery(UpdateTaskStatusOptions(...args));
 
 export const DeleteReportEntryQueryKey = "DeleteReportEntry";
 
-export const useDeleteReportEntryQuery = (settings?: TanstackQuerySettings<typeof instance.DeleteReportEntry>) => useQuery({
-    queryKey: ["DeleteReportEntryQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportEntryQuery = (settings: TanstackQuerySettings<typeof instance.DeleteReportEntry>) => useQuery({
+    queryKey: ["DeleteReportEntryQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const DeleteReportEntryMutationKey = "DeleteReportEntry";
@@ -3872,10 +3872,10 @@ export const useDeleteReportEntryMutation = (settings?: TanstackMutationSettings
 
 export const DeleteReportEntrySuspenseQueryKey = "DeleteReportEntry";
 
-export const DeleteReportEntryOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.DeleteReportEntry>) => queryOptions({
-    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const DeleteReportEntryOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.DeleteReportEntry>) => queryOptions({
+    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportEntrySuspenseQuery = (...args: Parameters<typeof DeleteReportEntryOptions>) => useSuspenseQuery(DeleteReportEntryOptions(...args));",
@@ -3943,10 +3943,10 @@ import { instance } from "generated/fetches/runtime/class/path/instance.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
-export const useGetUserByUsernameQuery = (settings?: TanstackQuerySettings<typeof instance.getUserByUsername>) => useQuery({
-    queryKey: ["getUserByUsernameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByUsernameQuery = (settings: TanstackQuerySettings<typeof instance.getUserByUsername>) => useQuery({
+    queryKey: ["getUserByUsernameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const getUserByUsernameMutationKey = "getUserByUsername";
@@ -3959,20 +3959,20 @@ export const useGetUserByUsernameMutation = (settings?: TanstackMutationSettings
 
 export const getUserByUsernameSuspenseQueryKey = "getUserByUsername";
 
-export const getUserByUsernameOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.getUserByUsername>) => queryOptions({
-    queryKey: ["getUserByUsernameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const getUserByUsernameOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.getUserByUsername>) => queryOptions({
+    queryKey: ["getUserByUsernameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByUsernameSuspenseQuery = (...args: Parameters<typeof getUserByUsernameOptions>) => useSuspenseQuery(getUserByUsernameOptions(...args));
 
 export const postUsersQueryKey = "postUsers";
 
-export const usePostUsersQuery = (settings?: TanstackQuerySettings<typeof instance.postUsers>) => useQuery({
-    queryKey: ["postUsersQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.postUsers({ ...settings?.request }),
-    ...settings?.params
+export const usePostUsersQuery = (settings: TanstackQuerySettings<typeof instance.postUsers>) => useQuery({
+    queryKey: ["postUsersQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const postUsersMutationKey = "postUsers";
@@ -3985,20 +3985,20 @@ export const usePostUsersMutation = (settings?: TanstackMutationSettings<typeof 
 
 export const postUsersSuspenseQueryKey = "postUsers";
 
-export const postUsersOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.postUsers>) => queryOptions({
-    queryKey: ["postUsersSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.postUsers({ ...settings?.request }),
-    ...settings?.params
+export const postUsersOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.postUsers>) => queryOptions({
+    queryKey: ["postUsersSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePostUsersSuspenseQuery = (...args: Parameters<typeof postUsersOptions>) => useSuspenseQuery(postUsersOptions(...args));
 
 export const patchProjectByProjectIdTaskByTaskIdQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings?: TanstackQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => useQuery({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings: TanstackQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => useQuery({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const patchProjectByProjectIdTaskByTaskIdMutationKey = "patchProjectByProjectIdTaskByTaskId";
@@ -4011,20 +4011,20 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = (settings?: Tansta
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const patchProjectByProjectIdTaskByTaskIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => queryOptions({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const patchProjectByProjectIdTaskByTaskIdOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.patchProjectByProjectIdTaskByTaskId>) => queryOptions({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery = (...args: Parameters<typeof patchProjectByProjectIdTaskByTaskIdOptions>) => useSuspenseQuery(patchProjectByProjectIdTaskByTaskIdOptions(...args));
 
 export const deleteReportByReportIdEntrieByEntryIdQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings?: TanstackQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => useQuery({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings: TanstackQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => useQuery({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const deleteReportByReportIdEntrieByEntryIdMutationKey = "deleteReportByReportIdEntrieByEntryId";
@@ -4037,10 +4037,10 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = (settings?: Tans
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const deleteReportByReportIdEntrieByEntryIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => queryOptions({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const deleteReportByReportIdEntrieByEntryIdOptions = (settings: TanstackSuspenseQuerySettings<typeof instance.deleteReportByReportIdEntrieByEntryId>) => queryOptions({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => instance.deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery = (...args: Parameters<typeof deleteReportByReportIdEntrieByEntryIdOptions>) => useSuspenseQuery(deleteReportByReportIdEntrieByEntryIdOptions(...args));",
@@ -4123,10 +4123,10 @@ import { UpdateTaskStatus } from "../../../../../requests/projects/{projectId}/t
 
 export const UpdateTaskStatusQueryKey = "UpdateTaskStatus";
 
-export const useUpdateTaskStatusQuery = (settings?: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
-    queryKey: ["UpdateTaskStatusQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const useUpdateTaskStatusQuery = (settings: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
+    queryKey: ["UpdateTaskStatusQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/paths/operationId/hooks/projects/{projectId}/tasks/{task_id}/useUpdateTaskStatusSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -4138,10 +4138,10 @@ import { UpdateTaskStatus } from "../../../../../requests/projects/{projectId}/t
 
 export const UpdateTaskStatusSuspenseQueryKey = "UpdateTaskStatus";
 
-export const UpdateTaskStatusOptions = (settings?: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
-    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const UpdateTaskStatusOptions = (settings: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
+    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const useUpdateTaskStatusSuspenseQuery = (...args: Parameters<typeof UpdateTaskStatusOptions>) => useSuspenseQuery(UpdateTaskStatusOptions(...args));",
@@ -4170,10 +4170,10 @@ import { DeleteReportEntry } from "../../../../../requests/reports/{report_id}/e
 
 export const DeleteReportEntryQueryKey = "DeleteReportEntry";
 
-export const useDeleteReportEntryQuery = (settings?: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
-    queryKey: ["DeleteReportEntryQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportEntryQuery = (settings: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
+    queryKey: ["DeleteReportEntryQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/paths/operationId/hooks/reports/{report_id}/entries/{entry_id}/useDeleteReportEntrySuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -4185,10 +4185,10 @@ import { DeleteReportEntry } from "../../../../../requests/reports/{report_id}/e
 
 export const DeleteReportEntrySuspenseQueryKey = "DeleteReportEntry";
 
-export const DeleteReportEntryOptions = (settings?: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
-    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const DeleteReportEntryOptions = (settings: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
+    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportEntrySuspenseQuery = (...args: Parameters<typeof DeleteReportEntryOptions>) => useSuspenseQuery(DeleteReportEntryOptions(...args));",
@@ -4217,10 +4217,10 @@ import { CreateUserRecord } from "../../requests/users/post.gen";
 
 export const CreateUserRecordQueryKey = "CreateUserRecord";
 
-export const useCreateUserRecordQuery = (settings?: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
-    queryKey: ["CreateUserRecordQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const useCreateUserRecordQuery = (settings: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
+    queryKey: ["CreateUserRecordQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/paths/operationId/hooks/users/useCreateUserRecordSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -4232,10 +4232,10 @@ import { CreateUserRecord } from "../../requests/users/post.gen";
 
 export const CreateUserRecordSuspenseQueryKey = "CreateUserRecord";
 
-export const CreateUserRecordOptions = (settings?: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
-    queryKey: ["CreateUserRecordSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const CreateUserRecordOptions = (settings: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
+    queryKey: ["CreateUserRecordSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const useCreateUserRecordSuspenseQuery = (...args: Parameters<typeof CreateUserRecordOptions>) => useSuspenseQuery(CreateUserRecordOptions(...args));",
@@ -4264,10 +4264,10 @@ import { GetUserByName } from "../../../requests/users/{username}/get.gen";
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
-export const useGetUserByNameQuery = (settings?: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
-    queryKey: ["GetUserByNameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByNameQuery = (settings: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
+    queryKey: ["GetUserByNameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/paths/operationId/hooks/users/{username}/useGetUserByNameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -4279,10 +4279,10 @@ import { GetUserByName } from "../../../requests/users/{username}/get.gen";
 
 export const GetUserByNameSuspenseQueryKey = "GetUserByName";
 
-export const GetUserByNameOptions = (settings?: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
-    queryKey: ["GetUserByNameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const GetUserByNameOptions = (settings: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
+    queryKey: ["GetUserByNameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByNameSuspenseQuery = (...args: Parameters<typeof GetUserByNameOptions>) => useSuspenseQuery(GetUserByNameOptions(...args));",
@@ -4391,10 +4391,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../../../../requests/pro
 
 export const patchProjectByProjectIdTaskByTaskIdQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings?: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/paths/path/hooks/projects/{projectId}/tasks/{task_id}/usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -4406,10 +4406,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../../../../requests/pro
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const patchProjectByProjectIdTaskByTaskIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const patchProjectByProjectIdTaskByTaskIdOptions = (settings: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery = (...args: Parameters<typeof patchProjectByProjectIdTaskByTaskIdOptions>) => useSuspenseQuery(patchProjectByProjectIdTaskByTaskIdOptions(...args));",
@@ -4438,10 +4438,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../../../../requests/r
 
 export const deleteReportByReportIdEntrieByEntryIdQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings?: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/paths/path/hooks/reports/{report_id}/entries/{entry_id}/useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -4453,10 +4453,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../../../../requests/r
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const deleteReportByReportIdEntrieByEntryIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const deleteReportByReportIdEntrieByEntryIdOptions = (settings: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery = (...args: Parameters<typeof deleteReportByReportIdEntrieByEntryIdOptions>) => useSuspenseQuery(deleteReportByReportIdEntrieByEntryIdOptions(...args));",
@@ -4485,10 +4485,10 @@ import { postUsers } from "../../requests/users/post.gen";
 
 export const postUsersQueryKey = "postUsers";
 
-export const usePostUsersQuery = (settings?: TanstackQuerySettings<typeof postUsers>) => useQuery({
-    queryKey: ["postUsersQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const usePostUsersQuery = (settings: TanstackQuerySettings<typeof postUsers>) => useQuery({
+    queryKey: ["postUsersQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/paths/path/hooks/users/usePostUsersSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -4500,10 +4500,10 @@ import { postUsers } from "../../requests/users/post.gen";
 
 export const postUsersSuspenseQueryKey = "postUsers";
 
-export const postUsersOptions = (settings?: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
-    queryKey: ["postUsersSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const postUsersOptions = (settings: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
+    queryKey: ["postUsersSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePostUsersSuspenseQuery = (...args: Parameters<typeof postUsersOptions>) => useSuspenseQuery(postUsersOptions(...args));",
@@ -4532,10 +4532,10 @@ import { getUserByUsername } from "../../../requests/users/{username}/get.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
-export const useGetUserByUsernameQuery = (settings?: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
-    queryKey: ["getUserByUsernameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByUsernameQuery = (settings: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
+    queryKey: ["getUserByUsernameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/paths/path/hooks/users/{username}/useGetUserByUsernameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -4547,10 +4547,10 @@ import { getUserByUsername } from "../../../requests/users/{username}/get.gen";
 
 export const getUserByUsernameSuspenseQueryKey = "getUserByUsername";
 
-export const getUserByUsernameOptions = (settings?: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
-    queryKey: ["getUserByUsernameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const getUserByUsernameOptions = (settings: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
+    queryKey: ["getUserByUsernameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByUsernameSuspenseQuery = (...args: Parameters<typeof getUserByUsernameOptions>) => useSuspenseQuery(getUserByUsernameOptions(...args));",
@@ -4659,10 +4659,10 @@ import { UpdateTaskStatus } from "../../requests/Project/UpdateTaskStatus.gen";
 
 export const UpdateTaskStatusQueryKey = "UpdateTaskStatus";
 
-export const useUpdateTaskStatusQuery = (settings?: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
-    queryKey: ["UpdateTaskStatusQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const useUpdateTaskStatusQuery = (settings: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
+    queryKey: ["UpdateTaskStatusQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/tags/operationId/hooks/Project/useUpdateTaskStatusSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -4674,10 +4674,10 @@ import { UpdateTaskStatus } from "../../requests/Project/UpdateTaskStatus.gen";
 
 export const UpdateTaskStatusSuspenseQueryKey = "UpdateTaskStatus";
 
-export const UpdateTaskStatusOptions = (settings?: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
-    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const UpdateTaskStatusOptions = (settings: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
+    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const useUpdateTaskStatusSuspenseQuery = (...args: Parameters<typeof UpdateTaskStatusOptions>) => useSuspenseQuery(UpdateTaskStatusOptions(...args));",
@@ -4706,10 +4706,10 @@ import { DeleteReportEntry } from "../../requests/Reports-analytics/DeleteReport
 
 export const DeleteReportEntryQueryKey = "DeleteReportEntry";
 
-export const useDeleteReportEntryQuery = (settings?: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
-    queryKey: ["DeleteReportEntryQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportEntryQuery = (settings: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
+    queryKey: ["DeleteReportEntryQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/tags/operationId/hooks/Reports-analytics/useDeleteReportEntrySuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -4721,10 +4721,10 @@ import { DeleteReportEntry } from "../../requests/Reports-analytics/DeleteReport
 
 export const DeleteReportEntrySuspenseQueryKey = "DeleteReportEntry";
 
-export const DeleteReportEntryOptions = (settings?: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
-    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const DeleteReportEntryOptions = (settings: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
+    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportEntrySuspenseQuery = (...args: Parameters<typeof DeleteReportEntryOptions>) => useSuspenseQuery(DeleteReportEntryOptions(...args));",
@@ -4753,10 +4753,10 @@ import { CreateUserRecord } from "../../requests/User/CreateUserRecord.gen";
 
 export const CreateUserRecordQueryKey = "CreateUserRecord";
 
-export const useCreateUserRecordQuery = (settings?: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
-    queryKey: ["CreateUserRecordQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const useCreateUserRecordQuery = (settings: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
+    queryKey: ["CreateUserRecordQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/tags/operationId/hooks/User/useCreateUserRecordSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -4768,10 +4768,10 @@ import { CreateUserRecord } from "../../requests/User/CreateUserRecord.gen";
 
 export const CreateUserRecordSuspenseQueryKey = "CreateUserRecord";
 
-export const CreateUserRecordOptions = (settings?: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
-    queryKey: ["CreateUserRecordSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const CreateUserRecordOptions = (settings: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
+    queryKey: ["CreateUserRecordSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const useCreateUserRecordSuspenseQuery = (...args: Parameters<typeof CreateUserRecordOptions>) => useSuspenseQuery(CreateUserRecordOptions(...args));",
@@ -4800,10 +4800,10 @@ import { GetUserByName } from "../../requests/User/GetUserByName.gen";
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
-export const useGetUserByNameQuery = (settings?: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
-    queryKey: ["GetUserByNameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByNameQuery = (settings: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
+    queryKey: ["GetUserByNameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/tags/operationId/hooks/User/useGetUserByNameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -4815,10 +4815,10 @@ import { GetUserByName } from "../../requests/User/GetUserByName.gen";
 
 export const GetUserByNameSuspenseQueryKey = "GetUserByName";
 
-export const GetUserByNameOptions = (settings?: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
-    queryKey: ["GetUserByNameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const GetUserByNameOptions = (settings: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
+    queryKey: ["GetUserByNameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByNameSuspenseQuery = (...args: Parameters<typeof GetUserByNameOptions>) => useSuspenseQuery(GetUserByNameOptions(...args));",
@@ -4927,10 +4927,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../requests/Project/patc
 
 export const patchProjectByProjectIdTaskByTaskIdQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings?: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/tags/path/hooks/Project/usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -4942,10 +4942,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../requests/Project/patc
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const patchProjectByProjectIdTaskByTaskIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const patchProjectByProjectIdTaskByTaskIdOptions = (settings: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery = (...args: Parameters<typeof patchProjectByProjectIdTaskByTaskIdOptions>) => useSuspenseQuery(patchProjectByProjectIdTaskByTaskIdOptions(...args));",
@@ -4974,10 +4974,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../requests/Reports-an
 
 export const deleteReportByReportIdEntrieByEntryIdQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings?: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/tags/path/hooks/Reports-analytics/useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -4989,10 +4989,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../requests/Reports-an
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const deleteReportByReportIdEntrieByEntryIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const deleteReportByReportIdEntrieByEntryIdOptions = (settings: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery = (...args: Parameters<typeof deleteReportByReportIdEntrieByEntryIdOptions>) => useSuspenseQuery(deleteReportByReportIdEntrieByEntryIdOptions(...args));",
@@ -5021,10 +5021,10 @@ import { getUserByUsername } from "../../requests/User/getUserByUsername.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
-export const useGetUserByUsernameQuery = (settings?: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
-    queryKey: ["getUserByUsernameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByUsernameQuery = (settings: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
+    queryKey: ["getUserByUsernameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/tags/path/hooks/User/useGetUserByUsernameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -5036,10 +5036,10 @@ import { getUserByUsername } from "../../requests/User/getUserByUsername.gen";
 
 export const getUserByUsernameSuspenseQueryKey = "getUserByUsername";
 
-export const getUserByUsernameOptions = (settings?: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
-    queryKey: ["getUserByUsernameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const getUserByUsernameOptions = (settings: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
+    queryKey: ["getUserByUsernameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByUsernameSuspenseQuery = (...args: Parameters<typeof getUserByUsernameOptions>) => useSuspenseQuery(getUserByUsernameOptions(...args));",
@@ -5068,10 +5068,10 @@ import { postUsers } from "../../requests/User/postUsers.gen";
 
 export const postUsersQueryKey = "postUsers";
 
-export const usePostUsersQuery = (settings?: TanstackQuerySettings<typeof postUsers>) => useQuery({
-    queryKey: ["postUsersQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const usePostUsersQuery = (settings: TanstackQuerySettings<typeof postUsers>) => useQuery({
+    queryKey: ["postUsersQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/runtime/tags/path/hooks/User/usePostUsersSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -5083,10 +5083,10 @@ import { postUsers } from "../../requests/User/postUsers.gen";
 
 export const postUsersSuspenseQueryKey = "postUsers";
 
-export const postUsersOptions = (settings?: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
-    queryKey: ["postUsersSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const postUsersOptions = (settings: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
+    queryKey: ["postUsersSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePostUsersSuspenseQuery = (...args: Parameters<typeof postUsersOptions>) => useSuspenseQuery(postUsersOptions(...args));",
@@ -5195,10 +5195,10 @@ import { UpdateTaskStatus } from "../../requests/Project/UpdateTaskStatus.gen";
 
 export const UpdateTaskStatusQueryKey = "UpdateTaskStatus";
 
-export const useUpdateTaskStatusQuery = (settings?: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
-    queryKey: ["UpdateTaskStatusQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const useUpdateTaskStatusQuery = (settings: TanstackQuerySettings<typeof UpdateTaskStatus>) => useQuery({
+    queryKey: ["UpdateTaskStatusQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/tags/operationId/hooks/Project/useUpdateTaskStatusSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -5210,10 +5210,10 @@ import { UpdateTaskStatus } from "../../requests/Project/UpdateTaskStatus.gen";
 
 export const UpdateTaskStatusSuspenseQueryKey = "UpdateTaskStatus";
 
-export const UpdateTaskStatusOptions = (settings?: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
-    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => UpdateTaskStatus({ ...settings?.request }),
-    ...settings?.params
+export const UpdateTaskStatusOptions = (settings: TanstackSuspenseQuerySettings<typeof UpdateTaskStatus>) => queryOptions({
+    queryKey: ["UpdateTaskStatusSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => UpdateTaskStatus({ ...settings.request }),
+    ...settings.params
 });
 
 export const useUpdateTaskStatusSuspenseQuery = (...args: Parameters<typeof UpdateTaskStatusOptions>) => useSuspenseQuery(UpdateTaskStatusOptions(...args));",
@@ -5242,10 +5242,10 @@ import { DeleteReportEntry } from "../../requests/Reports-analytics/DeleteReport
 
 export const DeleteReportEntryQueryKey = "DeleteReportEntry";
 
-export const useDeleteReportEntryQuery = (settings?: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
-    queryKey: ["DeleteReportEntryQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportEntryQuery = (settings: TanstackQuerySettings<typeof DeleteReportEntry>) => useQuery({
+    queryKey: ["DeleteReportEntryQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/tags/operationId/hooks/Reports-analytics/useDeleteReportEntrySuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -5257,10 +5257,10 @@ import { DeleteReportEntry } from "../../requests/Reports-analytics/DeleteReport
 
 export const DeleteReportEntrySuspenseQueryKey = "DeleteReportEntry";
 
-export const DeleteReportEntryOptions = (settings?: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
-    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => DeleteReportEntry({ ...settings?.request }),
-    ...settings?.params
+export const DeleteReportEntryOptions = (settings: TanstackSuspenseQuerySettings<typeof DeleteReportEntry>) => queryOptions({
+    queryKey: ["DeleteReportEntrySuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => DeleteReportEntry({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportEntrySuspenseQuery = (...args: Parameters<typeof DeleteReportEntryOptions>) => useSuspenseQuery(DeleteReportEntryOptions(...args));",
@@ -5289,10 +5289,10 @@ import { CreateUserRecord } from "../../requests/User/CreateUserRecord.gen";
 
 export const CreateUserRecordQueryKey = "CreateUserRecord";
 
-export const useCreateUserRecordQuery = (settings?: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
-    queryKey: ["CreateUserRecordQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const useCreateUserRecordQuery = (settings: TanstackQuerySettings<typeof CreateUserRecord>) => useQuery({
+    queryKey: ["CreateUserRecordQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/tags/operationId/hooks/User/useCreateUserRecordSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -5304,10 +5304,10 @@ import { CreateUserRecord } from "../../requests/User/CreateUserRecord.gen";
 
 export const CreateUserRecordSuspenseQueryKey = "CreateUserRecord";
 
-export const CreateUserRecordOptions = (settings?: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
-    queryKey: ["CreateUserRecordSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => CreateUserRecord({ ...settings?.request }),
-    ...settings?.params
+export const CreateUserRecordOptions = (settings: TanstackSuspenseQuerySettings<typeof CreateUserRecord>) => queryOptions({
+    queryKey: ["CreateUserRecordSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => CreateUserRecord({ ...settings.request }),
+    ...settings.params
 });
 
 export const useCreateUserRecordSuspenseQuery = (...args: Parameters<typeof CreateUserRecordOptions>) => useSuspenseQuery(CreateUserRecordOptions(...args));",
@@ -5336,10 +5336,10 @@ import { GetUserByName } from "../../requests/User/GetUserByName.gen";
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
-export const useGetUserByNameQuery = (settings?: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
-    queryKey: ["GetUserByNameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByNameQuery = (settings: TanstackQuerySettings<typeof GetUserByName>) => useQuery({
+    queryKey: ["GetUserByNameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/tags/operationId/hooks/User/useGetUserByNameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -5351,10 +5351,10 @@ import { GetUserByName } from "../../requests/User/GetUserByName.gen";
 
 export const GetUserByNameSuspenseQueryKey = "GetUserByName";
 
-export const GetUserByNameOptions = (settings?: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
-    queryKey: ["GetUserByNameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => GetUserByName({ ...settings?.request }),
-    ...settings?.params
+export const GetUserByNameOptions = (settings: TanstackSuspenseQuerySettings<typeof GetUserByName>) => queryOptions({
+    queryKey: ["GetUserByNameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => GetUserByName({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByNameSuspenseQuery = (...args: Parameters<typeof GetUserByNameOptions>) => useSuspenseQuery(GetUserByNameOptions(...args));",
@@ -5463,10 +5463,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../requests/Project/patc
 
 export const patchProjectByProjectIdTaskByTaskIdQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings?: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const usePatchProjectByProjectIdTaskByTaskIdQuery = (settings: TanstackQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => useQuery({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/tags/path/hooks/Project/usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -5478,10 +5478,10 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../requests/Project/patc
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskId";
 
-export const patchProjectByProjectIdTaskByTaskIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
-    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings?.request }),
-    ...settings?.params
+export const patchProjectByProjectIdTaskByTaskIdOptions = (settings: TanstackSuspenseQuerySettings<typeof patchProjectByProjectIdTaskByTaskId>) => queryOptions({
+    queryKey: ["patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => patchProjectByProjectIdTaskByTaskId({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePatchProjectByProjectIdTaskByTaskIdSuspenseQuery = (...args: Parameters<typeof patchProjectByProjectIdTaskByTaskIdOptions>) => useSuspenseQuery(patchProjectByProjectIdTaskByTaskIdOptions(...args));",
@@ -5510,10 +5510,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../requests/Reports-an
 
 export const deleteReportByReportIdEntrieByEntryIdQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings?: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const useDeleteReportByReportIdEntrieByEntryIdQuery = (settings: TanstackQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => useQuery({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/tags/path/hooks/Reports-analytics/useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -5525,10 +5525,10 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../requests/Reports-an
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryId";
 
-export const deleteReportByReportIdEntrieByEntryIdOptions = (settings?: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
-    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings?.request }),
-    ...settings?.params
+export const deleteReportByReportIdEntrieByEntryIdOptions = (settings: TanstackSuspenseQuerySettings<typeof deleteReportByReportIdEntrieByEntryId>) => queryOptions({
+    queryKey: ["deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => deleteReportByReportIdEntrieByEntryId({ ...settings.request }),
+    ...settings.params
 });
 
 export const useDeleteReportByReportIdEntrieByEntryIdSuspenseQuery = (...args: Parameters<typeof deleteReportByReportIdEntrieByEntryIdOptions>) => useSuspenseQuery(deleteReportByReportIdEntrieByEntryIdOptions(...args));",
@@ -5557,10 +5557,10 @@ import { getUserByUsername } from "../../requests/User/getUserByUsername.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
-export const useGetUserByUsernameQuery = (settings?: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
-    queryKey: ["getUserByUsernameQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const useGetUserByUsernameQuery = (settings: TanstackQuerySettings<typeof getUserByUsername>) => useQuery({
+    queryKey: ["getUserByUsernameQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/tags/path/hooks/User/useGetUserByUsernameSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -5572,10 +5572,10 @@ import { getUserByUsername } from "../../requests/User/getUserByUsername.gen";
 
 export const getUserByUsernameSuspenseQueryKey = "getUserByUsername";
 
-export const getUserByUsernameOptions = (settings?: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
-    queryKey: ["getUserByUsernameSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => getUserByUsername({ ...settings?.request }),
-    ...settings?.params
+export const getUserByUsernameOptions = (settings: TanstackSuspenseQuerySettings<typeof getUserByUsername>) => queryOptions({
+    queryKey: ["getUserByUsernameSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => getUserByUsername({ ...settings.request }),
+    ...settings.params
 });
 
 export const useGetUserByUsernameSuspenseQuery = (...args: Parameters<typeof getUserByUsernameOptions>) => useSuspenseQuery(getUserByUsernameOptions(...args));",
@@ -5604,10 +5604,10 @@ import { postUsers } from "../../requests/User/postUsers.gen";
 
 export const postUsersQueryKey = "postUsers";
 
-export const usePostUsersQuery = (settings?: TanstackQuerySettings<typeof postUsers>) => useQuery({
-    queryKey: ["postUsersQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const usePostUsersQuery = (settings: TanstackQuerySettings<typeof postUsers>) => useQuery({
+    queryKey: ["postUsersQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });",
   "fetches/tags/path/hooks/User/usePostUsersSuspenseQuery.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
@@ -5619,10 +5619,10 @@ import { postUsers } from "../../requests/User/postUsers.gen";
 
 export const postUsersSuspenseQueryKey = "postUsers";
 
-export const postUsersOptions = (settings?: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
-    queryKey: ["postUsersSuspenseQueryKey", settings?.request?.path, settings?.request?.query, settings?.request?.body],
-    queryFn: async () => postUsers({ ...settings?.request }),
-    ...settings?.params
+export const postUsersOptions = (settings: TanstackSuspenseQuerySettings<typeof postUsers>) => queryOptions({
+    queryKey: ["postUsersSuspenseQueryKey", settings.request.path, settings.request.query, settings.request.body],
+    queryFn: async () => postUsers({ ...settings.request }),
+    ...settings.params
 });
 
 export const usePostUsersSuspenseQuery = (...args: Parameters<typeof postUsersOptions>) => useSuspenseQuery(postUsersOptions(...args));",
