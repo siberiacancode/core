@@ -1,7 +1,9 @@
 import type { DefinePlugin } from '@hey-api/openapi-ts';
 
-import * as nodePath from 'node:path';
+import nodePath from 'node:path';
 import ts from 'typescript';
+
+import { getImportFetches } from './getImportFetches';
 
 export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
   const instanceFile = plugin.createFile({
@@ -9,12 +11,7 @@ export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
     path: nodePath.normalize(`${plugin.output}/instance`)
   });
 
-  // import fetches from '@siberiacancode/fetches';
-  const importFetches = ts.factory.createImportDeclaration(
-    undefined,
-    ts.factory.createImportClause(false, ts.factory.createIdentifier('fetches'), undefined),
-    ts.factory.createStringLiteral('@siberiacancode/fetches')
-  );
+  const importFetches = getImportFetches();
 
   // export const instance = fetches.create();
   const createInstance = ts.factory.createVariableStatement(

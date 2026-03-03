@@ -27,6 +27,11 @@ export const generate = {
         alias: 'o',
         type: 'string',
         description: 'Path to output folder'
+      })
+      .option('config', {
+        alias: 'c',
+        type: 'string',
+        description: 'Path to config file'
       }),
   handler: async (argv: GenerateApicraftOption) => {
     try {
@@ -34,7 +39,7 @@ export const generate = {
 
       const useConfig = !argv.input && !argv.output;
       if (useConfig) {
-        options = apicraftConfigSchema.parse(await getConfig());
+        options = apicraftConfigSchema.parse(await getConfig(argv.config));
       } else {
         options = [
           apicraftOptionSchema.parse({
@@ -51,14 +56,16 @@ export const generate = {
           option.instance === name ||
           (typeof option.instance === 'object' && option.instance.name === name);
 
+        const generateOutput =
+          typeof option.output === 'string' ? option.output : option.output.path;
+        const runtimeInstancePath =
+          typeof option.instance === 'object' ? option.instance.runtimeInstancePath : undefined;
+
         if (matchInstance('axios')) {
           plugins.push(
             defineAxiosPlugin({
-              generateOutput:
-                typeof option.output === 'string' ? option.output : option.output.path,
-              ...(typeof option.instance === 'object' && {
-                runtimeInstancePath: option.instance.runtimeInstancePath
-              }),
+              generateOutput,
+              runtimeInstancePath,
               exportFromIndex: true,
               nameBy: option.nameBy,
               groupBy: option.groupBy
@@ -66,16 +73,11 @@ export const generate = {
           );
         }
 
-        const generateOutput =
-          typeof option.output === 'string' ? option.output : option.output.path;
-
         if (matchInstance('fetches')) {
           plugins.push(
             defineFetchesPlugin({
               generateOutput,
-              ...(typeof option.instance === 'object' && {
-                runtimeInstancePath: option.instance.runtimeInstancePath
-              }),
+              runtimeInstancePath,
               exportFromIndex: true,
               nameBy: option.nameBy,
               groupBy: option.groupBy

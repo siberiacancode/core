@@ -160,19 +160,24 @@ export const apicraftOptionSchema = z
     parser: parserSchema,
     instance: z.union([instanceNameSchema, instanceSchema]).optional(),
     nameBy: z.enum(['path', 'operationId']).default('operationId').optional(),
-    groupBy: z.enum(['path', 'tag']).default('tag').optional(),
+    groupBy: z.enum(['paths', 'tags', 'class']).default('tags').optional(),
     plugins: z
       .array(pluginNameSchema.or(z.object({ name: pluginNameSchema }).passthrough()))
       .optional()
   })
   .strict();
 
+export type ApicraftInstanceName = z.infer<typeof instanceNameSchema>;
 export type ApicraftOption = z.infer<typeof apicraftOptionSchema>;
 
 export const apicraftConfigSchema = z.array(apicraftOptionSchema);
 export type ApicraftConfig = z.infer<typeof apicraftConfigSchema>;
 
-export const generateApicraftOptionSchema = apicraftOptionSchema.partial();
+export const generateApicraftOptionSchema = z.object({
+  input: pathSchema.optional(),
+  output: pathSchema.optional(),
+  config: pathSchema.optional()
+});
 export type GenerateApicraftOption = z.infer<typeof generateApicraftOptionSchema>;
 
 export type InstanceName = z.infer<typeof instanceNameSchema>;

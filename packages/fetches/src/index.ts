@@ -460,5 +460,6 @@ interface Instance extends Fetches {
 const fetches = new Fetches() as Instance;
 fetches.Fetches = Fetches;
 fetches.create = (params?: FetchesParams) => new Fetches(params);
+export type FetchesInstance = ReturnType<typeof fetches.create>;
 
 export default fetches;

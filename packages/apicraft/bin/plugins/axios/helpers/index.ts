@@ -1,1 +1,5 @@
-export { addInstanceFile } from './addInstanceFile';
+export * from './addInstanceFile';
+export * from './getAxiosRequestCallExpression';
+export * from './getAxiosRequestParameterDeclaration';
+export * from './getAxiosRequestParamsType';
+export * from './getImportAxios';

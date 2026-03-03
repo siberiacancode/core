@@ -1,29 +1,13 @@
 import type { TanstackPlugin } from './types';
 
-import { generateRequestName, getRequestFilePaths } from '../helpers';
-import {
-  generateMutationHookFile,
-  generateQueryHookFile,
-  generateSuspenseQueryHookFile
-} from './helpers';
+import { classHandler } from './class/plugin';
+import { composedHandler } from './composed/plugin';
 
-export const handler: TanstackPlugin['Handler'] = ({ plugin }) =>
-  plugin.forEach('operation', (event) => {
-    if (event.type !== 'operation') return;
-
-    const request = event.operation;
-    const requestName = generateRequestName(request, plugin.config.nameBy);
-
-    const requestFilePaths = getRequestFilePaths({
-      groupBy: plugin.config.groupBy,
-      output: plugin.output,
-      requestName,
-      request
-    });
-
-    requestFilePaths.forEach((requestFilePath) => {
-      generateQueryHookFile({ plugin, requestFilePath, request, requestName });
-      generateSuspenseQueryHookFile({ plugin, requestFilePath, request, requestName });
-      generateMutationHookFile({ plugin, requestFilePath, request, requestName });
-    });
-  });
+export const handler: TanstackPlugin['Handler'] = ({ plugin }) => {
+  if (plugin.config.groupBy === 'class') {
+    classHandler({ plugin });
+  }
+  if (plugin.config.groupBy === 'paths' || plugin.config.groupBy === 'tags') {
+    composedHandler({ plugin });
+  }
+};

@@ -1,7 +1,9 @@
 import type { DefinePlugin } from '@hey-api/openapi-ts';
 
-import * as nodePath from 'node:path';
+import nodePath from 'node:path';
 import ts from 'typescript';
+
+import { getImportAxios } from './getImportAxios';
 
 export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
   const instanceFile = plugin.createFile({
@@ -10,11 +12,7 @@ export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
   });
 
   // import axios from 'axios';
-  const importAxios = ts.factory.createImportDeclaration(
-    undefined,
-    ts.factory.createImportClause(false, ts.factory.createIdentifier('axios'), undefined),
-    ts.factory.createStringLiteral('axios')
-  );
+  const importAxios = getImportAxios();
 
   // export const instance = axios.create();
   const createInstance = ts.factory.createVariableStatement(
