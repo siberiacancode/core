@@ -48,12 +48,12 @@
     "pretty": "yarn type && yarn lint && yarn format"
   },
   "peerDependencies": {
-    "jsdom": "27.3.0",
-    "vitest": "4.0.16"
+    "jsdom": "28.1.0",
+    "vitest": "4.0.18"
   },
   "dependencies": {
-    "jsdom": "27.3.0",
-    "vitest": "4.0.16"
+    "jsdom": "28.1.0",
+    "vitest": "4.0.18"
   },
   "devDependencies": {
     "@siberiacancode/eslint": "*",
