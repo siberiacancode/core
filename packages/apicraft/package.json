@@ -54,11 +54,13 @@
     "lint-inspector": "npx @eslint/config-inspector",
     "type": "tsc --noEmit",
     "format": "prettier --write .",
-    "pretty": "yarn type && yarn lint && yarn format"
+    "pretty": "yarn type && yarn lint && yarn format",
+    "test": "yarn build && vitest -c tests/vitest.config.ts"
   },
   "dependencies": {
     "@hey-api/openapi-ts": "0.82.5",
     "@siberiacancode/fetches": "^1.14.1",
+    "@siberiacancode/vitest": "^2.4.1",
     "@tanstack/react-query": "^5.90.21",
     "cosmiconfig": "^9.0.0",
     "typescript": "^5.9.3",

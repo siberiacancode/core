@@ -130,6 +130,7 @@ export const apicraftOptionSchema = z
   })
   .strict();
 
+export type ApicraftInstanceName = z.infer<typeof instanceNameSchema>;
 export type ApicraftOption = z.infer<typeof apicraftOptionSchema>;
 
 export const apicraftConfigSchema = z.array(apicraftOptionSchema);
