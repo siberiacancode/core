@@ -3,12 +3,14 @@ import type { IR } from '@hey-api/openapi-ts';
 import ts from 'typescript';
 
 import type { GetRequestInfoResult } from '@/bin/plugins/helpers';
+import type { ApicraftOption } from '@/bin/schemas';
 
-import { buildRequestParamsPath } from '@/bin/plugins/helpers';
+import { buildRequestParamsPath, getRequestCallGenericResponse } from '@/bin/plugins/helpers';
 
 interface GetAxiosRequestCallExpressionParams {
-  instanceVariant: 'class' | 'function';
+  groupBy: ApicraftOption['groupBy'];
   request: IR.OperationObject;
+  requestErrorTypeName: string;
   requestInfo: GetRequestInfoResult;
   requestResponseTypeName: string;
 }
@@ -18,10 +20,11 @@ export const getAxiosRequestCallExpression = ({
   request,
   requestInfo,
   requestResponseTypeName,
-  instanceVariant
+  requestErrorTypeName,
+  groupBy
 }: GetAxiosRequestCallExpressionParams) =>
   ts.factory.createCallExpression(
-    instanceVariant === 'class'
+    groupBy === 'class'
       ? ts.factory.createPropertyAccessExpression(
           ts.factory.createPropertyAccessExpression(
             ts.factory.createThis(),
@@ -33,14 +36,7 @@ export const getAxiosRequestCallExpression = ({
           ts.factory.createIdentifier('instance'),
           ts.factory.createIdentifier('request')
         ),
-    requestInfo.hasResponse
-      ? [
-          ts.factory.createTypeReferenceNode(
-            ts.factory.createIdentifier(requestResponseTypeName),
-            undefined
-          )
-        ]
-      : undefined,
+    getRequestCallGenericResponse({ requestInfo, requestResponseTypeName, requestErrorTypeName }),
     [
       ts.factory.createObjectLiteralExpression(
         [

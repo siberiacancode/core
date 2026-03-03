@@ -38,13 +38,15 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
 
     const request = event.operation;
     const requestName = generateRequestName(request, plugin.config.nameBy);
-    const requestInfo = getRequestInfo({ request });
+    const requestInfo = getRequestInfo(request);
 
     const requestDataTypeName = `${capitalize(request.id)}Data`;
     typeImportNames.add(requestDataTypeName);
 
     const requestResponseTypeName = `${capitalize(request.id)}Response`;
-    if (requestInfo.hasResponse) typeImportNames.add(requestResponseTypeName);
+    if (requestInfo.hasSuccessResponse) typeImportNames.add(requestResponseTypeName);
+    const requestErrorTypeName = `${capitalize(request.id)}Error`;
+    if (requestInfo.hasErrorResponse) typeImportNames.add(requestErrorTypeName);
 
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
     typeStatements.push(
@@ -69,7 +71,8 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
             request,
             requestInfo,
             requestResponseTypeName,
-            instanceVariant: 'class'
+            requestErrorTypeName,
+            groupBy: plugin.config.groupBy
           })
         )
       ],

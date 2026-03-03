@@ -1,212 +1,401 @@
-# This is an **example** API to demonstrate features of OpenAPI specification.
-# It doesn't cover all OpenAPI features. For more full example check out: https://github.com/APIs-guru/petstore_extended
-
-openapi: 3.0.2
+openapi: 3.0.3
 info:
-  version: '1.0.0' # Your API version
-  # It can be any string but it is better to use semantic versioning: http://semver.org/
-  # Warning: OpenAPI requires the version to be a string, but without quotation marks YAML can recognize it as a number.
-
-  title: Example.com V1 # Replace with your API title
-  # Keep it simple. Don't add "API" or version at the end of the string.
-
-  termsOfService: 'https://example.com/terms/' # [Optional] Replace with an URL to your ToS
-  contact:
-    email: contact@example.com # [Optional] Replace with your contact email
-    url: 'http://example.com/contact' # [Optional] Replace with link to your contact form
-  license:
-    name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  x-logo:
-    url: 'https://redocly.github.io/openapi-template/logo.png'
-
-  # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
+  title: Auth Service (Simple Flow)
+  version: 1.2.0
   description: |
-    This is an **example** API to demonstrate features of OpenAPI specification
-    # Introduction
-    This API definition is intended to to be a good starting point for describing your API in
-    [OpenAPI/Swagger format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md).
-    It also demonstrates features of [create-openapi-repo](https://github.com/Redocly/create-openapi-repo) tool and
-    [Redoc](https://github.com/Redocly/Redoc) documentation engine. So beyond the standard OpenAPI syntax we use a few
-    [vendor extensions](https://github.com/Redocly/Redoc/blob/master/docs/redoc-vendor-extensions.md).
-
-    # OpenAPI Specification
-    The goal of The OpenAPI Specification is to define a standard, language-agnostic interface to REST APIs which
-    allows both humans and computers to discover and understand the capabilities of the service without access to source
-    code, documentation, or through network traffic inspection. When properly defined via OpenAPI, a consumer can
-    understand and interact with the remote service with a minimal amount of implementation logic. Similar to what
-    interfaces have done for lower-level programming, OpenAPI removes the guesswork in calling the service.
-externalDocs:
-  description: Find out how to create a GitHub repo for your OpenAPI definition.
-  url: 'https://github.com/Rebilly/generator-openapi-repo'
-
-# A list of tags used by the definition with additional metadata.
-# The order of the tags can be used to reflect on their order by the parsing tools.
-tags:
-  - name: Echo
-    description: Example echo operations
-  - name: User
-    description: Operations about user
-  - name: countries v3.0
-    description: Countries
+    Redirect flow с authorization code:
+    1) Клиент открывает GET /login?return_to=<callback>
+    2) POST /login проверяет логин/пароль и редиректит на return_to?code=...
+    3) Клиент обменивает code на токены через POST /token
+    4) Для новых пользователей пароль задается через /setup-password?token=...
 servers:
-  - url: 'http://example.com/api/v1'
-  - url: 'https://example.com/api/v1'
-
-# Holds the relative paths to the individual endpoints. The path is appended to the
-# basePath in order to construct the full URL.
+  - url: http://localhost:4000
+tags:
+  - name: Auth
+    description: Публичные методы аутентификации (HTML страницы / выдача токенов).
+  - name: Technical
+    description: Технические/интеграционные методы (JWKS, internal API).
 paths:
-  '/users/{username}': # path parameter in curly braces
-    # parameters list that are used with each operation for this path
-    parameters:
-      - name: pretty_print
-        in: query
-        description: Pretty print response
-        schema:
-          type: boolean
-    get: # documentation for GET operation for this path
-      tags:
-        - User
-
-      # summary is up to 120 symbold but we recommend to be shortest as possible
-      summary: Get user by user name
-
-      # you can use GFM in operation description too: https://guides.github.com/features/mastering-markdown
-      description: |
-        Some description of the operation.
-        You can use `markdown` here.
-
-      # operationId should be unique across the whole specification
-      operationId: getUserByName
-
-      # list of parameters for the operation
-      parameters:
-        - name: username
-          in: path
-          description: The name that needs to be fetched
-          required: true
-          schema:
-            type: string
-        - name: with_email
-          in: query
-          description: Filter users without email
-          schema:
-            type: boolean
-
-      # security schemas applied to this operation
-      security:
-        - main_auth:
-            - 'read:users' # for oauth2 provide list of scopes here
-        - api_key: []
-      responses: # list of responses
-        '200':
-          description: Success
-          content:
-            application/json: # operation response mime type
-              schema: # response schema can be specified for each response
-                $ref: '#/components/schemas/User'
-              example: # response example
-                username: user1
-                email: user@example.com
-        '403':
-          description: Forbidden
-        '404':
-          description: User not found
-
-  '/api/countries':
+  /health:
     get:
-      tags:
-        - countries v3.0
-      summary: Получить выборку с информацией о странах.
-      description: Запрос используется для получения списка стран
-      operationId: getCountries
-      parameters:
-        - name: Authorization
-          in: header
-          required: true
-          description: "'Bearer {access_token}'"
-          schema:
-            type: string
-            pattern: '^Bearer .*$'
+      tags: [Technical]
+      summary: Healthcheck
       responses:
-        '200':
-          description: OK
+        "200":
+          description: Service alive
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/GetCountryeV30'
-        '400':
-          description: BadRequest
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+              example:
+                ok: true
 
-# An object to hold reusable parts that can be used across the definition
+  /login:
+    get:
+      tags: [Auth]
+      summary: Страница входа (HTML)
+      parameters:
+        - in: query
+          name: return_to
+          required: false
+          schema:
+            type: string
+            format: uri
+      responses:
+        "200":
+          description: HTML login page
+          content:
+            text/html:
+              schema:
+                type: string
+        "default":
+          description: safsdf
+          content:
+            text/html:
+              schema:
+                type: string
+        "300":
+          description: HTML login page
+          content:
+            text/html:
+              schema:
+                type: string
+        # "400":
+        #   description: HTML login page
+        #   content:
+        #     text/html:
+        #       schema:
+        #         type: string
+        # "500":
+        #   description: HTML login page
+        #   content:
+        #     text/html:
+        #       schema:
+        #         type: string
+    post:
+      tags: [Auth]
+      summary: Проверка логина/пароля и redirect на return_to с code
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [username, password, return_to]
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                return_to:
+                  type: string
+                  format: uri
+      responses:
+        "302":
+          description: Redirect to return_to with code
+        "403":
+          description: Пользователь заблокирован или требуется первичная установка пароля
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/PasswordSetupRequiredError"
+                  - $ref: "#/components/schemas/SimpleError"
+        "400":
+          description: Невалидный ввод
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimpleError"
+
+  /token:
+    post:
+      tags: [Auth]
+      summary: Обмен authorization_code на токены или refresh
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/AuthCodeRequest"
+                - $ref: "#/components/schemas/RefreshTokenRequest"
+      responses:
+        "200":
+          description: Tokens issued
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+        "400":
+          description: OAuth-like error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OAuthError"
+
+  /setup-password:
+    get:
+      tags: [Auth]
+      summary: Страница первичной установки пароля
+      parameters:
+        - in: query
+          name: token
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: HTML page
+          content:
+            text/html:
+              schema:
+                type: string
+        "400":
+          description: Token invalid or expired
+          content:
+            text/html:
+              schema:
+                type: string
+    post:
+      tags: [Auth]
+      summary: Установка пароля по одноразовому token
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [token, password, passwordRepeat]
+              properties:
+                token:
+                  type: string
+                password:
+                  type: string
+                  minLength: 6
+                passwordRepeat:
+                  type: string
+      responses:
+        "200":
+          description: Password set
+          content:
+            text/html:
+              schema:
+                type: string
+        "400":
+          description: Validation or token error
+          content:
+            text/html:
+              schema:
+                type: string
+
+  /logout:
+    post:
+      tags: [Auth]
+      summary: Logout session
+      responses:
+        "200":
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+              example:
+                ok: true
+
+  /jwks:
+    get:
+      tags: [Technical]
+      summary: Public JWKS for backend token verification
+      responses:
+        "200":
+          description: Public keys
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JwksResponse"
+              example:
+                keys:
+                  - kty: RSA
+                    kid: auth-default
+                    use: sig
+                    alg: RS256
+                    n: "<base64url>"
+                    e: AQAB
+
+  /internal/users:
+    post:
+      tags: [Technical]
+      summary: Internal create user in auth (without password)
+      security:
+        - internalToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username]
+              properties:
+                username:
+                  type: string
+      responses:
+        "201":
+          description: Auth user created, password setup link issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  username:
+                    type: string
+                  setupUrl:
+                    type: string
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimpleError"
+        "401":
+          description: Invalid internal token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimpleError"
+        "409":
+          description: Username already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimpleError"
+
 components:
+  securitySchemes:
+    internalToken:
+      type: apiKey
+      in: header
+      name: x-internal-token
+      description: |
+        Внутренний токен для интеграций (например, Users -> Auth при создании пользователя).
   schemas:
-    Email:
-      description: User email address
-      type: string
-      format: test
-      example: john.smith@example.com
-    User:
+    OAuthError:
       type: object
+      description: Ошибка в OAuth-like формате (используется в `/token`).
+      required: [error]
       properties:
-        username:
-          description: User supplied username
+        error:
           type: string
-          minLength: 4
-          example: John78
-        firstName:
-          description: User first name
+          description: |
+            Код ошибки. Обычно:
+            - `invalid_request` — не хватает обязательных полей
+            - `invalid_grant` — неверный/просроченный code или refresh token
+            - `unsupported_grant_type` — неизвестный grant_type
+          example: invalid_grant
+        error_description:
           type: string
-          minLength: 1
-          example: John
-        lastName:
-          description: User last name
-          type: string
-          minLength: 1
-          example: Smith
-        email:
-          $ref: '#/components/schemas/Email'
-    GetCountryeV30:
+          description: Человекочитаемое пояснение (может отсутствовать).
+          example: code обязателен
+    SimpleError:
       type: object
-      description: Country (v3.0)
+      description: |
+        Простой JSON-формат ошибки: `{ "error": "..." }`.
+      required: [error]
       properties:
-        id:
+        error:
           type: string
-          example: '1'
-        name:
+          example: unauthorized
+    PasswordSetupRequiredError:
+      type: object
+      description: |
+        Ошибка логина, когда у пользователя ещё не установлен пароль.
+
+        Фронту нужно показать пользователю ссылку `setupUrl` (если пришла) и предложить установить пароль.
+      required: [error, message]
+      properties:
+        error:
           type: string
-          example: Russia
+          enum: [password_setup_required]
+          description: Машинный код ошибки.
+        message:
+          type: string
+          example: сначала подтвердите пароль
+          description: Пояснение для пользователя.
+        setupUrl:
+          type: string
+          nullable: true
+          description: URL страницы установки пароля (может отсутствовать).
+          example: "http://localhost:4000/setup-password?token=..."
+    RefreshTokenRequest:
+      type: object
+      description: Запрос обновления токенов по refresh token.
+      required: [grant_type, refresh_token]
+      properties:
+        grant_type:
+          type: string
+          enum: [refresh_token]
+          description: Тип гранта.
+        refresh_token:
+          type: string
+          description: Refresh token (opaque строка).
+          example: "c9Vv4F... (48 chars)"
+    AuthCodeRequest:
+      type: object
+      description: Запрос обмена authorization code на токены.
+      required: [grant_type, code]
+      properties:
+        grant_type:
+          type: string
+          enum: [authorization_code]
+          description: Тип гранта.
         code:
           type: string
-          example: RU
-  headers:
-    ExpiresAfter:
-      description: date in UTC when token expires
-      schema:
-        type: string
-        format: date-time
-  # Security scheme definitions that can be used across the definition.
-  securitySchemes:
-    main_auth: # security definition name (you can name it as you want)
-      # the following options are specific to oauth2 type
-      type: oauth2 # authorization type, one of: oauth2, apiKey, http
-      flows:
-        implicit:
-          authorizationUrl: 'http://example.com/api/oauth/dialog'
-          scopes:
-            'read:users': read users info
-            'write:users': modify or remove users
-    api_key: # security definition name (you can name it as you want)
-      type: apiKey
-      # The following options are specific to apiKey type
-      in: header # Where API key will be passed: header or query
-      name: api_key # API key parameter name
-    basic_auth: # security definition name (you can name it as you want)
-      type: http
-      scheme: basic
+          description: Authorization code, полученный из редиректа `/login`.
+          example: "SOME_AUTH_CODE"
+    TokenResponse:
+      type: object
+      description: |
+        Ответ с access/refresh токенами.
+
+        `access_token` — JWT (RS256). Внутри:
+        - `sub` = `user.id` (из Users Service)
+        - `roles` = роли пользователя
+        - `iss` = `ISSUER`
+      required: [token_type, access_token, refresh_token, expires_in, scope]
+      properties:
+        token_type:
+          type: string
+          example: Bearer
+          description: Тип токена для заголовка Authorization.
+        access_token:
+          type: string
+          description: JWT access token.
+        refresh_token:
+          type: string
+          description: Refresh token (хранить безопасно, не логировать).
+        expires_in:
+          type: integer
+          description: Время жизни access token в секундах.
+          example: 900
+        scope:
+          type: string
+          description: Scope строкой (через пробел).
+          example: "profile roles"
+    JwksResponse:
+      type: object
+      description: Public JWKS (набор публичных ключей) для проверки JWT другими сервисами.
+      required: [keys]
+      properties:
+        keys:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
