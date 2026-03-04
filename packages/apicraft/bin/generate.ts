@@ -10,6 +10,7 @@ import type { ApicraftOption, GenerateApicraftOption, InstanceName } from './sch
 
 import { defineAxiosPlugin } from './plugins/axios';
 import { defineFetchesPlugin } from './plugins/fetches';
+import { defineOfetchPlugin } from './plugins/ofetch';
 import { defineTanstackPlugin } from './plugins/tanstack';
 import { apicraftConfigSchema, apicraftOptionSchema } from './schemas';
 
@@ -76,6 +77,18 @@ export const generate = {
         if (matchInstance('fetches')) {
           plugins.push(
             defineFetchesPlugin({
+              generateOutput,
+              runtimeInstancePath,
+              exportFromIndex: true,
+              nameBy: option.nameBy,
+              groupBy: option.groupBy
+            })
+          );
+        }
+
+        if (matchInstance('ofetch')) {
+          plugins.push(
+            defineOfetchPlugin({
               generateOutput,
               runtimeInstancePath,
               exportFromIndex: true,
