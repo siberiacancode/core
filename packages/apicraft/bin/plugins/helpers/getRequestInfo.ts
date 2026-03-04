@@ -1,19 +1,16 @@
 import type { IR } from '@hey-api/openapi-ts';
 
-interface GetRequestInfoParams {
-  request: IR.OperationObject;
-}
+import type { GetRequestResponseInfoResult } from './getRequestResponseInfo';
 
-export interface GetRequestInfoResult {
+import { getRequestResponseInfo } from './getRequestResponseInfo';
+
+export interface GetRequestInfoResult extends GetRequestResponseInfoResult {
   hasPathParam: boolean;
   hasRequiredParam: boolean;
-  hasResponse: boolean;
 }
 
-export const getRequestInfo = ({ request }: GetRequestInfoParams): GetRequestInfoResult => ({
-  hasResponse: Object.values(request.responses ?? {}).some(
-    (response) => response?.schema.$ref || response?.schema.type !== 'unknown'
-  ),
+export const getRequestInfo = (request: IR.OperationObject): GetRequestInfoResult => ({
+  ...getRequestResponseInfo(request),
   hasPathParam: !!Object.keys(request.parameters?.path ?? {}).length,
   hasRequiredParam:
     Object.values(request.parameters?.query ?? {}).some((queryParam) => queryParam.required) ||

@@ -16,7 +16,7 @@ interface GetQueryHookParams {
 // const requestNameQueryKey = requestName;
 // const useRequestNameQuery = (settings: TanstackQuerySettings<typeof requestName>) => useQuery
 export const getQueryHook = ({ hookName, request, plugin, requestName }: GetQueryHookParams) => {
-  const requestInfo = getRequestInfo({ request });
+  const requestInfo = getRequestInfo(request);
 
   // export const requestNameQueryKey = requestName;
   const queryKey = ts.factory.createVariableStatement(
