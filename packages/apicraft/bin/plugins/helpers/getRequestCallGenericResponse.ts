@@ -13,7 +13,7 @@ export const getRequestCallGenericResponse = ({
   requestErrorTypeName,
   requestResponseTypeName
 }: GetRequestCallGenericResponseParams) => {
-  if (!requestInfo.hasSuccessResponse && !requestInfo.hasErrorResponse) return undefined;
+  if (!requestInfo.hasSuccessResponse && !requestInfo.hasErrorResponse) return;
 
   if (requestInfo.hasSuccessResponse && !requestInfo.hasErrorResponse) {
     return [

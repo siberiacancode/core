@@ -5,22 +5,22 @@ export interface GetRequestResponseInfoResult {
   hasSuccessResponse: boolean;
 }
 
-// copy hey api logic https://github.com/hey-api/openapi-ts/blob/main/packages/shared/src/ir/operation.ts#L109
 export const getRequestResponseInfo = (request: IR.OperationObject) => {
+  const responses = request.responses ?? {};
   const result: GetRequestResponseInfoResult = {
     hasSuccessResponse: false,
     hasErrorResponse: false
   };
 
-  if (Object.entries(request.responses ?? {}).some(([code]) => /2\d{2}/.test(code))) {
+  if (Object.entries(responses).some(([code]) => /2\d{2}/.test(code))) {
     result.hasSuccessResponse = true;
   }
-  if (Object.entries(request.responses ?? {}).some(([code]) => /[45]\d{2}/.test(code))) {
+  if (Object.entries(responses).some(([code]) => /[45]\d{2}/.test(code))) {
     result.hasErrorResponse = true;
   }
 
   let defaultResponse: IR.ResponseObject | undefined;
-  for (const [code, response] of Object.entries(request.responses ?? {})) {
+  for (const [code, response] of Object.entries(responses)) {
     if (code === 'default' && response) defaultResponse = response;
   }
   if (!defaultResponse) return result;
