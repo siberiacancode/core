@@ -1,6 +1,6 @@
 import ts from 'typescript';
 
-// interface Instance extends $Fetch { <T = any>(request, options?): Promise<MappedResponseType<ResponseType, T>> }
+// interface Instance extends $Fetch { <T = any>(request, options?): Promise<T> }
 export const getOfetchInstanceType = () =>
   ts.factory.createInterfaceDeclaration(
     undefined,
@@ -51,13 +51,7 @@ export const getOfetchInstanceType = () =>
           )
         ],
         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Promise'), [
-          ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('MappedResponseType'), [
-            ts.factory.createTypeReferenceNode(
-              ts.factory.createIdentifier('ResponseType'),
-              undefined
-            ),
-            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('T'), undefined)
-          ])
+          ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('T'), undefined)
         ])
       )
     ]

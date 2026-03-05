@@ -1,6 +1,6 @@
 import ts from 'typescript';
 
-// import type { $Fetch, FetchOptions, FetchRequest, MappedResponseType, ResponseType } from 'ofetch';
+// import type { $Fetch, FetchOptions, FetchRequest, ResponseType } from 'ofetch';
 export const getImportOfetchInstanceTypes = () =>
   ts.factory.createImportDeclaration(
     undefined,
@@ -18,11 +18,6 @@ export const getImportOfetchInstanceTypes = () =>
           false,
           undefined,
           ts.factory.createIdentifier('FetchRequest')
-        ),
-        ts.factory.createImportSpecifier(
-          false,
-          undefined,
-          ts.factory.createIdentifier('MappedResponseType')
         ),
         ts.factory.createImportSpecifier(
           false,
