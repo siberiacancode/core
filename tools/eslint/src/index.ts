@@ -18,6 +18,7 @@ type EslintOptions = OptionsConfig &
   TypedFlatConfigItem & {
     jsxA11y?: boolean;
     playwright?: boolean;
+    typescript?: 'engine';
   };
 
 export type Eslint = (
@@ -27,18 +28,26 @@ export type Eslint = (
   >[]
 ) => FlatConfigComposer<TypedFlatConfigItem, ConfigNames>;
 
-// const getDefaultTypescriptConfig = (option: boolean | OptionsTypescript) => {
-//   if (typeof option === 'object') return option;
-//   if (option === true && fs.existsSync('./tsconfig.json'))
-//     return { tsconfigPath: './tsconfig.json' };
-//   return option;
-// };
-
 export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) => {
-  const { jsxA11y = false, playwright = false, ...options } = inputOptions;
+  const { jsxA11y = false, playwright = false, typescript = false, ...options } = inputOptions;
 
-  // const typescript = getDefaultTypescriptConfig(options?.typescript ?? false);
-  const stylistic = options?.stylistic ?? false;
+  const stylistic = options.stylistic ?? false;
+
+  if (typescript === 'engine') {
+    configs.unshift({
+      name: 'siberiacancode/typescript',
+      files: ['**/*.?([cm])ts', '**/*.?([cm])tsx'],
+      rules: {
+        'ts/promise-function-async': 'off',
+        'ts/strict-boolean-expressions': 'off',
+        'ts/no-unnecessary-condition': 'error',
+        'ts/no-namespace': 'off',
+        'ts/no-floating-promises': 'off',
+        'ts/no-misused-promises': 'off',
+        'ts/no-empty-object-type': 'warn'
+      }
+    });
+  }
 
   if (jsxA11y) {
     const jsxA11yRules = pluginJsxA11y.flatConfigs.recommended.rules as Linter.RulesRecord;
@@ -138,20 +147,23 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
   });
 
   return antfu(
-    { ...options, stylistic },
+    {
+      ...options,
+      stylistic,
+      ...(typescript === 'engine'
+        ? {
+            typescript: {
+              tsconfigPath: './tsconfig.json'
+            }
+          }
+        : typescript)
+    },
     {
       name: 'siberiacancode/rewrite',
       rules: {
         'antfu/curly': 'off',
         'antfu/if-newline': 'off',
         'antfu/top-level-function': 'off',
-
-        // 'ts/strict-boolean-expressions': 'off',
-        // 'ts/no-unnecessary-condition': 'error',
-        // 'ts/no-namespace': 'off',
-        // 'ts/no-floating-promises': 'off',
-        // 'ts/no-misused-promises': 'off',
-        // 'ts/no-empty-object-type': 'warn',
 
         'no-console': 'warn',
 
