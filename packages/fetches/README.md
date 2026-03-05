@@ -46,7 +46,7 @@ interface GetUsersParams {
 const getUsers: ApiFetchesRequest<GetUsersParams, any[]> = ({ params, config }) =>
   fetches.get('/users', {
     ...config,
-    params: { ...config?.params, ...params }
+    query: { ...config?.params, ...params }
   });
 ```
 
