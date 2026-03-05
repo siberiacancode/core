@@ -6,8 +6,8 @@ import { apicraft } from './dist/esm/index.mjs';
 
 const apicraftConfig = apicraft([
   {
-    input: './src/example-apiV1.yaml',
-    output: './generated/apiV1-class',
+    input: 'example-apiV1.yaml',
+    output: 'generated/apiV1-class',
     instance: 'fetches',
     nameBy: 'path',
     groupBy: 'paths'
