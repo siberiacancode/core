@@ -121,7 +121,7 @@ export * from './instance.gen';",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse, CreateUserRecordData, CreateUserRecordResponse, UpdateTaskStatusData, UpdateTaskStatusResponse, DeleteReportEntryData, DeleteReportEntryResponse } from "./types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError, CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError, UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError, DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "./types.gen";
 
 import type { AxiosInstance, CreateAxiosDefaults } from "axios";
 
@@ -141,7 +141,7 @@ export class ApiInstance {
         this.instance = axios.create(config);
     }
     GetUserByName({ config, query, path }: GetUserByNameRequestParams) {
-        return this.instance.request<GetUserByNameResponse>({
+        return this.instance.request<GetUserByNameResponse | GetUserByNameError>({
             method: "GET",
             url: \`/users/\${path.username}\`,
             params: query,
@@ -149,7 +149,7 @@ export class ApiInstance {
         });
     }
     CreateUserRecord({ config, body, query }: CreateUserRecordRequestParams) {
-        return this.instance.request<CreateUserRecordResponse>({
+        return this.instance.request<CreateUserRecordResponse | CreateUserRecordError>({
             method: "POST",
             url: "/users",
             data: body,
@@ -158,7 +158,7 @@ export class ApiInstance {
         });
     }
     UpdateTaskStatus({ config, body, path }: UpdateTaskStatusRequestParams) {
-        return this.instance.request<UpdateTaskStatusResponse>({
+        return this.instance.request<UpdateTaskStatusResponse | UpdateTaskStatusError>({
             method: "PATCH",
             url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
             data: body,
@@ -166,7 +166,7 @@ export class ApiInstance {
         });
     }
     DeleteReportEntry({ config, path }: DeleteReportEntryRequestParams) {
-        return this.instance.request<DeleteReportEntryResponse>({
+        return this.instance.request<DeleteReportEntryResponse | DeleteReportEntryError>({
             method: "DELETE",
             url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
             ...config
@@ -294,7 +294,7 @@ export * from './instance.gen';",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse, CreateUserRecordData, CreateUserRecordResponse, UpdateTaskStatusData, UpdateTaskStatusResponse, DeleteReportEntryData, DeleteReportEntryResponse } from "./types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError, CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError, UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError, DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "./types.gen";
 
 import type { AxiosInstance, CreateAxiosDefaults } from "axios";
 
@@ -314,7 +314,7 @@ export class ApiInstance {
         this.instance = axios.create(config);
     }
     getUserByUsername({ config, query, path }: GetUserByUsernameRequestParams) {
-        return this.instance.request<GetUserByNameResponse>({
+        return this.instance.request<GetUserByNameResponse | GetUserByNameError>({
             method: "GET",
             url: \`/users/\${path.username}\`,
             params: query,
@@ -322,7 +322,7 @@ export class ApiInstance {
         });
     }
     postUsers({ config, body, query }: PostUsersRequestParams) {
-        return this.instance.request<CreateUserRecordResponse>({
+        return this.instance.request<CreateUserRecordResponse | CreateUserRecordError>({
             method: "POST",
             url: "/users",
             data: body,
@@ -331,7 +331,7 @@ export class ApiInstance {
         });
     }
     patchProjectByProjectIdTaskByTaskId({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) {
-        return this.instance.request<UpdateTaskStatusResponse>({
+        return this.instance.request<UpdateTaskStatusResponse | UpdateTaskStatusError>({
             method: "PATCH",
             url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
             data: body,
@@ -339,7 +339,7 @@ export class ApiInstance {
         });
     }
     deleteReportByReportIdEntrieByEntryId({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) {
-        return this.instance.request<DeleteReportEntryResponse>({
+        return this.instance.request<DeleteReportEntryResponse | DeleteReportEntryError>({
             method: "DELETE",
             url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
             ...config
@@ -564,13 +564,13 @@ export const instance = axios.create();",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../../../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../instance.gen";
 
 export type UpdateTaskStatusRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.request<UpdateTaskStatusResponse>({
+export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.request<UpdateTaskStatusResponse | UpdateTaskStatusError>({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -580,13 +580,13 @@ export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequest
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../../../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../instance.gen";
 
 export type DeleteReportEntryRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.request<DeleteReportEntryResponse>({
+export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.request<DeleteReportEntryResponse | DeleteReportEntryError>({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -595,13 +595,13 @@ export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestPara
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type CreateUserRecordRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.request<CreateUserRecordResponse>({
+export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.request<CreateUserRecordResponse | CreateUserRecordError>({
     method: "POST",
     url: "/users",
     data: body,
@@ -612,13 +612,13 @@ export const CreateUserRecord = ({ config, body, query }: CreateUserRecordReques
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../../types.gen";
 
 import { instance } from "../../../instance.gen";
 
 export type GetUserByNameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.request<GetUserByNameResponse>({
+export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.request<GetUserByNameResponse | GetUserByNameError>({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -840,13 +840,13 @@ export const instance = axios.create();",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../../../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../instance.gen";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.request<UpdateTaskStatusResponse>({
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.request<UpdateTaskStatusResponse | UpdateTaskStatusError>({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -856,13 +856,13 @@ export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: Patc
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../../../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../instance.gen";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.request<DeleteReportEntryResponse>({
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.request<DeleteReportEntryResponse | DeleteReportEntryError>({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -871,13 +871,13 @@ export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteRe
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type PostUsersRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.request<CreateUserRecordResponse>({
+export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.request<CreateUserRecordResponse | CreateUserRecordError>({
     method: "POST",
     url: "/users",
     data: body,
@@ -888,13 +888,13 @@ export const postUsers = ({ config, body, query }: PostUsersRequestParams) => in
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../../types.gen";
 
 import { instance } from "../../../instance.gen";
 
 export type GetUserByUsernameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.request<GetUserByNameResponse>({
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.request<GetUserByNameResponse | GetUserByNameError>({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -1019,7 +1019,7 @@ export * from './instance.gen';",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse, CreateUserRecordData, CreateUserRecordResponse, UpdateTaskStatusData, UpdateTaskStatusResponse, DeleteReportEntryData, DeleteReportEntryResponse } from "./types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError, CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError, UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError, DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "./types.gen";
 
 import type { AxiosInstance, CreateAxiosDefaults } from "axios";
 
@@ -1039,7 +1039,7 @@ export class ApiInstance {
         this.instance = axios.create(config);
     }
     GetUserByName({ config, query, path }: GetUserByNameRequestParams) {
-        return this.instance.request<GetUserByNameResponse>({
+        return this.instance.request<GetUserByNameResponse | GetUserByNameError>({
             method: "GET",
             url: \`/users/\${path.username}\`,
             params: query,
@@ -1047,7 +1047,7 @@ export class ApiInstance {
         });
     }
     CreateUserRecord({ config, body, query }: CreateUserRecordRequestParams) {
-        return this.instance.request<CreateUserRecordResponse>({
+        return this.instance.request<CreateUserRecordResponse | CreateUserRecordError>({
             method: "POST",
             url: "/users",
             data: body,
@@ -1056,7 +1056,7 @@ export class ApiInstance {
         });
     }
     UpdateTaskStatus({ config, body, path }: UpdateTaskStatusRequestParams) {
-        return this.instance.request<UpdateTaskStatusResponse>({
+        return this.instance.request<UpdateTaskStatusResponse | UpdateTaskStatusError>({
             method: "PATCH",
             url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
             data: body,
@@ -1064,7 +1064,7 @@ export class ApiInstance {
         });
     }
     DeleteReportEntry({ config, path }: DeleteReportEntryRequestParams) {
-        return this.instance.request<DeleteReportEntryResponse>({
+        return this.instance.request<DeleteReportEntryResponse | DeleteReportEntryError>({
             method: "DELETE",
             url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
             ...config
@@ -1192,7 +1192,7 @@ export * from './instance.gen';",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse, CreateUserRecordData, CreateUserRecordResponse, UpdateTaskStatusData, UpdateTaskStatusResponse, DeleteReportEntryData, DeleteReportEntryResponse } from "./types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError, CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError, UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError, DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "./types.gen";
 
 import type { AxiosInstance, CreateAxiosDefaults } from "axios";
 
@@ -1212,7 +1212,7 @@ export class ApiInstance {
         this.instance = axios.create(config);
     }
     getUserByUsername({ config, query, path }: GetUserByUsernameRequestParams) {
-        return this.instance.request<GetUserByNameResponse>({
+        return this.instance.request<GetUserByNameResponse | GetUserByNameError>({
             method: "GET",
             url: \`/users/\${path.username}\`,
             params: query,
@@ -1220,7 +1220,7 @@ export class ApiInstance {
         });
     }
     postUsers({ config, body, query }: PostUsersRequestParams) {
-        return this.instance.request<CreateUserRecordResponse>({
+        return this.instance.request<CreateUserRecordResponse | CreateUserRecordError>({
             method: "POST",
             url: "/users",
             data: body,
@@ -1229,7 +1229,7 @@ export class ApiInstance {
         });
     }
     patchProjectByProjectIdTaskByTaskId({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) {
-        return this.instance.request<UpdateTaskStatusResponse>({
+        return this.instance.request<UpdateTaskStatusResponse | UpdateTaskStatusError>({
             method: "PATCH",
             url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
             data: body,
@@ -1237,7 +1237,7 @@ export class ApiInstance {
         });
     }
     deleteReportByReportIdEntrieByEntryId({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) {
-        return this.instance.request<DeleteReportEntryResponse>({
+        return this.instance.request<DeleteReportEntryResponse | DeleteReportEntryError>({
             method: "DELETE",
             url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
             ...config
@@ -1462,13 +1462,13 @@ export const instance = axios.create();",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../../../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../../../../../..";
 
 export type UpdateTaskStatusRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.request<UpdateTaskStatusResponse>({
+export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.request<UpdateTaskStatusResponse | UpdateTaskStatusError>({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -1478,13 +1478,13 @@ export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequest
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../../../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../../../../../..";
 
 export type DeleteReportEntryRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.request<DeleteReportEntryResponse>({
+export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.request<DeleteReportEntryResponse | DeleteReportEntryError>({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -1493,13 +1493,13 @@ export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestPara
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type CreateUserRecordRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.request<CreateUserRecordResponse>({
+export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.request<CreateUserRecordResponse | CreateUserRecordError>({
     method: "POST",
     url: "/users",
     data: body,
@@ -1510,13 +1510,13 @@ export const CreateUserRecord = ({ config, body, query }: CreateUserRecordReques
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../../types.gen";
 
 import { instance } from "../../../../../../../..";
 
 export type GetUserByNameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.request<GetUserByNameResponse>({
+export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.request<GetUserByNameResponse | GetUserByNameError>({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -1738,13 +1738,13 @@ export const instance = axios.create();",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../../../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../../../../../..";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.request<UpdateTaskStatusResponse>({
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.request<UpdateTaskStatusResponse | UpdateTaskStatusError>({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -1754,13 +1754,13 @@ export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: Patc
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../../../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../../../../../..";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.request<DeleteReportEntryResponse>({
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.request<DeleteReportEntryResponse | DeleteReportEntryError>({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -1769,13 +1769,13 @@ export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteRe
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type PostUsersRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.request<CreateUserRecordResponse>({
+export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.request<CreateUserRecordResponse | CreateUserRecordError>({
     method: "POST",
     url: "/users",
     data: body,
@@ -1786,13 +1786,13 @@ export const postUsers = ({ config, body, query }: PostUsersRequestParams) => in
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../../types.gen";
 
 import { instance } from "../../../../../../../..";
 
 export type GetUserByUsernameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.request<GetUserByNameResponse>({
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.request<GetUserByNameResponse | GetUserByNameError>({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -2014,13 +2014,13 @@ export const instance = axios.create();",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type UpdateTaskStatusRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.request<UpdateTaskStatusResponse>({
+export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.request<UpdateTaskStatusResponse | UpdateTaskStatusError>({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -2030,13 +2030,13 @@ export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequest
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type DeleteReportEntryRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.request<DeleteReportEntryResponse>({
+export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.request<DeleteReportEntryResponse | DeleteReportEntryError>({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -2045,13 +2045,13 @@ export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestPara
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type CreateUserRecordRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.request<CreateUserRecordResponse>({
+export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.request<CreateUserRecordResponse | CreateUserRecordError>({
     method: "POST",
     url: "/users",
     data: body,
@@ -2062,13 +2062,13 @@ export const CreateUserRecord = ({ config, body, query }: CreateUserRecordReques
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type GetUserByNameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.request<GetUserByNameResponse>({
+export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.request<GetUserByNameResponse | GetUserByNameError>({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -2290,13 +2290,13 @@ export const instance = axios.create();",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.request<UpdateTaskStatusResponse>({
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.request<UpdateTaskStatusResponse | UpdateTaskStatusError>({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -2306,13 +2306,13 @@ export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: Patc
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.request<DeleteReportEntryResponse>({
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.request<DeleteReportEntryResponse | DeleteReportEntryError>({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -2321,13 +2321,13 @@ export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteRe
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type GetUserByUsernameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.request<GetUserByNameResponse>({
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.request<GetUserByNameResponse | GetUserByNameError>({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -2337,13 +2337,13 @@ export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequ
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type PostUsersRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.request<CreateUserRecordResponse>({
+export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.request<CreateUserRecordResponse | CreateUserRecordError>({
     method: "POST",
     url: "/users",
     data: body,
@@ -2566,13 +2566,13 @@ export const instance = axios.create();",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type UpdateTaskStatusRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.request<UpdateTaskStatusResponse>({
+export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.request<UpdateTaskStatusResponse | UpdateTaskStatusError>({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -2582,13 +2582,13 @@ export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequest
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type DeleteReportEntryRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.request<DeleteReportEntryResponse>({
+export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.request<DeleteReportEntryResponse | DeleteReportEntryError>({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -2597,13 +2597,13 @@ export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestPara
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type CreateUserRecordRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.request<CreateUserRecordResponse>({
+export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.request<CreateUserRecordResponse | CreateUserRecordError>({
     method: "POST",
     url: "/users",
     data: body,
@@ -2614,13 +2614,13 @@ export const CreateUserRecord = ({ config, body, query }: CreateUserRecordReques
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type GetUserByNameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.request<GetUserByNameResponse>({
+export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.request<GetUserByNameResponse | GetUserByNameError>({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -2842,13 +2842,13 @@ export const instance = axios.create();",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.request<UpdateTaskStatusResponse>({
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.request<UpdateTaskStatusResponse | UpdateTaskStatusError>({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -2858,13 +2858,13 @@ export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: Patc
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.request<DeleteReportEntryResponse>({
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.request<DeleteReportEntryResponse | DeleteReportEntryError>({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -2873,13 +2873,13 @@ export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteRe
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type GetUserByUsernameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.request<GetUserByNameResponse>({
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.request<GetUserByNameResponse | GetUserByNameError>({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -2889,13 +2889,13 @@ export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequ
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type PostUsersRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.request<CreateUserRecordResponse>({
+export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.request<CreateUserRecordResponse | CreateUserRecordError>({
     method: "POST",
     url: "/users",
     data: body,
@@ -3021,7 +3021,7 @@ export * from './instance.gen';",
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse, CreateUserRecordData, CreateUserRecordResponse, UpdateTaskStatusData, UpdateTaskStatusResponse, DeleteReportEntryData, DeleteReportEntryResponse } from "./types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError, CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError, UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError, DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "./types.gen";
 
 import type { FetchesInstance, FetchesParams } from "@siberiacancode/fetches";
 
@@ -3041,26 +3041,26 @@ export class ApiInstance {
         this.instance = fetches.create(config);
     }
     GetUserByName({ config, query, path }: GetUserByNameRequestParams) {
-        return this.instance.call<GetUserByNameResponse>("GET", \`/users/\${path.username}\`, {
+        return this.instance.call<GetUserByNameResponse | GetUserByNameError>("GET", \`/users/\${path.username}\`, {
             query,
             ...config
         });
     }
     CreateUserRecord({ config, body, query }: CreateUserRecordRequestParams) {
-        return this.instance.call<CreateUserRecordResponse>("POST", "/users", {
+        return this.instance.call<CreateUserRecordResponse | CreateUserRecordError>("POST", "/users", {
             body,
             query,
             ...config
         });
     }
     UpdateTaskStatus({ config, body, path }: UpdateTaskStatusRequestParams) {
-        return this.instance.call<UpdateTaskStatusResponse>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+        return this.instance.call<UpdateTaskStatusResponse | UpdateTaskStatusError>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
             body,
             ...config
         });
     }
     DeleteReportEntry({ config, path }: DeleteReportEntryRequestParams) {
-        return this.instance.call<DeleteReportEntryResponse>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+        return this.instance.call<DeleteReportEntryResponse | DeleteReportEntryError>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
             ...config
         });
     }
@@ -3186,7 +3186,7 @@ export * from './instance.gen';",
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse, CreateUserRecordData, CreateUserRecordResponse, UpdateTaskStatusData, UpdateTaskStatusResponse, DeleteReportEntryData, DeleteReportEntryResponse } from "./types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError, CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError, UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError, DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "./types.gen";
 
 import type { FetchesInstance, FetchesParams } from "@siberiacancode/fetches";
 
@@ -3206,26 +3206,26 @@ export class ApiInstance {
         this.instance = fetches.create(config);
     }
     getUserByUsername({ config, query, path }: GetUserByUsernameRequestParams) {
-        return this.instance.call<GetUserByNameResponse>("GET", \`/users/\${path.username}\`, {
+        return this.instance.call<GetUserByNameResponse | GetUserByNameError>("GET", \`/users/\${path.username}\`, {
             query,
             ...config
         });
     }
     postUsers({ config, body, query }: PostUsersRequestParams) {
-        return this.instance.call<CreateUserRecordResponse>("POST", "/users", {
+        return this.instance.call<CreateUserRecordResponse | CreateUserRecordError>("POST", "/users", {
             body,
             query,
             ...config
         });
     }
     patchProjectByProjectIdTaskByTaskId({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) {
-        return this.instance.call<UpdateTaskStatusResponse>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+        return this.instance.call<UpdateTaskStatusResponse | UpdateTaskStatusError>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
             body,
             ...config
         });
     }
     deleteReportByReportIdEntrieByEntryId({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) {
-        return this.instance.call<DeleteReportEntryResponse>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+        return this.instance.call<DeleteReportEntryResponse | DeleteReportEntryError>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
             ...config
         });
     }
@@ -3448,13 +3448,13 @@ export const instance = fetches.create();",
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../../../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../instance.gen";
 
 export type UpdateTaskStatusRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.call<UpdateTaskStatusResponse>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.call<UpdateTaskStatusResponse | UpdateTaskStatusError>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -3462,26 +3462,26 @@ export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequest
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../../../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../instance.gen";
 
 export type DeleteReportEntryRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.call<DeleteReportEntryResponse>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.call<DeleteReportEntryResponse | DeleteReportEntryError>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/paths/operationId/requests/users/post.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type CreateUserRecordRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.call<CreateUserRecordResponse>("POST", "/users", {
+export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.call<CreateUserRecordResponse | CreateUserRecordError>("POST", "/users", {
     body,
     query,
     ...config
@@ -3490,13 +3490,13 @@ export const CreateUserRecord = ({ config, body, query }: CreateUserRecordReques
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../../types.gen";
 
 import { instance } from "../../../instance.gen";
 
 export type GetUserByNameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.call<GetUserByNameResponse>("GET", \`/users/\${path.username}\`, {
+export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.call<GetUserByNameResponse | GetUserByNameError>("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -3716,13 +3716,13 @@ export const instance = fetches.create();",
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../../../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../instance.gen";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.call<UpdateTaskStatusResponse>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.call<UpdateTaskStatusResponse | UpdateTaskStatusError>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -3730,26 +3730,26 @@ export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: Patc
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../../../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../instance.gen";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.call<DeleteReportEntryResponse>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.call<DeleteReportEntryResponse | DeleteReportEntryError>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/paths/path/requests/users/post.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type PostUsersRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.call<CreateUserRecordResponse>("POST", "/users", {
+export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.call<CreateUserRecordResponse | CreateUserRecordError>("POST", "/users", {
     body,
     query,
     ...config
@@ -3758,13 +3758,13 @@ export const postUsers = ({ config, body, query }: PostUsersRequestParams) => in
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../../types.gen";
 
 import { instance } from "../../../instance.gen";
 
 export type GetUserByUsernameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.call<GetUserByNameResponse>("GET", \`/users/\${path.username}\`, {
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.call<GetUserByNameResponse | GetUserByNameError>("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -3887,7 +3887,7 @@ export * from './instance.gen';",
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse, CreateUserRecordData, CreateUserRecordResponse, UpdateTaskStatusData, UpdateTaskStatusResponse, DeleteReportEntryData, DeleteReportEntryResponse } from "./types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError, CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError, UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError, DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "./types.gen";
 
 import type { FetchesInstance, FetchesParams } from "@siberiacancode/fetches";
 
@@ -3907,26 +3907,26 @@ export class ApiInstance {
         this.instance = fetches.create(config);
     }
     GetUserByName({ config, query, path }: GetUserByNameRequestParams) {
-        return this.instance.call<GetUserByNameResponse>("GET", \`/users/\${path.username}\`, {
+        return this.instance.call<GetUserByNameResponse | GetUserByNameError>("GET", \`/users/\${path.username}\`, {
             query,
             ...config
         });
     }
     CreateUserRecord({ config, body, query }: CreateUserRecordRequestParams) {
-        return this.instance.call<CreateUserRecordResponse>("POST", "/users", {
+        return this.instance.call<CreateUserRecordResponse | CreateUserRecordError>("POST", "/users", {
             body,
             query,
             ...config
         });
     }
     UpdateTaskStatus({ config, body, path }: UpdateTaskStatusRequestParams) {
-        return this.instance.call<UpdateTaskStatusResponse>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+        return this.instance.call<UpdateTaskStatusResponse | UpdateTaskStatusError>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
             body,
             ...config
         });
     }
     DeleteReportEntry({ config, path }: DeleteReportEntryRequestParams) {
-        return this.instance.call<DeleteReportEntryResponse>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+        return this.instance.call<DeleteReportEntryResponse | DeleteReportEntryError>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
             ...config
         });
     }
@@ -4052,7 +4052,7 @@ export * from './instance.gen';",
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse, CreateUserRecordData, CreateUserRecordResponse, UpdateTaskStatusData, UpdateTaskStatusResponse, DeleteReportEntryData, DeleteReportEntryResponse } from "./types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError, CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError, UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError, DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "./types.gen";
 
 import type { FetchesInstance, FetchesParams } from "@siberiacancode/fetches";
 
@@ -4072,26 +4072,26 @@ export class ApiInstance {
         this.instance = fetches.create(config);
     }
     getUserByUsername({ config, query, path }: GetUserByUsernameRequestParams) {
-        return this.instance.call<GetUserByNameResponse>("GET", \`/users/\${path.username}\`, {
+        return this.instance.call<GetUserByNameResponse | GetUserByNameError>("GET", \`/users/\${path.username}\`, {
             query,
             ...config
         });
     }
     postUsers({ config, body, query }: PostUsersRequestParams) {
-        return this.instance.call<CreateUserRecordResponse>("POST", "/users", {
+        return this.instance.call<CreateUserRecordResponse | CreateUserRecordError>("POST", "/users", {
             body,
             query,
             ...config
         });
     }
     patchProjectByProjectIdTaskByTaskId({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) {
-        return this.instance.call<UpdateTaskStatusResponse>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+        return this.instance.call<UpdateTaskStatusResponse | UpdateTaskStatusError>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
             body,
             ...config
         });
     }
     deleteReportByReportIdEntrieByEntryId({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) {
-        return this.instance.call<DeleteReportEntryResponse>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+        return this.instance.call<DeleteReportEntryResponse | DeleteReportEntryError>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
             ...config
         });
     }
@@ -4314,13 +4314,13 @@ export const instance = fetches.create();",
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../../../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../../../../../..";
 
 export type UpdateTaskStatusRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.call<UpdateTaskStatusResponse>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.call<UpdateTaskStatusResponse | UpdateTaskStatusError>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -4328,26 +4328,26 @@ export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequest
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../../../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../../../../../..";
 
 export type DeleteReportEntryRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.call<DeleteReportEntryResponse>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.call<DeleteReportEntryResponse | DeleteReportEntryError>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/runtime/paths/operationId/requests/users/post.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type CreateUserRecordRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.call<CreateUserRecordResponse>("POST", "/users", {
+export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.call<CreateUserRecordResponse | CreateUserRecordError>("POST", "/users", {
     body,
     query,
     ...config
@@ -4356,13 +4356,13 @@ export const CreateUserRecord = ({ config, body, query }: CreateUserRecordReques
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../../types.gen";
 
 import { instance } from "../../../../../../../..";
 
 export type GetUserByNameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.call<GetUserByNameResponse>("GET", \`/users/\${path.username}\`, {
+export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.call<GetUserByNameResponse | GetUserByNameError>("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -4582,13 +4582,13 @@ export const instance = fetches.create();",
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../../../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../../../../../..";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.call<UpdateTaskStatusResponse>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.call<UpdateTaskStatusResponse | UpdateTaskStatusError>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -4596,26 +4596,26 @@ export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: Patc
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../../../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../../../../types.gen";
 
 import { instance } from "../../../../../../../../../..";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.call<DeleteReportEntryResponse>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.call<DeleteReportEntryResponse | DeleteReportEntryError>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/runtime/paths/path/requests/users/post.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type PostUsersRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.call<CreateUserRecordResponse>("POST", "/users", {
+export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.call<CreateUserRecordResponse | CreateUserRecordError>("POST", "/users", {
     body,
     query,
     ...config
@@ -4624,13 +4624,13 @@ export const postUsers = ({ config, body, query }: PostUsersRequestParams) => in
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../../types.gen";
 
 import { instance } from "../../../../../../../..";
 
 export type GetUserByUsernameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.call<GetUserByNameResponse>("GET", \`/users/\${path.username}\`, {
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.call<GetUserByNameResponse | GetUserByNameError>("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -4850,13 +4850,13 @@ export const instance = fetches.create();",
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type UpdateTaskStatusRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.call<UpdateTaskStatusResponse>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.call<UpdateTaskStatusResponse | UpdateTaskStatusError>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -4864,26 +4864,26 @@ export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequest
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type DeleteReportEntryRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.call<DeleteReportEntryResponse>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.call<DeleteReportEntryResponse | DeleteReportEntryError>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/runtime/tags/operationId/requests/User/CreateUserRecord.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type CreateUserRecordRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.call<CreateUserRecordResponse>("POST", "/users", {
+export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.call<CreateUserRecordResponse | CreateUserRecordError>("POST", "/users", {
     body,
     query,
     ...config
@@ -4892,13 +4892,13 @@ export const CreateUserRecord = ({ config, body, query }: CreateUserRecordReques
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type GetUserByNameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.call<GetUserByNameResponse>("GET", \`/users/\${path.username}\`, {
+export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.call<GetUserByNameResponse | GetUserByNameError>("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -5118,13 +5118,13 @@ export const instance = fetches.create();",
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.call<UpdateTaskStatusResponse>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.call<UpdateTaskStatusResponse | UpdateTaskStatusError>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -5132,26 +5132,26 @@ export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: Patc
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.call<DeleteReportEntryResponse>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.call<DeleteReportEntryResponse | DeleteReportEntryError>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/runtime/tags/path/requests/User/getUserByUsername.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type GetUserByUsernameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.call<GetUserByNameResponse>("GET", \`/users/\${path.username}\`, {
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.call<GetUserByNameResponse | GetUserByNameError>("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -5159,13 +5159,13 @@ export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequ
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../../../../../..";
 
 export type PostUsersRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.call<CreateUserRecordResponse>("POST", "/users", {
+export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.call<CreateUserRecordResponse | CreateUserRecordError>("POST", "/users", {
     body,
     query,
     ...config
@@ -5386,13 +5386,13 @@ export const instance = fetches.create();",
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type UpdateTaskStatusRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.call<UpdateTaskStatusResponse>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.call<UpdateTaskStatusResponse | UpdateTaskStatusError>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -5400,26 +5400,26 @@ export const UpdateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequest
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type DeleteReportEntryRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.call<DeleteReportEntryResponse>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const DeleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.call<DeleteReportEntryResponse | DeleteReportEntryError>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/tags/operationId/requests/User/CreateUserRecord.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type CreateUserRecordRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.call<CreateUserRecordResponse>("POST", "/users", {
+export const CreateUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.call<CreateUserRecordResponse | CreateUserRecordError>("POST", "/users", {
     body,
     query,
     ...config
@@ -5428,13 +5428,13 @@ export const CreateUserRecord = ({ config, body, query }: CreateUserRecordReques
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type GetUserByNameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.call<GetUserByNameResponse>("GET", \`/users/\${path.username}\`, {
+export const GetUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.call<GetUserByNameResponse | GetUserByNameError>("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -5654,13 +5654,13 @@ export const instance = fetches.create();",
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { UpdateTaskStatusData, UpdateTaskStatusResponse } from "../../types.gen";
+import type { UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.call<UpdateTaskStatusResponse>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.call<UpdateTaskStatusResponse | UpdateTaskStatusError>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -5668,26 +5668,26 @@ export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: Patc
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { DeleteReportEntryData, DeleteReportEntryResponse } from "../../types.gen";
+import type { DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.call<DeleteReportEntryResponse>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.call<DeleteReportEntryResponse | DeleteReportEntryError>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/tags/path/requests/User/getUserByUsername.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { GetUserByNameData, GetUserByNameResponse } from "../../types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type GetUserByUsernameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.call<GetUserByNameResponse>("GET", \`/users/\${path.username}\`, {
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.call<GetUserByNameResponse | GetUserByNameError>("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -5695,13 +5695,13 @@ export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequ
 
 import type { FetchesRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordResponse } from "../../types.gen";
+import type { CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type PostUsersRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.call<CreateUserRecordResponse>("POST", "/users", {
+export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.call<CreateUserRecordResponse | CreateUserRecordError>("POST", "/users", {
     body,
     query,
     ...config

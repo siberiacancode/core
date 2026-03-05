@@ -24,7 +24,7 @@ export const getSuspenseQueryHook = ({
   hookName,
   requestName
 }: GetSuspenseQueryHookParams) => {
-  const requestInfo = getRequestInfo({ request });
+  const requestInfo = getRequestInfo(request);
 
   // export const requestNameSuspenseQueryKey = requestName
   const suspenseQueryKey = ts.factory.createVariableStatement(
