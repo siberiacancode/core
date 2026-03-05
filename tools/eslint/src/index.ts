@@ -9,10 +9,9 @@ import type { FlatConfigComposer } from 'eslint-flat-config-utils';
 
 import antfu from '@antfu/eslint-config';
 import pluginCss from '@eslint/css';
+import pluginBetterTailwindcss from 'eslint-plugin-better-tailwindcss';
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginPlaywright from 'eslint-plugin-playwright';
-import path from 'node:path';
-import process from 'node:process';
 
 import { siberiacancodePlugin } from './plugin/index';
 
@@ -20,6 +19,7 @@ type EslintOptions = OptionsConfig &
   TypedFlatConfigItem & {
     jsxA11y?: boolean;
     playwright?: boolean;
+    tailwind?: boolean;
     typescript?: 'engine';
   };
 
@@ -31,7 +31,13 @@ export type Eslint = (
 ) => FlatConfigComposer<TypedFlatConfigItem, ConfigNames>;
 
 export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) => {
-  const { jsxA11y = false, playwright = false, typescript = false, ...options } = inputOptions;
+  const {
+    jsxA11y = false,
+    playwright = false,
+    tailwind = false,
+    typescript = false,
+    ...options
+  } = inputOptions;
 
   const stylistic = options.stylistic ?? false;
 
@@ -39,6 +45,11 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
     configs.unshift({
       name: 'siberiacancode/typescript',
       files: ['**/*.?([cm])ts', '**/*.?([cm])tsx'],
+      languageOptions: {
+        parserOptions: {
+          projectService: true
+        }
+      },
       rules: {
         'ts/promise-function-async': 'off',
         'ts/strict-boolean-expressions': 'off',
@@ -80,6 +91,23 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
       rules: {
         ...Object.entries(playwrightRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
           acc[key.replace('playwright', 'siberiacancode-playwright')] = value;
+          return acc;
+        }, {})
+      }
+    });
+  }
+
+  if (tailwind) {
+    const tailwindRules = pluginBetterTailwindcss.configs.recommended.rules as Linter.RulesRecord;
+
+    configs.unshift({
+      name: 'siberiacancode/tailwind',
+      plugins: {
+        'siberiacancode-tailwind': pluginBetterTailwindcss
+      },
+      rules: {
+        ...Object.entries(tailwindRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
+          acc[key.replace('better-tailwindcss', 'siberiacancode-tailwind')] = value;
           return acc;
         }, {})
       }
@@ -152,13 +180,7 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
     {
       ...options,
       stylistic,
-      ...(typescript === 'engine'
-        ? {
-            typescript: {
-              tsconfigPath: path.resolve(process.cwd(), 'tsconfig.json')
-            }
-          }
-        : typescript)
+      ...(typescript ? { typescript: { tsconfigPath: './tsconfig.json' } } : typescript)
     },
     {
       name: 'siberiacancode/rewrite',
