@@ -14,6 +14,8 @@ import type { OfetchPlugin } from '../types';
 
 import {
   getImportOfetch,
+  getImportOfetchInstanceTypes,
+  getOfetchInstanceType,
   getOfetchRequestCallExpression,
   getOfetchRequestParameterDeclaration,
   getOfetchRequestParamsType
@@ -102,39 +104,21 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
     groupBy: plugin.config.groupBy
   });
 
-  // import type { $Fetch, FetchOptions } from 'ofetch';
-  const importOfetchTypes = ts.factory.createImportDeclaration(
-    undefined,
-    ts.factory.createImportClause(
-      true,
-      undefined,
-      ts.factory.createNamedImports([
-        ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier('$Fetch')),
-        ...(!plugin.config.runtimeInstancePath
-          ? [
-              ts.factory.createImportSpecifier(
-                false,
-                undefined,
-                ts.factory.createIdentifier('FetchOptions')
-              )
-            ]
-          : [])
-      ])
-    ),
-    ts.factory.createStringLiteral('ofetch'),
-    undefined
-  );
+  // import type { $Fetch, FetchOptions, FetchRequest, MappedResponseType, ResponseType } from 'ofetch';
+  const importOfetchTypes = getImportOfetchInstanceTypes();
+  // interface Instance extends $Fetch {...}
+  const instanceType = getOfetchInstanceType();
 
-  // private instance: $Fetch;
+  // private instance: Instance;
   const classInstanceProperty = ts.factory.createPropertyDeclaration(
     [ts.factory.createModifier(ts.SyntaxKind.PrivateKeyword)],
     ts.factory.createIdentifier('instance'),
     undefined,
-    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('$Fetch'), undefined),
+    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Instance'), undefined),
     undefined
   );
 
-  // constructor(config?: FetchOptions) { this.instance = ofetch.create(config); }
+  // constructor(config?: FetchOptions) { this.instance = ofetch.create(config ?? {}) as Instance; }
   const constructorDeclaration = ts.factory.createConstructorDeclaration(
     undefined,
     !plugin.config.runtimeInstancePath
@@ -161,16 +145,27 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
               ts.factory.createIdentifier('instance')
             ),
             ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-            plugin.config.runtimeInstancePath
-              ? ts.factory.createIdentifier('runtimeInstance')
-              : ts.factory.createCallExpression(
-                  ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier('ofetch'),
-                    ts.factory.createIdentifier('create')
+            ts.factory.createAsExpression(
+              plugin.config.runtimeInstancePath
+                ? ts.factory.createIdentifier('runtimeInstance')
+                : ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                      ts.factory.createIdentifier('ofetch'),
+                      ts.factory.createIdentifier('create')
+                    ),
+                    undefined,
+                    !plugin.config.runtimeInstancePath
+                      ? [
+                          ts.factory.createBinaryExpression(
+                            ts.factory.createIdentifier('config'),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                            ts.factory.createObjectLiteralExpression([], false)
+                          )
+                        ]
+                      : []
                   ),
-                  undefined,
-                  !plugin.config.runtimeInstancePath ? [ts.factory.createIdentifier('config')] : []
-                )
+              ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Instance'), undefined)
+            )
           )
         )
       ],
@@ -206,6 +201,7 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
   classFile.add(importOfetchRequestParams);
   classFile.add(importTypes);
   classFile.add(importOfetchTypes);
+  classFile.add(instanceType);
 
   if (plugin.config.runtimeInstancePath) {
     // import { instance as runtimeInstance } from runtimeInstancePath;
@@ -217,7 +213,7 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
     );
   }
   if (!plugin.config.runtimeInstancePath) {
-    // import ofetch from 'ofetch';
+    // import { ofetch } from 'ofetch';
     classFile.add(getImportOfetch());
   }
 

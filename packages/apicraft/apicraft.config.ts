@@ -10,15 +10,15 @@ const apicraftConfig = apicraft([
     output: 'generated/apiV2-class',
     instance: 'ofetch',
     nameBy: 'path',
-    groupBy: 'paths'
+    groupBy: 'tags'
+  },
+  {
+    input: 'example-apiV2.yaml',
+    output: 'generated/apiV3-class',
+    instance: 'ofetch',
+    nameBy: 'path',
+    groupBy: 'class'
   }
-  // {
-  //   input: 'example-apiV2.yaml',
-  //   output: 'generated/apiV3-class',
-  //   instance: 'axios',
-  //   nameBy: 'path',
-  //   groupBy: 'class'
-  // }
 ]);
 
 export default apicraftConfig;
