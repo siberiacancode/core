@@ -180,7 +180,9 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
     {
       ...options,
       stylistic,
-      ...(typescript ? { typescript: { tsconfigPath: './tsconfig.json' } } : typescript)
+      ...(typescript === 'engine'
+        ? { typescript: { tsconfigPath: './tsconfig.json' } }
+        : typescript)
     },
     {
       name: 'siberiacancode/rewrite',
