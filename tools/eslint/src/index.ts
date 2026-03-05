@@ -11,6 +11,8 @@ import antfu from '@antfu/eslint-config';
 import pluginCss from '@eslint/css';
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginPlaywright from 'eslint-plugin-playwright';
+import path from 'node:path';
+import process from 'node:process';
 
 import { siberiacancodePlugin } from './plugin/index';
 
@@ -115,22 +117,6 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
   }
 
   configs.unshift({
-    name: 'siberiacancode',
-    plugins: {
-      siberiacancode: siberiacancodePlugin
-    },
-    rules: {
-      'siberiacancode/function-component-definition': [
-        'error',
-        {
-          namedComponents: ['arrow-function']
-        }
-      ],
-      'siberiacancode/no-unused-class': 'error'
-    }
-  });
-
-  configs.unshift({
     name: 'siberiacancode/css',
     plugins: {
       'siberiacancode-css': pluginCss
@@ -146,6 +132,22 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
     }
   });
 
+  configs.unshift({
+    name: 'siberiacancode',
+    plugins: {
+      siberiacancode: siberiacancodePlugin
+    },
+    rules: {
+      'siberiacancode/function-component-definition': [
+        'error',
+        {
+          namedComponents: ['arrow-function']
+        }
+      ],
+      'siberiacancode/no-unused-class': 'error'
+    }
+  });
+
   return antfu(
     {
       ...options,
@@ -153,7 +155,7 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
       ...(typescript === 'engine'
         ? {
             typescript: {
-              tsconfigPath: './tsconfig.json'
+              tsconfigPath: path.resolve(process.cwd(), 'tsconfig.json')
             }
           }
         : typescript)
@@ -167,6 +169,7 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
 
         'no-console': 'warn',
 
+        'react/prefer-namespace-import': 'off',
         'react-hooks/exhaustive-deps': 'off',
 
         'test/prefer-lowercase-title': 'off'
