@@ -2,7 +2,6 @@ import type {
   Awaitable,
   ConfigNames,
   OptionsConfig,
-  OptionsTypescript,
   TypedFlatConfigItem
 } from '@antfu/eslint-config';
 import type { Linter } from 'eslint';
@@ -12,7 +11,6 @@ import antfu from '@antfu/eslint-config';
 import pluginCss from '@eslint/css';
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginPlaywright from 'eslint-plugin-playwright';
-import fs from 'node:fs';
 
 import { siberiacancodePlugin } from './plugin/index';
 
@@ -29,17 +27,17 @@ export type Eslint = (
   >[]
 ) => FlatConfigComposer<TypedFlatConfigItem, ConfigNames>;
 
-const getDefaultTypescriptConfig = (option: boolean | OptionsTypescript) => {
-  if (typeof option === 'object') return option;
-  if (option === true && fs.existsSync('./tsconfig.json'))
-    return { tsconfigPath: './tsconfig.json' };
-  return option;
-};
+// const getDefaultTypescriptConfig = (option: boolean | OptionsTypescript) => {
+//   if (typeof option === 'object') return option;
+//   if (option === true && fs.existsSync('./tsconfig.json'))
+//     return { tsconfigPath: './tsconfig.json' };
+//   return option;
+// };
 
-export const eslint: Eslint = async (inputOptions = {} as EslintOptions, ...configs) => {
+export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) => {
   const { jsxA11y = false, playwright = false, ...options } = inputOptions;
 
-  const typescript = getDefaultTypescriptConfig(options?.typescript ?? false);
+  // const typescript = getDefaultTypescriptConfig(options?.typescript ?? false);
   const stylistic = options?.stylistic ?? false;
 
   if (jsxA11y) {
@@ -140,13 +138,20 @@ export const eslint: Eslint = async (inputOptions = {} as EslintOptions, ...conf
   });
 
   return antfu(
-    { ...options, typescript, stylistic },
+    { ...options, stylistic },
     {
       name: 'siberiacancode/rewrite',
       rules: {
         'antfu/curly': 'off',
         'antfu/if-newline': 'off',
         'antfu/top-level-function': 'off',
+
+        // 'ts/strict-boolean-expressions': 'off',
+        // 'ts/no-unnecessary-condition': 'error',
+        // 'ts/no-namespace': 'off',
+        // 'ts/no-floating-promises': 'off',
+        // 'ts/no-misused-promises': 'off',
+        // 'ts/no-empty-object-type': 'warn',
 
         'no-console': 'warn',
 
