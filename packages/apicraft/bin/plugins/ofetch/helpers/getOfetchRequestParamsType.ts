@@ -5,7 +5,7 @@ interface GetOfetchRequestParamsTypeParams {
   requestParamsTypeName: string;
 }
 
-// type RequestParams = OfetchRequestParams<RequestData>;
+// type RequestParams = OFetchRequestParams<RequestData>;
 export const getOfetchRequestParamsType = ({
   requestDataTypeName,
   requestParamsTypeName
@@ -14,7 +14,7 @@ export const getOfetchRequestParamsType = ({
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createIdentifier(requestParamsTypeName),
     undefined,
-    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('OfetchRequestParams'), [
+    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('OFetchRequestParams'), [
       ts.factory.createTypeReferenceNode(
         ts.factory.createIdentifier(requestDataTypeName),
         undefined

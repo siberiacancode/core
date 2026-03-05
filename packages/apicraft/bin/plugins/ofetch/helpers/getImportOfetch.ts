@@ -1,6 +1,6 @@
 import ts from 'typescript';
 
-// import { ofetch } from 'ofetch';
+// import ofetch from 'ofetch';
 export const getImportOfetch = () =>
   ts.factory.createImportDeclaration(
     undefined,

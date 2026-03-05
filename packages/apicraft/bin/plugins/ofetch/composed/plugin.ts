@@ -24,10 +24,8 @@ export const composedHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
   if (!plugin.config.runtimeInstancePath) addInstanceFile(plugin);
 
   plugin.forEach('operation', (event) => {
-    if (event.type !== 'operation') return;
-
     const request = event.operation;
-    const requestInfo = getRequestInfo({ request });
+    const requestInfo = getRequestInfo(request);
     const requestName = generateRequestName(request, plugin.config.nameBy);
 
     const requestFilePaths = getRequestFilePaths({
@@ -46,22 +44,27 @@ export const composedHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
       const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
       const requestDataTypeName = `${capitalize(request.id)}Data`;
       const requestResponseTypeName = `${capitalize(request.id)}Response`;
+      const requestErrorTypeName = `${capitalize(request.id)}Error`;
 
       const requestFolderPath = nodePath.dirname(
         `${plugin.config.generateOutput}/${requestFilePath}`
       );
 
-      const importOfetchRequestParams = getApicraftTypeImport('OfetchRequestParams');
+      // import type { OFetchRequestParams } from '@siberiacancode/apicraft';
+      const importOfetchRequestParams = getApicraftTypeImport('OFetchRequestParams');
+      // import type { RequestData, RequestResponse } from 'generated/types.gen';
       const importTypes = getImportTypes({
         typeNames: [
           requestDataTypeName,
-          ...(requestInfo.hasResponse ? [requestResponseTypeName] : [])
+          ...(requestInfo.hasSuccessResponse ? [requestResponseTypeName] : []),
+          ...(requestInfo.hasErrorResponse ? [requestErrorTypeName] : [])
         ],
         folderPath: requestFolderPath,
         generateOutput: plugin.config.generateOutput,
         groupBy: plugin.config.groupBy
       });
 
+      // import { instance } from "../../instance.gen";
       const importInstance = getImportInstance({
         folderPath: requestFolderPath,
         output: plugin.output,
@@ -69,11 +72,13 @@ export const composedHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
         runtimeInstancePath: plugin.config.runtimeInstancePath
       });
 
+      // type RequestParams = OFetchRequestParams<RequestData>;
       const requestParamsType = getOfetchRequestParamsType({
         requestDataTypeName,
         requestParamsTypeName
       });
 
+      // export const request = ({ path, body, query, config }) => ...
       const requestFunction = ts.factory.createVariableStatement(
         [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
         ts.factory.createVariableDeclarationList(
@@ -86,6 +91,7 @@ export const composedHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
                 undefined,
                 undefined,
                 [
+                  // ({ path, body, query, config }: RequestParams)
                   getOfetchRequestParameterDeclaration({
                     request,
                     requestInfo,
@@ -94,11 +100,13 @@ export const composedHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
                 ],
                 undefined,
                 ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                // instance(url, { method, body?, query?, ...config })
                 getOfetchRequestCallExpression({
                   request,
                   requestInfo,
                   requestResponseTypeName,
-                  instanceVariant: 'function'
+                  requestErrorTypeName,
+                  groupBy: plugin.config.groupBy
                 })
               )
             )

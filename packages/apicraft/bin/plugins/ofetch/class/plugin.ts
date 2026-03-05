@@ -34,17 +34,17 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
   const classElements: ts.ClassElement[] = [];
 
   plugin.forEach('operation', (event) => {
-    if (event.type !== 'operation') return;
-
     const request = event.operation;
     const requestName = generateRequestName(request, plugin.config.nameBy);
-    const requestInfo = getRequestInfo({ request });
+    const requestInfo = getRequestInfo(request);
 
     const requestDataTypeName = `${capitalize(request.id)}Data`;
     typeImportNames.add(requestDataTypeName);
 
     const requestResponseTypeName = `${capitalize(request.id)}Response`;
-    if (requestInfo.hasResponse) typeImportNames.add(requestResponseTypeName);
+    if (requestInfo.hasSuccessResponse) typeImportNames.add(requestResponseTypeName);
+    const requestErrorTypeName = `${capitalize(request.id)}Error`;
+    if (requestInfo.hasErrorResponse) typeImportNames.add(requestErrorTypeName);
 
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
     typeStatements.push(
@@ -54,6 +54,7 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
       })
     );
 
+    // ({ path, body, query, config }: RequestParams)
     const requestParameter = getOfetchRequestParameterDeclaration({
       request,
       requestInfo,
@@ -63,11 +64,13 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
     const requestBody = ts.factory.createBlock(
       [
         ts.factory.createReturnStatement(
+          // this.instance(url, { method, body?, query?, ...config })
           getOfetchRequestCallExpression({
             request,
             requestInfo,
             requestResponseTypeName,
-            instanceVariant: 'class'
+            requestErrorTypeName,
+            groupBy: plugin.config.groupBy
           })
         )
       ],
@@ -88,8 +91,10 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
     );
   });
 
-  const importOfetchRequestParams = getApicraftTypeImport('OfetchRequestParams');
+  // import type { OFetchRequestParams } from '@siberiacancode/apicraft';
+  const importOfetchRequestParams = getApicraftTypeImport('OFetchRequestParams');
 
+  // import type { RequestData, RequestResponse, ... } from './types.gen';
   const importTypes = getImportTypes({
     typeNames: Array.from(typeImportNames),
     folderPath: classFolderPath,
@@ -173,6 +178,7 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
     )
   );
 
+  // export class ApiInstance {...}
   const classDeclaration = ts.factory.createClassDeclaration(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createIdentifier(CLASS_NAME),
@@ -181,6 +187,7 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
     [classInstanceProperty, constructorDeclaration, ...classElements]
   );
 
+  // export const instance = new ApiInstance();
   const classInstance = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -201,6 +208,7 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
   classFile.add(importOfetchTypes);
 
   if (plugin.config.runtimeInstancePath) {
+    // import { instance as runtimeInstance } from runtimeInstancePath;
     classFile.add(
       getImportRuntimeInstance({
         folderPath: classFolderPath,
@@ -209,6 +217,7 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
     );
   }
   if (!plugin.config.runtimeInstancePath) {
+    // import ofetch from 'ofetch';
     classFile.add(getImportOfetch());
   }
 

@@ -15,9 +15,10 @@ export type AxiosRequestParams<Params> = Omit<Params, 'url'> & {
   config?: Partial<AxiosRequestConfig>;
 };
 
-export type OfetchRequestParams<Params> = Omit<Params, 'url'> & {
+export type OFetchRequestParams<Params> = Omit<Params, 'url'> & {
   config?: Partial<FetchOptions>;
 };
+
 export type IsParamsRequired<TFunc extends (...args: any[]) => any> =
   Parameters<TFunc> extends [infer P] ? (undefined extends P ? false : true) : false;
 
