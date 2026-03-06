@@ -11,16 +11,16 @@ import {
   getRequestInfo
 } from '@/bin/plugins/helpers';
 
-import type { FetchesPlugin } from '../types';
+import type { OfetchPlugin } from '../types';
 
 import {
   addInstanceFile,
-  getFetchesRequestCallExpression,
-  getFetchesRequestParameterDeclaration,
-  getFetchesRequestParamsType
+  getOfetchRequestCallExpression,
+  getOfetchRequestParameterDeclaration,
+  getOfetchRequestParamsType
 } from '../helpers';
 
-export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
+export const composedHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
   if (!plugin.config.runtimeInstancePath) addInstanceFile(plugin);
 
   plugin.forEach('operation', (event) => {
@@ -50,8 +50,8 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
         `${plugin.config.generateOutput}/${requestFilePath}`
       );
 
-      // import type { FetchesRequestParams } from '@siberiacancode/apicraft';
-      const importFetchesRequestParams = getApicraftTypeImport('FetchesRequestParams');
+      // import type { OFetchRequestParams } from '@siberiacancode/apicraft';
+      const importOfetchRequestParams = getApicraftTypeImport('OFetchRequestParams');
       // import type { RequestData, RequestResponse } from 'generated/types.gen';
       const importTypes = getImportTypes({
         typeNames: [
@@ -72,8 +72,8 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
         runtimeInstancePath: plugin.config.runtimeInstancePath
       });
 
-      // type RequestParams = FetchesRequestParams<RequestData>;
-      const requestParamsType = getFetchesRequestParamsType({
+      // type RequestParams = OFetchRequestParams<RequestData>;
+      const requestParamsType = getOfetchRequestParamsType({
         requestDataTypeName,
         requestParamsTypeName
       });
@@ -92,7 +92,7 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
                 undefined,
                 [
                   // ({ path, body, query, config }: RequestParams)
-                  getFetchesRequestParameterDeclaration({
+                  getOfetchRequestParameterDeclaration({
                     request,
                     requestInfo,
                     requestParamsTypeName
@@ -100,8 +100,8 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
                 ],
                 undefined,
                 ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                // instance.call(method, url, { body?, query?, ...config })
-                getFetchesRequestCallExpression({
+                // instance(url, { method, body?, query?, ...config })
+                getOfetchRequestCallExpression({
                   request,
                   requestInfo,
                   requestResponseTypeName,
@@ -115,7 +115,7 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
         )
       );
 
-      requestFile.add(importFetchesRequestParams);
+      requestFile.add(importOfetchRequestParams);
       requestFile.add(importTypes);
       requestFile.add(importInstance);
       requestFile.add(requestParamsType);

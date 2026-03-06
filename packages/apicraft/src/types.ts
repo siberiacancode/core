@@ -5,6 +5,7 @@ import type {
   UseSuspenseQueryOptions
 } from '@tanstack/react-query';
 import type { AxiosRequestConfig } from 'axios';
+import type { FetchOptions } from 'ofetch';
 
 export type FetchesRequestParams<Params> = Omit<Params, 'url'> & {
   config?: Partial<RequestConfig>;
@@ -13,6 +14,11 @@ export type FetchesRequestParams<Params> = Omit<Params, 'url'> & {
 export type AxiosRequestParams<Params> = Omit<Params, 'url'> & {
   config?: Partial<AxiosRequestConfig>;
 };
+
+export type OFetchRequestParams<Params> = Omit<Params, 'url'> & {
+  config?: Partial<FetchOptions>;
+};
+
 export type IsParamsRequired<TFunc extends (...args: any[]) => any> =
   Parameters<TFunc> extends [infer P] ? (undefined extends P ? false : true) : false;
 

@@ -8,12 +8,19 @@ import type { Linter } from 'eslint';
 import type { FlatConfigComposer } from 'eslint-flat-config-utils';
 
 import antfu from '@antfu/eslint-config';
+import pluginCss from '@eslint/css';
+import pluginBetterTailwindcss from 'eslint-plugin-better-tailwindcss';
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
-import pluginReact from 'eslint-plugin-react';
+import pluginPlaywright from 'eslint-plugin-playwright';
+
+import { siberiacancodePlugin } from './plugin/index';
 
 type EslintOptions = OptionsConfig &
   TypedFlatConfigItem & {
     jsxA11y?: boolean;
+    playwright?: boolean;
+    tailwind?: boolean;
+    typescript?: 'engine';
   };
 
 export type Eslint = (
@@ -24,8 +31,36 @@ export type Eslint = (
 ) => FlatConfigComposer<TypedFlatConfigItem, ConfigNames>;
 
 export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) => {
-  const { jsxA11y = false, ...options } = inputOptions;
-  const stylistic = options?.stylistic ?? false;
+  const {
+    jsxA11y = false,
+    playwright = false,
+    tailwind = false,
+    typescript = false,
+    ...options
+  } = inputOptions;
+
+  const stylistic = options.stylistic ?? false;
+
+  if (typescript === 'engine') {
+    configs.unshift({
+      name: 'siberiacancode/typescript',
+      files: ['**/*.?([cm])ts', '**/*.?([cm])tsx'],
+      languageOptions: {
+        parserOptions: {
+          projectService: true
+        }
+      },
+      rules: {
+        'ts/promise-function-async': 'off',
+        'ts/strict-boolean-expressions': 'off',
+        'ts/no-unnecessary-condition': 'error',
+        'ts/no-namespace': 'off',
+        'ts/no-floating-promises': 'off',
+        'ts/no-misused-promises': 'off',
+        'ts/no-empty-object-type': 'warn'
+      }
+    });
+  }
 
   if (jsxA11y) {
     const jsxA11yRules = pluginJsxA11y.flatConfigs.recommended.rules as Linter.RulesRecord;
@@ -44,34 +79,37 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
     });
   }
 
-  if (options.react) {
+  if (playwright) {
+    const playwrightRules = pluginPlaywright.configs['flat/recommended']
+      .rules as Linter.RulesRecord;
+
     configs.unshift({
-      name: 'siberiacancode/react',
+      name: 'siberiacancode/playwright',
       plugins: {
-        'siberiacancode-react': pluginReact
+        'siberiacancode-playwright': pluginPlaywright
       },
       rules: {
-        ...Object.entries(pluginReact.configs.recommended.rules).reduce<Linter.RulesRecord>(
-          (acc, [key, value]) => {
-            acc[key.replace('react', 'siberiacancode-react')] = value;
-            return acc;
-          },
-          {}
-        ),
-        'siberiacancode-react/function-component-definition': [
-          'error',
-          {
-            namedComponents: ['arrow-function'],
-            unnamedComponents: 'arrow-function'
-          }
-        ],
-        'siberiacancode-react/prop-types': 'off',
-        'siberiacancode-react/react-in-jsx-scope': 'off'
+        ...Object.entries(playwrightRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
+          acc[key.replace('playwright', 'siberiacancode-playwright')] = value;
+          return acc;
+        }, {})
+      }
+    });
+  }
+
+  if (tailwind) {
+    const tailwindRules = pluginBetterTailwindcss.configs.recommended.rules as Linter.RulesRecord;
+
+    configs.unshift({
+      name: 'siberiacancode/tailwind',
+      plugins: {
+        'siberiacancode-tailwind': pluginBetterTailwindcss
       },
-      settings: {
-        react: {
-          version: 'detect'
-        }
+      rules: {
+        ...Object.entries(tailwindRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
+          acc[key.replace('better-tailwindcss', 'siberiacancode-tailwind')] = value;
+          return acc;
+        }, {})
       }
     });
   }
@@ -106,8 +144,46 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
     });
   }
 
+  configs.unshift({
+    name: 'siberiacancode/css',
+    plugins: {
+      'siberiacancode-css': pluginCss
+    },
+    rules: {
+      ...Object.entries(pluginCss.configs.recommended.rules).reduce<Linter.RulesRecord>(
+        (acc, [key, value]) => {
+          acc[key.replace('css', 'siberiacancode-css')] = value;
+          return acc;
+        },
+        {}
+      )
+    }
+  });
+
+  configs.unshift({
+    name: 'siberiacancode',
+    plugins: {
+      siberiacancode: siberiacancodePlugin
+    },
+    rules: {
+      'siberiacancode/function-component-definition': [
+        'error',
+        {
+          namedComponents: ['arrow-function']
+        }
+      ],
+      'siberiacancode/no-unused-class': 'error'
+    }
+  });
+
   return antfu(
-    { ...options, stylistic },
+    {
+      ...options,
+      stylistic,
+      ...(typescript === 'engine'
+        ? { typescript: { tsconfigPath: './tsconfig.json' } }
+        : typescript)
+    },
     {
       name: 'siberiacancode/rewrite',
       rules: {
@@ -117,6 +193,7 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
 
         'no-console': 'warn',
 
+        'react/prefer-namespace-import': 'off',
         'react-hooks/exhaustive-deps': 'off',
 
         'test/prefer-lowercase-title': 'off'
@@ -144,9 +221,10 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
               ['value-parent', 'value-sibling', 'value-index'],
               'side-effect',
               'side-effect-style',
+              'ts-equals-import',
               'unknown'
             ],
-            internalPattern: ['^~/.*', '^@/.*'],
+            internalPattern: ['^~/.+', '^@/.+'],
             newlinesBetween: 1,
             order: 'asc',
             type: 'natural'
