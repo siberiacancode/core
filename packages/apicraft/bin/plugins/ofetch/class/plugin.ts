@@ -14,7 +14,7 @@ import type { OfetchPlugin } from '../types';
 
 import {
   getImportOfetch,
-  getImportOfetchInstanceTypes,
+  getImportOfetchTypes,
   getOfetchInstanceType,
   getOfetchRequestCallExpression,
   getOfetchRequestParameterDeclaration,
@@ -104,8 +104,13 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
     groupBy: plugin.config.groupBy
   });
 
-  // import type { $Fetch, FetchOptions, FetchRequest, MappedResponseType, ResponseType } from 'ofetch';
-  const importOfetchTypes = getImportOfetchInstanceTypes();
+  // import type { $Fetch, FetchOptions, FetchRequest, ResponseType } from 'ofetch';
+  const importOfetchTypes = getImportOfetchTypes([
+    '$Fetch',
+    'FetchOptions',
+    'FetchRequest',
+    'ResponseType'
+  ]);
   // interface Instance extends $Fetch {...}
   const instanceType = getOfetchInstanceType();
 
@@ -118,7 +123,7 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
     undefined
   );
 
-  // constructor(config?: FetchOptions) { this.instance = ofetch.create(config ?? {}) as Instance; }
+  // constructor(config?: FetchOptions) { this.instance = ofetch.create(config ?? {}); }
   const constructorDeclaration = ts.factory.createConstructorDeclaration(
     undefined,
     !plugin.config.runtimeInstancePath
@@ -145,27 +150,24 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
               ts.factory.createIdentifier('instance')
             ),
             ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-            ts.factory.createAsExpression(
-              plugin.config.runtimeInstancePath
-                ? ts.factory.createIdentifier('runtimeInstance')
-                : ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(
-                      ts.factory.createIdentifier('ofetch'),
-                      ts.factory.createIdentifier('create')
-                    ),
-                    undefined,
-                    !plugin.config.runtimeInstancePath
-                      ? [
-                          ts.factory.createBinaryExpression(
-                            ts.factory.createIdentifier('config'),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                            ts.factory.createObjectLiteralExpression([], false)
-                          )
-                        ]
-                      : []
+            plugin.config.runtimeInstancePath
+              ? ts.factory.createIdentifier('runtimeInstance')
+              : ts.factory.createCallExpression(
+                  ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier('ofetch'),
+                    ts.factory.createIdentifier('create')
                   ),
-              ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Instance'), undefined)
-            )
+                  undefined,
+                  !plugin.config.runtimeInstancePath
+                    ? [
+                        ts.factory.createBinaryExpression(
+                          ts.factory.createIdentifier('config'),
+                          ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                          ts.factory.createObjectLiteralExpression([], false)
+                        )
+                      ]
+                    : []
+                )
           )
         )
       ],
@@ -201,7 +203,6 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
   classFile.add(importOfetchRequestParams);
   classFile.add(importTypes);
   classFile.add(importOfetchTypes);
-  classFile.add(instanceType);
 
   if (plugin.config.runtimeInstancePath) {
     // import { instance as runtimeInstance } from runtimeInstancePath;
@@ -217,6 +218,7 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
     classFile.add(getImportOfetch());
   }
 
+  classFile.add(instanceType);
   typeStatements.forEach((alias) => classFile.add(alias));
   classFile.add(classDeclaration);
   classFile.add(classInstance);

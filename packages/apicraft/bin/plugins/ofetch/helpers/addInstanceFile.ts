@@ -4,7 +4,7 @@ import nodePath from 'node:path';
 import ts from 'typescript';
 
 import { getImportOfetch } from './getImportOfetch';
-import { getImportOfetchInstanceTypes } from './getImportOfetchInstanceTypes';
+import { getImportOfetchTypes } from './getImportOfetchTypes';
 import { getOfetchInstanceType } from './getOfetchInstanceType';
 
 export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
@@ -15,12 +15,17 @@ export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
 
   // import { ofetch } from 'ofetch';
   const importOfetch = getImportOfetch();
-  // import type { $Fetch, FetchOptions, FetchRequest, MappedResponseType, ResponseType } from 'ofetch';
-  const importOfetchTypes = getImportOfetchInstanceTypes();
+  // import type { $Fetch, FetchOptions, FetchRequest, ResponseType } from 'ofetch';
+  const importOfetchTypes = getImportOfetchTypes([
+    '$Fetch',
+    'FetchOptions',
+    'FetchRequest',
+    'ResponseType'
+  ]);
   // interface Instance extends $Fetch {...}
   const instanceType = getOfetchInstanceType();
 
-  // export const instance = ofetch.create({}) as Instance;
+  // export const instance: Instance = ofetch.create({});
   const createInstance = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -28,17 +33,14 @@ export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
         ts.factory.createVariableDeclaration(
           ts.factory.createIdentifier('instance'),
           undefined,
-          undefined,
-          ts.factory.createAsExpression(
-            ts.factory.createCallExpression(
-              ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier('ofetch'),
-                ts.factory.createIdentifier('create')
-              ),
-              undefined,
-              [ts.factory.createObjectLiteralExpression([], false)]
+          ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Instance'), undefined),
+          ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(
+              ts.factory.createIdentifier('ofetch'),
+              ts.factory.createIdentifier('create')
             ),
-            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Instance'), undefined)
+            undefined,
+            [ts.factory.createObjectLiteralExpression([], false)]
           )
         )
       ],
