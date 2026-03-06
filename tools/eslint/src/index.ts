@@ -171,8 +171,7 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
         {
           namedComponents: ['arrow-function']
         }
-      ],
-      'siberiacancode/no-unused-class': 'error'
+      ]
     }
   });
 
