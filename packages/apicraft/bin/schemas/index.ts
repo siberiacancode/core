@@ -160,7 +160,7 @@ export const apicraftOptionSchema = z
     parser: parserSchema,
     instance: z.union([instanceNameSchema, instanceSchema]).optional(),
     nameBy: z.enum(['path', 'operationId']).default('operationId').optional(),
-    groupBy: z.enum(['paths', 'tags', 'class']).default('tags').optional(),
+    groupBy: z.enum(['paths', 'tags', 'class', 'standalone']).default('standalone').optional(),
     plugins: z
       .array(pluginNameSchema.or(z.object({ name: pluginNameSchema }).passthrough()))
       .optional()

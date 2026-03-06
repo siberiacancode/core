@@ -1,5 +1,6 @@
 export * from './buildRequestParamsPath';
 export * from './capitalize';
+export * from './getRelativePath';
 export * from './getRequestCallGenericResponse';
 export * from './getRequestFilePaths';
 export * from './getRequestInfo';
