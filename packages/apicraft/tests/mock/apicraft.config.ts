@@ -4,9 +4,11 @@ import type { ApicraftOption } from '@/bin/schemas';
 import { apicraft } from '../../dist/esm/index.mjs';
 
 export const options: ApicraftOption[] = [];
-for (const instance of ['axios', 'fetches'] as const) {
+for (const instance of ['axios', 'fetches', 'ofetch'] as const) {
   for (const runtimeInstance of [true, false]) {
-    for (const groupBy of ['paths', 'tags', 'class'] as const) {
+    for (const groupBy of instance === 'axios'
+      ? (['paths', 'tags', 'class', 'standalone'] as const)
+      : (['paths', 'tags', 'class'] as const)) {
       for (const nameBy of ['operationId', 'path'] as const) {
         options.push({
           input: 'spec.yaml',
