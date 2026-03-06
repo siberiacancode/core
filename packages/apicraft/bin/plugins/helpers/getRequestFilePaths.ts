@@ -29,9 +29,5 @@ export const getRequestFilePaths = ({
     ];
   }
 
-  if (groupBy === 'class') {
-    return [nodePath.normalize(`${output}/instance.gen`)];
-  }
-
   throw new Error(`Unsupported groupBy option ${groupBy}`);
 };

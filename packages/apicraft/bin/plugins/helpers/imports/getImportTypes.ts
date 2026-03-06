@@ -1,22 +1,15 @@
-import nodePath from 'node:path';
 import ts from 'typescript';
 
-import type { ApicraftOption } from '@/bin/schemas';
+import { getRelativePath } from '../getRelativePath';
 
 interface GetImportTypesParams {
   folderPath: string;
   generateOutput: string;
-  groupBy: ApicraftOption['groupBy'];
   typeNames: string[];
 }
 
 // import type { Type } from 'generated/types.gen';
-export const getImportTypes = ({
-  typeNames,
-  folderPath,
-  generateOutput,
-  groupBy
-}: GetImportTypesParams) =>
+export const getImportTypes = ({ typeNames, folderPath, generateOutput }: GetImportTypesParams) =>
   ts.factory.createImportDeclaration(
     undefined,
     ts.factory.createImportClause(
@@ -28,10 +21,6 @@ export const getImportTypes = ({
         )
       )
     ),
-    ts.factory.createStringLiteral(
-      groupBy === 'paths' || groupBy === 'tags'
-        ? nodePath.relative(folderPath, `${generateOutput}/types.gen`)
-        : './types.gen'
-    ),
+    ts.factory.createStringLiteral(getRelativePath(folderPath, `${generateOutput}/types.gen`)),
     undefined
   );

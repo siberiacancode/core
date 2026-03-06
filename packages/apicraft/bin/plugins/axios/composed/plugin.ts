@@ -62,8 +62,7 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
           ...(requestInfo.hasErrorResponse ? [requestErrorTypeName] : [])
         ],
         folderPath: requestFolderPath,
-        generateOutput: plugin.config.generateOutput,
-        groupBy: plugin.config.groupBy
+        generateOutput: plugin.config.generateOutput
       });
 
       // import { instance } from "../../instance.gen";
@@ -80,7 +79,7 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
         requestParamsTypeName
       });
 
-      // --- export const request = ({ path, body, query, config }) => ...
+      // export const request = ({ path, body, query, config }) => ...
       const requestFunction = ts.factory.createVariableStatement(
         [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
         ts.factory.createVariableDeclarationList(

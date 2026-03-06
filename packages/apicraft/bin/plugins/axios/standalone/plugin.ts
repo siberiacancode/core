@@ -19,17 +19,17 @@ import {
   getAxiosRequestParamsType
 } from '../helpers';
 
-const SINGLE_FILE_ID = 'axiosRequestsSingle';
-
 export const standaloneHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
   if (!plugin.config.runtimeInstancePath) addInstanceFile(plugin);
 
-  const requestFilePath = nodePath.normalize(`${plugin.output}/requests`);
-  const requestFile = plugin.createFile({
-    id: SINGLE_FILE_ID,
-    path: requestFilePath
+  const requestsFilePath = nodePath.normalize(`${plugin.output}/requests`);
+  const requestsFolderPath = nodePath.dirname(
+    `${plugin.config.generateOutput}/${requestsFilePath}`
+  );
+  const requestsFile = plugin.createFile({
+    id: 'requests',
+    path: requestsFilePath
   });
-  const requestFolderPath = nodePath.dirname(`${plugin.config.generateOutput}/${requestFilePath}`);
 
   const typeImportNames = new Set<string>();
   const typeStatements: ts.Statement[] = [];
@@ -39,18 +39,18 @@ export const standaloneHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
     if (event.type !== 'operation') return;
 
     const request = event.operation;
-    const requestInfo = getRequestInfo(request);
     const requestName = generateRequestName(request, plugin.config.nameBy);
+    const requestInfo = getRequestInfo(request);
 
-    const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
     const requestDataTypeName = `${capitalize(request.id)}Data`;
-    const requestResponseTypeName = `${capitalize(request.id)}Response`;
-    const requestErrorTypeName = `${capitalize(request.id)}Error`;
-
     typeImportNames.add(requestDataTypeName);
+
+    const requestResponseTypeName = `${capitalize(request.id)}Response`;
     if (requestInfo.hasSuccessResponse) typeImportNames.add(requestResponseTypeName);
+    const requestErrorTypeName = `${capitalize(request.id)}Error`;
     if (requestInfo.hasErrorResponse) typeImportNames.add(requestErrorTypeName);
 
+    const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
     typeStatements.push(
       getAxiosRequestParamsType({
         requestDataTypeName,
@@ -58,60 +58,67 @@ export const standaloneHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
       })
     );
 
-    requestStatements.push(
-      ts.factory.createVariableStatement(
-        [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
-        ts.factory.createVariableDeclarationList(
-          [
-            ts.factory.createVariableDeclaration(
-              ts.factory.createIdentifier(requestName),
+    // export const request = ({ path, body, query, config }) => ...
+    const requestFunction = ts.factory.createVariableStatement(
+      [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+      ts.factory.createVariableDeclarationList(
+        [
+          ts.factory.createVariableDeclaration(
+            ts.factory.createIdentifier(requestName),
+            undefined,
+            undefined,
+            ts.factory.createArrowFunction(
               undefined,
               undefined,
-              ts.factory.createArrowFunction(
-                undefined,
-                undefined,
-                [
-                  getAxiosRequestParameterDeclaration({
-                    request,
-                    requestInfo,
-                    requestParamsTypeName
-                  })
-                ],
-                undefined,
-                ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                getAxiosRequestCallExpression({
+              [
+                // ({ path, body, query, config }: RequestParams)
+                getAxiosRequestParameterDeclaration({
                   request,
                   requestInfo,
-                  requestResponseTypeName,
-                  requestErrorTypeName,
-                  groupBy: plugin.config.groupBy
+                  requestParamsTypeName
                 })
-              )
+              ],
+              undefined,
+              ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+              // instance.request({ method, url, data, params })
+              getAxiosRequestCallExpression({
+                request,
+                requestInfo,
+                requestResponseTypeName,
+                requestErrorTypeName,
+                groupBy: plugin.config.groupBy
+              })
             )
-          ],
-          ts.NodeFlags.Const
-        )
+          )
+        ],
+        ts.NodeFlags.Const
       )
     );
+
+    requestStatements.push(requestFunction);
   });
 
+  // import type { AxiosRequestParams } from '@siberiacancode/apicraft';
   const importAxiosRequestParams = getApicraftTypeImport('AxiosRequestParams');
+
+  // import type { RequestData, RequestResponse, ... } from './types.gen';
   const importTypes = getImportTypes({
     typeNames: Array.from(typeImportNames).sort(),
-    folderPath: requestFolderPath,
-    generateOutput: plugin.config.generateOutput,
-    groupBy: plugin.config.groupBy
+    folderPath: requestsFolderPath,
+    generateOutput: plugin.config.generateOutput
   });
+
+  // import { instance } from "../../instance.gen";
   const importInstance = getImportInstance({
-    folderPath: requestFolderPath,
+    folderPath: requestsFolderPath,
     output: plugin.output,
     generateOutput: plugin.config.generateOutput,
     runtimeInstancePath: plugin.config.runtimeInstancePath
   });
 
-  requestFile.add(importAxiosRequestParams);
-  requestFile.add(importTypes);
-  requestFile.add(importInstance);
-  typeStatements.forEach((statement) => requestFile.add(statement));
-  requestStatements.forEach((statement) => requestFile.add(statement));
+  requestsFile.add(importAxiosRequestParams);
+  requestsFile.add(importTypes);
+  requestsFile.add(importInstance);
+  typeStatements.forEach((statement) => requestsFile.add(statement));
+  requestStatements.forEach((statement) => requestsFile.add(statement));
 };

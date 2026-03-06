@@ -4,19 +4,20 @@ import {
   capitalize,
   generateRequestName,
   getApicraftTypeImport,
-  getImportInstance
+  getImportRequest
 } from '@/bin/plugins/helpers';
 
 import type { TanstackPlugin } from '../types';
 
 import { getMutationHook, getQueryHook, getSuspenseQueryHook, getTanstackImport } from '../helpers';
 
-export const classHandler: TanstackPlugin['Handler'] = ({ plugin }) => {
+export const standaloneHandler: TanstackPlugin['Handler'] = ({ plugin }) => {
   const hooksFile = plugin.createFile({
     id: 'hooks',
     path: `${plugin.output}/hooks`
   });
 
+  const requestImportNames: string[] = [];
   const imports: ts.ImportDeclaration[] = [
     // import { useQuery, useMutation, queryOptions, useSuspenseQuery } from '@tanstack/react-query';
     getTanstackImport(['useQuery', 'useMutation', 'queryOptions', 'useSuspenseQuery']),
@@ -25,13 +26,7 @@ export const classHandler: TanstackPlugin['Handler'] = ({ plugin }) => {
       'TanstackQuerySettings',
       'TanstackMutationSettings',
       'TanstackSuspenseQuerySettings'
-    ]),
-    // import { instance } from '../../instance.gen';
-    getImportInstance({
-      output: plugin.output,
-      folderPath: plugin.config.generateOutput,
-      generateOutput: plugin.config.generateOutput
-    })
+    ])
   ];
 
   const hooks: ts.VariableStatement[] = [];
@@ -39,6 +34,8 @@ export const classHandler: TanstackPlugin['Handler'] = ({ plugin }) => {
   plugin.forEach('operation', (event) => {
     const request = event.operation;
     const requestName = generateRequestName(request, plugin.config.nameBy);
+
+    requestImportNames.push(requestName);
 
     hooks.push(
       ...getQueryHook({
@@ -65,6 +62,16 @@ export const classHandler: TanstackPlugin['Handler'] = ({ plugin }) => {
       })
     );
   });
+
+  imports.push(
+    // import type { requestName1, requestName2 } from './requests.gen';
+    getImportRequest({
+      folderPath: plugin.config.generateOutput,
+      generateOutput: plugin.config.generateOutput,
+      requestFilePath: `${plugin.output}/requests`,
+      requestName: requestImportNames
+    })
+  );
 
   hooksFile.add(...imports);
   hooksFile.add(...hooks);

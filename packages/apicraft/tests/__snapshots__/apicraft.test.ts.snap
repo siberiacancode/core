@@ -8,7 +8,7 @@ import { useQuery, useMutation, queryOptions, useSuspenseQuery } from "@tanstack
 
 import type { TanstackQuerySettings, TanstackMutationSettings, TanstackSuspenseQuerySettings } from "@siberiacancode/apicraft";
 
-import { instance } from "generated/axios/class/operationId/instance.gen";
+import { instance } from "./instance.gen";
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
@@ -181,7 +181,7 @@ import { useQuery, useMutation, queryOptions, useSuspenseQuery } from "@tanstack
 
 import type { TanstackQuerySettings, TanstackMutationSettings, TanstackSuspenseQuerySettings } from "@siberiacancode/apicraft";
 
-import { instance } from "generated/axios/class/path/instance.gen";
+import { instance } from "./instance.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
@@ -906,7 +906,7 @@ import { useQuery, useMutation, queryOptions, useSuspenseQuery } from "@tanstack
 
 import type { TanstackQuerySettings, TanstackMutationSettings, TanstackSuspenseQuerySettings } from "@siberiacancode/apicraft";
 
-import { instance } from "generated/axios/runtime/class/operationId/instance.gen";
+import { instance } from "./instance.gen";
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
@@ -1079,7 +1079,7 @@ import { useQuery, useMutation, queryOptions, useSuspenseQuery } from "@tanstack
 
 import type { TanstackQuerySettings, TanstackMutationSettings, TanstackSuspenseQuerySettings } from "@siberiacancode/apicraft";
 
-import { instance } from "generated/axios/runtime/class/path/instance.gen";
+import { instance } from "./instance.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
@@ -2908,7 +2908,7 @@ import { useQuery, useMutation, queryOptions, useSuspenseQuery } from "@tanstack
 
 import type { TanstackQuerySettings, TanstackMutationSettings, TanstackSuspenseQuerySettings } from "@siberiacancode/apicraft";
 
-import { instance } from "generated/fetches/class/operationId/instance.gen";
+import { instance } from "./instance.gen";
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
@@ -3073,7 +3073,7 @@ import { useQuery, useMutation, queryOptions, useSuspenseQuery } from "@tanstack
 
 import type { TanstackQuerySettings, TanstackMutationSettings, TanstackSuspenseQuerySettings } from "@siberiacancode/apicraft";
 
-import { instance } from "generated/fetches/class/path/instance.gen";
+import { instance } from "./instance.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
@@ -3774,7 +3774,7 @@ import { useQuery, useMutation, queryOptions, useSuspenseQuery } from "@tanstack
 
 import type { TanstackQuerySettings, TanstackMutationSettings, TanstackSuspenseQuerySettings } from "@siberiacancode/apicraft";
 
-import { instance } from "generated/fetches/runtime/class/operationId/instance.gen";
+import { instance } from "./instance.gen";
 
 export const GetUserByNameQueryKey = "GetUserByName";
 
@@ -3939,7 +3939,7 @@ import { useQuery, useMutation, queryOptions, useSuspenseQuery } from "@tanstack
 
 import type { TanstackQuerySettings, TanstackMutationSettings, TanstackSuspenseQuerySettings } from "@siberiacancode/apicraft";
 
-import { instance } from "generated/fetches/runtime/class/path/instance.gen";
+import { instance } from "./instance.gen";
 
 export const getUserByUsernameQueryKey = "getUserByUsername";
 
