@@ -34,8 +34,6 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
   const classElements: ts.ClassElement[] = [];
 
   plugin.forEach('operation', (event) => {
-    if (event.type !== 'operation') return;
-
     const request = event.operation;
     const requestName = generateRequestName(request, plugin.config.nameBy);
     const requestInfo = getRequestInfo(request);

@@ -24,8 +24,6 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
   if (!plugin.config.runtimeInstancePath) addInstanceFile(plugin);
 
   plugin.forEach('operation', (event) => {
-    if (event.type !== 'operation') return;
-
     const request = event.operation;
     const requestInfo = getRequestInfo(request);
     const requestName = generateRequestName(request, plugin.config.nameBy);

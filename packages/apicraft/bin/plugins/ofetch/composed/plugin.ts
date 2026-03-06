@@ -11,16 +11,16 @@ import {
   getRequestInfo
 } from '@/bin/plugins/helpers';
 
-import type { AxiosPlugin } from '../types';
+import type { OfetchPlugin } from '../types';
 
 import {
   addInstanceFile,
-  getAxiosRequestCallExpression,
-  getAxiosRequestParameterDeclaration,
-  getAxiosRequestParamsType
+  getOfetchRequestCallExpression,
+  getOfetchRequestParameterDeclaration,
+  getOfetchRequestParamsType
 } from '../helpers';
 
-export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
+export const composedHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
   if (!plugin.config.runtimeInstancePath) addInstanceFile(plugin);
 
   plugin.forEach('operation', (event) => {
@@ -50,8 +50,8 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
         `${plugin.config.generateOutput}/${requestFilePath}`
       );
 
-      // import type { AxiosRequestParams } from '@siberiacancode/apicraft';
-      const importAxiosRequestParams = getApicraftTypeImport('AxiosRequestParams');
+      // import type { OFetchRequestParams } from '@siberiacancode/apicraft';
+      const importOfetchRequestParams = getApicraftTypeImport('OFetchRequestParams');
       // import type { RequestData, RequestResponse } from 'generated/types.gen';
       const importTypes = getImportTypes({
         typeNames: [
@@ -60,7 +60,8 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
           ...(requestInfo.hasErrorResponse ? [requestErrorTypeName] : [])
         ],
         folderPath: requestFolderPath,
-        generateOutput: plugin.config.generateOutput
+        generateOutput: plugin.config.generateOutput,
+        groupBy: plugin.config.groupBy
       });
 
       // import { instance } from "../../instance.gen";
@@ -71,8 +72,8 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
         runtimeInstancePath: plugin.config.runtimeInstancePath
       });
 
-      // type RequestParams = AxiosRequestParams<RequestData>;
-      const requestParamsType = getAxiosRequestParamsType({
+      // type RequestParams = OFetchRequestParams<RequestData>;
+      const requestParamsType = getOfetchRequestParamsType({
         requestDataTypeName,
         requestParamsTypeName
       });
@@ -91,7 +92,7 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
                 undefined,
                 [
                   // ({ path, body, query, config }: RequestParams)
-                  getAxiosRequestParameterDeclaration({
+                  getOfetchRequestParameterDeclaration({
                     request,
                     requestInfo,
                     requestParamsTypeName
@@ -99,8 +100,8 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
                 ],
                 undefined,
                 ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                // instance.request({ method, url, data, params })
-                getAxiosRequestCallExpression({
+                // instance(url, { method, body?, query?, ...config })
+                getOfetchRequestCallExpression({
                   request,
                   requestInfo,
                   requestResponseTypeName,
@@ -114,7 +115,7 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
         )
       );
 
-      requestFile.add(importAxiosRequestParams);
+      requestFile.add(importOfetchRequestParams);
       requestFile.add(importTypes);
       requestFile.add(importInstance);
       requestFile.add(requestParamsType);
