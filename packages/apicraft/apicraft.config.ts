@@ -14,10 +14,10 @@ const apicraftConfig = apicraft([
   },
   {
     input: 'example-apiV2.yaml',
-    output: 'generated/apiV3-class',
+    output: 'generated/axios-standalone',
     instance: 'axios',
     nameBy: 'path',
-    groupBy: 'class'
+    groupBy: 'standalone'
   }
 ]);
 
