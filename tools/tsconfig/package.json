@@ -21,6 +21,8 @@
     "access": "public"
   },
   "files": [
+    "tsconfig.base.json",
+    "tsconfig.bundler.json",
     "tsconfig.react.json",
     "tsconfig.node.json"
   ],

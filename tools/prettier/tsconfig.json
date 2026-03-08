@@ -1,19 +1,7 @@
 {
+  "extends": "@siberiacancode/tsconfig/tsconfig.bundler.json",
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "newLine": "lf",
-    "noEmit": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "skipLibCheck": true
+    "target": "ESNext"
   },
   "include": ["src"],
   "exclude": ["dist", "node_modules"]

@@ -463,3 +463,5 @@ fetches.create = (params?: FetchesParams) => new Fetches(params);
 export type FetchesInstance = ReturnType<typeof fetches.create>;
 
 export default fetches;
+
+export const instance = fetches.create();

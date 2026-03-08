@@ -8,7 +8,7 @@ const apicraftConfig = apicraft([
   {
     input: 'example-apiV2.yaml',
     output: 'generated/axios-standalone-runtime',
-    instance: { name: 'axios', runtimeInstancePath: 'src/instance' },
+    instance: 'fetches',
     nameBy: 'path',
     groupBy: 'standalone',
     plugins: ['tanstack']
@@ -16,7 +16,7 @@ const apicraftConfig = apicraft([
   {
     input: 'example-apiV2.yaml',
     output: 'generated/axios-standalone',
-    instance: 'axios',
+    instance: 'ofetch',
     nameBy: 'path',
     groupBy: 'standalone',
     plugins: ['tanstack']
