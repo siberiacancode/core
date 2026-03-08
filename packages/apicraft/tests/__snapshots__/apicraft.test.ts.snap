@@ -1923,7 +1923,7 @@ export const instance = axios.create();",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordError, CreateUserRecordResponse, DeleteReportEntryData, DeleteReportEntryError, DeleteReportEntryResponse, GetUserByNameData, GetUserByNameError, GetUserByNameResponse, UpdateTaskStatusData, UpdateTaskStatusError, UpdateTaskStatusResponse } from "./types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError, CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError, UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError, DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "./types.gen";
 
 import { instance } from "../../../../..";
 
@@ -2087,7 +2087,7 @@ export const instance = axios.create();",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordError, CreateUserRecordResponse, DeleteReportEntryData, DeleteReportEntryError, DeleteReportEntryResponse, GetUserByNameData, GetUserByNameError, GetUserByNameResponse, UpdateTaskStatusData, UpdateTaskStatusError, UpdateTaskStatusResponse } from "./types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError, CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError, UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError, DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "./types.gen";
 
 import { instance } from "../../../../..";
 
@@ -2803,7 +2803,7 @@ export const instance = axios.create();",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordError, CreateUserRecordResponse, DeleteReportEntryData, DeleteReportEntryError, DeleteReportEntryResponse, GetUserByNameData, GetUserByNameError, GetUserByNameResponse, UpdateTaskStatusData, UpdateTaskStatusError, UpdateTaskStatusResponse } from "./types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError, CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError, UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError, DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "./types.gen";
 
 import { instance } from "./instance.gen";
 
@@ -2967,7 +2967,7 @@ export const instance = axios.create();",
 
 import type { AxiosRequestParams } from "@siberiacancode/apicraft";
 
-import type { CreateUserRecordData, CreateUserRecordError, CreateUserRecordResponse, DeleteReportEntryData, DeleteReportEntryError, DeleteReportEntryResponse, GetUserByNameData, GetUserByNameError, GetUserByNameResponse, UpdateTaskStatusData, UpdateTaskStatusError, UpdateTaskStatusResponse } from "./types.gen";
+import type { GetUserByNameData, GetUserByNameResponse, GetUserByNameError, CreateUserRecordData, CreateUserRecordResponse, CreateUserRecordError, UpdateTaskStatusData, UpdateTaskStatusResponse, UpdateTaskStatusError, DeleteReportEntryData, DeleteReportEntryResponse, DeleteReportEntryError } from "./types.gen";
 
 import { instance } from "./instance.gen";
 

@@ -8,10 +8,10 @@ export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
   if (plugin.config.groupBy === 'class') {
     classHandler({ plugin });
   }
-  if (plugin.config.groupBy === 'paths' || plugin.config.groupBy === 'tags') {
-    composedHandler({ plugin });
-  }
   if (plugin.config.groupBy === 'standalone') {
     standaloneHandler({ plugin });
+  }
+  if (plugin.config.groupBy === 'paths' || plugin.config.groupBy === 'tags') {
+    composedHandler({ plugin });
   }
 };

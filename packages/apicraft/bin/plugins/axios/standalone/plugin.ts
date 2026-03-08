@@ -36,8 +36,6 @@ export const standaloneHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
   const requestStatements: ts.Statement[] = [];
 
   plugin.forEach('operation', (event) => {
-    if (event.type !== 'operation') return;
-
     const request = event.operation;
     const requestName = generateRequestName(request, plugin.config.nameBy);
     const requestInfo = getRequestInfo(request);
@@ -103,7 +101,7 @@ export const standaloneHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
 
   // import type { RequestData, RequestResponse, ... } from './types.gen';
   const importTypes = getImportTypes({
-    typeNames: Array.from(typeImportNames).sort(),
+    typeNames: Array.from(typeImportNames),
     folderPath: requestsFolderPath,
     generateOutput: plugin.config.generateOutput
   });
