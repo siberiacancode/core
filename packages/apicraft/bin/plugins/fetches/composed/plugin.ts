@@ -60,8 +60,7 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
           ...(requestInfo.hasErrorResponse ? [requestErrorTypeName] : [])
         ],
         folderPath: requestFolderPath,
-        generateOutput: plugin.config.generateOutput,
-        groupBy: plugin.config.groupBy
+        generateOutput: plugin.config.generateOutput
       });
 
       // import { instance } from "../../instance.gen";
