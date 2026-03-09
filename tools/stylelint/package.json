@@ -25,11 +25,8 @@
   ],
   "main": "index.js",
   "scripts": {
-    "lint": "eslint . --fix",
-    "lint-inspector": "npx @eslint/config-inspector",
-    "type": "tsc --noEmit",
     "format": "prettier --write .",
-    "pretty": "yarn type && yarn lint && yarn format"
+    "pretty": "pnpm format"
   },
   "lint-staged": {
     "*.js": "prettier --write"

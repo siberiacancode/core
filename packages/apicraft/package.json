@@ -47,15 +47,15 @@
     "dist"
   ],
   "scripts": {
-    "prepublishOnly": "yarn type && yarn build && yarn e2e-test",
+    "prepublishOnly": "pnpm type && pnpm build && pnpm e2e-test",
     "dev": "tsdown --watch",
     "build": "tsdown",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector",
     "type": "tsc --noEmit",
     "format": "prettier --write .",
-    "pretty": "yarn type && yarn lint && yarn format",
-    "e2e-test": "yarn build && vitest -c tests/vitest.config.ts"
+    "pretty": "pnpm type && pnpm lint && pnpm format",
+    "e2e-test": "pnpm build && vitest -c tests/vitest.config.ts"
   },
   "dependencies": {
     "@hey-api/openapi-ts": "0.82.5",

@@ -45,13 +45,13 @@
     "dist"
   ],
   "scripts": {
-    "prepublishOnly": "yarn type && yarn build",
+    "prepublishOnly": "pnpm type && pnpm build",
     "build": "tsdown",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector",
     "type": "tsc --noEmit",
     "format": "prettier --write .",
-    "pretty": "yarn type && yarn lint && yarn format"
+    "pretty": "pnpm type && pnpm lint && pnpm format"
   },
   "dependencies": {
     "@antfu/eslint-config": "7.4.3",
