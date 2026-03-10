@@ -4,17 +4,17 @@ import fetches, { DEFAULT_VALIDATE_STATUS, ResponseError } from './index';
 
 const Fetches = fetches.Fetches;
 
-function createMockResponse(
+const createMockResponse = (
   data: unknown = {},
   init: { status?: number; statusText?: string; headers?: Record<string, string> } = {}
-) {
+) => {
   const body = typeof data === 'string' ? data : JSON.stringify(data);
   return new Response(body, {
     status: init.status ?? 200,
     statusText: init.statusText ?? 'OK',
     headers: new Headers(init.headers ?? {})
   });
-}
+};
 
 const mockedFetch = vi.fn();
 

@@ -1,10 +1,10 @@
 import { definePluginConfig } from '@hey-api/openapi-ts';
 
-import type { OfetchPlugin } from './types';
+import type { OFetchPlugin } from './types';
 
 import { handler } from './plugin';
 
-export const defaultConfig: OfetchPlugin['Config'] = {
+export const defaultConfig: OFetchPlugin['Config'] = {
   config: {
     generateOutput: '',
     exportFromIndex: true

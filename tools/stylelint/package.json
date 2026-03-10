@@ -25,7 +25,8 @@
   ],
   "main": "index.js",
   "scripts": {
-    "format": "prettier --write \"*.js\""
+    "format": "prettier --write .",
+    "pretty": "pnpm format"
   },
   "lint-staged": {
     "*.js": "prettier --write"

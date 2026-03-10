@@ -40,12 +40,12 @@
     "dist"
   ],
   "scripts": {
-    "prepublishOnly": "yarn type && yarn build",
+    "prepublishOnly": "pnpm type && pnpm build",
     "build": "tsdown",
     "type": "tsc --noEmit",
     "lint": "eslint . --fix",
     "format": "prettier --write .",
-    "pretty": "yarn type && yarn lint && yarn format"
+    "pretty": "pnpm type && pnpm lint && pnpm format"
   },
   "peerDependencies": {
     "jsdom": "28.1.0",

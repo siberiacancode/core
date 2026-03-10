@@ -10,7 +10,7 @@ import {
   getRequestInfo
 } from '@/bin/plugins/helpers';
 
-import type { OfetchPlugin } from '../types';
+import type { OFetchPlugin } from '../types';
 
 import {
   getImportOfetch,
@@ -23,7 +23,7 @@ import {
 
 const CLASS_NAME = 'ApiInstance';
 
-export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
+export const classHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
   const classFilePath = nodePath.normalize(`${plugin.output}/instance`);
   const classFolderPath = nodePath.dirname(`${plugin.config.generateOutput}/${classFilePath}`);
   const classFile = plugin.createFile({
@@ -100,8 +100,7 @@ export const classHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
   const importTypes = getImportTypes({
     typeNames: Array.from(typeImportNames),
     folderPath: classFolderPath,
-    generateOutput: plugin.config.generateOutput,
-    groupBy: plugin.config.groupBy
+    generateOutput: plugin.config.generateOutput
   });
 
   // import type { $Fetch, FetchOptions, FetchRequest, ResponseType } from 'ofetch';

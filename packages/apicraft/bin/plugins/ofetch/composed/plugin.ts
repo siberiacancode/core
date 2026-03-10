@@ -11,7 +11,7 @@ import {
   getRequestInfo
 } from '@/bin/plugins/helpers';
 
-import type { OfetchPlugin } from '../types';
+import type { OFetchPlugin } from '../types';
 
 import {
   addInstanceFile,
@@ -20,7 +20,7 @@ import {
   getOfetchRequestParamsType
 } from '../helpers';
 
-export const composedHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
+export const composedHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
   if (!plugin.config.runtimeInstancePath) addInstanceFile(plugin);
 
   plugin.forEach('operation', (event) => {
@@ -60,8 +60,7 @@ export const composedHandler: OfetchPlugin['Handler'] = ({ plugin }) => {
           ...(requestInfo.hasErrorResponse ? [requestErrorTypeName] : [])
         ],
         folderPath: requestFolderPath,
-        generateOutput: plugin.config.generateOutput,
-        groupBy: plugin.config.groupBy
+        generateOutput: plugin.config.generateOutput
       });
 
       // import { instance } from "../../instance.gen";
