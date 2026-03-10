@@ -7,9 +7,8 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "declaration": true,
-    "declarationMap": true,
-    "inlineSources": false
+    "allowJs": true,
+    "sourceMap": true
   },
   "exclude": ["node_modules"]
 }
