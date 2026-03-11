@@ -7,7 +7,7 @@ import {
   getApicraftTypeImport,
   getImportInstance,
   getImportTypes,
-  getRequestFilePaths,
+  getRequestFilePath,
   getRequestInfo
 } from '@/bin/plugins/helpers';
 
@@ -28,97 +28,95 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
     const requestInfo = getRequestInfo(request);
     const requestName = generateRequestName(request, plugin.config.nameBy);
 
-    const requestFilePaths = getRequestFilePaths({
+    const requestFilePath = getRequestFilePath({
       groupBy: plugin.config.groupBy,
       output: plugin.output,
       requestName,
       request
     });
 
-    requestFilePaths.forEach((requestFilePath) => {
-      const requestFile = plugin.createFile({
-        id: requestFilePath,
-        path: requestFilePath
-      });
+    const requestFile = plugin.createFile({
+      id: requestFilePath,
+      path: requestFilePath
+    });
 
-      const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
-      const requestDataTypeName = `${capitalize(request.id)}Data`;
-      const requestResponseTypeName = `${capitalize(request.id)}Response`;
-      const requestErrorTypeName = `${capitalize(request.id)}Error`;
+    const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
+    const requestDataTypeName = `${capitalize(request.id)}Data`;
+    const requestResponseTypeName = `${capitalize(request.id)}Response`;
+    const requestErrorTypeName = `${capitalize(request.id)}Error`;
 
-      const requestFolderPath = nodePath.dirname(
-        `${plugin.config.generateOutput}/${requestFilePath}`
-      );
+    const requestFolderPath = nodePath.dirname(
+      `${plugin.config.generateOutput}/${requestFilePath}`
+    );
 
-      // import type { FetchesRequestParams } from '@siberiacancode/apicraft';
-      const importFetchesRequestParams = getApicraftTypeImport('FetchesRequestParams');
-      // import type { RequestData, RequestResponse } from 'generated/types.gen';
-      const importTypes = getImportTypes({
-        typeNames: [
-          requestDataTypeName,
-          ...(requestInfo.hasSuccessResponse ? [requestResponseTypeName] : []),
-          ...(requestInfo.hasErrorResponse ? [requestErrorTypeName] : [])
-        ],
-        folderPath: requestFolderPath,
-        generateOutput: plugin.config.generateOutput
-      });
-
-      // import { instance } from "../../instance.gen";
-      const importInstance = getImportInstance({
-        folderPath: requestFolderPath,
-        output: plugin.output,
-        generateOutput: plugin.config.generateOutput,
-        runtimeInstancePath: plugin.config.runtimeInstancePath
-      });
-
-      // type RequestParams = FetchesRequestParams<RequestData>;
-      const requestParamsType = getFetchesRequestParamsType({
+    // import type { FetchesRequestParams } from '@siberiacancode/apicraft';
+    const importFetchesRequestParams = getApicraftTypeImport('FetchesRequestParams');
+    // import type { RequestData, RequestResponse } from 'generated/types.gen';
+    const importTypes = getImportTypes({
+      typeNames: [
         requestDataTypeName,
-        requestParamsTypeName
-      });
+        ...(requestInfo.hasSuccessResponse ? [requestResponseTypeName] : []),
+        ...(requestInfo.hasErrorResponse ? [requestErrorTypeName] : [])
+      ],
+      folderPath: requestFolderPath,
+      generateOutput: plugin.config.generateOutput
+    });
 
-      // export const request = ({ path, body, query, config }) => ...
-      const requestFunction = ts.factory.createVariableStatement(
-        [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
-        ts.factory.createVariableDeclarationList(
-          [
-            ts.factory.createVariableDeclaration(
-              ts.factory.createIdentifier(requestName),
+    // import { instance } from "../../instance.gen";
+    const importInstance = getImportInstance({
+      folderPath: requestFolderPath,
+      output: plugin.output,
+      generateOutput: plugin.config.generateOutput,
+      runtimeInstancePath: plugin.config.runtimeInstancePath
+    });
+
+    // type RequestParams = FetchesRequestParams<RequestData>;
+    const requestParamsType = getFetchesRequestParamsType({
+      requestDataTypeName,
+      requestParamsTypeName
+    });
+
+    // export const request = ({ path, body, query, config }) => ...
+    const requestFunction = ts.factory.createVariableStatement(
+      [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+      ts.factory.createVariableDeclarationList(
+        [
+          ts.factory.createVariableDeclaration(
+            ts.factory.createIdentifier(requestName),
+            undefined,
+            undefined,
+            ts.factory.createArrowFunction(
               undefined,
               undefined,
-              ts.factory.createArrowFunction(
-                undefined,
-                undefined,
-                [
-                  // ({ path, body, query, config }: RequestParams)
-                  getFetchesRequestParameterDeclaration({
-                    request,
-                    requestInfo,
-                    requestParamsTypeName
-                  })
-                ],
-                undefined,
-                ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                // instance.call(method, url, { body?, query?, ...config })
-                getFetchesRequestCallExpression({
+              [
+                // ({ path, body, query, config }: RequestParams)
+                getFetchesRequestParameterDeclaration({
                   request,
                   requestInfo,
-                  requestResponseTypeName,
-                  requestErrorTypeName,
-                  groupBy: plugin.config.groupBy
+                  requestParamsTypeName
                 })
-              )
+              ],
+              undefined,
+              ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+              // instance.call(method, url, { body?, query?, ...config })
+              getFetchesRequestCallExpression({
+                request,
+                requestInfo,
+                requestResponseTypeName,
+                requestErrorTypeName,
+                groupBy: plugin.config.groupBy
+              })
             )
-          ],
-          ts.NodeFlags.Const
-        )
-      );
+          )
+        ],
+        ts.NodeFlags.Const
+      )
+    );
 
-      requestFile.add(importFetchesRequestParams);
-      requestFile.add(importTypes);
-      requestFile.add(importInstance);
-      requestFile.add(requestParamsType);
-      requestFile.add(requestFunction);
-    });
+    requestFile.add(importFetchesRequestParams);
+    requestFile.add(importTypes);
+    requestFile.add(importInstance);
+    requestFile.add(requestParamsType);
+    requestFile.add(requestFunction);
   });
 };
