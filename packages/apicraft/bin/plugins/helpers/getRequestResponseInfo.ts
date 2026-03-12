@@ -12,10 +12,21 @@ export const getRequestResponseInfo = (request: IR.OperationObject) => {
     hasErrorResponse: false
   };
 
-  if (Object.entries(responses).some(([code]) => /2\d{2}/.test(code))) {
+  const isUnknownSchema = (schema: IR.SchemaObject | undefined) =>
+    !schema || schema.type === 'unknown' || (schema.type === 'object' && !schema.properties);
+
+  if (
+    Object.entries(responses).some(
+      ([code, response]) => /2\d{2}/.test(code) && !isUnknownSchema(response?.schema)
+    )
+  ) {
     result.hasSuccessResponse = true;
   }
-  if (Object.entries(responses).some(([code]) => /[45]\d{2}/.test(code))) {
+  if (
+    Object.entries(responses).some(
+      ([code, response]) => /[45]\d{2}/.test(code) && !isUnknownSchema(response?.schema)
+    )
+  ) {
     result.hasErrorResponse = true;
   }
 
