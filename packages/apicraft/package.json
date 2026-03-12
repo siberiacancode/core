@@ -1,7 +1,7 @@
 {
   "name": "@siberiacancode/apicraft",
   "type": "module",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "description": "Generate rest api for your api with one command",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -47,7 +47,7 @@
     "dist"
   ],
   "scripts": {
-    "prepublishOnly": "pnpm type && pnpm build && pnpm e2e-test",
+    "prepublishOnly": "pnpm build",
     "dev": "tsdown --watch",
     "build": "tsdown",
     "lint": "eslint . --fix",

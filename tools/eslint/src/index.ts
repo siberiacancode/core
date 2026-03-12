@@ -11,14 +11,14 @@ import type { FlatConfigComposer } from 'eslint-flat-config-utils';
 import antfu from '@antfu/eslint-config';
 import pluginCss from '@eslint/css';
 import pluginBetterTailwindcss from 'eslint-plugin-better-tailwindcss';
-import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
+// import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginPlaywright from 'eslint-plugin-playwright';
 
 import { siberiacancodePlugin } from './plugin/index';
 
 type EslintOptions = OptionsConfig &
   TypedFlatConfigItem & {
-    jsxA11y?: boolean;
+    // jsxA11y?: boolean;
     playwright?: boolean;
     tailwind?: boolean;
     typescript?: boolean | 'engine' | OptionsTypescript;
@@ -33,7 +33,7 @@ export type Eslint = (
 
 export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) => {
   const {
-    jsxA11y = false,
+    // jsxA11y = false,
     playwright = false,
     tailwind = false,
     typescript = false,
@@ -64,22 +64,22 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
     });
   }
 
-  if (jsxA11y) {
-    const jsxA11yRules = pluginJsxA11y.flatConfigs.recommended.rules as Linter.RulesRecord;
+  // if (jsxA11y) {
+  //   const jsxA11yRules = pluginJsxA11y.flatConfigs.recommended.rules as Linter.RulesRecord;
 
-    configs.unshift({
-      name: 'siberiacancode/jsx-a11y',
-      plugins: {
-        'siberiacancode-jsx-a11y': pluginJsxA11y
-      },
-      rules: {
-        ...Object.entries(jsxA11yRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
-          acc[key.replace('jsx-a11y', 'siberiacancode-jsx-a11y')] = value;
-          return acc;
-        }, {})
-      }
-    });
-  }
+  //   configs.unshift({
+  //     name: 'siberiacancode/jsx-a11y',
+  //     plugins: {
+  //       'siberiacancode-jsx-a11y': pluginJsxA11y
+  //     },
+  //     rules: {
+  //       ...Object.entries(jsxA11yRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
+  //         acc[key.replace('jsx-a11y', 'siberiacancode-jsx-a11y')] = value;
+  //         return acc;
+  //       }, {})
+  //     }
+  //   });
+  // }
 
   if (playwright) {
     const playwrightRules = pluginPlaywright.configs['flat/recommended']
@@ -279,6 +279,13 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
             type: 'alphabetical'
           }
         ]
+      }
+    },
+    {
+      name: 'siberiacancode/disable/markdown',
+      files: ['**/*.md'],
+      rules: {
+        'perfectionist/sort-imports': 'off'
       }
     },
     ...configs
