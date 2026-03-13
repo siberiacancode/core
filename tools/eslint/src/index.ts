@@ -2,6 +2,7 @@ import type {
   Awaitable,
   ConfigNames,
   OptionsConfig,
+  OptionsTypescript,
   TypedFlatConfigItem
 } from '@antfu/eslint-config';
 import type { Linter } from 'eslint';
@@ -20,7 +21,7 @@ type EslintOptions = OptionsConfig &
     jsxA11y?: boolean;
     playwright?: boolean;
     tailwind?: boolean;
-    typescript?: 'engine';
+    typescript?: boolean | 'engine' | OptionsTypescript;
   };
 
 export type Eslint = (
@@ -51,12 +52,13 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
         }
       },
       rules: {
+        ...(options.react && { 'react/no-leaked-conditional-rendering': 'error' }),
         'ts/promise-function-async': 'off',
         'ts/strict-boolean-expressions': 'off',
         'ts/no-unnecessary-condition': 'error',
         'ts/no-namespace': 'off',
         'ts/no-floating-promises': 'off',
-        'ts/no-misused-promises': 'off',
+        'ts/no-misused-promises': ['error', { checksVoidReturn: false }],
         'ts/no-empty-object-type': 'warn'
       }
     });
@@ -181,7 +183,7 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
       stylistic,
       ...(typescript === 'engine'
         ? { typescript: { tsconfigPath: './tsconfig.json' } }
-        : typescript)
+        : { typescript })
     },
     {
       name: 'siberiacancode/rewrite',
@@ -277,6 +279,13 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
             type: 'alphabetical'
           }
         ]
+      }
+    },
+    {
+      name: 'siberiacancode/disable/markdown',
+      files: ['**/*.md'],
+      rules: {
+        'perfectionist/sort-imports': 'off'
       }
     },
     ...configs

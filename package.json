@@ -27,13 +27,13 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "yarn workspaces run dev",
-    "build": "yarn workspaces run build",
-    "deploy": "yarn workspaces run deploy",
-    "lint": "yarn workspaces run lint",
-    "format": "yarn workspaces run format",
-    "stylelint": "yarn workspaces run stylelint",
-    "unit-test": "yarn workspaces run unit-test",
+    "dev": "pnpm -r run dev",
+    "build": "pnpm -r run build",
+    "deploy": "pnpm -r run deploy",
+    "lint": "pnpm -r run lint",
+    "format": "pnpm -r run format",
+    "stylelint": "pnpm -r run stylelint",
+    "unit-test": "pnpm -r run unit-test",
     "lint-staged": "lint-staged",
     "prepare": "husky"
   },
