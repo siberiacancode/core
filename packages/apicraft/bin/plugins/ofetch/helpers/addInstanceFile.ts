@@ -1,13 +1,13 @@
-import type { DefinePlugin } from '@hey-api/openapi-ts';
-
 import nodePath from 'node:path';
 import ts from 'typescript';
+
+import type { OFetchPlugin } from '../types';
 
 import { getImportOfetch } from './getImportOfetch';
 import { getImportOfetchTypes } from './getImportOfetchTypes';
 import { getOfetchInstanceType } from './getOfetchInstanceType';
 
-export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
+export const addInstanceFile = (plugin: OFetchPlugin['Instance']) => {
   const instanceFile = plugin.createFile({
     id: 'ofetchInstance',
     path: nodePath.normalize(`${plugin.output}/instance`)
@@ -40,7 +40,19 @@ export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
               ts.factory.createIdentifier('create')
             ),
             undefined,
-            [ts.factory.createObjectLiteralExpression([], false)]
+            [
+              ts.factory.createObjectLiteralExpression(
+                plugin.config.baseUrl
+                  ? [
+                      ts.factory.createPropertyAssignment(
+                        ts.factory.createIdentifier('baseURL'),
+                        ts.factory.createStringLiteral(plugin.config.baseUrl)
+                      )
+                    ]
+                  : [],
+                false
+              )
+            ]
           )
         )
       ],

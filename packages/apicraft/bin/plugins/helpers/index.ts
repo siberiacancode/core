@@ -5,4 +5,5 @@ export * from './getRequestCallGenericResponse';
 export * from './getRequestFilePaths';
 export * from './getRequestInfo';
 export * from './imports';
+export * from './removeRequestsBaseUrl';
 export * from './requestName';

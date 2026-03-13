@@ -1,11 +1,11 @@
-import type { DefinePlugin } from '@hey-api/openapi-ts';
-
 import nodePath from 'node:path';
 import ts from 'typescript';
 
+import type { FetchesPlugin } from '../types';
+
 import { getImportFetches } from './getImportFetches';
 
-export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
+export const addInstanceFile = (plugin: FetchesPlugin['Instance']) => {
   const instanceFile = plugin.createFile({
     id: 'fetchesInstance',
     path: nodePath.normalize(`${plugin.output}/instance`)
@@ -28,7 +28,19 @@ export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
               ts.factory.createIdentifier('create')
             ),
             undefined,
-            undefined
+            plugin.config.baseUrl
+              ? [
+                  ts.factory.createObjectLiteralExpression(
+                    [
+                      ts.factory.createPropertyAssignment(
+                        ts.factory.createIdentifier('baseURL'),
+                        ts.factory.createStringLiteral(plugin.config.baseUrl)
+                      )
+                    ],
+                    false
+                  )
+                ]
+              : undefined
           )
         )
       ],

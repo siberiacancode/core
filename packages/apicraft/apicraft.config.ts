@@ -6,9 +6,10 @@ import { apicraft } from './dist/esm/index.mjs';
 
 const apicraftConfig = apicraft([
   {
-    input: 'example-apiV2.yaml',
-    output: 'generated/axios-standalone-runtime',
-    instance: 'fetches',
+    input: 'example-apiV1.yaml',
+    output: 'generated/base-url',
+    instance: 'axios',
+    baseUrl: '/api',
     nameBy: 'path',
     groupBy: 'standalone',
     plugins: ['tanstack']
