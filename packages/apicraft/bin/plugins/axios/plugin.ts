@@ -1,3 +1,5 @@
+import { removeRequestsBaseUrl } from '@/bin/plugins/helpers';
+
 import type { AxiosPlugin } from './types';
 
 import { classHandler } from './class/plugin';
@@ -5,6 +7,8 @@ import { composedHandler } from './composed/plugin';
 import { standaloneHandler } from './standalone/plugin';
 
 export const handler: AxiosPlugin['Handler'] = ({ plugin }) => {
+  if (plugin.config.baseUrl) removeRequestsBaseUrl(plugin, plugin.config.baseUrl);
+
   if (plugin.config.groupBy === 'class') {
     classHandler({ plugin });
   }

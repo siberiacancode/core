@@ -69,7 +69,8 @@ export const generate = {
               runtimeInstancePath,
               exportFromIndex: true,
               nameBy: option.nameBy,
-              groupBy: option.groupBy
+              groupBy: option.groupBy,
+              baseUrl: option.baseUrl
             })
           );
         }

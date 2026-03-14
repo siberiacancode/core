@@ -6,4 +6,5 @@ export * from './getRequestFilePath';
 export * from './getRequestInfo';
 export * from './imports';
 export * from './normalizeName';
+export * from './removeRequestsBaseUrl';
 export * from './requestName';
