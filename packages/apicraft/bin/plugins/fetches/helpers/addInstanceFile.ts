@@ -11,9 +11,10 @@ export const addInstanceFile = (plugin: FetchesPlugin['Instance']) => {
     path: nodePath.normalize(`${plugin.output}/instance`)
   });
 
+  // import fetches from '@siberiacancode/fetches';
   const importFetches = getImportFetches();
 
-  // export const instance = fetches.create();
+  // export const instance = fetches.create({ baseURL: '/api/v1' });
   const createInstance = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(

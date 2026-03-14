@@ -14,7 +14,7 @@ export const addInstanceFile = (plugin: AxiosPlugin['Instance']) => {
   // import axios from 'axios';
   const importAxios = getImportAxios();
 
-  // export const instance = axios.create({ baseUrl: '/api/v1' });
+  // export const instance = axios.create({ baseURL: '/api/v1' });
   const createInstance = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(

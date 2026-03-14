@@ -25,7 +25,7 @@ export const addInstanceFile = (plugin: OFetchPlugin['Instance']) => {
   // interface Instance extends $Fetch {...}
   const instanceType = getOfetchInstanceType();
 
-  // export const instance: Instance = ofetch.create({});
+  // export const instance: Instance = ofetch.create({ baseURL: '/api/v1' });
   const createInstance = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
