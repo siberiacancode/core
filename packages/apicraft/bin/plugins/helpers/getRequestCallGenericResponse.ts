@@ -29,7 +29,7 @@ export const getRequestCallGenericResponse = ({
   if (requestInfo.hasErrorResponse && !requestInfo.hasSuccessResponse) {
     return [
       ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('ApiResponse'), [
-        ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('unknown'), undefined),
+        ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('never'), undefined),
         ts.factory.createTypeReferenceNode(
           ts.factory.createIdentifier(requestErrorTypeName),
           undefined

@@ -40,5 +40,5 @@ export interface TanstackMutationSettings<TFunc extends (...args: any[]) => Prom
 }
 
 declare global {
-  type ApiResponse<Data = unknown, Error = unknown> = Data | Error;
+  type ApiResponse<Data = never, Error = never> = Data | Error;
 }
