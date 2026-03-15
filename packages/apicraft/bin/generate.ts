@@ -110,7 +110,8 @@ export const generate = {
               generateOutput,
               exportFromIndex: true,
               nameBy: option.nameBy,
-              groupBy: option.groupBy
+              groupBy: option.groupBy,
+              baseUrl: option.baseUrl
             })
           );
         }
