@@ -15,6 +15,7 @@ for (const instance of ['axios', 'fetches', 'ofetch'] as const) {
             name: instance,
             ...(runtimeInstance && { runtimeInstancePath: '' })
           },
+          baseUrl: '/api',
           groupBy,
           nameBy,
           plugins: ['tanstack']

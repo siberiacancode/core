@@ -1,11 +1,11 @@
-import type { DefinePlugin } from '@hey-api/openapi-ts';
-
 import nodePath from 'node:path';
 import ts from 'typescript';
 
+import type { AxiosPlugin } from '../types';
+
 import { getImportAxios } from './getImportAxios';
 
-export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
+export const addInstanceFile = (plugin: AxiosPlugin['Instance']) => {
   const instanceFile = plugin.createFile({
     id: 'axiosInstance',
     path: nodePath.normalize(`${plugin.output}/instance`)
@@ -14,7 +14,7 @@ export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
   // import axios from 'axios';
   const importAxios = getImportAxios();
 
-  // export const instance = axios.create();
+  // export const instance = axios.create({ baseURL: '/api/v1' });
   const createInstance = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -29,7 +29,19 @@ export const addInstanceFile = (plugin: DefinePlugin['Instance']) => {
               ts.factory.createIdentifier('create')
             ),
             undefined,
-            undefined
+            plugin.config.baseUrl
+              ? [
+                  ts.factory.createObjectLiteralExpression(
+                    [
+                      ts.factory.createPropertyAssignment(
+                        ts.factory.createIdentifier('baseURL'),
+                        ts.factory.createStringLiteral(plugin.config.baseUrl)
+                      )
+                    ],
+                    false
+                  )
+                ]
+              : undefined
           )
         )
       ],
