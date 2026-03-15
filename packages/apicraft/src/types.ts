@@ -38,3 +38,7 @@ export interface TanstackMutationSettings<TFunc extends (...args: any[]) => Prom
   params?: UseMutationOptions<Awaited<ReturnType<TFunc>>, never, Parameters<TFunc>[0], unknown>;
   request?: NonNullable<Parameters<TFunc>[0]>;
 }
+
+declare global {
+  type ApiResponse<Data = never, Error = never> = Data | Error;
+}
