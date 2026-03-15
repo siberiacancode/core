@@ -158,6 +158,7 @@ export const apicraftOptionSchema = z
       })
     ),
     parser: parserSchema,
+    baseUrl: z.string().optional(),
     instance: z.union([instanceNameSchema, instanceSchema]).optional(),
     nameBy: z.enum(['path', 'operationId']).default('operationId').optional(),
     groupBy: z.enum(['paths', 'tags', 'class', 'standalone']).default('standalone').optional(),

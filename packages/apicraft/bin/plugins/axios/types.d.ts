@@ -3,6 +3,7 @@ import type { DefinePlugin } from '@hey-api/openapi-ts';
 import type { ApicraftOption } from '@/bin/schemas';
 
 export interface AxiosPluginConfig {
+  baseUrl?: ApicraftOption['baseUrl'];
   exportFromIndex: boolean;
   generateOutput: string;
   groupBy?: ApicraftOption['groupBy'];

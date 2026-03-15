@@ -13,7 +13,7 @@ tags:
   - name: Reports-analytics
     description: Reporting endpoints
 paths:
-  /users/{username}:
+  /api/users/{username}:
     parameters:
       - name: username
         in: path
@@ -45,7 +45,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /users:
+  /api/users:
     post:
       tags:
         - User
@@ -76,7 +76,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /projects/{projectId}/tasks/{task_id}:
+  /api/projects/{projectId}/tasks/{task_id}:
     parameters:
       - name: projectId
         in: path
@@ -110,7 +110,7 @@ paths:
           description: Accepted and scheduled for processing
         '404':
           description: Task not found
-  /reports/{report_id}/entries/{entry_id}:
+  /api/reports/{report_id}/entries/{entry_id}:
     parameters:
       - name: report_id
         in: path
