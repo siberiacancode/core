@@ -56,6 +56,8 @@ export const standaloneHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
         requestParamsTypeName
       })
     );
+
+    // Promise<ApicraftAxiosResponse<Response, Error>>
     const requestReturnType = getRequestReturnType({
       instanceName: 'axios',
       requestInfo,

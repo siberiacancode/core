@@ -45,12 +45,6 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
     const requestDataTypeName = `${capitalize(request.id)}Data`;
     const requestResponseTypeName = `${capitalize(request.id)}Response`;
     const requestErrorTypeName = `${capitalize(request.id)}Error`;
-    const requestReturnType = getRequestReturnType({
-      instanceName: 'fetches',
-      requestInfo,
-      requestResponseTypeName,
-      requestErrorTypeName
-    });
 
     const requestFolderPath = nodePath.dirname(
       `${plugin.config.generateOutput}/${requestFilePath}`
@@ -81,6 +75,14 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
     const requestParamsType = getFetchesRequestParamsType({
       requestDataTypeName,
       requestParamsTypeName
+    });
+
+    // Promise<ApicraftFetchesResponse<Response, Error>>
+    const requestReturnType = getRequestReturnType({
+      instanceName: 'fetches',
+      requestInfo,
+      requestResponseTypeName,
+      requestErrorTypeName
     });
 
     // export const request = ({ path, body, query, config }) => ...

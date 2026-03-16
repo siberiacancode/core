@@ -56,6 +56,8 @@ export const standaloneHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
         requestParamsTypeName
       })
     );
+
+    // Promise<ApicraftFetchesResponse<Response, Error>>
     const requestReturnType = getRequestReturnType({
       instanceName: 'fetches',
       requestInfo,

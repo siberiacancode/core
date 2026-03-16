@@ -140,13 +140,15 @@ Generate React Query query, mutations and options for your API requests:
 }
 ```
 
-## ApiResponse type
+## Request return types
 
-Every generated request returns the global `ApiResponse<Data, Error>` type exposed by
+Every generated request returns the global return type exposed by
 `@siberiacancode/apicraft`. You can define your own type globally for your needs:
 
 ```ts
 declare global {
-  type ApiResponse<Data = never, Error = never> = { data: Data; error: Error };
+  interface ApicraftAxiosResponse<Data = never, Error = never> extends Omit<AxiosResponse, 'data'> {
+    data: Data | Error;
+  }
 }
 ```

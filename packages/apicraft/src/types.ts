@@ -40,11 +40,10 @@ export interface TanstackMutationSettings<TFunc extends (...args: any[]) => Prom
 }
 
 declare global {
-  interface ApicraftAxiosResponse<Data = never, Error = never> extends Promise<
-    AxiosResponse<Data | Error>
+  interface ApicraftAxiosResponse<Data = never, Error = never> extends AxiosResponse<
+    Data | Error
   > {}
-  interface ApicraftFetchesResponse<Data = never, Error = never> extends Promise<
-    FetchesResponse<Data | Error>
+  interface ApicraftFetchesResponse<Data = never, Error = never> extends FetchesResponse<
+    Data | Error
   > {}
-  interface ApicraftOfetchResponse<Data = never, Error = never> extends Promise<Data | Error> {}
 }

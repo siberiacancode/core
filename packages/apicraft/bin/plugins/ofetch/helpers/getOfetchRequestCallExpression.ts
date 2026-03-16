@@ -5,18 +5,22 @@ import ts from 'typescript';
 import type { GetRequestInfoResult } from '@/bin/plugins/helpers';
 import type { ApicraftOption } from '@/bin/schemas';
 
-import { buildRequestParamsPath } from '@/bin/plugins/helpers';
+import { buildRequestParamsPath, getRequestCallGenericResponse } from '@/bin/plugins/helpers';
 
 interface GetOfetchRequestCallExpressionParams {
   groupBy: ApicraftOption['groupBy'];
   request: IR.OperationObject;
+  requestErrorTypeName: string;
   requestInfo: GetRequestInfoResult;
+  requestResponseTypeName: string;
 }
 
 // instance(url, { method, body?, query?, ...config })
 export const getOfetchRequestCallExpression = ({
   request,
   requestInfo,
+  requestResponseTypeName,
+  requestErrorTypeName,
   groupBy
 }: GetOfetchRequestCallExpressionParams) =>
   ts.factory.createCallExpression(
@@ -26,7 +30,7 @@ export const getOfetchRequestCallExpression = ({
           ts.factory.createIdentifier('instance')
         )
       : ts.factory.createIdentifier('instance'),
-    undefined,
+    getRequestCallGenericResponse({ requestInfo, requestResponseTypeName, requestErrorTypeName }),
     [
       requestInfo.hasPathParam
         ? buildRequestParamsPath(request.path)

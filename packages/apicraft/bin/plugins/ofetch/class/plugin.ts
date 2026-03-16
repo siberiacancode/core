@@ -7,8 +7,7 @@ import {
   getApicraftTypeImport,
   getImportRuntimeInstance,
   getImportTypes,
-  getRequestInfo,
-  getRequestReturnType
+  getRequestInfo
 } from '@/bin/plugins/helpers';
 
 import type { OFetchPlugin } from '../types';
@@ -56,12 +55,6 @@ export const classHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
         requestParamsTypeName
       })
     );
-    const requestReturnType = getRequestReturnType({
-      instanceName: 'ofetch',
-      requestInfo,
-      requestResponseTypeName,
-      requestErrorTypeName
-    });
 
     // ({ path, body, query, config }: RequestParams)
     const requestParameter = getOfetchRequestParameterDeclaration({
@@ -77,6 +70,8 @@ export const classHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
           getOfetchRequestCallExpression({
             request,
             requestInfo,
+            requestResponseTypeName,
+            requestErrorTypeName,
             groupBy: plugin.config.groupBy
           })
         )
@@ -92,7 +87,7 @@ export const classHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
         undefined,
         undefined,
         [requestParameter],
-        requestReturnType,
+        undefined,
         requestBody
       )
     );

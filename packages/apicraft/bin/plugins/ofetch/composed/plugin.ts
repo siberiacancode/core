@@ -8,8 +8,7 @@ import {
   getImportInstance,
   getImportTypes,
   getRequestFilePath,
-  getRequestInfo,
-  getRequestReturnType
+  getRequestInfo
 } from '@/bin/plugins/helpers';
 
 import type { OFetchPlugin } from '../types';
@@ -45,12 +44,6 @@ export const composedHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
     const requestDataTypeName = `${capitalize(request.id)}Data`;
     const requestResponseTypeName = `${capitalize(request.id)}Response`;
     const requestErrorTypeName = `${capitalize(request.id)}Error`;
-    const requestReturnType = getRequestReturnType({
-      instanceName: 'ofetch',
-      requestInfo,
-      requestResponseTypeName,
-      requestErrorTypeName
-    });
 
     const requestFolderPath = nodePath.dirname(
       `${plugin.config.generateOutput}/${requestFilePath}`
@@ -103,12 +96,14 @@ export const composedHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
                   requestParamsTypeName
                 })
               ],
-              requestReturnType,
+              undefined,
               ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
               // instance(url, { method, body?, query?, ...config })
               getOfetchRequestCallExpression({
                 request,
                 requestInfo,
+                requestResponseTypeName,
+                requestErrorTypeName,
                 groupBy: plugin.config.groupBy
               })
             )
