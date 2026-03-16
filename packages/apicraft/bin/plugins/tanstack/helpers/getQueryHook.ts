@@ -27,7 +27,7 @@ export const getQueryHook = ({ hookName, request, plugin, requestName }: GetQuer
           ts.factory.createIdentifier(`${requestName}QueryKey`),
           undefined,
           undefined,
-          ts.factory.createStringLiteral(requestName)
+          ts.factory.createStringLiteral(`${requestName}QueryKey`)
         )
       ],
       ts.NodeFlags.Const
@@ -79,7 +79,7 @@ export const getQueryHook = ({ hookName, request, plugin, requestName }: GetQuer
                     ts.factory.createIdentifier('queryKey'),
                     ts.factory.createArrayLiteralExpression(
                       [
-                        ts.factory.createStringLiteral(`${requestName}QueryKey`),
+                        ts.factory.createIdentifier(`${requestName}QueryKey`),
                         ...['path', 'query', 'body'].map((field) =>
                           ts.factory.createPropertyAccessChain(
                             ts.factory.createPropertyAccessChain(

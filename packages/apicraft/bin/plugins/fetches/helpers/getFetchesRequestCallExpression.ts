@@ -15,7 +15,7 @@ interface GetFetchesRequestCallExpressionParams {
   requestResponseTypeName: string;
 }
 
-// instance.call(method, url, { body?, query?, ...config })
+// instance.call(method, url, { body?, query?, headers?, ...config })
 export const getFetchesRequestCallExpression = ({
   request,
   requestInfo,
@@ -56,6 +56,14 @@ export const getFetchesRequestCallExpression = ({
             ? [
                 ts.factory.createShorthandPropertyAssignment(
                   ts.factory.createIdentifier('query'),
+                  undefined
+                )
+              ]
+            : []),
+          ...(request.parameters?.header
+            ? [
+                ts.factory.createShorthandPropertyAssignment(
+                  ts.factory.createIdentifier('headers'),
                   undefined
                 )
               ]
