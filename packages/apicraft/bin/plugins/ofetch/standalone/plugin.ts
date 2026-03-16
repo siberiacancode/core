@@ -7,7 +7,8 @@ import {
   getApicraftTypeImport,
   getImportInstance,
   getImportTypes,
-  getRequestInfo
+  getRequestInfo,
+  getRequestReturnType
 } from '@/bin/plugins/helpers';
 
 import type { OFetchPlugin } from '../types';
@@ -55,6 +56,12 @@ export const standaloneHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
         requestParamsTypeName
       })
     );
+    const requestReturnType = getRequestReturnType({
+      instanceName: 'ofetch',
+      requestInfo,
+      requestResponseTypeName,
+      requestErrorTypeName
+    });
 
     // export const request = ({ path, body, query, config }) => ...
     const requestFunction = ts.factory.createVariableStatement(
@@ -76,14 +83,12 @@ export const standaloneHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
                   requestParamsTypeName
                 })
               ],
-              undefined,
+              requestReturnType,
               ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
               // instance(url, { method, body?, query?, ...config })
               getOfetchRequestCallExpression({
                 request,
                 requestInfo,
-                requestResponseTypeName,
-                requestErrorTypeName,
                 groupBy: plugin.config.groupBy
               })
             )

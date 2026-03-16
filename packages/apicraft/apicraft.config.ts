@@ -17,6 +17,14 @@ const apicraftConfig = apicraft([
   {
     input: 'example-apiV2.yaml',
     output: 'generated/axios-standalone',
+    instance: 'fetches',
+    nameBy: 'path',
+    groupBy: 'standalone',
+    plugins: ['tanstack']
+  },
+  {
+    input: 'example-apiV2.yaml',
+    output: 'generated/ofetch-standalone',
     instance: 'ofetch',
     nameBy: 'path',
     groupBy: 'standalone',

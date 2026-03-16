@@ -7,7 +7,8 @@ import {
   getApicraftTypeImport,
   getImportInstance,
   getImportTypes,
-  getRequestInfo
+  getRequestInfo,
+  getRequestReturnType
 } from '@/bin/plugins/helpers';
 
 import type { FetchesPlugin } from '../types';
@@ -55,6 +56,12 @@ export const standaloneHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
         requestParamsTypeName
       })
     );
+    const requestReturnType = getRequestReturnType({
+      instanceName: 'fetches',
+      requestInfo,
+      requestResponseTypeName,
+      requestErrorTypeName
+    });
 
     // export const request = ({ path, body, query, config }) => ...
     const requestFunction = ts.factory.createVariableStatement(
@@ -76,14 +83,12 @@ export const standaloneHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
                   requestParamsTypeName
                 })
               ],
-              undefined,
+              requestReturnType,
               ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
               // instance.call(method, url, { body?, query?, ...config })
               getFetchesRequestCallExpression({
                 request,
                 requestInfo,
-                requestResponseTypeName,
-                requestErrorTypeName,
                 groupBy: plugin.config.groupBy
               })
             )

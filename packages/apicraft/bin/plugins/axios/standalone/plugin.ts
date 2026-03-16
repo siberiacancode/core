@@ -7,7 +7,8 @@ import {
   getApicraftTypeImport,
   getImportInstance,
   getImportTypes,
-  getRequestInfo
+  getRequestInfo,
+  getRequestReturnType
 } from '@/bin/plugins/helpers';
 
 import type { AxiosPlugin } from '../types';
@@ -55,6 +56,12 @@ export const standaloneHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
         requestParamsTypeName
       })
     );
+    const requestReturnType = getRequestReturnType({
+      instanceName: 'axios',
+      requestInfo,
+      requestResponseTypeName,
+      requestErrorTypeName
+    });
 
     // export const request = ({ path, body, query, config }) => ...
     const requestFunction = ts.factory.createVariableStatement(
@@ -76,14 +83,12 @@ export const standaloneHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
                   requestParamsTypeName
                 })
               ],
-              undefined,
+              requestReturnType,
               ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
               // instance.request({ method, url, data, params })
               getAxiosRequestCallExpression({
                 request,
                 requestInfo,
-                requestResponseTypeName,
-                requestErrorTypeName,
                 groupBy: plugin.config.groupBy
               })
             )

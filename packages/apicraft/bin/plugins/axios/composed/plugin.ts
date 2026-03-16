@@ -8,7 +8,8 @@ import {
   getImportInstance,
   getImportTypes,
   getRequestFilePath,
-  getRequestInfo
+  getRequestInfo,
+  getRequestReturnType
 } from '@/bin/plugins/helpers';
 
 import type { AxiosPlugin } from '../types';
@@ -44,6 +45,12 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
     const requestDataTypeName = `${capitalize(request.id)}Data`;
     const requestResponseTypeName = `${capitalize(request.id)}Response`;
     const requestErrorTypeName = `${capitalize(request.id)}Error`;
+    const requestReturnType = getRequestReturnType({
+      instanceName: 'axios',
+      requestInfo,
+      requestResponseTypeName,
+      requestErrorTypeName
+    });
 
     const requestFolderPath = nodePath.dirname(
       `${plugin.config.generateOutput}/${requestFilePath}`
@@ -96,14 +103,12 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
                   requestParamsTypeName
                 })
               ],
-              undefined,
+              requestReturnType,
               ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
               // instance.request({ method, url, data, params })
               getAxiosRequestCallExpression({
                 request,
                 requestInfo,
-                requestResponseTypeName,
-                requestErrorTypeName,
                 groupBy: plugin.config.groupBy
               })
             )
