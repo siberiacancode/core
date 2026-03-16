@@ -7,7 +7,8 @@ import {
   getApicraftTypeImport,
   getImportRuntimeInstance,
   getImportTypes,
-  getRequestInfo
+  getRequestInfo,
+  getRequestReturnType
 } from '@/bin/plugins/helpers';
 
 import type { AxiosPlugin } from '../types';
@@ -54,6 +55,14 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
       })
     );
 
+    // Promise<ApicraftAxiosResponse<Response, Error>>
+    const requestReturnType = getRequestReturnType({
+      instanceName: 'axios',
+      requestInfo,
+      requestResponseTypeName,
+      requestErrorTypeName
+    });
+
     // ({ path, body, query, config }: RequestParams)
     const requestParameter = getAxiosRequestParameterDeclaration({
       request,
@@ -68,8 +77,6 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
           getAxiosRequestCallExpression({
             request,
             requestInfo,
-            requestResponseTypeName,
-            requestErrorTypeName,
             groupBy: plugin.config.groupBy
           })
         )
@@ -85,7 +92,7 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
         undefined,
         undefined,
         [requestParameter],
-        undefined,
+        requestReturnType,
         requestBody
       )
     );

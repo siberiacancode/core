@@ -1,10 +1,10 @@
-import type { RequestConfig } from '@siberiacancode/fetches';
+import type { FetchesResponse, RequestConfig } from '@siberiacancode/fetches';
 import type {
   UseMutationOptions,
   UseQueryOptions,
   UseSuspenseQueryOptions
 } from '@tanstack/react-query';
-import type { AxiosRequestConfig } from 'axios';
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { FetchOptions } from 'ofetch';
 
 export type FetchesRequestParams<Params> = Omit<Params, 'url'> & {
@@ -41,4 +41,10 @@ export interface TanstackMutationSettings<TFunc extends (...args: any[]) => Prom
 
 declare global {
   type ApiResponse<Data = never, Error = never> = Data | Error;
+  interface ApicraftAxiosResponse<Data = never, Error = never> extends AxiosResponse<
+    Data | Error
+  > {}
+  interface ApicraftFetchesResponse<Data = never, Error = never> extends FetchesResponse<
+    Data | Error
+  > {}
 }

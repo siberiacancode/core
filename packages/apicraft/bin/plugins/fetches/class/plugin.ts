@@ -7,7 +7,8 @@ import {
   getApicraftTypeImport,
   getImportRuntimeInstance,
   getImportTypes,
-  getRequestInfo
+  getRequestInfo,
+  getRequestReturnType
 } from '@/bin/plugins/helpers';
 
 import type { FetchesPlugin } from '../types';
@@ -54,6 +55,14 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
       })
     );
 
+    // Promise<ApicraftFetchesResponse<Response, Error>>
+    const requestReturnType = getRequestReturnType({
+      instanceName: 'fetches',
+      requestInfo,
+      requestResponseTypeName,
+      requestErrorTypeName
+    });
+
     // ({ path, body, query, config }: RequestParams)
     const requestParameter = getFetchesRequestParameterDeclaration({
       request,
@@ -68,8 +77,6 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
           getFetchesRequestCallExpression({
             request,
             requestInfo,
-            requestResponseTypeName,
-            requestErrorTypeName,
             groupBy: plugin.config.groupBy
           })
         )
@@ -85,7 +92,7 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
         undefined,
         undefined,
         [requestParameter],
-        undefined,
+        requestReturnType,
         requestBody
       )
     );

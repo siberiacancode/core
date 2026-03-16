@@ -140,16 +140,16 @@ export class ApiInstance {
     constructor(config?: CreateAxiosDefaults) {
         this.instance = axios.create(config);
     }
-    getUserByName({ config, query, path }: GetUserByNameRequestParams) {
-        return this.instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+    getUserByName({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> {
+        return this.instance.request({
             method: "GET",
             url: \`/users/\${path.username}\`,
             params: query,
             ...config
         });
     }
-    createUserRecord({ config, body, query }: CreateUserRecordRequestParams) {
-        return this.instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+    createUserRecord({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> {
+        return this.instance.request({
             method: "POST",
             url: "/users",
             data: body,
@@ -157,16 +157,16 @@ export class ApiInstance {
             ...config
         });
     }
-    updateTaskStatus({ config, body, path }: UpdateTaskStatusRequestParams) {
-        return this.instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+    updateTaskStatus({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> {
+        return this.instance.request({
             method: "PATCH",
             url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
             data: body,
             ...config
         });
     }
-    deleteReportEntry({ config, path }: DeleteReportEntryRequestParams) {
-        return this.instance.request<ApiResponse<DeleteReportEntryResponse>>({
+    deleteReportEntry({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> {
+        return this.instance.request({
             method: "DELETE",
             url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
             ...config
@@ -313,16 +313,16 @@ export class ApiInstance {
     constructor(config?: CreateAxiosDefaults) {
         this.instance = axios.create(config);
     }
-    getUserByUsername({ config, query, path }: GetUserByUsernameRequestParams) {
-        return this.instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+    getUserByUsername({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> {
+        return this.instance.request({
             method: "GET",
             url: \`/users/\${path.username}\`,
             params: query,
             ...config
         });
     }
-    postUsers({ config, body, query }: PostUsersRequestParams) {
-        return this.instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+    postUsers({ config, body, query }: PostUsersRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> {
+        return this.instance.request({
             method: "POST",
             url: "/users",
             data: body,
@@ -330,16 +330,16 @@ export class ApiInstance {
             ...config
         });
     }
-    patchProjectByProjectIdTaskByTaskId({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) {
-        return this.instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+    patchProjectByProjectIdTaskByTaskId({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> {
+        return this.instance.request({
             method: "PATCH",
             url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
             data: body,
             ...config
         });
     }
-    deleteReportByReportIdEntrieByEntryId({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) {
-        return this.instance.request<ApiResponse<DeleteReportEntryResponse>>({
+    deleteReportByReportIdEntrieByEntryId({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> {
+        return this.instance.request({
             method: "DELETE",
             url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
             ...config
@@ -570,7 +570,7 @@ import { instance } from "../../../../../instance.gen";
 
 export type UpdateTaskStatusRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> => instance.request({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -586,7 +586,7 @@ import { instance } from "../../../../../instance.gen";
 
 export type DeleteReportEntryRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.request<ApiResponse<DeleteReportEntryResponse>>({
+export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> => instance.request({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -601,7 +601,7 @@ import { instance } from "../../instance.gen";
 
 export type CreateUserRecordRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.request({
     method: "POST",
     url: "/users",
     data: body,
@@ -618,7 +618,7 @@ import { instance } from "../../../instance.gen";
 
 export type GetUserByNameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> => instance.request({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -846,7 +846,7 @@ import { instance } from "../../../../../instance.gen";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> => instance.request({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -862,7 +862,7 @@ import { instance } from "../../../../../instance.gen";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.request<ApiResponse<DeleteReportEntryResponse>>({
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> => instance.request({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -877,7 +877,7 @@ import { instance } from "../../instance.gen";
 
 export type PostUsersRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+export const postUsers = ({ config, body, query }: PostUsersRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.request({
     method: "POST",
     url: "/users",
     data: body,
@@ -894,7 +894,7 @@ import { instance } from "../../../instance.gen";
 
 export type GetUserByUsernameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> => instance.request({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -1038,16 +1038,16 @@ export class ApiInstance {
     constructor(config?: CreateAxiosDefaults) {
         this.instance = axios.create(config);
     }
-    getUserByName({ config, query, path }: GetUserByNameRequestParams) {
-        return this.instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+    getUserByName({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> {
+        return this.instance.request({
             method: "GET",
             url: \`/users/\${path.username}\`,
             params: query,
             ...config
         });
     }
-    createUserRecord({ config, body, query }: CreateUserRecordRequestParams) {
-        return this.instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+    createUserRecord({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> {
+        return this.instance.request({
             method: "POST",
             url: "/users",
             data: body,
@@ -1055,16 +1055,16 @@ export class ApiInstance {
             ...config
         });
     }
-    updateTaskStatus({ config, body, path }: UpdateTaskStatusRequestParams) {
-        return this.instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+    updateTaskStatus({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> {
+        return this.instance.request({
             method: "PATCH",
             url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
             data: body,
             ...config
         });
     }
-    deleteReportEntry({ config, path }: DeleteReportEntryRequestParams) {
-        return this.instance.request<ApiResponse<DeleteReportEntryResponse>>({
+    deleteReportEntry({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> {
+        return this.instance.request({
             method: "DELETE",
             url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
             ...config
@@ -1211,16 +1211,16 @@ export class ApiInstance {
     constructor(config?: CreateAxiosDefaults) {
         this.instance = axios.create(config);
     }
-    getUserByUsername({ config, query, path }: GetUserByUsernameRequestParams) {
-        return this.instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+    getUserByUsername({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> {
+        return this.instance.request({
             method: "GET",
             url: \`/users/\${path.username}\`,
             params: query,
             ...config
         });
     }
-    postUsers({ config, body, query }: PostUsersRequestParams) {
-        return this.instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+    postUsers({ config, body, query }: PostUsersRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> {
+        return this.instance.request({
             method: "POST",
             url: "/users",
             data: body,
@@ -1228,16 +1228,16 @@ export class ApiInstance {
             ...config
         });
     }
-    patchProjectByProjectIdTaskByTaskId({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) {
-        return this.instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+    patchProjectByProjectIdTaskByTaskId({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> {
+        return this.instance.request({
             method: "PATCH",
             url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
             data: body,
             ...config
         });
     }
-    deleteReportByReportIdEntrieByEntryId({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) {
-        return this.instance.request<ApiResponse<DeleteReportEntryResponse>>({
+    deleteReportByReportIdEntrieByEntryId({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> {
+        return this.instance.request({
             method: "DELETE",
             url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
             ...config
@@ -1468,7 +1468,7 @@ import { instance } from "../../../../../../../../../..";
 
 export type UpdateTaskStatusRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> => instance.request({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -1484,7 +1484,7 @@ import { instance } from "../../../../../../../../../..";
 
 export type DeleteReportEntryRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.request<ApiResponse<DeleteReportEntryResponse>>({
+export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> => instance.request({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -1499,7 +1499,7 @@ import { instance } from "../../../../../../..";
 
 export type CreateUserRecordRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.request({
     method: "POST",
     url: "/users",
     data: body,
@@ -1516,7 +1516,7 @@ import { instance } from "../../../../../../../..";
 
 export type GetUserByNameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> => instance.request({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -1744,7 +1744,7 @@ import { instance } from "../../../../../../../../../..";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> => instance.request({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -1760,7 +1760,7 @@ import { instance } from "../../../../../../../../../..";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.request<ApiResponse<DeleteReportEntryResponse>>({
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> => instance.request({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -1775,7 +1775,7 @@ import { instance } from "../../../../../../..";
 
 export type PostUsersRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+export const postUsers = ({ config, body, query }: PostUsersRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.request({
     method: "POST",
     url: "/users",
     data: body,
@@ -1792,7 +1792,7 @@ import { instance } from "../../../../../../../..";
 
 export type GetUserByUsernameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> => instance.request({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -1935,14 +1935,14 @@ export type UpdateTaskStatusRequestParams = AxiosRequestParams<UpdateTaskStatusD
 
 export type DeleteReportEntryRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> => instance.request({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
     ...config
 });
 
-export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.request({
     method: "POST",
     url: "/users",
     data: body,
@@ -1950,14 +1950,14 @@ export const createUserRecord = ({ config, body, query }: CreateUserRecordReques
     ...config
 });
 
-export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> => instance.request({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
     ...config
 });
 
-export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.request<ApiResponse<DeleteReportEntryResponse>>({
+export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> => instance.request({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -2099,14 +2099,14 @@ export type PatchProjectByProjectIdTaskByTaskIdRequestParams = AxiosRequestParam
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> => instance.request({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
     ...config
 });
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+export const postUsers = ({ config, body, query }: PostUsersRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.request({
     method: "POST",
     url: "/users",
     data: body,
@@ -2114,14 +2114,14 @@ export const postUsers = ({ config, body, query }: PostUsersRequestParams) => in
     ...config
 });
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> => instance.request({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
     ...config
 });
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.request<ApiResponse<DeleteReportEntryResponse>>({
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> => instance.request({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -2348,7 +2348,7 @@ import { instance } from "../../../../../../..";
 
 export type UpdateTaskStatusRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> => instance.request({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -2364,7 +2364,7 @@ import { instance } from "../../../../../../..";
 
 export type DeleteReportEntryRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.request<ApiResponse<DeleteReportEntryResponse>>({
+export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> => instance.request({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -2379,7 +2379,7 @@ import { instance } from "../../../../../../..";
 
 export type CreateUserRecordRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.request({
     method: "POST",
     url: "/users",
     data: body,
@@ -2396,7 +2396,7 @@ import { instance } from "../../../../../../..";
 
 export type GetUserByNameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> => instance.request({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -2624,7 +2624,7 @@ import { instance } from "../../../../../../..";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> => instance.request({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -2640,7 +2640,7 @@ import { instance } from "../../../../../../..";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.request<ApiResponse<DeleteReportEntryResponse>>({
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> => instance.request({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -2655,7 +2655,7 @@ import { instance } from "../../../../../../..";
 
 export type GetUserByUsernameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> => instance.request({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -2671,7 +2671,7 @@ import { instance } from "../../../../../../..";
 
 export type PostUsersRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+export const postUsers = ({ config, body, query }: PostUsersRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.request({
     method: "POST",
     url: "/users",
     data: body,
@@ -2815,14 +2815,14 @@ export type UpdateTaskStatusRequestParams = AxiosRequestParams<UpdateTaskStatusD
 
 export type DeleteReportEntryRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> => instance.request({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
     ...config
 });
 
-export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.request({
     method: "POST",
     url: "/users",
     data: body,
@@ -2830,14 +2830,14 @@ export const createUserRecord = ({ config, body, query }: CreateUserRecordReques
     ...config
 });
 
-export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> => instance.request({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
     ...config
 });
 
-export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.request<ApiResponse<DeleteReportEntryResponse>>({
+export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> => instance.request({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -2979,14 +2979,14 @@ export type PatchProjectByProjectIdTaskByTaskIdRequestParams = AxiosRequestParam
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> => instance.request({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
     ...config
 });
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+export const postUsers = ({ config, body, query }: PostUsersRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.request({
     method: "POST",
     url: "/users",
     data: body,
@@ -2994,14 +2994,14 @@ export const postUsers = ({ config, body, query }: PostUsersRequestParams) => in
     ...config
 });
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> => instance.request({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
     ...config
 });
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.request<ApiResponse<DeleteReportEntryResponse>>({
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> => instance.request({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -3228,7 +3228,7 @@ import { instance } from "../../instance.gen";
 
 export type UpdateTaskStatusRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> => instance.request({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -3244,7 +3244,7 @@ import { instance } from "../../instance.gen";
 
 export type DeleteReportEntryRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.request<ApiResponse<DeleteReportEntryResponse>>({
+export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> => instance.request({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -3259,7 +3259,7 @@ import { instance } from "../../instance.gen";
 
 export type CreateUserRecordRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.request({
     method: "POST",
     url: "/users",
     data: body,
@@ -3276,7 +3276,7 @@ import { instance } from "../../instance.gen";
 
 export type GetUserByNameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> => instance.request({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -3504,7 +3504,7 @@ import { instance } from "../../instance.gen";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = AxiosRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.request<ApiResponse<UpdateTaskStatusResponse>>({
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftAxiosResponse<UpdateTaskStatusResponse>> => instance.request({
     method: "PATCH",
     url: \`/projects/\${path.projectId}/tasks/\${path.task_id}\`,
     data: body,
@@ -3520,7 +3520,7 @@ import { instance } from "../../instance.gen";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.request<ApiResponse<DeleteReportEntryResponse>>({
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftAxiosResponse<DeleteReportEntryResponse>> => instance.request({
     method: "DELETE",
     url: \`/reports/\${path.report_id}/entries/\${path.entry_id}\`,
     ...config
@@ -3535,7 +3535,7 @@ import { instance } from "../../instance.gen";
 
 export type GetUserByUsernameRequestParams = AxiosRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.request<ApiResponse<GetUserByNameResponse, GetUserByNameError>>({
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> => instance.request({
     method: "GET",
     url: \`/users/\${path.username}\`,
     params: query,
@@ -3551,7 +3551,7 @@ import { instance } from "../../instance.gen";
 
 export type PostUsersRequestParams = AxiosRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.request<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>({
+export const postUsers = ({ config, body, query }: PostUsersRequestParams): Promise<ApicraftAxiosResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.request({
     method: "POST",
     url: "/users",
     data: body,
@@ -3696,27 +3696,27 @@ export class ApiInstance {
     constructor(config?: FetchesParams) {
         this.instance = fetches.create(config);
     }
-    getUserByName({ config, query, path }: GetUserByNameRequestParams) {
-        return this.instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+    getUserByName({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> {
+        return this.instance.call("GET", \`/users/\${path.username}\`, {
             query,
             ...config
         });
     }
-    createUserRecord({ config, body, query }: CreateUserRecordRequestParams) {
-        return this.instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+    createUserRecord({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> {
+        return this.instance.call("POST", "/users", {
             body,
             query,
             ...config
         });
     }
-    updateTaskStatus({ config, body, path }: UpdateTaskStatusRequestParams) {
-        return this.instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+    updateTaskStatus({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> {
+        return this.instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
             body,
             ...config
         });
     }
-    deleteReportEntry({ config, path }: DeleteReportEntryRequestParams) {
-        return this.instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+    deleteReportEntry({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> {
+        return this.instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
             ...config
         });
     }
@@ -3861,27 +3861,27 @@ export class ApiInstance {
     constructor(config?: FetchesParams) {
         this.instance = fetches.create(config);
     }
-    getUserByUsername({ config, query, path }: GetUserByUsernameRequestParams) {
-        return this.instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+    getUserByUsername({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> {
+        return this.instance.call("GET", \`/users/\${path.username}\`, {
             query,
             ...config
         });
     }
-    postUsers({ config, body, query }: PostUsersRequestParams) {
-        return this.instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+    postUsers({ config, body, query }: PostUsersRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> {
+        return this.instance.call("POST", "/users", {
             body,
             query,
             ...config
         });
     }
-    patchProjectByProjectIdTaskByTaskId({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) {
-        return this.instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+    patchProjectByProjectIdTaskByTaskId({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> {
+        return this.instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
             body,
             ...config
         });
     }
-    deleteReportByReportIdEntrieByEntryId({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) {
-        return this.instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+    deleteReportByReportIdEntrieByEntryId({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> {
+        return this.instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
             ...config
         });
     }
@@ -4110,7 +4110,7 @@ import { instance } from "../../../../../instance.gen";
 
 export type UpdateTaskStatusRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> => instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -4124,7 +4124,7 @@ import { instance } from "../../../../../instance.gen";
 
 export type DeleteReportEntryRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> => instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/paths/operationId/requests/users/post.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
@@ -4137,7 +4137,7 @@ import { instance } from "../../instance.gen";
 
 export type CreateUserRecordRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.call("POST", "/users", {
     body,
     query,
     ...config
@@ -4152,7 +4152,7 @@ import { instance } from "../../../instance.gen";
 
 export type GetUserByNameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> => instance.call("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -4378,7 +4378,7 @@ import { instance } from "../../../../../instance.gen";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> => instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -4392,7 +4392,7 @@ import { instance } from "../../../../../instance.gen";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> => instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/paths/path/requests/users/post.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
@@ -4405,7 +4405,7 @@ import { instance } from "../../instance.gen";
 
 export type PostUsersRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+export const postUsers = ({ config, body, query }: PostUsersRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.call("POST", "/users", {
     body,
     query,
     ...config
@@ -4420,7 +4420,7 @@ import { instance } from "../../../instance.gen";
 
 export type GetUserByUsernameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> => instance.call("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -4562,27 +4562,27 @@ export class ApiInstance {
     constructor(config?: FetchesParams) {
         this.instance = fetches.create(config);
     }
-    getUserByName({ config, query, path }: GetUserByNameRequestParams) {
-        return this.instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+    getUserByName({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> {
+        return this.instance.call("GET", \`/users/\${path.username}\`, {
             query,
             ...config
         });
     }
-    createUserRecord({ config, body, query }: CreateUserRecordRequestParams) {
-        return this.instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+    createUserRecord({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> {
+        return this.instance.call("POST", "/users", {
             body,
             query,
             ...config
         });
     }
-    updateTaskStatus({ config, body, path }: UpdateTaskStatusRequestParams) {
-        return this.instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+    updateTaskStatus({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> {
+        return this.instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
             body,
             ...config
         });
     }
-    deleteReportEntry({ config, path }: DeleteReportEntryRequestParams) {
-        return this.instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+    deleteReportEntry({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> {
+        return this.instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
             ...config
         });
     }
@@ -4727,27 +4727,27 @@ export class ApiInstance {
     constructor(config?: FetchesParams) {
         this.instance = fetches.create(config);
     }
-    getUserByUsername({ config, query, path }: GetUserByUsernameRequestParams) {
-        return this.instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+    getUserByUsername({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> {
+        return this.instance.call("GET", \`/users/\${path.username}\`, {
             query,
             ...config
         });
     }
-    postUsers({ config, body, query }: PostUsersRequestParams) {
-        return this.instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+    postUsers({ config, body, query }: PostUsersRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> {
+        return this.instance.call("POST", "/users", {
             body,
             query,
             ...config
         });
     }
-    patchProjectByProjectIdTaskByTaskId({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) {
-        return this.instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+    patchProjectByProjectIdTaskByTaskId({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> {
+        return this.instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
             body,
             ...config
         });
     }
-    deleteReportByReportIdEntrieByEntryId({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) {
-        return this.instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+    deleteReportByReportIdEntrieByEntryId({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> {
+        return this.instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
             ...config
         });
     }
@@ -4976,7 +4976,7 @@ import { instance } from "../../../../../../../../../..";
 
 export type UpdateTaskStatusRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> => instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -4990,7 +4990,7 @@ import { instance } from "../../../../../../../../../..";
 
 export type DeleteReportEntryRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> => instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/runtime/paths/operationId/requests/users/post.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
@@ -5003,7 +5003,7 @@ import { instance } from "../../../../../../..";
 
 export type CreateUserRecordRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.call("POST", "/users", {
     body,
     query,
     ...config
@@ -5018,7 +5018,7 @@ import { instance } from "../../../../../../../..";
 
 export type GetUserByNameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> => instance.call("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -5244,7 +5244,7 @@ import { instance } from "../../../../../../../../../..";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> => instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -5258,7 +5258,7 @@ import { instance } from "../../../../../../../../../..";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> => instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/runtime/paths/path/requests/users/post.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
@@ -5271,7 +5271,7 @@ import { instance } from "../../../../../../..";
 
 export type PostUsersRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+export const postUsers = ({ config, body, query }: PostUsersRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.call("POST", "/users", {
     body,
     query,
     ...config
@@ -5286,7 +5286,7 @@ import { instance } from "../../../../../../../..";
 
 export type GetUserByUsernameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> => instance.call("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -5427,23 +5427,23 @@ export type UpdateTaskStatusRequestParams = FetchesRequestParams<UpdateTaskStatu
 
 export type DeleteReportEntryRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> => instance.call("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });
 
-export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.call("POST", "/users", {
     body,
     query,
     ...config
 });
 
-export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> => instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });
 
-export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> => instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/runtime/standalone/path/hooks.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
@@ -5583,23 +5583,23 @@ export type PatchProjectByProjectIdTaskByTaskIdRequestParams = FetchesRequestPar
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> => instance.call("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+export const postUsers = ({ config, body, query }: PostUsersRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.call("POST", "/users", {
     body,
     query,
     ...config
 });
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> => instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> => instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/runtime/tags/operationId/hooks/project/useUpdateTaskStatusMutation.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
@@ -5824,7 +5824,7 @@ import { instance } from "../../../../../../..";
 
 export type UpdateTaskStatusRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> => instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -5838,7 +5838,7 @@ import { instance } from "../../../../../../..";
 
 export type DeleteReportEntryRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> => instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/runtime/tags/operationId/requests/user/createUserRecord.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
@@ -5851,7 +5851,7 @@ import { instance } from "../../../../../../..";
 
 export type CreateUserRecordRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.call("POST", "/users", {
     body,
     query,
     ...config
@@ -5866,7 +5866,7 @@ import { instance } from "../../../../../../..";
 
 export type GetUserByNameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> => instance.call("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -6092,7 +6092,7 @@ import { instance } from "../../../../../../..";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> => instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -6106,7 +6106,7 @@ import { instance } from "../../../../../../..";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> => instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/runtime/tags/path/requests/user/getUserByUsername.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
@@ -6119,7 +6119,7 @@ import { instance } from "../../../../../../..";
 
 export type GetUserByUsernameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> => instance.call("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -6133,7 +6133,7 @@ import { instance } from "../../../../../../..";
 
 export type PostUsersRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+export const postUsers = ({ config, body, query }: PostUsersRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.call("POST", "/users", {
     body,
     query,
     ...config
@@ -6275,23 +6275,23 @@ export type UpdateTaskStatusRequestParams = FetchesRequestParams<UpdateTaskStatu
 
 export type DeleteReportEntryRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> => instance.call("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });
 
-export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.call("POST", "/users", {
     body,
     query,
     ...config
 });
 
-export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> => instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });
 
-export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> => instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/standalone/path/hooks.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
@@ -6431,23 +6431,23 @@ export type PatchProjectByProjectIdTaskByTaskIdRequestParams = FetchesRequestPar
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> => instance.call("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+export const postUsers = ({ config, body, query }: PostUsersRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.call("POST", "/users", {
     body,
     query,
     ...config
 });
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> => instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> => instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/tags/operationId/hooks/project/useUpdateTaskStatusMutation.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
@@ -6672,7 +6672,7 @@ import { instance } from "../../instance.gen";
 
 export type UpdateTaskStatusRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams) => instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const updateTaskStatus = ({ config, body, path }: UpdateTaskStatusRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> => instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -6686,7 +6686,7 @@ import { instance } from "../../instance.gen";
 
 export type DeleteReportEntryRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams) => instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportEntry = ({ config, path }: DeleteReportEntryRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> => instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/tags/operationId/requests/user/createUserRecord.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
@@ -6699,7 +6699,7 @@ import { instance } from "../../instance.gen";
 
 export type CreateUserRecordRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams) => instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+export const createUserRecord = ({ config, body, query }: CreateUserRecordRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.call("POST", "/users", {
     body,
     query,
     ...config
@@ -6714,7 +6714,7 @@ import { instance } from "../../instance.gen";
 
 export type GetUserByNameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams) => instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+export const getUserByName = ({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> => instance.call("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -6940,7 +6940,7 @@ import { instance } from "../../instance.gen";
 
 export type PatchProjectByProjectIdTaskByTaskIdRequestParams = FetchesRequestParams<UpdateTaskStatusData>;
 
-export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams) => instance.call<ApiResponse<UpdateTaskStatusResponse>>("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
+export const patchProjectByProjectIdTaskByTaskId = ({ config, body, path }: PatchProjectByProjectIdTaskByTaskIdRequestParams): Promise<ApicraftFetchesResponse<UpdateTaskStatusResponse>> => instance.call("PATCH", \`/projects/\${path.projectId}/tasks/\${path.task_id}\`, {
     body,
     ...config
 });",
@@ -6954,7 +6954,7 @@ import { instance } from "../../instance.gen";
 
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
-export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams) => instance.call<ApiResponse<DeleteReportEntryResponse>>("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
+export const deleteReportByReportIdEntrieByEntryId = ({ config, path }: DeleteReportByReportIdEntrieByEntryIdRequestParams): Promise<ApicraftFetchesResponse<DeleteReportEntryResponse>> => instance.call("DELETE", \`/reports/\${path.report_id}/entries/\${path.entry_id}\`, {
     ...config
 });",
   "fetches/tags/path/requests/user/getUserByUsername.gen.ts": "// This file is auto-generated by @hey-api/openapi-ts
@@ -6967,7 +6967,7 @@ import { instance } from "../../instance.gen";
 
 export type GetUserByUsernameRequestParams = FetchesRequestParams<GetUserByNameData>;
 
-export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams) => instance.call<ApiResponse<GetUserByNameResponse, GetUserByNameError>>("GET", \`/users/\${path.username}\`, {
+export const getUserByUsername = ({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> => instance.call("GET", \`/users/\${path.username}\`, {
     query,
     ...config
 });",
@@ -6981,7 +6981,7 @@ import { instance } from "../../instance.gen";
 
 export type PostUsersRequestParams = FetchesRequestParams<CreateUserRecordData>;
 
-export const postUsers = ({ config, body, query }: PostUsersRequestParams) => instance.call<ApiResponse<CreateUserRecordResponse, CreateUserRecordError>>("POST", "/users", {
+export const postUsers = ({ config, body, query }: PostUsersRequestParams): Promise<ApicraftFetchesResponse<CreateUserRecordResponse, CreateUserRecordError>> => instance.call("POST", "/users", {
     body,
     query,
     ...config

@@ -5,22 +5,18 @@ import ts from 'typescript';
 import type { GetRequestInfoResult } from '@/bin/plugins/helpers';
 import type { ApicraftOption } from '@/bin/schemas';
 
-import { buildRequestParamsPath, getRequestCallGenericResponse } from '@/bin/plugins/helpers';
+import { buildRequestParamsPath } from '@/bin/plugins/helpers';
 
 interface GetAxiosRequestCallExpressionParams {
   groupBy: ApicraftOption['groupBy'];
   request: IR.OperationObject;
-  requestErrorTypeName: string;
   requestInfo: GetRequestInfoResult;
-  requestResponseTypeName: string;
 }
 
 // instance.request({ method, url, data, params })
 export const getAxiosRequestCallExpression = ({
   request,
   requestInfo,
-  requestResponseTypeName,
-  requestErrorTypeName,
   groupBy
 }: GetAxiosRequestCallExpressionParams) =>
   ts.factory.createCallExpression(
@@ -36,7 +32,7 @@ export const getAxiosRequestCallExpression = ({
           ts.factory.createIdentifier('instance'),
           ts.factory.createIdentifier('request')
         ),
-    getRequestCallGenericResponse({ requestInfo, requestResponseTypeName, requestErrorTypeName }),
+    undefined,
     [
       ts.factory.createObjectLiteralExpression(
         [

@@ -4,6 +4,7 @@ export * from './getRelativePath';
 export * from './getRequestCallGenericResponse';
 export * from './getRequestFilePath';
 export * from './getRequestInfo';
+export * from './getRequestReturnType';
 export * from './imports';
 export * from './normalizeName';
 export * from './removeRequestsBaseUrl';
