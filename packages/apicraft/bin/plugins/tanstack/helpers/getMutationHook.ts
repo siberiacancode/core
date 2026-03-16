@@ -20,7 +20,7 @@ export const getMutationHook = ({ hookName, plugin, requestName }: GetMutationHo
           ts.factory.createIdentifier(`${requestName}MutationKey`),
           undefined,
           undefined,
-          ts.factory.createStringLiteral(requestName)
+          ts.factory.createStringLiteral(`${requestName}MutationKey`)
         )
       ],
       ts.NodeFlags.Const
@@ -69,7 +69,7 @@ export const getMutationHook = ({ hookName, plugin, requestName }: GetMutationHo
                   ts.factory.createPropertyAssignment(
                     ts.factory.createIdentifier('mutationKey'),
                     ts.factory.createArrayLiteralExpression(
-                      [ts.factory.createStringLiteral(`${requestName}MutationKey`)],
+                      [ts.factory.createIdentifier(`${requestName}MutationKey`)],
                       false
                     )
                   ),

@@ -15,7 +15,7 @@ interface GetOfetchRequestCallExpressionParams {
   requestResponseTypeName: string;
 }
 
-// instance(url, { method, body?, query?, ...config })
+// instance(url, { method, body?, query?, headers?, ...config })
 export const getOfetchRequestCallExpression = ({
   request,
   requestInfo,
@@ -53,6 +53,14 @@ export const getOfetchRequestCallExpression = ({
             ? [
                 ts.factory.createShorthandPropertyAssignment(
                   ts.factory.createIdentifier('query'),
+                  undefined
+                )
+              ]
+            : []),
+          ...(request.parameters?.header
+            ? [
+                ts.factory.createShorthandPropertyAssignment(
+                  ts.factory.createIdentifier('headers'),
                   undefined
                 )
               ]

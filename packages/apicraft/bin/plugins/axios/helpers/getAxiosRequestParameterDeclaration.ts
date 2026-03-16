@@ -10,7 +10,7 @@ interface GetAxiosRequestParameterDeclarationParams {
   requestParamsTypeName: string;
 }
 
-// ({ path, body, query, config }: RequestParams)
+// ({ config, body, query, path, headers }: RequestParams)
 export const getAxiosRequestParameterDeclaration = ({
   request,
   requestInfo,
@@ -52,6 +52,16 @@ export const getAxiosRequestParameterDeclaration = ({
               undefined,
               undefined,
               ts.factory.createIdentifier('path'),
+              undefined
+            )
+          ]
+        : []),
+      ...(request.parameters?.header
+        ? [
+            ts.factory.createBindingElement(
+              undefined,
+              undefined,
+              ts.factory.createIdentifier('headers'),
               undefined
             )
           ]

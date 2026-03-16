@@ -13,7 +13,7 @@ interface GetAxiosRequestCallExpressionParams {
   requestInfo: GetRequestInfoResult;
 }
 
-// instance.request({ method, url, data, params })
+// instance.request({ method, url, data, params, headers })
 export const getAxiosRequestCallExpression = ({
   request,
   requestInfo,
@@ -59,6 +59,14 @@ export const getAxiosRequestCallExpression = ({
                 ts.factory.createPropertyAssignment(
                   ts.factory.createIdentifier('params'),
                   ts.factory.createIdentifier('query')
+                )
+              ]
+            : []),
+          ...(request.parameters?.header
+            ? [
+                ts.factory.createPropertyAssignment(
+                  ts.factory.createIdentifier('headers'),
+                  ts.factory.createIdentifier('headers')
                 )
               ]
             : []),

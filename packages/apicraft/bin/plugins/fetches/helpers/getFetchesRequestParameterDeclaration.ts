@@ -10,7 +10,7 @@ interface GetFetchesRequestParameterDeclarationParams {
   requestParamsTypeName: string;
 }
 
-// ({ path, body, query, config }: RequestParams)
+// ({ config, body, query, path, headers }: RequestParams)
 export const getFetchesRequestParameterDeclaration = ({
   request,
   requestInfo,
@@ -52,6 +52,16 @@ export const getFetchesRequestParameterDeclaration = ({
               undefined,
               undefined,
               ts.factory.createIdentifier('path'),
+              undefined
+            )
+          ]
+        : []),
+      ...(request.parameters?.header
+        ? [
+            ts.factory.createBindingElement(
+              undefined,
+              undefined,
+              ts.factory.createIdentifier('headers'),
               undefined
             )
           ]

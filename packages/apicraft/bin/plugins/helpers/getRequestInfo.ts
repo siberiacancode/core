@@ -15,5 +15,6 @@ export const getRequestInfo = (request: IR.OperationObject): GetRequestInfoResul
   hasRequiredParam:
     Object.values(request.parameters?.query ?? {}).some((queryParam) => queryParam.required) ||
     Object.values(request.parameters?.path ?? {}).some((pathParam) => pathParam.required) ||
+    Object.values(request.parameters?.header ?? {}).some((headerParam) => headerParam.required) ||
     !!request.body?.required
 });
