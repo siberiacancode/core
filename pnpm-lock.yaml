@@ -35,9 +35,6 @@ importers:
       '@siberiacancode/fetches':
         specifier: ^1.14.1
         version: 1.14.1
-      '@siberiacancode/vitest':
-        specifier: ^2.4.1
-        version: 2.4.1(jsdom@27.3.0)(vitest@4.0.16(@types/node@25.3.5)(jiti@2.6.1)(jsdom@27.3.0)(yaml@2.8.2))
       '@tanstack/react-query':
         specifier: ^5.90.21
         version: 5.90.21(react@19.2.4)
@@ -66,6 +63,12 @@ importers:
       '@siberiacancode/prettier':
         specifier: '*'
         version: 1.6.1(prettier@3.8.1)
+      '@siberiacancode/tsconfig':
+        specifier: '*'
+        version: 1.1.0(typescript@5.9.3)
+      '@siberiacancode/vitest':
+        specifier: '*'
+        version: 2.4.1(jsdom@27.3.0)(vitest@4.0.16(@types/node@25.3.5)(jiti@2.6.1)(jsdom@27.3.0)(yaml@2.8.2))
       '@types/node':
         specifier: ^25.3.3
         version: 25.3.5
@@ -1239,6 +1242,11 @@ packages:
     resolution: {integrity: sha512-HKPTpvTQjqYDj6pfFr4cY5ivx7rJRQDOV72nGGspEM8gq0yHqDnN75BvdtE7f5ay0gm+Fm6XOm82VWrCKaF0Yg==}
     peerDependencies:
       prettier: ^3.8.1
+
+  '@siberiacancode/tsconfig@1.1.0':
+    resolution: {integrity: sha512-A8IvojNlKM3gVWQfh2FP6K47NHbKJ7Ig6BaSdgHqyEGOl/2ibQH51IpJ/fV29zoPEEBzco3XlR+JHYfa7Z/5nQ==}
+    peerDependencies:
+      typescript: ^4.9.5 || ^5.0.0
 
   '@siberiacancode/vitest@2.4.1':
     resolution: {integrity: sha512-ci3X+/ao10HxuENulYkoxejgN/geINpQF04YdU1DOaFpvo6Oo1YOKAg4e+X5WDDpNMOjiw9GYWmYab6ltQxdkQ==}
@@ -5552,6 +5560,10 @@ snapshots:
   '@siberiacancode/prettier@1.6.1(prettier@3.8.1)':
     dependencies:
       prettier: 3.8.1
+
+  '@siberiacancode/tsconfig@1.1.0(typescript@5.9.3)':
+    dependencies:
+      typescript: 5.9.3
 
   '@siberiacancode/vitest@2.4.1(jsdom@27.3.0)(vitest@4.0.16(@types/node@25.3.5)(jiti@2.6.1)(jsdom@27.3.0)(yaml@2.8.2))':
     dependencies:
