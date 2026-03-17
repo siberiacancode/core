@@ -219,7 +219,6 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
     {
       name: 'siberiacancode/rewrite',
       rules: {
-        'antfu/curly': 'off',
         'antfu/if-newline': 'off',
         'antfu/top-level-function': 'off',
 
