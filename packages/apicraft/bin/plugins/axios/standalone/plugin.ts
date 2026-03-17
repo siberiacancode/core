@@ -6,9 +6,11 @@ import {
   generateRequestName,
   getApicraftTypeImport,
   getImportInstance,
+  getImportRuntimeResponseType,
   getImportTypes,
   getRequestInfo,
-  getRequestReturnType
+  getRequestReturnType,
+  hasRuntimeResponseType
 } from '@/bin/plugins/helpers';
 
 import type { AxiosPlugin } from '../types';
@@ -35,6 +37,9 @@ export const standaloneHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
   const typeImportNames = new Set<string>();
   const typeStatements: ts.Statement[] = [];
   const requestStatements: ts.Statement[] = [];
+  const useRuntimeResponseType =
+    !!plugin.config.runtimeInstancePath &&
+    hasRuntimeResponseType(plugin.config.runtimeInstancePath);
 
   plugin.forEach('operation', (event) => {
     const request = event.operation;
@@ -59,6 +64,7 @@ export const standaloneHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
 
     // Promise<ApicraftAxiosResponse<Response, Error>>
     const requestReturnType = getRequestReturnType({
+      useRuntimeResponseType,
       instanceName: 'axios',
       requestInfo,
       requestResponseTypeName,
@@ -103,8 +109,11 @@ export const standaloneHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
     requestStatements.push(requestFunction);
   });
 
-  // import type { AxiosRequestParams } from '@siberiacancode/apicraft';
-  const importAxiosRequestParams = getApicraftTypeImport('AxiosRequestParams');
+  // import type { AxiosRequestParams, ... } from '@siberiacancode/apicraft';
+  const importApicraftTypes = getApicraftTypeImport([
+    'AxiosRequestParams',
+    ...(!useRuntimeResponseType ? ['ApicraftAxiosResponse'] : [])
+  ]);
 
   // import type { RequestData, RequestResponse, ... } from './types.gen';
   const importTypes = getImportTypes({
@@ -121,8 +130,16 @@ export const standaloneHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
     runtimeInstancePath: plugin.config.runtimeInstancePath
   });
 
-  requestsFile.add(importAxiosRequestParams);
+  requestsFile.add(importApicraftTypes);
   requestsFile.add(importTypes);
+  if (useRuntimeResponseType) {
+    requestsFile.add(
+      getImportRuntimeResponseType({
+        folderPath: requestsFolderPath,
+        runtimeInstancePath: plugin.config.runtimeInstancePath!
+      })
+    );
+  }
   requestsFile.add(importInstance);
   typeStatements.forEach((statement) => requestsFile.add(statement));
   requestStatements.forEach((statement) => requestsFile.add(statement));

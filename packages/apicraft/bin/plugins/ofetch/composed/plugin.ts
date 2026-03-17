@@ -6,10 +6,12 @@ import {
   generateRequestName,
   getApicraftTypeImport,
   getImportInstance,
+  getImportRuntimeResponseType,
   getImportTypes,
   getRequestFilePath,
   getRequestInfo,
-  getRequestReturnType
+  getRequestReturnType,
+  hasRuntimeResponseType
 } from '@/bin/plugins/helpers';
 
 import type { OFetchPlugin } from '../types';
@@ -23,6 +25,9 @@ import {
 
 export const composedHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
   if (!plugin.config.runtimeInstancePath) addInstanceFile(plugin);
+  const useRuntimeResponseType =
+    !!plugin.config.runtimeInstancePath &&
+    hasRuntimeResponseType(plugin.config.runtimeInstancePath);
 
   plugin.forEach('operation', (event) => {
     const request = event.operation;
@@ -50,8 +55,11 @@ export const composedHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
       `${plugin.config.generateOutput}/${requestFilePath}`
     );
 
-    // import type { OFetchRequestParams } from '@siberiacancode/apicraft';
-    const importOfetchRequestParams = getApicraftTypeImport('OFetchRequestParams');
+    // import type { OFetchRequestParams, ... } from '@siberiacancode/apicraft';
+    const importApicraftTypes = getApicraftTypeImport([
+      'OFetchRequestParams',
+      ...(!useRuntimeResponseType ? ['ApicraftOfetchResponse'] : [])
+    ]);
     // import type { RequestData, RequestResponse } from 'generated/types.gen';
     const importTypes = getImportTypes({
       typeNames: [
@@ -78,6 +86,7 @@ export const composedHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
     });
 
     const requestReturnType = getRequestReturnType({
+      useRuntimeResponseType,
       instanceName: 'ofetch',
       requestInfo,
       requestResponseTypeName,
@@ -119,8 +128,16 @@ export const composedHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
       )
     );
 
-    requestFile.add(importOfetchRequestParams);
+    requestFile.add(importApicraftTypes);
     requestFile.add(importTypes);
+    if (useRuntimeResponseType) {
+      requestFile.add(
+        getImportRuntimeResponseType({
+          folderPath: requestFolderPath,
+          runtimeInstancePath: plugin.config.runtimeInstancePath!
+        })
+      );
+    }
     requestFile.add(importInstance);
     requestFile.add(requestParamsType);
     requestFile.add(requestFunction);

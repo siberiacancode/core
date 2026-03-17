@@ -6,9 +6,11 @@ import {
   generateRequestName,
   getApicraftTypeImport,
   getImportRuntimeInstance,
+  getImportRuntimeResponseType,
   getImportTypes,
   getRequestInfo,
-  getRequestReturnType
+  getRequestReturnType,
+  hasRuntimeResponseType
 } from '@/bin/plugins/helpers';
 
 import type { FetchesPlugin } from '../types';
@@ -33,6 +35,9 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
   const typeImportNames = new Set<string>();
   const typeStatements: ts.Statement[] = [];
   const classElements: ts.ClassElement[] = [];
+  const useRuntimeResponseType =
+    !!plugin.config.runtimeInstancePath &&
+    hasRuntimeResponseType(plugin.config.runtimeInstancePath);
 
   plugin.forEach('operation', (event) => {
     const request = event.operation;
@@ -57,6 +62,7 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
 
     // Promise<ApicraftFetchesResponse<Response, Error>>
     const requestReturnType = getRequestReturnType({
+      useRuntimeResponseType,
       instanceName: 'fetches',
       requestInfo,
       requestResponseTypeName,
@@ -105,8 +111,11 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
     generateOutput: plugin.config.generateOutput
   });
 
-  // import type { FetchesRequestParams } from '@siberiacancode/apicraft';
-  const importFetchesRequestParams = getApicraftTypeImport('FetchesRequestParams');
+  // import type { FetchesRequestParams, ... } from '@siberiacancode/apicraft';
+  const importApicraftTypes = getApicraftTypeImport([
+    'FetchesRequestParams',
+    ...(!useRuntimeResponseType ? ['ApicraftFetchesResponse'] : [])
+  ]);
 
   // import type { FetchesInstance, FetchesParams } from '@siberiacancode/fetches';
   const importFetchesTypes = ts.factory.createImportDeclaration(
@@ -213,10 +222,19 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
     )
   );
 
-  classFile.add(importFetchesRequestParams);
+  classFile.add(importApicraftTypes);
   classFile.add(importTypes);
   classFile.add(importFetchesTypes);
 
+  if (useRuntimeResponseType) {
+    // import type { ApicraftApiResponse } from runtimeInstancePath;
+    classFile.add(
+      getImportRuntimeResponseType({
+        folderPath: classFolderPath,
+        runtimeInstancePath: plugin.config.runtimeInstancePath!
+      })
+    );
+  }
   if (plugin.config.runtimeInstancePath) {
     // import { instance as runtimeInstance } from runtimeInstancePath;
     classFile.add(
