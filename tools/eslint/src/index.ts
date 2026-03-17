@@ -2,6 +2,7 @@ import type {
   Awaitable,
   ConfigNames,
   OptionsConfig,
+  OptionsOverrides,
   OptionsTypescript,
   TypedFlatConfigItem
 } from '@antfu/eslint-config';
@@ -16,11 +17,29 @@ import pluginPlaywright from 'eslint-plugin-playwright';
 
 import { siberiacancodePlugin } from './plugin/index';
 
+export interface OptionsPlaywright extends OptionsOverrides {
+  patterns?: string[];
+}
+
+export interface TailwindSettings {
+  detectComponentClasses?: boolean;
+  entryPoint?: string;
+  messageStyle?: 'compact' | 'raw' | 'visual';
+  rootFontSize?: number;
+  selectors?: unknown[];
+  tailwindConfig?: string;
+  tsconfig?: string;
+}
+
+export interface OptionsTailwind extends OptionsOverrides {
+  settings?: TailwindSettings;
+}
+
 type EslintOptions = OptionsConfig &
   TypedFlatConfigItem & {
     jsxA11y?: boolean;
-    playwright?: boolean;
-    tailwind?: boolean;
+    playwright?: boolean | OptionsPlaywright;
+    tailwind?: boolean | OptionsTailwind;
     typescript?: boolean | 'engine' | OptionsTypescript;
   };
 
@@ -59,7 +78,8 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
         'ts/no-namespace': 'off',
         'ts/no-floating-promises': 'off',
         'ts/no-misused-promises': ['error', { checksVoidReturn: false }],
-        'ts/no-empty-object-type': 'warn'
+        'ts/no-empty-object-type': 'warn',
+        'ts/unbound-method': 'off'
       }
     });
   }
@@ -87,6 +107,7 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
 
     configs.unshift({
       name: 'siberiacancode/playwright',
+      ...(typeof playwright === 'object' && { files: playwright.patterns }),
       plugins: {
         'siberiacancode-playwright': pluginPlaywright
       },
@@ -112,7 +133,17 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
           acc[key.replace('better-tailwindcss', 'siberiacancode-tailwind')] = value;
           return acc;
         }, {})
-      }
+      },
+      settings: {
+        'better-tailwindcss': {
+          entryPoint: 'src/global.css'
+        }
+      },
+      ...(typeof tailwind === 'object' && {
+        settings: {
+          'better-tailwindcss': tailwind.settings
+        }
+      })
     });
   }
 
@@ -196,6 +227,7 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
 
         'react/prefer-namespace-import': 'off',
         'react-hooks/exhaustive-deps': 'off',
+        'react-refresh/only-export-components': 'off',
 
         'test/prefer-lowercase-title': 'off'
       }
