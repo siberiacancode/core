@@ -6,6 +6,7 @@ import {
   generateRequestName,
   getApicraftTypeImport,
   getImportRuntimeInstance,
+  getImportRuntimeResponseType,
   getImportTypes,
   getRequestInfo,
   getRequestReturnType,
@@ -14,7 +15,6 @@ import {
 
 import type { AxiosPlugin } from '../types';
 
-import { getImportRuntimeResponseType } from '../../helpers/imports/getImportRuntimeResponseType';
 import {
   getAxiosRequestCallExpression,
   getAxiosRequestParameterDeclaration,
@@ -108,7 +108,7 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
   // import type { AxiosRequestParams } from '@siberiacancode/apicraft';
   const importApicraftTypes = getApicraftTypeImport([
     'AxiosRequestParams',
-    ...(useRuntimeResponseType ? [] : ['ApicraftAxiosResponse'])
+    ...(!useRuntimeResponseType ? ['ApicraftAxiosResponse'] : [])
   ]);
 
   // import type { RequestData, RequestResponse, ... } from './types.gen';

@@ -13,7 +13,7 @@ for (const instance of ['axios', 'fetches', 'ofetch'] as const) {
           output: `generated/${instance}${runtimeInstance ? '/runtime' : ''}/${groupBy}/${nameBy}`,
           instance: {
             name: instance,
-            ...(runtimeInstance && { runtimeInstancePath: '' })
+            ...(runtimeInstance && { runtimeInstancePath: './runtime-instance' })
           },
           baseUrl: '/api',
           groupBy,

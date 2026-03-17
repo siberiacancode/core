@@ -1,9 +1,13 @@
 import nodeFs from 'node:fs';
-
-import { getRelativePath } from './getRelativePath';
+import nodePath from 'node:path';
 
 export const hasRuntimeResponseType = (runtimeInstancePath: string) => {
-  const content = nodeFs.readFileSync(getRelativePath(__dirname, runtimeInstancePath), 'utf-8');
+  const content = nodeFs.readFileSync(
+    nodePath.extname(runtimeInstancePath) === 'ts'
+      ? runtimeInstancePath
+      : `${runtimeInstancePath}.ts`,
+    'utf-8'
+  );
 
   return /export\s+(?:type|interface)\s+ApicraftApiResponse\b/.test(content);
 };

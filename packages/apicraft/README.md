@@ -85,7 +85,7 @@ export default apicraft([
 ]);
 ```
 
-Also in that file you can define custom request return type that will be used instead of default one:
+Also in that file you can define custom request return type/interface that will be used instead of default one:
 
 ```ts
 export type ApicraftApiResponse<Data, Error> = AxiosResponse<Data | Error>;
