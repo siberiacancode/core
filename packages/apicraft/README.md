@@ -85,6 +85,12 @@ export default apicraft([
 ]);
 ```
 
+Also in that file you can define custom request return type that will be used instead of default one:
+
+```ts
+export type ApicraftApiResponse<Data, Error> = AxiosResponse<Data | Error>;
+```
+
 ## Client Instances
 
 Apicraft supports three HTTP client instances:
@@ -137,18 +143,5 @@ Generate React Query query, mutations and options for your API requests:
   "output": "generated/api",
   "instance": "fetches",
   "plugins": ["tanstack"]
-}
-```
-
-## Request return types
-
-Every generated request returns the global return type exposed by
-`@siberiacancode/apicraft`. You can define your own type globally for your needs:
-
-```ts
-declare global {
-  interface ApicraftAxiosResponse<Data = never, Error = never> extends Omit<AxiosResponse, 'data'> {
-    data: Data | Error;
-  }
 }
 ```

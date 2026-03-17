@@ -1,4 +1,4 @@
-import type { RequestConfig } from '@siberiacancode/fetches';
+import type { FetchesResponse, RequestConfig } from '@siberiacancode/fetches';
 import type {
   UseMutationOptions,
   UseQueryOptions,
@@ -39,26 +39,6 @@ export interface TanstackMutationSettings<TFunc extends (...args: any[]) => Prom
   request?: NonNullable<Parameters<TFunc>[0]>;
 }
 
-declare global {
-  type ApiResponse<Data = never, Error = never> = Data | Error;
-
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  interface ApicraftApiTypes<Data, Error> {
-    AxiosResponse?: unknown;
-    FetchesResponse?: unknown;
-  }
-
-  type ApicraftAxiosResponse<Data = never, Error = never> = unknown extends ApicraftApiTypes<
-    Data,
-    Error
-  >['AxiosResponse']
-    ? AxiosResponse<Data | Error>
-    : ApicraftApiTypes<Data, Error>['AxiosResponse'];
-
-  type ApicraftFetchesResponse<Data = never, Error = never> = unknown extends ApicraftApiTypes<
-    Data,
-    Error
-  >['FetchesResponse']
-    ? AxiosResponse<Data | Error>
-    : ApicraftApiTypes<Data, Error>['FetchesResponse'];
-}
+export type ApicraftAxiosResponse<Data = never, Error = never> = AxiosResponse<Data | Error>;
+export type ApicraftFetchesResponse<Data = never, Error = never> = FetchesResponse<Data | Error>;
+export type ApicraftOfetchResponse<Data = never, Error = never> = Data | Error;

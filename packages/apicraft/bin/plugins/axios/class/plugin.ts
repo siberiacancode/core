@@ -8,11 +8,13 @@ import {
   getImportRuntimeInstance,
   getImportTypes,
   getRequestInfo,
-  getRequestReturnType
+  getRequestReturnType,
+  hasRuntimeResponseType
 } from '@/bin/plugins/helpers';
 
 import type { AxiosPlugin } from '../types';
 
+import { getImportRuntimeResponseType } from '../../helpers/imports/getImportRuntimeResponseType';
 import {
   getAxiosRequestCallExpression,
   getAxiosRequestParameterDeclaration,
@@ -33,6 +35,10 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
   const typeImportNames = new Set<string>();
   const typeStatements: ts.Statement[] = [];
   const classElements: ts.ClassElement[] = [];
+
+  const useRuntimeResponseType =
+    !!plugin.config.runtimeInstancePath &&
+    hasRuntimeResponseType(plugin.config.runtimeInstancePath);
 
   plugin.forEach('operation', (event) => {
     const request = event.operation;
@@ -58,6 +64,7 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
     // Promise<ApicraftAxiosResponse<Response, Error>>
     const requestReturnType = getRequestReturnType({
       instanceName: 'axios',
+      useRuntimeResponseType,
       requestInfo,
       requestResponseTypeName,
       requestErrorTypeName
@@ -99,7 +106,10 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
   });
 
   // import type { AxiosRequestParams } from '@siberiacancode/apicraft';
-  const importAxiosRequestParams = getApicraftTypeImport('AxiosRequestParams');
+  const importApicraftTypes = getApicraftTypeImport([
+    'AxiosRequestParams',
+    ...(useRuntimeResponseType ? [] : ['ApicraftAxiosResponse'])
+  ]);
 
   // import type { RequestData, RequestResponse, ... } from './types.gen';
   const importTypes = getImportTypes({
@@ -213,10 +223,19 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
     )
   );
 
-  classFile.add(importAxiosRequestParams);
+  classFile.add(importApicraftTypes);
   classFile.add(importTypes);
   classFile.add(importAxiosTypes);
 
+  if (useRuntimeResponseType) {
+    // import type { ApicraftApiResponse } from runtimeInstancePath;
+    classFile.add(
+      getImportRuntimeResponseType({
+        folderPath: classFolderPath,
+        runtimeInstancePath: plugin.config.runtimeInstancePath!
+      })
+    );
+  }
   if (plugin.config.runtimeInstancePath) {
     // import { instance as runtimeInstance } from runtimeInstancePath;
     classFile.add(
@@ -226,6 +245,7 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
       })
     );
   }
+
   if (!plugin.config.runtimeInstancePath) {
     // import axios from 'axios';
     classFile.add(getImportAxios());
