@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "../../tools/tsconfig/tsconfig.node.json",
+  "extends": "@siberiacancode/tsconfig/tsconfig.node.json",
   "compilerOptions": {
     "composite": false,
     "baseUrl": ".",
