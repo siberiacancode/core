@@ -21,22 +21,6 @@ const apicraftConfig = apicraft([
     nameBy: 'path',
     groupBy: 'class'
   }
-  // {
-  //   input: 'example-apiV2.yaml',
-  //   output: 'generated/axios-standalone',
-  //   instance: 'fetches',
-  //   nameBy: 'path',
-  //   groupBy: 'standalone',
-  //   plugins: ['tanstack']
-  // },
-  // {
-  //   input: 'example-apiV2.yaml',
-  //   output: 'generated/ofetch-standalone',
-  //   instance: 'ofetch',
-  //   nameBy: 'path',
-  //   groupBy: 'standalone',
-  //   plugins: ['tanstack']
-  // }
 ]);
 
 export default apicraftConfig;
