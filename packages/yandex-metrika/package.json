@@ -1,7 +1,7 @@
 {
   "name": "@siberiacancode/yandex-metrika",
   "type": "module",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Yandex Metrika integration helpers",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
