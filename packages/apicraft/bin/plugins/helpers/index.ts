@@ -5,6 +5,7 @@ export * from './getRequestCallGenericResponse';
 export * from './getRequestFilePath';
 export * from './getRequestInfo';
 export * from './getRequestReturnType';
+export * from './hasRuntimeResponseType';
 export * from './imports';
 export * from './normalizeName';
 export * from './removeRequestsBaseUrl';

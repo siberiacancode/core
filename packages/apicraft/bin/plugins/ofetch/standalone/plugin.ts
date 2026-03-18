@@ -6,8 +6,11 @@ import {
   generateRequestName,
   getApicraftTypeImport,
   getImportInstance,
+  getImportRuntimeResponseType,
   getImportTypes,
-  getRequestInfo
+  getRequestInfo,
+  getRequestReturnType,
+  hasRuntimeResponseType
 } from '@/bin/plugins/helpers';
 
 import type { OFetchPlugin } from '../types';
@@ -34,6 +37,9 @@ export const standaloneHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
   const typeImportNames = new Set<string>();
   const typeStatements: ts.Statement[] = [];
   const requestStatements: ts.Statement[] = [];
+  const useRuntimeResponseType =
+    !!plugin.config.runtimeInstancePath &&
+    hasRuntimeResponseType(plugin.config.runtimeInstancePath);
 
   plugin.forEach('operation', (event) => {
     const request = event.operation;
@@ -56,6 +62,14 @@ export const standaloneHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
       })
     );
 
+    const requestReturnType = getRequestReturnType({
+      useRuntimeResponseType,
+      instanceName: 'ofetch',
+      requestInfo,
+      requestResponseTypeName,
+      requestErrorTypeName
+    });
+
     // export const request = ({ path, body, query, config }) => ...
     const requestFunction = ts.factory.createVariableStatement(
       [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
@@ -76,14 +90,12 @@ export const standaloneHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
                   requestParamsTypeName
                 })
               ],
-              undefined,
+              requestReturnType,
               ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
               // instance(url, { method, body?, query?, ...config })
               getOfetchRequestCallExpression({
                 request,
                 requestInfo,
-                requestResponseTypeName,
-                requestErrorTypeName,
                 groupBy: plugin.config.groupBy
               })
             )
@@ -96,8 +108,11 @@ export const standaloneHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
     requestStatements.push(requestFunction);
   });
 
-  // import type { OFetchRequestParams } from '@siberiacancode/apicraft';
-  const importOfetchRequestParams = getApicraftTypeImport('OFetchRequestParams');
+  // import type { OFetchRequestParams, ... } from '@siberiacancode/apicraft';
+  const importApicraftTypes = getApicraftTypeImport([
+    'OFetchRequestParams',
+    ...(!useRuntimeResponseType ? ['ApicraftOfetchResponse'] : [])
+  ]);
 
   // import type { RequestData, RequestResponse, ... } from './types.gen';
   const importTypes = getImportTypes({
@@ -114,8 +129,16 @@ export const standaloneHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
     runtimeInstancePath: plugin.config.runtimeInstancePath
   });
 
-  requestsFile.add(importOfetchRequestParams);
+  requestsFile.add(importApicraftTypes);
   requestsFile.add(importTypes);
+  if (useRuntimeResponseType) {
+    requestsFile.add(
+      getImportRuntimeResponseType({
+        folderPath: requestsFolderPath,
+        runtimeInstancePath: plugin.config.runtimeInstancePath!
+      })
+    );
+  }
   requestsFile.add(importInstance);
   typeStatements.forEach((statement) => requestsFile.add(statement));
   requestStatements.forEach((statement) => requestsFile.add(statement));

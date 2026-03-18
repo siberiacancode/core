@@ -60,7 +60,6 @@
   "dependencies": {
     "@hey-api/openapi-ts": "0.82.5",
     "@siberiacancode/fetches": "^1.14.1",
-    "@siberiacancode/vitest": "^2.4.1",
     "@tanstack/react-query": "^5.90.21",
     "axios": "^1.13.6",
     "cosmiconfig": "^9.0.1",
@@ -72,6 +71,8 @@
   "devDependencies": {
     "@siberiacancode/eslint": "*",
     "@siberiacancode/prettier": "*",
+    "@siberiacancode/tsconfig": "*",
+    "@siberiacancode/vitest": "*",
     "@types/node": "^25.3.3",
     "@types/yargs": "^17.0.35"
   },

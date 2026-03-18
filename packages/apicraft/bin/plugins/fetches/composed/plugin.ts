@@ -6,10 +6,12 @@ import {
   generateRequestName,
   getApicraftTypeImport,
   getImportInstance,
+  getImportRuntimeResponseType,
   getImportTypes,
   getRequestFilePath,
   getRequestInfo,
-  getRequestReturnType
+  getRequestReturnType,
+  hasRuntimeResponseType
 } from '@/bin/plugins/helpers';
 
 import type { FetchesPlugin } from '../types';
@@ -23,6 +25,9 @@ import {
 
 export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
   if (!plugin.config.runtimeInstancePath) addInstanceFile(plugin);
+  const useRuntimeResponseType =
+    !!plugin.config.runtimeInstancePath &&
+    hasRuntimeResponseType(plugin.config.runtimeInstancePath);
 
   plugin.forEach('operation', (event) => {
     const request = event.operation;
@@ -50,8 +55,11 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
       `${plugin.config.generateOutput}/${requestFilePath}`
     );
 
-    // import type { FetchesRequestParams } from '@siberiacancode/apicraft';
-    const importFetchesRequestParams = getApicraftTypeImport('FetchesRequestParams');
+    // import type { FetchesRequestParams, ... } from '@siberiacancode/apicraft';
+    const importApicraftTypes = getApicraftTypeImport([
+      'FetchesRequestParams',
+      ...(!useRuntimeResponseType ? ['ApicraftFetchesResponse'] : [])
+    ]);
     // import type { RequestData, RequestResponse } from 'generated/types.gen';
     const importTypes = getImportTypes({
       typeNames: [
@@ -79,6 +87,7 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
 
     // Promise<ApicraftFetchesResponse<Response, Error>>
     const requestReturnType = getRequestReturnType({
+      useRuntimeResponseType,
       instanceName: 'fetches',
       requestInfo,
       requestResponseTypeName,
@@ -120,8 +129,16 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
       )
     );
 
-    requestFile.add(importFetchesRequestParams);
+    requestFile.add(importApicraftTypes);
     requestFile.add(importTypes);
+    if (useRuntimeResponseType) {
+      requestFile.add(
+        getImportRuntimeResponseType({
+          folderPath: requestFolderPath,
+          runtimeInstancePath: plugin.config.runtimeInstancePath!
+        })
+      );
+    }
     requestFile.add(importInstance);
     requestFile.add(requestParamsType);
     requestFile.add(requestFunction);

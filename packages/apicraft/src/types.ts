@@ -39,12 +39,6 @@ export interface TanstackMutationSettings<TFunc extends (...args: any[]) => Prom
   request?: NonNullable<Parameters<TFunc>[0]>;
 }
 
-declare global {
-  type ApiResponse<Data = never, Error = never> = Data | Error;
-  interface ApicraftAxiosResponse<Data = never, Error = never> extends AxiosResponse<
-    Data | Error
-  > {}
-  interface ApicraftFetchesResponse<Data = never, Error = never> extends FetchesResponse<
-    Data | Error
-  > {}
-}
+export type ApicraftAxiosResponse<Data = never, Error = never> = AxiosResponse<Data | Error>;
+export type ApicraftFetchesResponse<Data = never, Error = never> = FetchesResponse<Data | Error>;
+export type ApicraftOfetchResponse<Data = never, Error = never> = Data | Error;

@@ -11,9 +11,11 @@ interface GetRequestCallGenericResponseParams {
   requestErrorTypeName: string;
   requestInfo: GetRequestInfoResult;
   requestResponseTypeName: string;
+  useRuntimeResponseType: boolean;
 }
 
 export const getRequestReturnType = ({
+  useRuntimeResponseType,
   instanceName,
   requestInfo,
   requestErrorTypeName,
@@ -21,7 +23,9 @@ export const getRequestReturnType = ({
 }: GetRequestCallGenericResponseParams) => {
   if (!requestInfo.hasSuccessResponse && !requestInfo.hasErrorResponse) return;
 
-  const responseTypeName = `Apicraft${capitalize(instanceName)}Response`;
+  const responseTypeName = useRuntimeResponseType
+    ? 'ApicraftApiResponse'
+    : `Apicraft${capitalize(instanceName)}Response`;
 
   if (requestInfo.hasSuccessResponse && !requestInfo.hasErrorResponse) {
     return ts.factory.createTypeReferenceNode('Promise', [
