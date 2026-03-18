@@ -3,7 +3,7 @@ import ts from 'typescript';
 
 export const hasRuntimeResponseType = (runtimeInstancePath: string): boolean => {
   const filePath =
-    nodePath.extname(runtimeInstancePath) === 'ts'
+    nodePath.extname(runtimeInstancePath) === '.ts'
       ? runtimeInstancePath
       : `${runtimeInstancePath}.ts`;
 
