@@ -35,7 +35,7 @@ export const getSuspenseQueryHook = ({
           ts.factory.createIdentifier(`${requestName}SuspenseQueryKey`),
           undefined,
           undefined,
-          ts.factory.createStringLiteral(requestName)
+          ts.factory.createStringLiteral(`${requestName}SuspenseQueryKey`)
         )
       ],
       ts.NodeFlags.Const
@@ -90,7 +90,7 @@ export const getSuspenseQueryHook = ({
                       ts.factory.createIdentifier('queryKey'),
                       ts.factory.createArrayLiteralExpression(
                         [
-                          ts.factory.createStringLiteral(`${requestName}SuspenseQueryKey`),
+                          ts.factory.createIdentifier(`${requestName}SuspenseQueryKey`),
                           ...['path', 'query', 'body'].map((field) =>
                             ts.factory.createPropertyAccessChain(
                               ts.factory.createPropertyAccessChain(
