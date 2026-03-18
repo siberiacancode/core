@@ -5,7 +5,7 @@ Helpers for integrating Yandex Metrika into your app.
 ## Installation
 
 ```bash
-pnpm add @siberiacancode/yandex-metrika
+npm add @siberiacancode/yandex-metrika
 ```
 
 ## Script setup
@@ -41,28 +41,21 @@ import { createYandexMetrika } from '@siberiacancode/yandex-metrika';
 
 const counterId = 'your-counter-id';
 
-interface YandexMetrikaEventCalculatorOpen {
+interface YandexMetrikaEventBadgeClick {
   eventName: 'reachGoal';
-  target: 'calculator-open';
+  params: { type: 'javascript' | 'typescript' };
+  target: 'badge-click';
 }
 
-interface YandexMetrikaEventCalculatorSum {
+interface YandexMetrikaEventSearch {
   eventName: 'reachGoal';
-  target: 'calculator-sum';
-  params: { sum: number };
+  params: { value: string };
+  target: 'search';
 }
 
-interface YandexMetrikaEventCalculatorCurrency {
-  eventName: 'reachGoal';
-  target: 'calculator-currency';
-  params: { currency: string };
-}
-
-const yandexMetrika = createYandexMetrika<
-  | YandexMetrikaEventCalculatorOpen
-  | YandexMetrikaEventCalculatorSum
-  | YandexMetrikaEventCalculatorCurrency
->(counterId);
+const yandexMetrika = createYandexMetrika<YandexMetrikaEventBadgeClick | YandexMetrikaEventSearch>(
+  counterId
+);
 ```
 
 ## Send events
@@ -70,7 +63,7 @@ const yandexMetrika = createYandexMetrika<
 ```typescript
 yandexMetrika({
   eventName: 'reachGoal',
-  target: 'calculator-currency',
-  params: { currency: 'RUB' }
+  target: 'badge-click',
+  params: { type: 'javascript' }
 });
 ```
