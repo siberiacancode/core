@@ -59,9 +59,8 @@
     "@siberiacancode/eslint": "*",
     "@siberiacancode/prettier": "*",
     "@siberiacancode/tsconfig": "*",
-    "@types/react": "^19.0.0",
-    "react": "^19.0.0",
-    "typescript": "^5.9.3"
+    "@types/react": "^19.2.14",
+    "react": "^19.2.4"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
