@@ -43,6 +43,7 @@ export const classHandler: TanstackPlugin['Handler'] = ({ plugin }) => {
     hooks.push(
       ...getQueryHook({
         hookName: `use${capitalize(requestName)}Query`,
+        optionsFunctionName: `${requestName}QueryOptions`,
         plugin,
         request,
         requestName
@@ -58,7 +59,7 @@ export const classHandler: TanstackPlugin['Handler'] = ({ plugin }) => {
     hooks.push(
       ...getSuspenseQueryHook({
         hookName: `use${capitalize(requestName)}SuspenseQuery`,
-        optionsFunctionName: `${requestName}Options`,
+        optionsFunctionName: `${requestName}SuspenseQueryOptions`,
         plugin,
         request,
         requestName

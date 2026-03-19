@@ -67,7 +67,7 @@ export const generateSuspenseQueryHookFile = ({
   // const useRequestNameSuspenseQuery = (settings: TanstackSuspenseQuerySettings<typeof requestName>) => useSuspenseQuery
   hookFile.add(
     ...getSuspenseQueryHook({
-      optionsFunctionName: `${requestName}Options`,
+      optionsFunctionName: `${requestName}SuspenseQueryOptions`,
       hookName,
       plugin,
       request,

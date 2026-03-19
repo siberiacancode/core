@@ -8,14 +8,22 @@ import type { TanstackPlugin } from '../types';
 
 interface GetQueryHookParams {
   hookName: string;
+  optionsFunctionName: string;
   plugin: TanstackPlugin['Instance'];
   request: IR.OperationObject;
   requestName: string;
 }
 
 // const requestNameQueryKey = requestName;
+// const requestNameQueryOptions = queryOptions({...})
 // const useRequestNameQuery = (settings: TanstackQuerySettings<typeof requestName>) => useQuery
-export const getQueryHook = ({ hookName, request, plugin, requestName }: GetQueryHookParams) => {
+export const getQueryHook = ({
+  hookName,
+  optionsFunctionName,
+  request,
+  plugin,
+  requestName
+}: GetQueryHookParams) => {
   const requestInfo = getRequestInfo(request);
 
   // export const requestNameQueryKey = requestName;
@@ -34,13 +42,13 @@ export const getQueryHook = ({ hookName, request, plugin, requestName }: GetQuer
     )
   );
 
-  // const useRequestNameQuery = (settings: TanstackQuerySettings<typeof requestName>) => useQuery
-  const hookFunction = ts.factory.createVariableStatement(
+  // const requestNameQueryOptions = queryOptions({...})
+  const optionsFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
       [
         ts.factory.createVariableDeclaration(
-          ts.factory.createIdentifier(hookName),
+          ts.factory.createIdentifier(optionsFunctionName),
           undefined,
           undefined,
           ts.factory.createArrowFunction(
@@ -71,82 +79,125 @@ export const getQueryHook = ({ hookName, request, plugin, requestName }: GetQuer
             ],
             undefined,
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-            ts.factory.createCallExpression(ts.factory.createIdentifier('useQuery'), undefined, [
-              ts.factory.createObjectLiteralExpression(
-                [
-                  // queryKey: [requestNameQueryKey, settings.request.path, settings.request.query, settings.request.body]
-                  ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier('queryKey'),
-                    ts.factory.createArrayLiteralExpression(
-                      [
-                        ts.factory.createIdentifier(`${requestName}QueryKey`),
-                        ...['path', 'query', 'body'].map((field) =>
-                          ts.factory.createPropertyAccessChain(
+            ts.factory.createCallExpression(
+              ts.factory.createIdentifier('queryOptions'),
+              undefined,
+              [
+                ts.factory.createObjectLiteralExpression(
+                  [
+                    // queryKey: [requestNameQueryKey, settings.request.path, settings.request.query, settings.request.body]
+                    ts.factory.createPropertyAssignment(
+                      ts.factory.createIdentifier('queryKey'),
+                      ts.factory.createArrayLiteralExpression(
+                        [
+                          ts.factory.createIdentifier(`${requestName}QueryKey`),
+                          ...['path', 'query', 'body'].map((field) =>
                             ts.factory.createPropertyAccessChain(
-                              ts.factory.createIdentifier('settings'),
+                              ts.factory.createPropertyAccessChain(
+                                ts.factory.createIdentifier('settings'),
+                                !requestInfo.hasRequiredParam
+                                  ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
+                                  : undefined,
+                                ts.factory.createIdentifier('request')
+                              ),
                               !requestInfo.hasRequiredParam
                                 ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
                                 : undefined,
-                              ts.factory.createIdentifier('request')
-                            ),
-                            !requestInfo.hasRequiredParam
-                              ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
-                              : undefined,
-                            ts.factory.createIdentifier(field)
-                          )
-                        )
-                      ],
-                      false
-                    )
-                  ),
-                  // queryFn: async () => requestName({ ...settings.request })
-                  ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier('queryFn'),
-                    ts.factory.createArrowFunction(
-                      [ts.factory.createModifier(ts.SyntaxKind.AsyncKeyword)],
-                      undefined,
-                      [],
-                      undefined,
-                      ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                      ts.factory.createCallExpression(
-                        plugin.config.groupBy === 'class'
-                          ? ts.factory.createPropertyAccessExpression(
-                              ts.factory.createIdentifier('instance'),
-                              ts.factory.createIdentifier(requestName)
+                              ts.factory.createIdentifier(field)
                             )
-                          : ts.factory.createIdentifier(requestName),
-                        undefined,
-                        [
-                          ts.factory.createObjectLiteralExpression(
-                            [
-                              ts.factory.createSpreadAssignment(
-                                ts.factory.createPropertyAccessChain(
-                                  ts.factory.createIdentifier('settings'),
-                                  !requestInfo.hasRequiredParam
-                                    ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
-                                    : undefined,
-                                  ts.factory.createIdentifier('request')
-                                )
-                              )
-                            ],
-                            false
                           )
-                        ]
+                        ],
+                        false
+                      )
+                    ),
+                    // queryFn: async () => requestName({ ...settings.request })
+                    ts.factory.createPropertyAssignment(
+                      ts.factory.createIdentifier('queryFn'),
+                      ts.factory.createArrowFunction(
+                        [ts.factory.createModifier(ts.SyntaxKind.AsyncKeyword)],
+                        undefined,
+                        [],
+                        undefined,
+                        ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                        ts.factory.createCallExpression(
+                          plugin.config.groupBy === 'class'
+                            ? ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier('instance'),
+                                ts.factory.createIdentifier(requestName)
+                              )
+                            : ts.factory.createIdentifier(requestName),
+                          undefined,
+                          [
+                            ts.factory.createObjectLiteralExpression(
+                              [
+                                ts.factory.createSpreadAssignment(
+                                  ts.factory.createPropertyAccessChain(
+                                    ts.factory.createIdentifier('settings'),
+                                    !requestInfo.hasRequiredParam
+                                      ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
+                                      : undefined,
+                                    ts.factory.createIdentifier('request')
+                                  )
+                                )
+                              ],
+                              false
+                            )
+                          ]
+                        )
+                      )
+                    ),
+                    // ...settings.params
+                    ts.factory.createSpreadAssignment(
+                      ts.factory.createPropertyAccessChain(
+                        ts.factory.createIdentifier('settings'),
+                        !requestInfo.hasRequiredParam
+                          ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
+                          : undefined,
+                        ts.factory.createIdentifier('params')
                       )
                     )
-                  ),
-                  // ...settings.params
-                  ts.factory.createSpreadAssignment(
-                    ts.factory.createPropertyAccessChain(
-                      ts.factory.createIdentifier('settings'),
-                      !requestInfo.hasRequiredParam
-                        ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
-                        : undefined,
-                      ts.factory.createIdentifier('params')
-                    )
-                  )
-                ],
-                true
+                  ],
+                  true
+                )
+              ]
+            )
+          )
+        )
+      ],
+      ts.NodeFlags.Const
+    )
+  );
+
+  // const useRequestNameQuery = (settings: TanstackQuerySettings<typeof requestName>) => useQuery
+  const hookFunction = ts.factory.createVariableStatement(
+    [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+    ts.factory.createVariableDeclarationList(
+      [
+        ts.factory.createVariableDeclaration(
+          ts.factory.createIdentifier(hookName),
+          undefined,
+          undefined,
+          ts.factory.createArrowFunction(
+            undefined,
+            undefined,
+            [
+              ts.factory.createParameterDeclaration(
+                undefined,
+                ts.factory.createToken(ts.SyntaxKind.DotDotDotToken),
+                ts.factory.createIdentifier('args'),
+                undefined,
+                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Parameters'), [
+                  ts.factory.createTypeQueryNode(ts.factory.createIdentifier(optionsFunctionName))
+                ])
+              )
+            ],
+            undefined,
+            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+            ts.factory.createCallExpression(ts.factory.createIdentifier('useQuery'), undefined, [
+              ts.factory.createCallExpression(
+                ts.factory.createIdentifier(optionsFunctionName),
+                undefined,
+                [ts.factory.createSpreadElement(ts.factory.createIdentifier('args'))]
               )
             ])
           )
@@ -156,5 +207,5 @@ export const getQueryHook = ({ hookName, request, plugin, requestName }: GetQuer
     )
   );
 
-  return [queryKey, hookFunction];
+  return [queryKey, optionsFunction, hookFunction];
 };
