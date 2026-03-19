@@ -15,7 +15,7 @@ interface GetSuspenseQueryHookParams {
 }
 
 // export const requestNameSuspenseQueryKey = requestName
-// const requestNameOptions = queryOptions({...})
+// const requestNameSuspenseQueryOptions = queryOptions({...})
 // const useRequestNameSuspenseQuery = (settings: TanstackSuspenseQuerySettings<typeof requestName>) => useSuspenseQuery
 export const getSuspenseQueryHook = ({
   plugin,
@@ -42,7 +42,7 @@ export const getSuspenseQueryHook = ({
     )
   );
 
-  // const requestNameOptions = queryOptions({...})
+  // const requestNameSuspenseQueryOptions = queryOptions({...})
   const optionsFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
