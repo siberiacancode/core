@@ -224,6 +224,8 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
 
         'no-console': 'warn',
 
+        'e18e/prefer-static-regex': 'off',
+
         'react/prefer-namespace-import': 'off',
         'react-hooks/exhaustive-deps': 'off',
         'react-refresh/only-export-components': 'off',
