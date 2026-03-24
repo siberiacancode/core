@@ -23,11 +23,17 @@ paths:
       tags:
         - pet
       summary: Add a new pet to the store
-      description: ''
+      description: Register a pet, optionally preloading medical and adoption metadata.
       operationId: addPet
       responses:
-        '200':
-          description: successful operation
+        '201':
+          description: Pet created successfully
+          headers:
+            Location:
+              description: URL of the new pet resource
+              schema:
+                type: string
+                format: uri
           content:
             application/xml:
               schema:
@@ -35,6 +41,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Pet'
+        '202':
+          description: Accepted for background processing
+        '409':
+          description: Pet with the provided microchip already exists
         '405':
           description: Invalid input
       security:
@@ -47,7 +57,7 @@ paths:
       tags:
         - pet
       summary: Update an existing pet
-      description: ''
+      description: Update existing pet metadata, including adoption pipeline information.
       operationId: updatePet
       externalDocs:
         url: "http://petstore.swagger.io/v2/doc/updatePet"
@@ -62,11 +72,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Pet'
+        '207':
+          description: >-
+            Pet updated but one or more attached records (medical, vaccination,
+            etc) could not be processed
         '400':
           description: Invalid ID supplied
         '404':
           description: Pet not found
-        '405':
+        '409':
+          description: Microchip conflict
+        '422':
           description: Validation exception
       security:
         - petstore_auth:
@@ -84,20 +100,24 @@ paths:
       parameters:
         - name: status
           in: query
-          description: Status values that need to be considered for filter
-          required: true
+          description: Inventory status filter for the catalog search
+          required: false
           style: form
-          explode: false
-          deprecated: true
+          explode: true
           schema:
             type: array
             items:
-              type: string
-              enum:
-                - available
-                - pending
-                - sold
-              default: available
+              $ref: '#/components/schemas/PetAvailability'
+            default:
+              - available
+        - name: includeMedicalSummary
+          in: query
+          description: >-
+            When true include condensed vaccination summary for each pet in the
+            response
+          required: false
+          schema:
+            type: boolean
       responses:
         '200':
           description: successful operation
@@ -157,6 +177,65 @@ paths:
         - petstore_auth:
             - 'read:pets'
       deprecated: true
+  /pet/search:
+    get:
+      tags:
+        - pet
+      summary: Search pets by attributes
+      description: Filter pets by traits like species, size, and readiness for adoption.
+      operationId: searchPets
+      parameters:
+        - name: species
+          in: query
+          description: Restrict results to a single species (dog, cat, etc).
+          required: false
+          schema:
+            type: string
+        - name: microchipped
+          in: query
+          description: Only return pets with registered microchips when true.
+          required: false
+          schema:
+            type: boolean
+        - name: adoptionStatus
+          in: query
+          description: Filter results by current adoption status.
+          required: false
+          schema:
+            $ref: '#/components/schemas/PetAvailability'
+        - name: page
+          in: query
+          description: Page of results to return.
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1
+            minimum: 1
+        - name: pageSize
+          in: query
+          description: Number of records per page (max 50).
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 20
+            minimum: 1
+            maximum: 50
+      responses:
+        '200':
+          description: A paged list of matching pets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+        '400':
+          description: Invalid search criteria supplied
+      security:
+        - petstore_auth:
+            - 'read:pets'
   '/pet/{petId}':
     get:
       tags:
@@ -286,6 +365,84 @@ paths:
                   description: file to upload
                   type: string
                   format: binary
+  '/pet/{petId}/medical-records':
+    get:
+      tags:
+        - pet
+      summary: List a pet's medical records
+      description: Returns the full veterinary history recorded for a pet.
+      operationId: listMedicalRecords
+      parameters:
+        - name: petId
+          in: path
+          description: ID of the pet whose records should be returned
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: type
+          in: query
+          description: Filter records by record type (vaccination, surgery, etc).
+          required: false
+          schema:
+            type: string
+        - name: recordedAfter
+          in: query
+          description: Only include records created after the supplied timestamp.
+          required: false
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Historical medical records for the pet
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MedicalRecord'
+        '404':
+          description: Pet or record set not found
+      security:
+        - petstore_auth:
+            - 'read:pets'
+            - 'write:pets'
+    post:
+      tags:
+        - pet
+      summary: Add a new medical record entry for a pet
+      description: Stores a veterinarian note, treatment, or vaccination record.
+      operationId: createMedicalRecord
+      parameters:
+        - name: petId
+          in: path
+          description: ID of the pet whose record is being updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '201':
+          description: Medical record created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MedicalRecord'
+        '400':
+          description: Invalid record payload supplied
+        '404':
+          description: Pet not found
+      security:
+        - petstore_auth:
+            - 'write:pets'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MedicalRecordInput'
+        description: New medical record data
+        required: true
   /store/inventory:
     get:
       tags:
@@ -293,6 +450,19 @@ paths:
       summary: Returns pet inventories by status
       description: Returns a map of status codes to quantities
       operationId: getInventory
+      parameters:
+        - name: warehouseId
+          in: query
+          description: Limit the inventory response to a particular warehouse
+          required: false
+          schema:
+            type: string
+        - name: includeBackordered
+          in: query
+          description: Include counts for pets currently backordered
+          required: false
+          schema:
+            type: boolean
       responses:
         '200':
           description: successful operation
@@ -310,10 +480,10 @@ paths:
       tags:
         - store
       summary: Place an order for a pet
-      description: ''
+      description: Submit a pet purchase order to the fulfillment system.
       operationId: placeOrder
       responses:
-        '200':
+        '201':
           description: successful operation
           content:
             application/xml:
@@ -324,9 +494,23 @@ paths:
                 $ref: '#/components/schemas/Order'
         '400':
           description: Invalid Order
+        '409':
+          description: Duplicate client reference
       requestBody:
         content:
           application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Order'
+                - type: object
+                  properties:
+                    clientReference:
+                      type: string
+                      description: Client generated unique identifier
+                    expedite:
+                      type: boolean
+                      description: Should fulfillment prioritize shipping
+          application/xml:
             schema:
               $ref: '#/components/schemas/Order'
         description: order placed for purchasing the pet
@@ -634,8 +818,34 @@ components:
         complete:
           type: boolean
           default: false
+        deliveryAddress:
+          $ref: '#/components/schemas/Address'
+        expedited:
+          type: boolean
+          description: Indicates the order should be shipped as priority
       xml:
         name: Order
+    Address:
+      title: Mailing Address
+      description: Customer shipping destination information
+      type: object
+      required:
+        - line1
+        - city
+        - country
+      properties:
+        line1:
+          type: string
+        line2:
+          type: string
+        city:
+          type: string
+        stateOrProvince:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
     Category:
       title: Pet category
       description: A category for a pet
@@ -647,6 +857,10 @@ components:
         name:
           type: string
           pattern: '^[a-zA-Z0-9]+[a-zA-Z0-9\.\-_]*[a-zA-Z0-9]+$'
+        iconUrl:
+          type: string
+          format: uri
+          description: Icon used for this category in UI menus
       xml:
         name: Category
     User:
@@ -673,6 +887,9 @@ components:
           type: integer
           format: int32
           description: User Status
+        loyaltyTier:
+          type: string
+          description: Loyalty tier label applied to discounts
       xml:
         name: User
     Tag:
@@ -703,6 +920,14 @@ components:
         name:
           type: string
           example: doggie
+        microchipId:
+          type: string
+          description: Optional microchip identifier registered for the pet
+          example: USA-9823749823
+        birthDate:
+          type: string
+          format: date
+          description: Date the pet was born if known
         photoUrls:
           type: array
           xml:
@@ -720,11 +945,18 @@ components:
         status:
           type: string
           description: pet status in the store
-          deprecated: true
           enum:
             - available
             - pending
             - sold
+            - retired
+        adoptionStatus:
+          $ref: '#/components/schemas/PetAvailability'
+        vaccinations:
+          type: array
+          description: Recorded vaccinations for regulatory compliance
+          items:
+            $ref: '#/components/schemas/VaccinationRecord'
       xml:
         name: Pet
     ApiResponse:
@@ -739,3 +971,94 @@ components:
           type: string
         message:
           type: string
+    PetAvailability:
+      title: Pet adoption availability
+      description: Indicates whether the pet can currently be adopted.
+      type: string
+      enum:
+        - available
+        - on_hold
+        - fostered
+        - adopted
+        - retired
+    VaccinationRecord:
+      title: Vaccination record
+      description: Details about a vaccine administered to a pet
+      type: object
+      required:
+        - name
+        - administeredAt
+      properties:
+        name:
+          type: string
+          description: Commercial name of the vaccine
+        administeredAt:
+          type: string
+          format: date-time
+          description: When the shot was administered
+        veterinarian:
+          type: string
+          description: Vet who administered the shot
+        lotNumber:
+          type: string
+          description: Manufacturer batch or lot number
+    MedicalRecord:
+      title: Medical record entry
+      description: Structured medical history item for a pet
+      type: object
+      required:
+        - id
+        - type
+        - recordedAt
+        - description
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the record entry
+        type:
+          type: string
+          description: Kind of record (checkup, surgery, vaccination)
+        recordedAt:
+          type: string
+          format: date-time
+          description: Timestamp representing when the record took place
+        description:
+          type: string
+          description: Summary of the visit or procedure
+        veterinarian:
+          type: string
+          description: Name of the veterinarian on file
+        followUpRequired:
+          type: boolean
+          description: Indicates that a follow-up appointment is required
+        attachments:
+          type: array
+          description: Optional URIs pointing to supporting documents
+          items:
+            type: string
+            format: uri
+    MedicalRecordInput:
+      title: Medical record submission
+      description: Payload required to create a medical record for a pet
+      type: object
+      required:
+        - type
+        - recordedAt
+        - description
+      properties:
+        type:
+          type: string
+          description: Kind of visit or treatment that occurred
+        recordedAt:
+          type: string
+          format: date-time
+          description: When the event occurred
+        description:
+          type: string
+          description: Summary of findings or actions taken
+        veterinarian:
+          type: string
+          description: Treating veterinarian
+        followUpRequired:
+          type: boolean
+          description: Whether additional monitoring is required
