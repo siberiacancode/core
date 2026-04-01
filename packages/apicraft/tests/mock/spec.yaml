@@ -128,7 +128,7 @@ paths:
       operationId: delete-report_entry
       summary: Delete report entry
       responses:
-        '204':
+        '200':
           description: Deleted
         '404':
           description: Entry not found
