@@ -6,6 +6,8 @@ import { getRequestInfo } from '@/bin/plugins/helpers/';
 
 import type { TanstackPlugin } from '../types';
 
+import { getQueryKey } from './getQueryKey';
+
 interface GetQueryHookParams {
   hookName: string;
   optionsFunctionName: string;
@@ -85,31 +87,8 @@ export const getQueryHook = ({
               [
                 ts.factory.createObjectLiteralExpression(
                   [
-                    // queryKey: [requestNameQueryKey, settings.request.path, settings.request.query, settings.request.body]
-                    ts.factory.createPropertyAssignment(
-                      ts.factory.createIdentifier('queryKey'),
-                      ts.factory.createArrayLiteralExpression(
-                        [
-                          ts.factory.createIdentifier(`${requestName}QueryKey`),
-                          ...['path', 'query', 'body'].map((field) =>
-                            ts.factory.createPropertyAccessChain(
-                              ts.factory.createPropertyAccessChain(
-                                ts.factory.createIdentifier('settings'),
-                                !requestInfo.hasRequiredParam
-                                  ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
-                                  : undefined,
-                                ts.factory.createIdentifier('request')
-                              ),
-                              !requestInfo.hasRequiredParam
-                                ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
-                                : undefined,
-                              ts.factory.createIdentifier(field)
-                            )
-                          )
-                        ],
-                        false
-                      )
-                    ),
+                    // queryKey: [requestNameSuspenseQueryKey, ...(!!settings.request.path ? [settings.request.path] : undefined)]
+                    getQueryKey({ requestInfo, requestName }),
                     // queryFn: async () => requestName({ ...settings.request })
                     ts.factory.createPropertyAssignment(
                       ts.factory.createIdentifier('queryFn'),
