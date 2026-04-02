@@ -12,7 +12,7 @@ npm add @siberiacancode/yandex-metrika
 
 Inject the Metrika tag with `getYandexMetrikaScript`.
 
-```typescript
+```tsx
 import { getYandexMetrikaScript } from '@siberiacancode/yandex-metrika';
 
 const counterId = 'your-counter-id';
@@ -24,7 +24,7 @@ const counterId = 'your-counter-id';
 
 If JavaScript is disabled, you can render the tracking pixel:
 
-```typescript
+```tsx
 import { YandexMetrikaNoScript } from '@siberiacancode/yandex-metrika';
 
 const counterId = 'your-counter-id';
@@ -36,7 +36,7 @@ const counterId = 'your-counter-id';
 
 Use `createYandexMetrika` to create a typed tracker function for your counter.
 
-```typescript
+```tsx
 import { createYandexMetrika } from '@siberiacancode/yandex-metrika';
 
 const counterId = 'your-counter-id';

@@ -115,7 +115,8 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
         ...Object.entries(playwrightRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
           acc[key.replace('playwright', 'siberiacancode-playwright')] = value;
           return acc;
-        }, {})
+        }, {}),
+        'siberiacancode-playwright/expect-expect': 'off'
       }
     });
   }
@@ -132,7 +133,8 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
         ...Object.entries(tailwindRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
           acc[key.replace('better-tailwindcss', 'siberiacancode-tailwind')] = value;
           return acc;
-        }, {})
+        }, {}),
+        'siberiacancode-tailwind/enforce-consistent-line-wrapping': 'off'
       },
       settings: {
         'better-tailwindcss': {
@@ -223,6 +225,16 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
         'antfu/top-level-function': 'off',
 
         'no-console': 'warn',
+        'prefer-template': 'error',
+        'arrow-body-style': ['error', 'as-needed'],
+
+        'unicorn/no-typeof-undefined': 'error',
+        'unicorn/no-useless-spread': 'warn',
+
+        'e18e/prefer-static-regex': 'off',
+        'e18e/prefer-array-at': 'off',
+
+        'import/newline-after-import': 'error',
 
         'react/prefer-namespace-import': 'off',
         'react-hooks/exhaustive-deps': 'off',

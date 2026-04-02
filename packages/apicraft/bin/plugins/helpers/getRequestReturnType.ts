@@ -21,11 +21,15 @@ export const getRequestReturnType = ({
   requestErrorTypeName,
   requestResponseTypeName
 }: GetRequestCallGenericResponseParams) => {
-  if (!requestInfo.hasSuccessResponse && !requestInfo.hasErrorResponse) return;
-
   const responseTypeName = useRuntimeResponseType
     ? 'ApicraftApiResponse'
     : `Apicraft${capitalize(instanceName)}Response`;
+
+  if (!requestInfo.hasSuccessResponse && !requestInfo.hasErrorResponse) {
+    return ts.factory.createTypeReferenceNode('Promise', [
+      ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(responseTypeName))
+    ]);
+  }
 
   if (requestInfo.hasSuccessResponse && !requestInfo.hasErrorResponse) {
     return ts.factory.createTypeReferenceNode('Promise', [
