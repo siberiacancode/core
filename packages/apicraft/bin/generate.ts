@@ -4,7 +4,9 @@ import type { Argv } from 'yargs';
 import { createClient } from '@hey-api/openapi-ts';
 import process from 'node:process';
 
-import { getConfig } from '@/bin/helpers';
+import type { Dependency} from '@/bin/helpers';
+
+import { getConfig, installPeerDependencies } from '@/bin/helpers';
 
 import type { ApicraftOption, GenerateApicraftOption, InstanceName } from './schemas';
 
@@ -50,6 +52,8 @@ export const generate = {
         ];
       }
 
+      const dependencies: Dependency[] = [];
+
       for (const option of options) {
         const plugins: any[] = ['@hey-api/typescript', ...(option.plugins ?? [])];
 
@@ -63,6 +67,7 @@ export const generate = {
           typeof option.instance === 'object' ? option.instance.runtimeInstancePath : undefined;
 
         if (matchInstance('axios')) {
+          dependencies.push('axios');
           plugins.push(
             defineAxiosPlugin({
               generateOutput,
@@ -76,6 +81,7 @@ export const generate = {
         }
 
         if (matchInstance('fetches')) {
+          dependencies.push('@siberiacancode/fetches');
           plugins.push(
             defineFetchesPlugin({
               generateOutput,
@@ -89,6 +95,7 @@ export const generate = {
         }
 
         if (matchInstance('ofetch')) {
+          dependencies.push('ofetch');
           plugins.push(
             defineOfetchPlugin({
               generateOutput,
@@ -105,6 +112,7 @@ export const generate = {
           (plugin) => plugin === 'tanstack' || plugin.name === 'tanstack'
         );
         if (tanstackPlugin) {
+          dependencies.push('@tanstack/react-query');
           plugins.push(
             defineTanstackPlugin({
               generateOutput,
@@ -123,6 +131,8 @@ export const generate = {
           plugins: plugins as UserConfig['plugins']
         });
       }
+
+      await installPeerDependencies(dependencies);
 
       console.info('\n🎉  Generation done! Thanks for using apicraft! 🎉');
     } catch (error: any) {
