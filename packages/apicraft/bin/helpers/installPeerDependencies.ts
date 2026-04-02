@@ -1,5 +1,5 @@
-import fs from 'node:fs/promises';
-import nodePath from 'node:path';
+import * as prompts from '@clack/prompts';
+import { isPackageExists } from 'local-pkg';
 
 export type Dependency = '@siberiacancode/fetches' | '@tanstack/react-query' | 'axios' | 'ofetch';
 
@@ -10,20 +10,24 @@ export const dependencyVersionsMap: Record<Dependency, string> = {
   '@tanstack/react-query': '^5.90.21'
 };
 
-export const installPeerDependencies = async (dependencies: Dependency[]) => {
-  const cwd = process.cwd();
+export const installDependencies = async (dependencies: Dependency[]) => {
+  const requiredDependencies = dependencies.filter((dependency) => !isPackageExists(dependency));
+  if (!requiredDependencies.length) return;
 
-  const packageJsonPath = nodePath.join(cwd, 'package.json');
-  const packageJsonContent = await fs.readFile(packageJsonPath, 'utf-8');
-  const packageJson = JSON.parse(packageJsonContent) as Record<string, any>;
-
-  dependencies.forEach((dependency) => {
-    packageJson.dependencies ??= {};
-    packageJson.dependencies[dependency] = dependencyVersionsMap[dependency];
+  const confirmed = await prompts.confirm({
+    message: `Additional dependencies are required: ${requiredDependencies.join(', ')}. Do you want to install them?`
   });
+  if (!confirmed) return;
 
-  console.log(`Adding dependencies to package.json: ${dependencies.join(', ')}`);
-  await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
+  const spinner = prompts.spinner();
+  spinner.start('Installing required dependencies');
 
-  console.log('You can install new packages by running your package manager install command');
+  const { installPackage } = await import('@antfu/install-pkg');
+  await installPackage(
+    requiredDependencies.map(
+      (requiredDependency) => `${requiredDependency}@${dependencyVersionsMap[requiredDependency]}`
+    )
+  );
+
+  spinner.stop('Installion finished');
 };
