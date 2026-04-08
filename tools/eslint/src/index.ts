@@ -263,6 +263,7 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
               'value-internal',
               ['type-parent', 'type-sibling', 'type-index'],
               ['value-parent', 'value-sibling', 'value-index'],
+              'style',
               'side-effect',
               'side-effect-style',
               'ts-equals-import',
