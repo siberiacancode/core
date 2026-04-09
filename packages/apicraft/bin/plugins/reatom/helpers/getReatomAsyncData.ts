@@ -25,33 +25,10 @@ function getRequestFieldsForOperation(request: IR.OperationObject): string[] {
   return fields;
 }
 
-function createUnwrapAtom(field: string): ts.Statement {
-  return ts.factory.createVariableStatement(
-    undefined,
-    ts.factory.createVariableDeclarationList(
-      [
-        ts.factory.createVariableDeclaration(
-          ts.factory.createIdentifier(field),
-          undefined,
-          undefined,
-          ts.factory.createCallExpression(
-            ts.factory.createPropertyAccessExpression(
-              ts.factory.createIdentifier('request'),
-              ts.factory.createIdentifier(field)
-            ),
-            undefined,
-            []
-          )
-        )
-      ],
-      ts.NodeFlags.Const
-    )
-  );
-}
-
 export const getReatomAsyncData = ({
   request,
   requestName,
+  requestParamsTypeName,
   requestRef
 }: GetReatomAsyncDataParams) => {
   const requestInfo = getRequestInfo({ request });
@@ -89,35 +66,264 @@ export const getReatomAsyncData = ({
           requestCallArg
         ]);
 
-  const computedBody: ts.Statement[] = [
-    ts.factory.createVariableStatement(
+  const requestAccess = requestInfo.hasRequiredParam
+    ? ts.factory.createPropertyAccessExpression(
+        ts.factory.createIdentifier('settings'),
+        ts.factory.createIdentifier('request')
+      )
+    : ts.factory.createPropertyAccessChain(
+        ts.factory.createIdentifier('settings'),
+        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+        ts.factory.createIdentifier('request')
+      );
+
+  const requestVariable = ts.factory.createVariableStatement(
+    undefined,
+    ts.factory.createVariableDeclarationList(
+      [
+        ts.factory.createVariableDeclaration(
+          ts.factory.createIdentifier('request'),
+          undefined,
+          ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
+          ts.factory.createAsExpression(
+            ts.factory.createBinaryExpression(
+              requestAccess,
+              ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+              ts.factory.createObjectLiteralExpression([], false)
+            ),
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+          )
+        )
+      ],
+      ts.NodeFlags.Const
+    )
+  );
+
+  const unwrapReactiveObjectHelper = ts.factory.createVariableStatement(
+    undefined,
+    ts.factory.createVariableDeclarationList(
+      [
+        ts.factory.createVariableDeclaration(
+          ts.factory.createIdentifier('unwrapReactiveObject'),
+          undefined,
+          undefined,
+          ts.factory.createArrowFunction(
+            undefined,
+            undefined,
+            [
+              ts.factory.createParameterDeclaration(
+                undefined,
+                undefined,
+                ts.factory.createIdentifier('value'),
+                undefined,
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+              )
+            ],
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
+            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+            ts.factory.createBlock(
+              [
+                ts.factory.createIfStatement(
+                  ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                      ts.factory.createIdentifier('Array'),
+                      ts.factory.createIdentifier('isArray')
+                    ),
+                    undefined,
+                    [ts.factory.createIdentifier('value')]
+                  ),
+                  ts.factory.createBlock(
+                    [
+                      ts.factory.createReturnStatement(
+                        ts.factory.createCallExpression(
+                          ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier('value'),
+                            ts.factory.createIdentifier('map')
+                          ),
+                          undefined,
+                          [
+                            ts.factory.createArrowFunction(
+                              undefined,
+                              undefined,
+                              [ts.factory.createParameterDeclaration(undefined, undefined, 'item')],
+                              undefined,
+                              ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                              ts.factory.createCallExpression(
+                                ts.factory.createIdentifier('unwrapReactiveObject'),
+                                undefined,
+                                [ts.factory.createIdentifier('item')]
+                              )
+                            )
+                          ]
+                        )
+                      )
+                    ],
+                    true
+                  )
+                ),
+                ts.factory.createIfStatement(
+                  ts.factory.createBinaryExpression(
+                    ts.factory.createIdentifier('value'),
+                    ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
+                    ts.factory.createBinaryExpression(
+                      ts.factory.createTypeOfExpression(ts.factory.createIdentifier('value')),
+                      ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
+                      ts.factory.createStringLiteral('object')
+                    )
+                  ),
+                  ts.factory.createBlock(
+                    [
+                      ts.factory.createReturnStatement(
+                        ts.factory.createCallExpression(
+                          ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier('Object'),
+                            ts.factory.createIdentifier('fromEntries')
+                          ),
+                          undefined,
+                          [
+                            ts.factory.createCallExpression(
+                              ts.factory.createPropertyAccessExpression(
+                                ts.factory.createCallExpression(
+                                  ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier('Object'),
+                                    ts.factory.createIdentifier('entries')
+                                  ),
+                                  undefined,
+                                  [ts.factory.createIdentifier('value')]
+                                ),
+                                ts.factory.createIdentifier('map')
+                              ),
+                              undefined,
+                              [
+                                ts.factory.createArrowFunction(
+                                  undefined,
+                                  undefined,
+                                  [
+                                    ts.factory.createParameterDeclaration(
+                                      undefined,
+                                      undefined,
+                                      ts.factory.createArrayBindingPattern([
+                                        ts.factory.createBindingElement(undefined, undefined, 'key'),
+                                        ts.factory.createBindingElement(
+                                          undefined,
+                                          undefined,
+                                          'entry'
+                                        )
+                                      ])
+                                    )
+                                  ],
+                                  undefined,
+                                  ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                  ts.factory.createArrayLiteralExpression(
+                                    [
+                                      ts.factory.createIdentifier('key'),
+                                      ts.factory.createConditionalExpression(
+                                        ts.factory.createBinaryExpression(
+                                          ts.factory.createTypeOfExpression(
+                                            ts.factory.createIdentifier('entry')
+                                          ),
+                                          ts.factory.createToken(
+                                            ts.SyntaxKind.EqualsEqualsEqualsToken
+                                          ),
+                                          ts.factory.createStringLiteral('function')
+                                        ),
+                                        undefined,
+                                        ts.factory.createConditionalExpression(
+                                          ts.factory.createPrefixUnaryExpression(
+                                            ts.SyntaxKind.ExclamationToken,
+                                            ts.factory.createPrefixUnaryExpression(
+                                              ts.SyntaxKind.ExclamationToken,
+                                              ts.factory.createPropertyAccessChain(
+                                                ts.factory.createIdentifier('entry'),
+                                                ts.factory.createToken(
+                                                  ts.SyntaxKind.QuestionDotToken
+                                                ),
+                                                ts.factory.createIdentifier('__reatom')
+                                              )
+                                            )
+                                          ),
+                                          undefined,
+                                          ts.factory.createCallExpression(
+                                            ts.factory.createIdentifier('entry'),
+                                            undefined,
+                                            []
+                                          ),
+                                          undefined,
+                                          ts.factory.createIdentifier('entry')
+                                        ),
+                                        undefined,
+                                        ts.factory.createCallExpression(
+                                          ts.factory.createIdentifier('unwrapReactiveObject'),
+                                          undefined,
+                                          [ts.factory.createIdentifier('entry')]
+                                        )
+                                      )
+                                    ],
+                                    false
+                                  )
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      )
+                    ],
+                    true
+                  )
+                ),
+                ts.factory.createReturnStatement(ts.factory.createIdentifier('value'))
+              ],
+              true
+            )
+          )
+        )
+      ],
+      ts.NodeFlags.Const
+    )
+  );
+
+  const createRequestFieldStatement = (field: string): ts.Statement => {
+    const requestFieldAccess = ts.factory.createPropertyAccessExpression(
+      ts.factory.createIdentifier('request'),
+      ts.factory.createIdentifier(field)
+    );
+
+    const valueExpression =
+      field === 'config'
+        ? requestFieldAccess
+        : ts.factory.createCallExpression(ts.factory.createIdentifier('unwrapReactiveObject'), undefined, [
+            requestFieldAccess
+          ]);
+
+    return ts.factory.createVariableStatement(
       undefined,
       ts.factory.createVariableDeclarationList(
         [
           ts.factory.createVariableDeclaration(
-            ts.factory.createIdentifier('request'),
+            ts.factory.createIdentifier(field),
             undefined,
-            undefined,
-            ts.factory.createBinaryExpression(
-              requestInfo.hasRequiredParam
-                ? ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier('settings'),
-                    ts.factory.createIdentifier('request')
-                  )
-                : ts.factory.createPropertyAccessChain(
-                    ts.factory.createIdentifier('settings'),
-                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                    ts.factory.createIdentifier('request')
-                  ),
-              ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-              ts.factory.createObjectLiteralExpression([], false)
+            ts.factory.createIndexedAccessTypeNode(
+              ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(requestParamsTypeName)),
+              ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(field))
+            ),
+            ts.factory.createAsExpression(
+              valueExpression,
+              ts.factory.createIndexedAccessTypeNode(
+                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(requestParamsTypeName)),
+                ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(field))
+              )
             )
           )
         ],
         ts.NodeFlags.Const
       )
-    ),
-    ...requestFields.map((field) => createUnwrapAtom(field)),
+    );
+  };
+
+  const computedBody: ts.Statement[] = [
+    requestVariable,
+    unwrapReactiveObjectHelper,
+    ...requestFields.map((field) => createRequestFieldStatement(field)),
     ts.factory.createReturnStatement(
       ts.factory.createAwaitExpression(
         ts.factory.createCallExpression(ts.factory.createIdentifier('wrap'), undefined, [

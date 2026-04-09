@@ -34,6 +34,14 @@ export interface TanstackMutationSettings<TFunc extends (...args: any[]) => Prom
   request?: NonNullable<Parameters<TFunc>[0]>;
 }
 
+export type ReatomAtom<TValue> = (() => TValue) & { __reatom: unknown };
+export type ReatomAtomized<TValue> = TValue | ReatomAtom<TValue>;
+export type ReatomDeepAtomized<TValue> = TValue extends readonly (infer Item)[]
+  ? ReatomDeepAtomized<Item>[]
+  : TValue extends object
+    ? { [Key in keyof TValue]: ReatomDeepAtomized<TValue[Key]> | ReatomAtom<TValue[Key]> }
+    : ReatomAtomized<TValue>;
+
 export interface ReatomAsyncDataSettings<TFunc extends (...args: any[]) => Promise<any>> {
   params?: AsyncDataOptions<
     Awaited<ReturnType<TFunc>>,
@@ -42,7 +50,11 @@ export interface ReatomAsyncDataSettings<TFunc extends (...args: any[]) => Promi
     Error,
     undefined
   >;
-  request?: NonNullable<Parameters<TFunc>[0]>;
+  request?: Partial<{
+    [Key in keyof NonNullable<Parameters<TFunc>[0]>]: Key extends 'config'
+      ? NonNullable<Parameters<TFunc>[0]>[Key]
+      : ReatomDeepAtomized<NonNullable<Parameters<TFunc>[0]>[Key]>;
+  }>;
 }
 
 export interface ReatomAsyncSettings<TFunc extends (...args: any[]) => Promise<any>> {
