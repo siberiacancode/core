@@ -4,12 +4,15 @@ import type { Argv } from 'yargs';
 import { createClient } from '@hey-api/openapi-ts';
 import process from 'node:process';
 
-import { getConfig } from '@/bin/helpers';
+import type { Dependency } from '@/bin/helpers';
+
+import { getConfig, installDependencies } from '@/bin/helpers';
 
 import type { ApicraftOption, GenerateApicraftOption, InstanceName } from './schemas';
 
 import { defineAxiosPlugin } from './plugins/axios';
 import { defineFetchesPlugin } from './plugins/fetches';
+import { defineOfetchPlugin } from './plugins/ofetch';
 import { defineReatomPlugin } from './plugins/reatom';
 import { defineTanstackPlugin } from './plugins/tanstack';
 import { apicraftConfigSchema, apicraftOptionSchema } from './schemas';
@@ -28,6 +31,11 @@ export const generate = {
         alias: 'o',
         type: 'string',
         description: 'Path to output folder'
+      })
+      .option('config', {
+        alias: 'c',
+        type: 'string',
+        description: 'Path to config file'
       }),
   handler: async (argv: GenerateApicraftOption) => {
     try {
@@ -35,7 +43,7 @@ export const generate = {
 
       const useConfig = !argv.input && !argv.output;
       if (useConfig) {
-        options = apicraftConfigSchema.parse(await getConfig());
+        options = apicraftConfigSchema.parse(await getConfig(argv.config));
       } else {
         options = [
           apicraftOptionSchema.parse({
@@ -46,6 +54,7 @@ export const generate = {
       }
 
       for (const option of options) {
+        const dependencies: Set<Dependency> = new Set();
         const plugins: any[] = ['@hey-api/typescript', ...(option.plugins ?? [])];
 
         const matchInstance = (name: InstanceName) =>
@@ -58,25 +67,43 @@ export const generate = {
           typeof option.instance === 'object' ? option.instance.runtimeInstancePath : undefined;
 
         if (matchInstance('axios')) {
+          dependencies.add('axios');
           plugins.push(
             defineAxiosPlugin({
               generateOutput,
               runtimeInstancePath,
               exportFromIndex: true,
               nameBy: option.nameBy,
-              groupBy: option.groupBy
+              groupBy: option.groupBy,
+              baseUrl: option.baseUrl
             })
           );
         }
 
         if (matchInstance('fetches')) {
+          dependencies.add('@siberiacancode/fetches');
           plugins.push(
             defineFetchesPlugin({
               generateOutput,
               runtimeInstancePath,
               exportFromIndex: true,
               nameBy: option.nameBy,
-              groupBy: option.groupBy
+              groupBy: option.groupBy,
+              baseUrl: option.baseUrl
+            })
+          );
+        }
+
+        if (matchInstance('ofetch')) {
+          dependencies.add('ofetch');
+          plugins.push(
+            defineOfetchPlugin({
+              generateOutput,
+              runtimeInstancePath,
+              exportFromIndex: true,
+              nameBy: option.nameBy,
+              groupBy: option.groupBy,
+              baseUrl: option.baseUrl
             })
           );
         }
@@ -85,12 +112,14 @@ export const generate = {
           (plugin) => plugin === 'tanstack' || plugin.name === 'tanstack'
         );
         if (tanstackPlugin) {
+          dependencies.add('@tanstack/react-query');
           plugins.push(
             defineTanstackPlugin({
               generateOutput,
               exportFromIndex: true,
               nameBy: option.nameBy,
-              groupBy: option.groupBy
+              groupBy: option.groupBy,
+              baseUrl: option.baseUrl
             })
           );
         }
@@ -99,19 +128,23 @@ export const generate = {
           (plugin) => plugin === 'reatom' || plugin.name === 'reatom'
         );
         if (reatomPlugin) {
+          dependencies.add('@reatom/core');
           plugins.push(
             defineReatomPlugin({
               generateOutput,
               exportFromIndex: true,
               nameBy: option.nameBy,
-              groupBy: option.groupBy
+              groupBy: option.groupBy,
+              baseUrl: option.baseUrl
             })
           );
         }
 
+        await installDependencies(Array.from(dependencies));
+
         await createClient({
-          parser: { filters: option.filters },
-          input: option.input,
+          ...(option.parser && { parser: option.parser as UserConfig['parser'] }),
+          input: typeof option.input === 'function' ? await option.input() : option.input,
           output: option.output,
           plugins: plugins as UserConfig['plugins']
         });

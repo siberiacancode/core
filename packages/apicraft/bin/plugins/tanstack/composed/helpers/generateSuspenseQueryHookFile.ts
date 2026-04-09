@@ -1,6 +1,6 @@
 import type { DefinePlugin, IR } from '@hey-api/openapi-ts';
 
-import * as nodePath from 'node:path';
+import nodePath from 'node:path';
 
 import {
   capitalize,
@@ -67,7 +67,7 @@ export const generateSuspenseQueryHookFile = ({
   // const useRequestNameSuspenseQuery = (settings: TanstackSuspenseQuerySettings<typeof requestName>) => useSuspenseQuery
   hookFile.add(
     ...getSuspenseQueryHook({
-      optionsFunctionName: `${requestName}Options`,
+      optionsFunctionName: `${requestName}SuspenseQueryOptions`,
       hookName,
       plugin,
       request,

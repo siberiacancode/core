@@ -1,7 +1,7 @@
 {
   "name": "@siberiacancode/apicraft",
   "type": "module",
-  "version": "1.5.2",
+  "version": "1.8.0",
   "description": "Generate rest api for your api with one command",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -47,20 +47,29 @@
     "dist"
   ],
   "scripts": {
-    "prepublishOnly": "yarn type && yarn build",
+    "prepublishOnly": "pnpm build",
     "dev": "tsdown --watch",
     "build": "tsdown",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector",
     "type": "tsc --noEmit",
     "format": "prettier --write .",
-    "pretty": "yarn type && yarn lint && yarn format"
+    "pretty": "pnpm type && pnpm lint && pnpm format",
+    "e2e-test": "pnpm build && vitest -c tests/vitest.config.ts"
+  },
+  "peerDependencies": {
+    "@reatom/core": "^1000",
+    "@siberiacancode/fetches": "^1",
+    "@tanstack/react-query": "^5",
+    "axios": "^1",
+    "ofetch": "^1 || ^2"
   },
   "dependencies": {
+    "@antfu/install-pkg": "^1.1.0",
+    "@clack/prompts": "^1.2.0",
     "@hey-api/openapi-ts": "0.82.5",
-    "@siberiacancode/fetches": "^1.14.0",
-    "@tanstack/react-query": "^5.90.21",
-    "cosmiconfig": "^9.0.0",
+    "cosmiconfig": "^9.0.1",
+    "local-pkg": "^1.1.2",
     "typescript": "^5.9.3",
     "yargs": "^18.0.0",
     "zod": "^4.3.6"
@@ -68,10 +77,15 @@
   "devDependencies": {
     "@reatom/core": "^1000.15.1",
     "@siberiacancode/eslint": "*",
+    "@siberiacancode/fetches": "^1.14.1",
     "@siberiacancode/prettier": "*",
-    "@types/node": "^25.2.3",
+    "@siberiacancode/tsconfig": "*",
+    "@siberiacancode/vitest": "*",
+    "@tanstack/react-query": "^5.90.21",
+    "@types/node": "^25.3.3",
     "@types/yargs": "^17.0.35",
-    "axios": "^1.13.5"
+    "axios": "^1.13.6",
+    "ofetch": "^1.5.1"
   },
   "lint-staged": {
     "*.{js,ts}": [

@@ -1,11 +1,12 @@
-import nodePath from 'node:path';
 import ts from 'typescript';
+
+import { getRelativePath } from '../getRelativePath';
 
 interface GetImportRequestParams {
   folderPath: string;
   generateOutput: string;
   requestFilePath: string;
-  requestName: string;
+  requestName: string | string[];
 }
 
 // import type { requestName } from './requestName.gen';
@@ -21,10 +22,12 @@ export const getImportRequest = ({
       false,
       undefined,
       ts.factory.createNamedImports([
-        ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier(requestName))
+        ...(Array.isArray(requestName) ? requestName : [requestName]).map((name) =>
+          ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier(name))
+        )
       ])
     ),
     ts.factory.createStringLiteral(
-      nodePath.relative(folderPath, `${generateOutput}/${requestFilePath}.gen`).replace(/\\/g, '/')
+      getRelativePath(folderPath, `${generateOutput}/${requestFilePath}.gen`)
     )
   );

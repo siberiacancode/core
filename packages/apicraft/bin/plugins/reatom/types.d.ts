@@ -3,6 +3,7 @@ import type { DefinePlugin } from '@hey-api/openapi-ts';
 import type { ApicraftOption } from '@/bin/schemas';
 
 export interface ReatomPluginConfig {
+  baseUrl?: ApicraftOption['baseUrl'];
   exportFromIndex: boolean;
   generateOutput: string;
   groupBy?: ApicraftOption['groupBy'];

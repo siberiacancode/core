@@ -1,0 +1,231 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/tester/session": {
+      "get": {
+        "operationId": "TesterController_session",
+        "summary": "получить сессию пользователя",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "session",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SessionResponse" }
+              }
+            }
+          }
+        },
+        "tags": ["🧪 tester"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/api/tester/profile": {
+      "patch": {
+        "operationId": "TesterController_updateProfile",
+        "summary": "обновить профиль пользователя",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateProfileDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "update profile",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UpdateProfileResponse" }
+              }
+            }
+          }
+        },
+        "tags": ["🧪 tester"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/api/tester/auth/otp": {
+      "post": {
+        "operationId": "TesterController_createOtp",
+        "summary": "создание отп кода",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateOtpDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "create otp",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/OtpResponse" }
+              }
+            }
+          }
+        },
+        "tags": ["🧪 tester"]
+      }
+    },
+    "/api/tester/signin": {
+      "post": {
+        "operationId": "TesterController_signin",
+        "summary": "авторизация",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SignInDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "signin",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SignInResponse" }
+              }
+            }
+          }
+        },
+        "tags": ["🧪 tester"]
+      }
+    }
+  },
+  "info": {
+    "title": "shift tester 🧪",
+    "description": "Апи для тестирования",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [{ "url": "https://shift-intensive.ru/" }],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string", "description": "ID пользователя" },
+          "phone": { "type": "string", "example": "89990009999", "description": "Номер телефона" },
+          "firstname": { "type": "string", "example": "firstname", "description": "Имя" },
+          "middlename": { "type": "string", "example": "middlename", "description": "Отчество" },
+          "lastname": { "type": "string", "example": "lastname", "description": "Фамилия" },
+          "email": { "type": "string", "example": "email@gmail.com", "description": "Почта" },
+          "city": { "type": "string", "example": "city", "description": "Город" }
+        },
+        "required": ["_id", "phone"]
+      },
+      "SessionResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "Статус запроса" },
+          "reason": { "type": "string", "description": "Причина ошибки" },
+          "user": {
+            "description": "Пользователь",
+            "allOf": [{ "$ref": "#/components/schemas/User" }]
+          }
+        },
+        "required": ["success", "user"]
+      },
+      "UpdateProfileProfileDto": {
+        "type": "object",
+        "properties": {
+          "firstname": { "type": "string", "example": "firstname", "description": "Имя" },
+          "middlename": { "type": "string", "example": "middlename", "description": "Отчество" },
+          "lastname": { "type": "string", "example": "lastname", "description": "Фамилия" },
+          "email": { "type": "string", "example": "email@gmail.com", "description": "Почта" },
+          "city": { "type": "string", "example": "city", "description": "Город" }
+        }
+      },
+      "UpdateProfileDto": {
+        "type": "object",
+        "properties": {
+          "profile": {
+            "description": "Данные пользователя",
+            "allOf": [{ "$ref": "#/components/schemas/UpdateProfileProfileDto" }]
+          },
+          "phone": { "type": "string", "example": "89990009999", "description": "Номер телефона" }
+        },
+        "required": ["profile", "phone"]
+      },
+      "UpdateProfileResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "Статус запроса" },
+          "reason": { "type": "string", "description": "Причина ошибки" },
+          "user": {
+            "description": "Пользователь",
+            "allOf": [{ "$ref": "#/components/schemas/User" }]
+          }
+        },
+        "required": ["success", "user"]
+      },
+      "CreateOtpDto": {
+        "type": "object",
+        "properties": { "phone": { "type": "string", "example": "89990009999" } },
+        "required": ["phone"]
+      },
+      "OtpResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "Статус запроса" },
+          "reason": { "type": "string", "description": "Причина ошибки" },
+          "retryDelay": {
+            "type": "number",
+            "example": 120000,
+            "description": "Время запроса повторного отп кода в мс"
+          }
+        },
+        "required": ["success", "retryDelay"]
+      },
+      "SignInDto": {
+        "type": "object",
+        "properties": {
+          "phone": { "type": "string", "example": "89990009999", "description": "Номер телефона" },
+          "code": { "type": "number", "example": 345231, "description": "Отп код" }
+        },
+        "required": ["phone", "code"]
+      },
+      "SignInResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "Статус запроса" },
+          "reason": { "type": "string", "description": "Причина ошибки" },
+          "user": {
+            "description": "Пользователь",
+            "allOf": [{ "$ref": "#/components/schemas/User" }]
+          },
+          "token": { "type": "string", "description": "Пользовательский токен" }
+        },
+        "required": ["success", "user", "token"]
+      }
+    }
+  }
+}

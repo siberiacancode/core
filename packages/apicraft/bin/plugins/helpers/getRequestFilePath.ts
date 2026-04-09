@@ -1,8 +1,10 @@
 import type { IR } from '@hey-api/openapi-ts';
 
-import * as nodePath from 'node:path';
+import nodePath from 'node:path';
 
 import type { ApicraftOption } from '@/bin/schemas';
+
+import { normalizeName } from './normalizeName';
 
 interface GetRequestFilePathsParams {
   groupBy: ApicraftOption['groupBy'];
@@ -11,26 +13,20 @@ interface GetRequestFilePathsParams {
   requestName: string;
 }
 
-export const getRequestFilePaths = ({
+export const getRequestFilePath = ({
   request,
   requestName,
   groupBy,
   output
 }: GetRequestFilePathsParams) => {
   if (groupBy === 'tags') {
-    const tags = request.tags ?? ['default'];
+    const tag = request.tags?.[0] ?? 'default';
 
-    return tags.map((tag) => nodePath.normalize(`${output}/requests/${tag}/${requestName}`));
+    return nodePath.normalize(`${output}/requests/${normalizeName(tag)}/${requestName}`);
   }
 
   if (groupBy === 'paths') {
-    return [
-      nodePath.normalize(`${output}/requests/${request.path}/${request.method.toLowerCase()}`)
-    ];
-  }
-
-  if (groupBy === 'class') {
-    return [nodePath.normalize(`${output}/instance.gen`)];
+    return nodePath.normalize(`${output}/requests/${request.path}/${request.method.toLowerCase()}`);
   }
 
   throw new Error(`Unsupported groupBy option ${groupBy}`);

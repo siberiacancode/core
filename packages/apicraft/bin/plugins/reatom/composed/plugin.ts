@@ -1,4 +1,4 @@
-import { generateRequestName, getRequestFilePaths } from '@/bin/plugins/helpers';
+import { generateRequestName, getRequestFilePath } from '@/bin/plugins/helpers';
 
 import type { ReatomPlugin } from '../types';
 
@@ -11,14 +11,12 @@ export const composedHandler: ReatomPlugin['Handler'] = ({ plugin }) =>
     const request = event.operation;
     const requestName = generateRequestName(request, plugin.config.nameBy);
 
-    const requestFilePaths = getRequestFilePaths({
+    const requestFilePath = getRequestFilePath({
       groupBy: plugin.config.groupBy,
       output: plugin.output,
       requestName,
       request
     });
 
-    requestFilePaths.forEach((requestFilePath) => {
-      generateReatomFile({ plugin, requestFilePath, request, requestName });
-    });
+    generateReatomFile({ plugin, requestFilePath, request, requestName });
   });

@@ -3,25 +3,24 @@ import type { IR } from '@hey-api/openapi-ts';
 import ts from 'typescript';
 
 import type { GetRequestInfoResult } from '@/bin/plugins/helpers';
+import type { ApicraftOption } from '@/bin/schemas';
 
 import { buildRequestParamsPath } from '@/bin/plugins/helpers';
 
 interface GetAxiosRequestCallExpressionParams {
-  instanceVariant: 'class' | 'function';
+  groupBy: ApicraftOption['groupBy'];
   request: IR.OperationObject;
   requestInfo: GetRequestInfoResult;
-  requestResponseTypeName: string;
 }
 
-// instance.request({ method, url, data, params })
+// instance.request({ method, url, data, params, headers })
 export const getAxiosRequestCallExpression = ({
   request,
   requestInfo,
-  requestResponseTypeName,
-  instanceVariant
+  groupBy
 }: GetAxiosRequestCallExpressionParams) =>
   ts.factory.createCallExpression(
-    instanceVariant === 'class'
+    groupBy === 'class'
       ? ts.factory.createPropertyAccessExpression(
           ts.factory.createPropertyAccessExpression(
             ts.factory.createThis(),
@@ -33,14 +32,7 @@ export const getAxiosRequestCallExpression = ({
           ts.factory.createIdentifier('instance'),
           ts.factory.createIdentifier('request')
         ),
-    requestInfo.hasResponse
-      ? [
-          ts.factory.createTypeReferenceNode(
-            ts.factory.createIdentifier(requestResponseTypeName),
-            undefined
-          )
-        ]
-      : undefined,
+    undefined,
     [
       ts.factory.createObjectLiteralExpression(
         [
@@ -67,6 +59,14 @@ export const getAxiosRequestCallExpression = ({
                 ts.factory.createPropertyAssignment(
                   ts.factory.createIdentifier('params'),
                   ts.factory.createIdentifier('query')
+                )
+              ]
+            : []),
+          ...(request.parameters?.header
+            ? [
+                ts.factory.createPropertyAssignment(
+                  ts.factory.createIdentifier('headers'),
+                  ts.factory.createIdentifier('headers')
                 )
               ]
             : []),

@@ -1,7 +1,7 @@
 {
   "name": "@siberiacancode/fetches",
   "type": "module",
-  "version": "1.13.2",
+  "version": "1.14.1",
   "description": "fetch instance",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -42,17 +42,21 @@
     "dist"
   ],
   "scripts": {
-    "prepublishOnly": "yarn type && yarn build",
+    "test": "vitest run",
+    "prepublishOnly": "pnpm type && pnpm build",
     "build": "tsdown",
+    "unit-test": "vitest",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector",
     "type": "tsc --noEmit",
     "format": "prettier --write .",
-    "pretty": "yarn type && yarn lint && yarn format"
+    "pretty": "pnpm type && pnpm lint && pnpm format"
   },
   "devDependencies": {
     "@siberiacancode/eslint": "*",
-    "@siberiacancode/prettier": "*"
+    "@siberiacancode/prettier": "*",
+    "@siberiacancode/vitest": "*",
+    "vitest": "4.0.16"
   },
   "lint-staged": {
     "*.{js,ts}": [

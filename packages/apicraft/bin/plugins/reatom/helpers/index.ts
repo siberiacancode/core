@@ -1,7 +1,8 @@
 export {
   getImportRequestParamsType,
   getImportRequestParamsTypeFromRequestFile,
-  getImportRequestParamsTypes
+  getImportRequestParamsTypes,
+  getImportRequestParamsTypesFromRequestFile
 } from './getImportRequestParamsType';
 export { getReatomAsync } from './getReatomAsync';
 export type { RequestRef } from './getReatomAsyncData';

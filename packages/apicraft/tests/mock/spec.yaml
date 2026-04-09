@@ -1,0 +1,235 @@
+openapi: 3.0.3
+info:
+  title: Test Service
+  version: '1.0.0'
+servers:
+  - url: https://api.test.local/v1
+  - url: http://localhost:4000/v1
+tags:
+  - name: User
+    description: Operations for user management
+  - name: Project
+    description: Project/task related operations
+  - name: Reports-analytics
+    description: Reporting endpoints
+paths:
+  /api/users/{username}:
+    parameters:
+      - name: username
+        in: path
+        description: Unique username, may include underscores
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - User
+      operationId: get_user-by-name
+      summary: Get user by username
+      parameters:
+        - name: include_inactive
+          in: query
+          description: Whether to include inactive users
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Found user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/users:
+    post:
+      tags:
+        - User
+      operationId: create-user_record
+      summary: Create a new user
+      parameters:
+        - name: notify
+          in: query
+          description: Send welcome notification
+          schema:
+            type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUser'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/projects/{projectId}/tasks/{task_id}:
+    parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: task_id
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      tags:
+        - Project
+      operationId: update-task_status
+      summary: Update task metadata
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskUpdate'
+      responses:
+        '200':
+          description: Updated task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '202':
+          description: Accepted and scheduled for processing
+        '404':
+          description: Task not found
+  /api/reports/{report_id}/entries/{entry_id}:
+    parameters:
+      - name: report_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: entry_id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      tags:
+        - Reports-analytics
+      operationId: delete-report_entry
+      summary: Delete report entry
+      responses:
+        '200':
+          description: Deleted
+        '404':
+          description: Entry not found
+components:
+  schemas:
+    User:
+      type: object
+      required: [id, username, email]
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        status:
+          type: string
+          enum: [active, pending, disabled]
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    NewUser:
+      type: object
+      required: [username, email]
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        status:
+          type: string
+          default: pending
+        profile:
+          type: object
+          properties:
+            first_name:
+              type: string
+            last-name:
+              type: string
+            tags:
+              type: array
+              items:
+                type: string
+    Task:
+      type: object
+      required: [id, projectId, title]
+      properties:
+        id:
+          type: string
+        projectId:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        completed:
+          type: boolean
+        priority_level:
+          type: integer
+    TaskUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        completed:
+          type: boolean
+        priority_level:
+          type: integer
+    ReportEntry:
+      type: object
+      properties:
+        entry_id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        payload:
+          type: object
+          additionalProperties: true
+        metrics:
+          type: object
+          properties:
+            total_count:
+              type: integer
+            success-rate:
+              type: number
+              format: float
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string

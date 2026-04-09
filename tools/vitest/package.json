@@ -40,20 +40,20 @@
     "dist"
   ],
   "scripts": {
-    "prepublishOnly": "yarn type && yarn build",
+    "prepublishOnly": "pnpm type && pnpm build",
     "build": "tsdown",
     "type": "tsc --noEmit",
     "lint": "eslint . --fix",
     "format": "prettier --write .",
-    "pretty": "yarn type && yarn lint && yarn format"
+    "pretty": "pnpm type && pnpm lint && pnpm format"
   },
   "peerDependencies": {
-    "jsdom": "27.3.0",
-    "vitest": "4.0.16"
+    "jsdom": "28.1.0",
+    "vitest": "4.0.18"
   },
   "dependencies": {
-    "jsdom": "27.3.0",
-    "vitest": "4.0.16"
+    "jsdom": "28.1.0",
+    "vitest": "4.0.18"
   },
   "devDependencies": {
     "@siberiacancode/eslint": "*",

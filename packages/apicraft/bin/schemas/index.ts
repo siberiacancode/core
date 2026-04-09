@@ -1,12 +1,86 @@
 import * as z from 'zod';
 
-const instanceNameSchema = z.enum(['fetches', 'axios']);
+const instanceNameSchema = z.enum(['fetches', 'axios', 'ofetch']);
 const instanceSchema = z.object({
   name: instanceNameSchema,
   runtimeInstancePath: z.string().optional()
 });
 
-const pathSchema = z.string().regex(/^[^/.].*[^/]$/, 'Path must be absolute');
+const pathSchema = z.string();
+
+const includeExcludeSchema = z.object({
+  exclude: z.array(z.string()).readonly().optional(),
+  include: z.array(z.string()).readonly().optional()
+});
+
+const filtersSchema = z.object({
+  deprecated: z.boolean().default(true).optional(),
+  operations: includeExcludeSchema.optional(),
+  orphans: z.boolean().default(false).optional(),
+  parameters: includeExcludeSchema.optional(),
+  preserveOrder: z.boolean().default(false).optional(),
+  requestBodies: includeExcludeSchema.optional(),
+  responses: includeExcludeSchema.optional(),
+  schemas: includeExcludeSchema.optional(),
+  tags: includeExcludeSchema.optional()
+});
+
+const enumsModeSchema = z.enum(['root', 'inline']);
+const stringCaseSchema = z.enum(['camelCase', 'PascalCase', 'preserve', 'snake_case']);
+const stringNameSchema = z.union([z.string(), z.function()]);
+
+const parserTransformsSchema = z
+  .object({
+    enums: z
+      .union([
+        z.boolean(),
+        enumsModeSchema,
+        z.object({
+          case: stringCaseSchema.optional(),
+          enabled: z.boolean().optional(),
+          mode: enumsModeSchema.optional(),
+          name: stringNameSchema.optional()
+        })
+      ])
+      .optional(),
+    readWrite: z
+      .union([
+        z.boolean(),
+        z.object({
+          enabled: z.boolean().optional(),
+          requests: z
+            .union([
+              stringNameSchema,
+              z.object({ case: stringCaseSchema.optional(), name: stringNameSchema.optional() })
+            ])
+            .optional(),
+          responses: z
+            .union([
+              stringNameSchema,
+              z.object({ case: stringCaseSchema.optional(), name: stringNameSchema.optional() })
+            ])
+            .optional()
+        })
+      ])
+      .optional()
+  })
+  .optional();
+
+const parserSchema = z
+  .object({
+    filters: filtersSchema.optional(),
+    hooks: z.record(z.string(), z.any()).optional(),
+    pagination: z
+      .object({
+        keywords: z.array(z.string()).readonly().optional()
+      })
+      .optional(),
+    patch: z.record(z.string(), z.any()).optional(),
+    transforms: parserTransformsSchema,
+    validate_EXPERIMENTAL: z.union([z.boolean(), z.enum(['strict', 'warn'])]).optional()
+  })
+  .strict()
+  .optional();
 
 const pluginNameSchema = z.enum([
   '@hey-api/client-angular',
@@ -39,23 +113,28 @@ const pluginNameSchema = z.enum([
 
 export const apicraftOptionSchema = z
   .object({
-    input: pathSchema.or(
-      z.object({
-        path: pathSchema.or(z.record(z.string(), z.unknown())),
-        fetch: z.record(z.string(), z.any()).optional(),
-        watch: z
-          .boolean()
-          .or(z.number())
-          .or(
-            z.object({
-              enabled: z.boolean().optional(),
-              interval: z.number().optional(),
-              timeout: z.number().optional()
-            })
-          )
-          .optional()
-      })
-    ),
+    input: z
+      .function()
+      .output(z.any())
+      .or(
+        pathSchema.or(
+          z.object({
+            path: pathSchema.or(z.record(z.string(), z.unknown())),
+            fetch: z.record(z.string(), z.any()).optional(),
+            watch: z
+              .boolean()
+              .or(z.number())
+              .or(
+                z.object({
+                  enabled: z.boolean().optional(),
+                  interval: z.number().optional(),
+                  timeout: z.number().optional()
+                })
+              )
+              .optional()
+          })
+        )
+      ),
     output: pathSchema.or(
       z.object({
         path: pathSchema,
@@ -79,64 +158,28 @@ export const apicraftOptionSchema = z
           .optional()
       })
     ),
-    filters: z
-      .object({
-        deprecated: z.boolean().default(true).optional(),
-        operations: z
-          .object({
-            exclude: z.array(z.string()).readonly().optional(),
-            include: z.array(z.string()).readonly().optional()
-          })
-          .optional(),
-        orphans: z.boolean().default(false).optional(),
-        parameters: z
-          .object({
-            exclude: z.array(z.string()).readonly().optional(),
-            include: z.array(z.string()).readonly().optional()
-          })
-          .optional(),
-        preserveOrder: z.boolean().default(false).optional(),
-        requestBodies: z
-          .object({
-            exclude: z.array(z.string()).readonly().optional(),
-            include: z.array(z.string()).readonly().optional()
-          })
-          .optional(),
-        responses: z
-          .object({
-            exclude: z.array(z.string()).readonly().optional(),
-            include: z.array(z.string()).readonly().optional()
-          })
-          .optional(),
-        schemas: z
-          .object({
-            exclude: z.array(z.string()).readonly().optional(),
-            include: z.array(z.string()).readonly().optional()
-          })
-          .optional(),
-        tags: z
-          .object({
-            exclude: z.array(z.string()).readonly().optional(),
-            include: z.array(z.string()).readonly().optional()
-          })
-          .optional()
-      })
-      .optional(),
+    parser: parserSchema,
+    baseUrl: z.string().optional(),
     instance: z.union([instanceNameSchema, instanceSchema]).optional(),
     nameBy: z.enum(['path', 'operationId']).default('operationId').optional(),
-    groupBy: z.enum(['paths', 'tags', 'class']).default('tags').optional(),
+    groupBy: z.enum(['paths', 'tags', 'class', 'standalone']).default('standalone').optional(),
     plugins: z
       .array(pluginNameSchema.or(z.object({ name: pluginNameSchema }).passthrough()))
       .optional()
   })
   .strict();
 
+export type ApicraftInstanceName = z.infer<typeof instanceNameSchema>;
 export type ApicraftOption = z.infer<typeof apicraftOptionSchema>;
 
 export const apicraftConfigSchema = z.array(apicraftOptionSchema);
 export type ApicraftConfig = z.infer<typeof apicraftConfigSchema>;
 
-export const generateApicraftOptionSchema = apicraftOptionSchema.partial();
+export const generateApicraftOptionSchema = z.object({
+  input: pathSchema.optional(),
+  output: pathSchema.optional(),
+  config: pathSchema.optional()
+});
 export type GenerateApicraftOption = z.infer<typeof generateApicraftOptionSchema>;
 
 export type InstanceName = z.infer<typeof instanceNameSchema>;

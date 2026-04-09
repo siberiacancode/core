@@ -1,6 +1,8 @@
 import nodePath from 'node:path';
 import ts from 'typescript';
 
+import { getRelativePath } from '@/bin/plugins/helpers';
+
 interface GetImportRequestParamsTypeParams {
   folderPath: string;
   generateOutput: string;
@@ -31,12 +33,10 @@ export const getImportRequestParamsType = ({
       ])
     ),
     ts.factory.createStringLiteral(
-      nodePath
-        .relative(
-          folderPath,
-          runtimeInstancePath ?? nodePath.normalize(`${generateOutput}/${output}/instance.gen`)
-        )
-        .replace(/\\/g, '/')
+      getRelativePath(
+        folderPath,
+        runtimeInstancePath ?? nodePath.normalize(`${generateOutput}/${output}/instance.gen`)
+      )
     )
   );
 
@@ -59,13 +59,11 @@ export const getImportRequestParamsTypes = (params: {
       )
     ),
     ts.factory.createStringLiteral(
-      nodePath
-        .relative(
-          params.folderPath,
-          params.runtimeInstancePath ??
-            nodePath.normalize(`${params.generateOutput}/${params.output}/instance.gen`)
-        )
-        .replace(/\\/g, '/')
+      getRelativePath(
+        params.folderPath,
+        params.runtimeInstancePath ??
+          nodePath.normalize(`${params.generateOutput}/${params.output}/instance.gen`)
+      )
     )
   );
 
@@ -97,6 +95,36 @@ export const getImportRequestParamsTypeFromRequestFile = ({
       ])
     ),
     ts.factory.createStringLiteral(
-      nodePath.relative(folderPath, `${generateOutput}/${requestFilePath}.gen`).replace(/\\/g, '/')
+      getRelativePath(folderPath, `${generateOutput}/${requestFilePath}.gen`)
+    )
+  );
+
+interface GetImportRequestParamsTypesFromRequestFileParams {
+  folderPath: string;
+  generateOutput: string;
+  requestFilePath: string;
+  requestParamsTypeNames: string[];
+}
+
+/** Import types from request file (standalone mode) */
+export const getImportRequestParamsTypesFromRequestFile = ({
+  folderPath,
+  generateOutput,
+  requestFilePath,
+  requestParamsTypeNames
+}: GetImportRequestParamsTypesFromRequestFileParams) =>
+  ts.factory.createImportDeclaration(
+    undefined,
+    ts.factory.createImportClause(
+      true,
+      undefined,
+      ts.factory.createNamedImports(
+        requestParamsTypeNames.map((name) =>
+          ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier(name))
+        )
+      )
+    ),
+    ts.factory.createStringLiteral(
+      getRelativePath(folderPath, `${generateOutput}/${requestFilePath}.gen`)
     )
   );

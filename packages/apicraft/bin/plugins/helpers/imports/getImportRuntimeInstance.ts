@@ -1,5 +1,6 @@
-import nodePath from 'node:path';
 import ts from 'typescript';
+
+import { getRelativePath } from '../getRelativePath';
 
 interface GetImportRuntimeInstanceParams {
   folderPath: string;
@@ -24,6 +25,6 @@ export const getImportRuntimeInstance = ({
         )
       ])
     ),
-    ts.factory.createStringLiteral(nodePath.relative(folderPath, runtimeInstancePath)),
+    ts.factory.createStringLiteral(getRelativePath(folderPath, runtimeInstancePath)),
     undefined
   );

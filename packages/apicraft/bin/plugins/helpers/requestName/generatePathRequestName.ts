@@ -1,4 +1,5 @@
-import { capitalize } from './capitalize';
+import { capitalize } from '../capitalize';
+import { normalizeName } from '../normalizeName';
 
 export const generatePathRequestName = (method: string, path: string) => {
   const pathParts = path.split('/');
@@ -8,11 +9,7 @@ export const generatePathRequestName = (method: string, path: string) => {
 
   for (let pathPart of pathParts) {
     const isParam = pathPart.startsWith('{') && pathPart.endsWith('}');
-    pathPart = pathPart
-      .split(/[^a-z0-9]+/i)
-      .filter(Boolean)
-      .map(capitalize)
-      .join('');
+    pathPart = normalizeName(pathPart);
 
     if (!isParam) {
       nameParts.push(capitalize(pathPart));

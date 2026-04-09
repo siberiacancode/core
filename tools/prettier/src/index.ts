@@ -1,4 +1,6 @@
-import type { Config as Prettier } from 'prettier';
+import type { Config } from 'prettier';
+
+export type Prettier = Config;
 
 export const prettier: Prettier = {
   printWidth: 100,

@@ -6,6 +6,8 @@ import { getRequestInfo } from '@/bin/plugins/helpers';
 
 import type { TanstackPlugin } from '../types';
 
+import { getQueryKey } from './getQueryKey';
+
 interface GetSuspenseQueryHookParams {
   hookName: string;
   optionsFunctionName: string;
@@ -15,7 +17,7 @@ interface GetSuspenseQueryHookParams {
 }
 
 // export const requestNameSuspenseQueryKey = requestName
-// const requestNameOptions = queryOptions({...})
+// const requestNameSuspenseQueryOptions = queryOptions({...})
 // const useRequestNameSuspenseQuery = (settings: TanstackSuspenseQuerySettings<typeof requestName>) => useSuspenseQuery
 export const getSuspenseQueryHook = ({
   plugin,
@@ -24,7 +26,7 @@ export const getSuspenseQueryHook = ({
   hookName,
   requestName
 }: GetSuspenseQueryHookParams) => {
-  const requestInfo = getRequestInfo({ request });
+  const requestInfo = getRequestInfo(request);
 
   // export const requestNameSuspenseQueryKey = requestName
   const suspenseQueryKey = ts.factory.createVariableStatement(
@@ -35,14 +37,14 @@ export const getSuspenseQueryHook = ({
           ts.factory.createIdentifier(`${requestName}SuspenseQueryKey`),
           undefined,
           undefined,
-          ts.factory.createStringLiteral(requestName)
+          ts.factory.createStringLiteral(`${requestName}SuspenseQueryKey`)
         )
       ],
       ts.NodeFlags.Const
     )
   );
 
-  // const requestNameOptions = queryOptions({...})
+  // const requestNameSuspenseQueryOptions = queryOptions({...})
   const optionsFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -85,31 +87,8 @@ export const getSuspenseQueryHook = ({
               [
                 ts.factory.createObjectLiteralExpression(
                   [
-                    // queryKey: [requestNameSuspenseQueryKey, settings.request.path, settings.request.query, settings.request.body]
-                    ts.factory.createPropertyAssignment(
-                      ts.factory.createIdentifier('queryKey'),
-                      ts.factory.createArrayLiteralExpression(
-                        [
-                          ts.factory.createStringLiteral(`${requestName}SuspenseQueryKey`),
-                          ...['path', 'query', 'body'].map((field) =>
-                            ts.factory.createPropertyAccessChain(
-                              ts.factory.createPropertyAccessChain(
-                                ts.factory.createIdentifier('settings'),
-                                !requestInfo.hasRequiredParam
-                                  ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
-                                  : undefined,
-                                ts.factory.createIdentifier('request')
-                              ),
-                              !requestInfo.hasRequiredParam
-                                ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
-                                : undefined,
-                              ts.factory.createIdentifier(field)
-                            )
-                          )
-                        ],
-                        false
-                      )
-                    ),
+                    // queryKey: [requestNameSuspenseQueryKey, ...(!!settings.request.path ? [settings.request.path] : undefined)]
+                    getQueryKey({ requestInfo, requestName }),
                     // queryFn: async () => requestName({ ...settings.request })
                     ts.factory.createPropertyAssignment(
                       ts.factory.createIdentifier('queryFn'),

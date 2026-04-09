@@ -1,6 +1,6 @@
 import type { IR } from '@hey-api/openapi-ts';
 
-import * as nodePath from 'node:path';
+import nodePath from 'node:path';
 
 import {
   capitalize,
@@ -37,8 +37,8 @@ export const generateQueryHookFile = ({
   // import type { TanstackQuerySettings } from '@siberiacancode/apicraft';
   hookFile.add(getApicraftTypeImport('TanstackQuerySettings'));
 
-  // import { useQuery } from '@tanstack/react-query';
-  hookFile.add(getTanstackImport('useQuery'));
+  // import { queryOptions, useQuery } from '@tanstack/react-query';
+  hookFile.add(getTanstackImport(['queryOptions', 'useQuery']));
 
   if (plugin.config.groupBy === 'class') {
     // import { instance } from '../../instance.gen';
@@ -63,6 +63,15 @@ export const generateQueryHookFile = ({
   }
 
   // const requestNameQueryKey = requestName;
+  // const requestNameQueryOptions = queryOptions({...})
   // const useRequestNameQuery = (settings: TanstackQuerySettings<typeof requestName>) => useQuery
-  hookFile.add(...getQueryHook({ hookName, request, plugin, requestName }));
+  hookFile.add(
+    ...getQueryHook({
+      hookName,
+      optionsFunctionName: `${requestName}QueryOptions`,
+      request,
+      plugin,
+      requestName
+    })
+  );
 };

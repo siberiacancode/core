@@ -18,15 +18,18 @@ export const classHandler: TanstackPlugin['Handler'] = ({ plugin }) => {
   });
 
   const imports: ts.ImportDeclaration[] = [
+    // import { useQuery, useMutation, queryOptions, useSuspenseQuery } from '@tanstack/react-query';
     getTanstackImport(['useQuery', 'useMutation', 'queryOptions', 'useSuspenseQuery']),
+    // import type { TanstackQuerySettings, TanstackMutationSettings, TanstackSuspenseQuerySettings } from '@siberiacancode/apicraft';
     getApicraftTypeImport([
       'TanstackQuerySettings',
       'TanstackMutationSettings',
       'TanstackSuspenseQuerySettings'
     ]),
+    // import { instance } from '../../instance.gen';
     getImportInstance({
       output: plugin.output,
-      folderPath: plugin.output,
+      folderPath: plugin.config.generateOutput,
       generateOutput: plugin.config.generateOutput
     })
   ];
@@ -34,14 +37,13 @@ export const classHandler: TanstackPlugin['Handler'] = ({ plugin }) => {
   const hooks: ts.VariableStatement[] = [];
 
   plugin.forEach('operation', (event) => {
-    if (event.type !== 'operation') return;
-
     const request = event.operation;
     const requestName = generateRequestName(request, plugin.config.nameBy);
 
     hooks.push(
       ...getQueryHook({
         hookName: `use${capitalize(requestName)}Query`,
+        optionsFunctionName: `${requestName}QueryOptions`,
         plugin,
         request,
         requestName
@@ -57,7 +59,7 @@ export const classHandler: TanstackPlugin['Handler'] = ({ plugin }) => {
     hooks.push(
       ...getSuspenseQueryHook({
         hookName: `use${capitalize(requestName)}SuspenseQuery`,
-        optionsFunctionName: `${requestName}Options`,
+        optionsFunctionName: `${requestName}SuspenseQueryOptions`,
         plugin,
         request,
         requestName
