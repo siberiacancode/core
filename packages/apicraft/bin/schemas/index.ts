@@ -107,6 +107,7 @@ const pluginNameSchema = z.enum([
   'fastify',
   'valibot',
   'tanstack',
+  'reatom',
   'zod'
 ]);
 

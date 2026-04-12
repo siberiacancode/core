@@ -60,8 +60,7 @@ const getParams = (
   if (node.params.length === 0) return undefined;
   const first = node.params[0];
   const last = node.params[node.params.length - 1];
-  if (first == null || last == null || !('range' in first) || !('range' in last))
-    return undefined;
+  if (first == null || last == null || !('range' in first) || !('range' in last)) return undefined;
   return sourceCode.getText({
     range: [first.range![0], last.range![1]]
   } as ESTree.Node & { range: [number, number] });
@@ -142,12 +141,7 @@ const walk = (node: ASTNode, visit: (n: ASTNode) => void): void => {
     if (value !== null && value !== undefined && typeof value === 'object') {
       if (Array.isArray(value))
         value.forEach((child: unknown) => {
-          if (
-            child !== null &&
-            child !== undefined &&
-            typeof child === 'object' &&
-            'type' in child
-          )
+          if (child !== null && child !== undefined && typeof child === 'object' && 'type' in child)
             walk(child as ASTNode, visit);
         });
       else if (

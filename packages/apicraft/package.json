@@ -57,12 +57,17 @@
     "pretty": "pnpm type && pnpm lint && pnpm format",
     "e2e-test": "pnpm build && vitest -c tests/vitest.config.ts"
   },
+  "peerDependencies": {
+    "@reatom/core": "^1000",
+    "@siberiacancode/fetches": "^1",
+    "@tanstack/react-query": "^5",
+    "axios": "^1",
+    "ofetch": "^1 || ^2"
+  },
   "dependencies": {
     "@antfu/install-pkg": "^1.1.0",
     "@clack/prompts": "^1.2.0",
     "@hey-api/openapi-ts": "0.82.5",
-    "@tanstack/react-query": "^5.90.21",
-    "axios": "^1.13.6",
     "cosmiconfig": "^9.0.1",
     "local-pkg": "^1.1.2",
     "typescript": "^5.9.3",
@@ -70,6 +75,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@reatom/core": "^1000.15.1",
     "@siberiacancode/eslint": "*",
     "@siberiacancode/fetches": "^1.14.1",
     "@siberiacancode/prettier": "*",
@@ -80,12 +86,6 @@
     "@types/yargs": "^17.0.35",
     "axios": "^1.13.6",
     "ofetch": "^1.5.1"
-  },
-  "peerDependencies": {
-    "@siberiacancode/fetches": "^1",
-    "@tanstack/react-query": "^5",
-    "axios": "^1",
-    "ofetch": "^1 || ^2"
   },
   "lint-staged": {
     "*.{js,ts}": [

@@ -1,5 +1,6 @@
 import { eslint } from '@siberiacancode/eslint';
 
 export default eslint({
-  typescript: 'engine'
+  typescript: 'engine',
+  ignores: ['**/rules/**']
 });

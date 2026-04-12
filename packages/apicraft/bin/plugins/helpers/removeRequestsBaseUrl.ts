@@ -20,7 +20,7 @@ export const removeRequestsBaseUrl = (plugin: DefinePlugin['Instance'], baseUrl:
       ...([
         ...events,
         (event: WalkEvent) => {
-          // eslint-disable-next-line ts/no-unnecessary-condition
+           
           if (event.type === 'operation') {
             const newPath = event.operation.path.replace(new RegExp(`^${baseUrl}`), '');
             event.operation.path = newPath.startsWith('/')

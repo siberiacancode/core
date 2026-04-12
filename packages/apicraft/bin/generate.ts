@@ -13,6 +13,7 @@ import type { ApicraftOption, GenerateApicraftOption, InstanceName } from './sch
 import { defineAxiosPlugin } from './plugins/axios';
 import { defineFetchesPlugin } from './plugins/fetches';
 import { defineOfetchPlugin } from './plugins/ofetch';
+import { defineReatomPlugin } from './plugins/reatom';
 import { defineTanstackPlugin } from './plugins/tanstack';
 import { apicraftConfigSchema, apicraftOptionSchema } from './schemas';
 
@@ -114,6 +115,22 @@ export const generate = {
           dependencies.add('@tanstack/react-query');
           plugins.push(
             defineTanstackPlugin({
+              generateOutput,
+              exportFromIndex: true,
+              nameBy: option.nameBy,
+              groupBy: option.groupBy,
+              baseUrl: option.baseUrl
+            })
+          );
+        }
+
+        const reatomPlugin = plugins.find(
+          (plugin) => plugin === 'reatom' || plugin.name === 'reatom'
+        );
+        if (reatomPlugin) {
+          dependencies.add('@reatom/core');
+          plugins.push(
+            defineReatomPlugin({
               generateOutput,
               exportFromIndex: true,
               nameBy: option.nameBy,

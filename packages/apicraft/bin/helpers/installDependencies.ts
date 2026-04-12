@@ -1,11 +1,17 @@
 import * as prompts from '@clack/prompts';
 import { isPackageExists } from 'local-pkg';
 
-export type Dependency = '@siberiacancode/fetches' | '@tanstack/react-query' | 'axios' | 'ofetch';
+export type Dependency =
+  | '@reatom/core'
+  | '@siberiacancode/fetches'
+  | '@tanstack/react-query'
+  | 'axios'
+  | 'ofetch';
 
 export const dependencyVersionsMap: Record<Dependency, string> = {
   axios: '^1.13.6',
   ofetch: '^1.5.1',
+  '@reatom/core': '^1000.15.1',
   '@siberiacancode/fetches': '^1.14.1',
   '@tanstack/react-query': '^5.90.21'
 };

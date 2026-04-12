@@ -1,3 +1,4 @@
+import type { AsyncDataOptions, AsyncOptions } from '@reatom/core';
 import type { FetchesResponse, RequestConfig } from '@siberiacancode/fetches';
 import type {
   UseMutationOptions,
@@ -36,6 +37,39 @@ export type TanstackSuspenseQuerySettings<TFunc extends (...args: any[]) => Prom
 
 export interface TanstackMutationSettings<TFunc extends (...args: any[]) => Promise<any>> {
   params?: UseMutationOptions<Awaited<ReturnType<TFunc>>, never, Parameters<TFunc>[0], unknown>;
+  request?: NonNullable<Parameters<TFunc>[0]>;
+}
+
+export type ReatomAtom<TValue> = (() => TValue) | TValue;
+export type ReatomDeepAtomized<TValue> =
+  | ([NonNullable<TValue>] extends [readonly (infer Item)[]]
+      ? ReatomAtom<NonNullable<TValue>> | ReatomDeepAtomized<Item>[]
+      : [NonNullable<TValue>] extends [object]
+        ?
+            | ReatomAtom<NonNullable<TValue>>
+            | {
+                [Key in keyof NonNullable<TValue>]: ReatomDeepAtomized<NonNullable<TValue>[Key]>;
+              }
+        : ReatomAtom<NonNullable<TValue>>)
+  | Extract<TValue, null | undefined>;
+
+export interface ReatomAsyncDataSettings<TFunc extends (...args: any[]) => Promise<any>> {
+  params?: AsyncDataOptions<
+    Awaited<ReturnType<TFunc>>,
+    Parameters<TFunc>,
+    Awaited<ReturnType<TFunc>>,
+    Error,
+    undefined
+  >;
+  request?: Partial<{
+    [Key in keyof NonNullable<Parameters<TFunc>[0]>]: ReatomDeepAtomized<
+      NonNullable<Parameters<TFunc>[0]>[Key]
+    >;
+  }>;
+}
+
+export interface ReatomAsyncSettings<TFunc extends (...args: any[]) => Promise<any>> {
+  params?: AsyncOptions<Error, undefined>;
   request?: NonNullable<Parameters<TFunc>[0]>;
 }
 
