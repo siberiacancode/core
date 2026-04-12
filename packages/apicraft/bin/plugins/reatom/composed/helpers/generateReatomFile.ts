@@ -2,17 +2,11 @@ import type { IR } from '@hey-api/openapi-ts';
 
 import * as nodePath from 'node:path';
 
-import { capitalize, getImportRequest } from '@/bin/plugins/helpers';
+import { capitalize, getApicraftTypeImport, getImportRequest } from '@/bin/plugins/helpers';
 
 import type { ReatomPlugin } from '../../types';
 
-import {
-  getImportRequestParamsTypeFromRequestFile,
-  getReatomAsync,
-  getReatomAsyncData,
-  getReatomCoreImport,
-  getReatomSettingsTypeImport
-} from '../../helpers';
+import { getReatomAsync, getReatomAsyncData, getReatomImport } from '../../helpers';
 
 interface GenerateReatomFileParams {
   plugin: ReatomPlugin['Instance'];
@@ -29,16 +23,20 @@ export const generateReatomFile = ({
 }: GenerateReatomFileParams) => {
   const reatomFilePath = `${nodePath.dirname(requestFilePath).replace('requests', 'reatom')}/${requestName}`;
   const reatomFolderPath = nodePath.dirname(`${plugin.config.generateOutput}/${reatomFilePath}`);
+  const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
 
   const reatomFile = plugin.createFile({
     id: requestName,
     path: reatomFilePath
   });
 
-  const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
+  // import type { ReatomAsyncDataSettings, ReatomAsyncSettings } from '@siberiacancode/apicraft';
+  reatomFile.add(getApicraftTypeImport(['ReatomAsyncDataSettings', 'ReatomAsyncSettings']));
 
-  reatomFile.add(getReatomCoreImport());
-  reatomFile.add(getReatomSettingsTypeImport());
+  // import { action, computed, wrap, withAsync, withAsyncData } from '@reatom/core';
+  reatomFile.add(getReatomImport(['action', 'computed', 'wrap', 'withAsync', 'withAsyncData']));
+
+  // import { requestName } from './requestName.gen';
   reatomFile.add(
     getImportRequest({
       folderPath: reatomFolderPath,
@@ -47,27 +45,33 @@ export const generateReatomFile = ({
       generateOutput: plugin.config.generateOutput
     })
   );
+
+  // import { RequestNameRequestParams } from './requestName.gen';
   reatomFile.add(
-    getImportRequestParamsTypeFromRequestFile({
+    getImportRequest({
       folderPath: reatomFolderPath,
-      generateOutput: plugin.config.generateOutput,
       requestFilePath,
+      requestName: requestParamsTypeName,
+      generateOutput: plugin.config.generateOutput
+    })
+  );
+
+  // export const requestNameAsyncData = (...) => computed(...).extend(withAsyncData(...));
+  reatomFile.add(
+    getReatomAsyncData({
+      plugin,
+      request,
+      requestName,
       requestParamsTypeName
     })
   );
-  reatomFile.add(
-    getReatomAsyncData({
-      request,
-      requestName,
-      requestParamsTypeName,
-      requestRef: 'function'
-    })
-  );
+
+  // export const requestNameAsync = (...) => action(...).extend(withAsync(...));
   reatomFile.add(
     getReatomAsync({
+      plugin,
       requestName,
-      requestParamsTypeName,
-      requestRef: 'function'
+      requestParamsTypeName
     })
   );
 };

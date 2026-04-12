@@ -1,16 +1,15 @@
 import type ts from 'typescript';
 
-import { capitalize, generateRequestName, getImportRequest } from '@/bin/plugins/helpers';
+import {
+  capitalize,
+  generateRequestName,
+  getApicraftTypeImport,
+  getImportRequest
+} from '@/bin/plugins/helpers';
 
 import type { ReatomPlugin } from '../types';
 
-import {
-  getImportRequestParamsTypesFromRequestFile,
-  getReatomAsync,
-  getReatomAsyncData,
-  getReatomCoreImport,
-  getReatomSettingsTypeImport
-} from '../helpers';
+import { getReatomAsync, getReatomAsyncData, getReatomImport } from '../helpers';
 
 export const standaloneHandler: ReatomPlugin['Handler'] = ({ plugin }) => {
   const reatomFile = plugin.createFile({
@@ -20,59 +19,52 @@ export const standaloneHandler: ReatomPlugin['Handler'] = ({ plugin }) => {
 
   const requestImportNames: string[] = [];
   const requestParamsTypeNames: string[] = [];
+  const functions: ts.VariableStatement[] = [];
 
   plugin.forEach('operation', (event) => {
-    if (event.type !== 'operation') return;
-
     const request = event.operation;
     const requestName = generateRequestName(request, plugin.config.nameBy);
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
 
     requestImportNames.push(requestName);
     requestParamsTypeNames.push(requestParamsTypeName);
+    functions.push(
+      getReatomAsyncData({
+        plugin,
+        request,
+        requestName,
+        requestParamsTypeName
+      }),
+      getReatomAsync({
+        plugin,
+        requestName,
+        requestParamsTypeName
+      })
+    );
   });
 
   const imports: ts.ImportDeclaration[] = [
-    getReatomCoreImport(),
-    getReatomSettingsTypeImport(),
+    // import type { ReatomAsyncDataSettings, ReatomAsyncSettings } from '@siberiacancode/apicraft';
+    getApicraftTypeImport(['ReatomAsyncDataSettings', 'ReatomAsyncSettings']),
+    // import { action, computed, wrap, withAsync, withAsyncData } from '@reatom/core';
+    getReatomImport(['action', 'computed', 'wrap', 'withAsync', 'withAsyncData']),
+    // import { requestName1, requestName2 } from './requests.gen';
     getImportRequest({
       folderPath: plugin.config.generateOutput,
       requestFilePath: `${plugin.output}/requests`,
       requestName: requestImportNames,
       generateOutput: plugin.config.generateOutput
     }),
-    getImportRequestParamsTypesFromRequestFile({
+    // import { RequestNameRequestParams } from './requests.gen';
+    getImportRequest({
       folderPath: plugin.config.generateOutput,
-      generateOutput: plugin.config.generateOutput,
       requestFilePath: `${plugin.output}/requests`,
-      requestParamsTypeNames
+      requestName: requestParamsTypeNames,
+      generateOutput: plugin.config.generateOutput
     })
   ];
 
   reatomFile.add(...imports);
-
-  plugin.forEach('operation', (event) => {
-    if (event.type !== 'operation') return;
-
-    const request = event.operation;
-    const requestName = generateRequestName(request, plugin.config.nameBy);
-    const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
-
-    reatomFile.add(
-      getReatomAsyncData({
-        request,
-        requestName,
-        requestParamsTypeName,
-        requestRef: 'function'
-      })
-    );
-
-    reatomFile.add(
-      getReatomAsync({
-        requestName,
-        requestParamsTypeName,
-        requestRef: 'function'
-      })
-    );
-  });
+  // export const requestNameAsyncData / requestNameAsync
+  reatomFile.add(...functions);
 };

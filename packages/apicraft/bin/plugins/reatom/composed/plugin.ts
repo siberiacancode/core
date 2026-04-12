@@ -6,8 +6,6 @@ import { generateReatomFile } from './helpers';
 
 export const composedHandler: ReatomPlugin['Handler'] = ({ plugin }) =>
   plugin.forEach('operation', (event) => {
-    if (event.type !== 'operation') return;
-
     const request = event.operation;
     const requestName = generateRequestName(request, plugin.config.nameBy);
 
@@ -18,5 +16,5 @@ export const composedHandler: ReatomPlugin['Handler'] = ({ plugin }) =>
       request
     });
 
-    generateReatomFile({ plugin, requestFilePath, request, requestName });
+    generateReatomFile({ plugin, request, requestFilePath, requestName });
   });

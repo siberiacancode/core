@@ -1,22 +1,22 @@
 import ts from 'typescript';
 
-import type { RequestRef } from './getReatomAsyncData';
+import type { ReatomPlugin } from '../types';
 
 interface GetReatomAsyncParams {
+  plugin: ReatomPlugin['Instance'];
   requestName: string;
   requestParamsTypeName: string;
-  requestRef: RequestRef;
 }
 
 export const getReatomAsync = ({
+  plugin,
   requestName,
-  requestParamsTypeName,
-  requestRef
+  requestParamsTypeName
 }: GetReatomAsyncParams) => {
   const asyncName = `${requestName}Async`;
 
   const requestCall =
-    requestRef === 'instance'
+    plugin.config.groupBy === 'class'
       ? ts.factory.createCallExpression(
           ts.factory.createPropertyAccessExpression(
             ts.factory.createIdentifier('instance'),
@@ -55,8 +55,8 @@ export const getReatomAsync = ({
           )
         ]);
 
-  const settingsTypeNode =
-    requestRef === 'instance'
+  const requestTypeNode =
+    plugin.config.groupBy === 'class'
       ? ts.factory.createTypeQueryNode(
           ts.factory.createQualifiedName(
             ts.factory.createIdentifier('instance'),
@@ -133,7 +133,7 @@ export const getReatomAsync = ({
                 ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                 ts.factory.createTypeReferenceNode(
                   ts.factory.createIdentifier('ReatomAsyncSettings'),
-                  [settingsTypeNode]
+                  [requestTypeNode]
                 )
               )
             ],

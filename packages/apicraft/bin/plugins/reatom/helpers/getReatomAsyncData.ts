@@ -2,43 +2,28 @@ import type { IR } from '@hey-api/openapi-ts';
 
 import ts from 'typescript';
 
-import { capitalize, getRequestInfo } from '@/bin/plugins/helpers';
+import { getRequestInfo } from '@/bin/plugins/helpers';
 
-export type RequestRef = 'function' | 'instance';
+import type { ReatomPlugin } from '../types';
 
 interface GetReatomAsyncDataParams {
+  plugin: ReatomPlugin['Instance'];
   request: IR.OperationObject;
   requestName: string;
   requestParamsTypeName: string;
-  requestRef: RequestRef;
-}
-
-function getRequestFieldsForOperation(request: IR.OperationObject): string[] {
-  const hasPathParam = !!Object.keys(request.parameters?.path ?? {}).length;
-  const hasQueryParam = !!Object.keys(request.parameters?.query ?? {}).length;
-  const hasHeaderParam = !!Object.keys(request.parameters?.header ?? {}).length;
-  const hasBody = !!request.body;
-  const fields: string[] = [];
-  if (hasPathParam) fields.push('path');
-  if (hasQueryParam) fields.push('query');
-  if (hasHeaderParam) fields.push('headers');
-  if (hasBody) fields.push('body');
-  fields.push('config');
-  return fields;
 }
 
 export const getReatomAsyncData = ({
+  plugin,
   request,
   requestName,
-  requestParamsTypeName,
-  requestRef
+  requestParamsTypeName
 }: GetReatomAsyncDataParams) => {
   const requestInfo = getRequestInfo(request);
-  const requestFields = getRequestFieldsForOperation(request);
-  const asyncDataName = `create${capitalize(requestName)}AsyncData`;
+  const asyncDataName = `${requestName}AsyncData`;
 
-  const settingsTypeNode =
-    requestRef === 'instance'
+  const requestTypeNode =
+    plugin.config.groupBy === 'class'
       ? ts.factory.createTypeQueryNode(
           ts.factory.createQualifiedName(
             ts.factory.createIdentifier('instance'),
@@ -47,66 +32,27 @@ export const getReatomAsyncData = ({
         )
       : ts.factory.createTypeQueryNode(ts.factory.createIdentifier(requestName));
 
-  const requestCallArg = ts.factory.createObjectLiteralExpression(
-    requestFields.map((field) =>
-      ts.factory.createShorthandPropertyAssignment(ts.factory.createIdentifier(field))
-    ),
-    false
-  );
-
   const requestCall =
-    requestRef === 'instance'
+    plugin.config.groupBy === 'class'
       ? ts.factory.createCallExpression(
           ts.factory.createPropertyAccessExpression(
             ts.factory.createIdentifier('instance'),
             ts.factory.createIdentifier(requestName)
           ),
           undefined,
-          [requestCallArg]
+          [ts.factory.createIdentifier('normalizedRequest')]
         )
       : ts.factory.createCallExpression(ts.factory.createIdentifier(requestName), undefined, [
-          requestCallArg
+          ts.factory.createIdentifier('normalizedRequest')
         ]);
 
-  const requestAccess = requestInfo.hasRequiredParam
-    ? ts.factory.createPropertyAccessExpression(
-        ts.factory.createIdentifier('settings'),
-        ts.factory.createIdentifier('request')
-      )
-    : ts.factory.createPropertyAccessChain(
-        ts.factory.createIdentifier('settings'),
-        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-        ts.factory.createIdentifier('request')
-      );
-
-  const requestVariable = ts.factory.createVariableStatement(
+  // const unwrap = (value: unknown): unknown => { ... }
+  const unwrapHelper = ts.factory.createVariableStatement(
     undefined,
     ts.factory.createVariableDeclarationList(
       [
         ts.factory.createVariableDeclaration(
-          ts.factory.createIdentifier('request'),
-          undefined,
-          ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
-          ts.factory.createAsExpression(
-            ts.factory.createBinaryExpression(
-              requestAccess,
-              ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-              ts.factory.createObjectLiteralExpression([], false)
-            ),
-            ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
-          )
-        )
-      ],
-      ts.NodeFlags.Const
-    )
-  );
-
-  const unwrapReactiveObjectHelper = ts.factory.createVariableStatement(
-    undefined,
-    ts.factory.createVariableDeclarationList(
-      [
-        ts.factory.createVariableDeclaration(
-          ts.factory.createIdentifier('unwrapReactiveObject'),
+          ts.factory.createIdentifier('unwrap'),
           undefined,
           undefined,
           ts.factory.createArrowFunction(
@@ -118,13 +64,32 @@ export const getReatomAsyncData = ({
                 undefined,
                 ts.factory.createIdentifier('value'),
                 undefined,
-                ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
               )
             ],
-            ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword),
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
             ts.factory.createBlock(
               [
+                ts.factory.createIfStatement(
+                  ts.factory.createBinaryExpression(
+                    ts.factory.createTypeOfExpression(ts.factory.createIdentifier('value')),
+                    ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
+                    ts.factory.createStringLiteral('function')
+                  ),
+                  ts.factory.createBlock(
+                    [
+                      ts.factory.createReturnStatement(
+                        ts.factory.createCallExpression(
+                          ts.factory.createIdentifier('value'),
+                          undefined,
+                          []
+                        )
+                      )
+                    ],
+                    true
+                  )
+                ),
                 ts.factory.createIfStatement(
                   ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
@@ -151,7 +116,7 @@ export const getReatomAsyncData = ({
                               undefined,
                               ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
                               ts.factory.createCallExpression(
-                                ts.factory.createIdentifier('unwrapReactiveObject'),
+                                ts.factory.createIdentifier('unwrap'),
                                 undefined,
                                 [ts.factory.createIdentifier('item')]
                               )
@@ -223,46 +188,10 @@ export const getReatomAsyncData = ({
                                   ts.factory.createArrayLiteralExpression(
                                     [
                                       ts.factory.createIdentifier('key'),
-                                      ts.factory.createConditionalExpression(
-                                        ts.factory.createBinaryExpression(
-                                          ts.factory.createTypeOfExpression(
-                                            ts.factory.createIdentifier('entry')
-                                          ),
-                                          ts.factory.createToken(
-                                            ts.SyntaxKind.EqualsEqualsEqualsToken
-                                          ),
-                                          ts.factory.createStringLiteral('function')
-                                        ),
+                                      ts.factory.createCallExpression(
+                                        ts.factory.createIdentifier('unwrap'),
                                         undefined,
-                                        ts.factory.createConditionalExpression(
-                                          ts.factory.createPrefixUnaryExpression(
-                                            ts.SyntaxKind.ExclamationToken,
-                                            ts.factory.createPrefixUnaryExpression(
-                                              ts.SyntaxKind.ExclamationToken,
-                                              ts.factory.createPropertyAccessChain(
-                                                ts.factory.createIdentifier('entry'),
-                                                ts.factory.createToken(
-                                                  ts.SyntaxKind.QuestionDotToken
-                                                ),
-                                                ts.factory.createIdentifier('__reatom')
-                                              )
-                                            )
-                                          ),
-                                          undefined,
-                                          ts.factory.createCallExpression(
-                                            ts.factory.createIdentifier('entry'),
-                                            undefined,
-                                            []
-                                          ),
-                                          undefined,
-                                          ts.factory.createIdentifier('entry')
-                                        ),
-                                        undefined,
-                                        ts.factory.createCallExpression(
-                                          ts.factory.createIdentifier('unwrapReactiveObject'),
-                                          undefined,
-                                          [ts.factory.createIdentifier('entry')]
-                                        )
+                                        [ts.factory.createIdentifier('entry')]
                                       )
                                     ],
                                     false
@@ -288,60 +217,48 @@ export const getReatomAsyncData = ({
     )
   );
 
-  const createRequestFieldStatement = (field: string): ts.Statement => {
-    const requestFieldAccess = ts.factory.createPropertyAccessExpression(
-      ts.factory.createIdentifier('request'),
-      ts.factory.createIdentifier(field)
-    );
-
-    const valueExpression =
-      field === 'config'
-        ? requestFieldAccess
-        : ts.factory.createCallExpression(
-            ts.factory.createIdentifier('unwrapReactiveObject'),
-            undefined,
-            [requestFieldAccess]
-          );
-
-    return ts.factory.createVariableStatement(
-      undefined,
-      ts.factory.createVariableDeclarationList(
-        [
-          ts.factory.createVariableDeclaration(
-            ts.factory.createIdentifier(field),
-            undefined,
-            ts.factory.createIndexedAccessTypeNode(
-              ts.factory.createTypeReferenceNode(
-                ts.factory.createIdentifier(requestParamsTypeName)
-              ),
-              ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(field))
-            ),
-            ts.factory.createAsExpression(
-              valueExpression,
-              ts.factory.createIndexedAccessTypeNode(
-                ts.factory.createTypeReferenceNode(
-                  ts.factory.createIdentifier(requestParamsTypeName)
-                ),
-                ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(field))
-              )
-            )
-          )
-        ],
-        ts.NodeFlags.Const
+  const requestAccess = requestInfo.hasRequiredParam
+    ? ts.factory.createPropertyAccessExpression(
+        ts.factory.createIdentifier('settings'),
+        ts.factory.createIdentifier('request')
       )
-    );
-  };
+    : ts.factory.createPropertyAccessChain(
+        ts.factory.createIdentifier('settings'),
+        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+        ts.factory.createIdentifier('request')
+      );
+
+  // const normalizedRequest = unwrap(settings.request ?? {}) as RequestParams;
+  const normalizedRequestVariable = ts.factory.createVariableStatement(
+    undefined,
+    ts.factory.createVariableDeclarationList(
+      [
+        ts.factory.createVariableDeclaration(
+          ts.factory.createIdentifier('normalizedRequest'),
+          undefined,
+          ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(requestParamsTypeName)),
+          ts.factory.createAsExpression(
+            ts.factory.createCallExpression(ts.factory.createIdentifier('unwrap'), undefined, [
+              ts.factory.createBinaryExpression(
+                requestAccess,
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                ts.factory.createObjectLiteralExpression([], false)
+              )
+            ]),
+            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(requestParamsTypeName))
+          )
+        )
+      ],
+      ts.NodeFlags.Const
+    )
+  );
 
   const computedBody: ts.Statement[] = [
-    requestVariable,
-    unwrapReactiveObjectHelper,
-    ...requestFields.map((field) => createRequestFieldStatement(field)),
+    unwrapHelper,
+    normalizedRequestVariable,
+    // return wrap(requestName(normalizedRequest));
     ts.factory.createReturnStatement(
-      ts.factory.createAwaitExpression(
-        ts.factory.createCallExpression(ts.factory.createIdentifier('wrap'), undefined, [
-          requestCall
-        ])
-      )
+      ts.factory.createCallExpression(ts.factory.createIdentifier('wrap'), undefined, [requestCall])
     )
   ];
 
@@ -399,7 +316,7 @@ export const getReatomAsyncData = ({
                   : undefined,
                 ts.factory.createTypeReferenceNode(
                   ts.factory.createIdentifier('ReatomAsyncDataSettings'),
-                  [settingsTypeNode]
+                  [requestTypeNode]
                 )
               )
             ],
