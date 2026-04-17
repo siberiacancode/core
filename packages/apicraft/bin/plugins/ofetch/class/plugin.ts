@@ -9,6 +9,7 @@ import {
   getImportRuntimeResponseType,
   getImportTypes,
   getRequestInfo,
+  getRequestParamsType,
   getRequestReturnType,
   hasRuntimeResponseType
 } from '@/bin/plugins/helpers';
@@ -20,8 +21,7 @@ import {
   getImportOfetchTypes,
   getOfetchInstanceType,
   getOfetchRequestCallExpression,
-  getOfetchRequestParameterDeclaration,
-  getOfetchRequestParamsType
+  getOfetchRequestParameterDeclaration
 } from '../helpers';
 
 const CLASS_NAME = 'ApiInstance';
@@ -56,7 +56,9 @@ export const classHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
 
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
     typeStatements.push(
-      getOfetchRequestParamsType({
+      getRequestParamsType({
+        instanceName: 'ofetch',
+        requestInfo,
         requestDataTypeName,
         requestParamsTypeName
       })
@@ -105,9 +107,9 @@ export const classHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
     );
   });
 
-  // import type { OFetchRequestParams, ... } from '@siberiacancode/apicraft';
+  // import type { OfetchRequestParams, ... } from '@siberiacancode/apicraft';
   const importApicraftTypes = getApicraftTypeImport([
-    'OFetchRequestParams',
+    'OfetchRequestParams',
     ...(!useRuntimeResponseType ? ['ApicraftOfetchResponse'] : [])
   ]);
 

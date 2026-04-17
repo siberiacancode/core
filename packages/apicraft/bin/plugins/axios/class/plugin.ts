@@ -9,6 +9,7 @@ import {
   getImportRuntimeResponseType,
   getImportTypes,
   getRequestInfo,
+  getRequestParamsType,
   getRequestReturnType,
   hasRuntimeResponseType
 } from '@/bin/plugins/helpers';
@@ -18,7 +19,6 @@ import type { AxiosPlugin } from '../types';
 import {
   getAxiosRequestCallExpression,
   getAxiosRequestParameterDeclaration,
-  getAxiosRequestParamsType,
   getImportAxios
 } from '../helpers';
 
@@ -55,7 +55,9 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
 
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
     typeStatements.push(
-      getAxiosRequestParamsType({
+      getRequestParamsType({
+        instanceName: 'axios',
+        requestInfo,
         requestDataTypeName,
         requestParamsTypeName
       })

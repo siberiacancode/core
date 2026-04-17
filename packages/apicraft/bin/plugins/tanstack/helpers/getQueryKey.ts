@@ -3,12 +3,12 @@ import ts from 'typescript';
 import type { GetRequestInfoResult } from '../../helpers';
 
 interface GetQueryKeyParams {
+  queryKeyName: string;
   requestInfo: GetRequestInfoResult;
-  requestName: string;
 }
 
 // queryKey: [requestNameSuspenseQueryKey, ...(!!settings.request.path ? [settings.request.path] : undefined)]
-export const getQueryKey = ({ requestInfo, requestName }: GetQueryKeyParams) => {
+export const getQueryKey = ({ requestInfo, queryKeyName }: GetQueryKeyParams) => {
   const getRequestSettingsAccess = (field: string) =>
     ts.factory.createPropertyAccessChain(
       ts.factory.createPropertyAccessChain(
@@ -28,7 +28,7 @@ export const getQueryKey = ({ requestInfo, requestName }: GetQueryKeyParams) => 
     ts.factory.createIdentifier('queryKey'),
     ts.factory.createArrayLiteralExpression(
       [
-        ts.factory.createIdentifier(`${requestName}QueryKey`),
+        ts.factory.createIdentifier(queryKeyName),
         ...['path', 'query', 'body'].map((field) =>
           ts.factory.createSpreadElement(
             ts.factory.createParenthesizedExpression(

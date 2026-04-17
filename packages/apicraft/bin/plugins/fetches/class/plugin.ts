@@ -9,6 +9,7 @@ import {
   getImportRuntimeResponseType,
   getImportTypes,
   getRequestInfo,
+  getRequestParamsType,
   getRequestReturnType,
   hasRuntimeResponseType
 } from '@/bin/plugins/helpers';
@@ -18,7 +19,6 @@ import type { FetchesPlugin } from '../types';
 import {
   getFetchesRequestCallExpression,
   getFetchesRequestParameterDeclaration,
-  getFetchesRequestParamsType,
   getImportFetches
 } from '../helpers';
 
@@ -54,7 +54,9 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
 
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
     typeStatements.push(
-      getFetchesRequestParamsType({
+      getRequestParamsType({
+        instanceName: 'fetches',
+        requestInfo,
         requestDataTypeName,
         requestParamsTypeName
       })

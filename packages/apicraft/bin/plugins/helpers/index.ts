@@ -4,6 +4,7 @@ export * from './getRelativePath';
 export * from './getRequestCallGenericResponse';
 export * from './getRequestFilePath';
 export * from './getRequestInfo';
+export * from './getRequestParamsType';
 export * from './getRequestReturnType';
 export * from './hasRuntimeResponseType';
 export * from './imports';

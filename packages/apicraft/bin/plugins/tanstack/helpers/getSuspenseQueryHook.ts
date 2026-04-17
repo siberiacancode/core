@@ -27,6 +27,7 @@ export const getSuspenseQueryHook = ({
   requestName
 }: GetSuspenseQueryHookParams) => {
   const requestInfo = getRequestInfo(request);
+  const queryKeyName = `${requestName}SuspenseQueryKey`;
 
   // export const requestNameSuspenseQueryKey = requestName
   const suspenseQueryKey = ts.factory.createVariableStatement(
@@ -34,10 +35,10 @@ export const getSuspenseQueryHook = ({
     ts.factory.createVariableDeclarationList(
       [
         ts.factory.createVariableDeclaration(
-          ts.factory.createIdentifier(`${requestName}SuspenseQueryKey`),
+          ts.factory.createIdentifier(queryKeyName),
           undefined,
           undefined,
-          ts.factory.createStringLiteral(`${requestName}SuspenseQueryKey`)
+          ts.factory.createStringLiteral(queryKeyName)
         )
       ],
       ts.NodeFlags.Const
@@ -88,7 +89,7 @@ export const getSuspenseQueryHook = ({
                 ts.factory.createObjectLiteralExpression(
                   [
                     // queryKey: [requestNameSuspenseQueryKey, ...(!!settings.request.path ? [settings.request.path] : undefined)]
-                    getQueryKey({ requestInfo, requestName }),
+                    getQueryKey({ requestInfo, queryKeyName }),
                     // queryFn: async () => requestName({ ...settings.request })
                     ts.factory.createPropertyAssignment(
                       ts.factory.createIdentifier('queryFn'),

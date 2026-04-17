@@ -11,7 +11,8 @@ const apicraftConfig = apicraft([
     instance: 'axios',
     baseUrl: '/api',
     nameBy: 'path',
-    groupBy: 'class'
+    groupBy: 'class',
+    plugins: ['tanstack']
   },
   {
     input: 'example-apiV1.yaml',

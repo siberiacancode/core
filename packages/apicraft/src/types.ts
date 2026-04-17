@@ -15,7 +15,7 @@ export type AxiosRequestParams<Params> = Omit<Params, 'url'> & {
   config?: Partial<AxiosRequestConfig>;
 };
 
-export type OFetchRequestParams<Params> = Omit<Params, 'url'> & {
+export type OfetchRequestParams<Params> = Omit<Params, 'url'> & {
   config?: Partial<FetchOptions>;
 };
 

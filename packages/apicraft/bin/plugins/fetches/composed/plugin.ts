@@ -10,6 +10,7 @@ import {
   getImportTypes,
   getRequestFilePath,
   getRequestInfo,
+  getRequestParamsType,
   getRequestReturnType,
   hasRuntimeResponseType
 } from '@/bin/plugins/helpers';
@@ -19,8 +20,7 @@ import type { FetchesPlugin } from '../types';
 import {
   addInstanceFile,
   getFetchesRequestCallExpression,
-  getFetchesRequestParameterDeclaration,
-  getFetchesRequestParamsType
+  getFetchesRequestParameterDeclaration
 } from '../helpers';
 
 export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
@@ -80,7 +80,9 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
     });
 
     // type RequestParams = FetchesRequestParams<RequestData>;
-    const requestParamsType = getFetchesRequestParamsType({
+    const requestParamsType = getRequestParamsType({
+      instanceName: 'fetches',
+      requestInfo,
       requestDataTypeName,
       requestParamsTypeName
     });
