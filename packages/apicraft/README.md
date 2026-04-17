@@ -48,6 +48,27 @@ npx apicraft generate
 
 Apicraft consumes an array of options exported from `apicraft.config.ts`.
 
+### `input`
+
+`input` accepts either a direct path/object value or an async/sync function that returns that value.
+This is useful when the OpenAPI source needs to be resolved dynamically before generation starts.
+
+```ts
+import { apicraft } from '@siberiacancode/apicraft';
+
+export default apicraft([
+  {
+    input: async () => {
+      const schema = await getSchema();
+
+      return schema;
+    },
+    output: 'generated/api',
+    instance: 'fetches'
+  }
+]);
+```
+
 ### `baseUrl`
 
 `baseUrl` lets you describe the path prefix that every request should strip while generating the
