@@ -9,6 +9,7 @@ import {
   getImportRuntimeResponseType,
   getImportTypes,
   getRequestInfo,
+  getRequestParamsType,
   getRequestReturnType,
   hasRuntimeResponseType
 } from '@/bin/plugins/helpers';
@@ -18,8 +19,7 @@ import type { AxiosPlugin } from '../types';
 import {
   addInstanceFile,
   getAxiosRequestCallExpression,
-  getAxiosRequestParameterDeclaration,
-  getAxiosRequestParamsType
+  getAxiosRequestParameterDeclaration
 } from '../helpers';
 
 export const standaloneHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
@@ -56,7 +56,9 @@ export const standaloneHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
 
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
     typeStatements.push(
-      getAxiosRequestParamsType({
+      getRequestParamsType({
+        instanceName: 'axios',
+        requestInfo,
         requestDataTypeName,
         requestParamsTypeName
       })

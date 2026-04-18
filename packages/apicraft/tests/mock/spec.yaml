@@ -58,7 +58,7 @@ paths:
           schema:
             type: boolean
       requestBody:
-        required: true
+        required: false
         content:
           application/json:
             schema:

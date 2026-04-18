@@ -10,6 +10,7 @@ import {
   getImportTypes,
   getRequestFilePath,
   getRequestInfo,
+  getRequestParamsType,
   getRequestReturnType,
   hasRuntimeResponseType
 } from '@/bin/plugins/helpers';
@@ -19,8 +20,7 @@ import type { AxiosPlugin } from '../types';
 import {
   addInstanceFile,
   getAxiosRequestCallExpression,
-  getAxiosRequestParameterDeclaration,
-  getAxiosRequestParamsType
+  getAxiosRequestParameterDeclaration
 } from '../helpers';
 
 export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
@@ -80,7 +80,9 @@ export const composedHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
     });
 
     // type RequestParams = AxiosRequestParams<RequestData>;
-    const requestParamsType = getAxiosRequestParamsType({
+    const requestParamsType = getRequestParamsType({
+      instanceName: 'axios',
+      requestInfo,
       requestDataTypeName,
       requestParamsTypeName
     });
