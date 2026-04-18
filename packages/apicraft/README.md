@@ -63,6 +63,18 @@ export default apicraft([
 
       return schema;
     },
+    // input: 'api.yaml',
+    // input: 'http://api.example.com/api.yaml',
+    // input: {
+    //   version: '3.0.0',
+    //   paths: {
+    //     '/api/users': {
+    //       get: {
+    //         operationId: 'getUser'
+    //       }
+    //     }
+    //   }
+    // },
     output: 'generated/api',
     instance: 'fetches'
   }
