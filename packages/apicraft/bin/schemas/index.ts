@@ -107,7 +107,8 @@ const pluginNameSchema = z.enum([
   'fastify',
   'valibot',
   'tanstack',
-  'zod'
+  'zod',
+  'faker'
 ]);
 
 export const apicraftOptionSchema = z

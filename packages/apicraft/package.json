@@ -79,9 +79,11 @@
     "@types/node": "^25.3.3",
     "@types/yargs": "^17.0.35",
     "axios": "^1.13.6",
+    "@faker-js/faker": "^10.0.0",
     "ofetch": "^1.5.1"
   },
   "peerDependencies": {
+    "@faker-js/faker": "^10",
     "@siberiacancode/fetches": "^1",
     "@tanstack/react-query": "^5",
     "axios": "^1",
