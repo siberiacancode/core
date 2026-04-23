@@ -104,6 +104,7 @@ const pluginNameSchema = z.enum([
   '@tanstack/solid-query',
   '@tanstack/svelte-query',
   '@tanstack/vue-query',
+  'faker',
   'fastify',
   'valibot',
   'tanstack',

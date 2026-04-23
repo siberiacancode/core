@@ -12,7 +12,7 @@ const apicraftConfig = apicraft([
     baseUrl: '/api',
     nameBy: 'path',
     groupBy: 'class',
-    plugins: ['tanstack']
+    plugins: ['tanstack', 'faker']
   },
   {
     input: 'example-apiV1.yaml',
@@ -20,8 +20,8 @@ const apicraftConfig = apicraft([
     instance: { name: 'axios', runtimeInstancePath: './src/instance' },
     baseUrl: '/api',
     nameBy: 'path',
-    groupBy: 'class',
-    plugins: ['tanstack']
+    groupBy: 'paths',
+    plugins: ['tanstack', 'faker']
   }
 ]);
 

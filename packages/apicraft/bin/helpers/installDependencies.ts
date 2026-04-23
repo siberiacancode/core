@@ -1,9 +1,15 @@
 import * as prompts from '@clack/prompts';
 import { isPackageExists } from 'local-pkg';
 
-export type Dependency = '@siberiacancode/fetches' | '@tanstack/react-query' | 'axios' | 'ofetch';
+export type Dependency =
+  | '@faker-js/faker'
+  | '@siberiacancode/fetches'
+  | '@tanstack/react-query'
+  | 'axios'
+  | 'ofetch';
 
 export const dependencyVersionsMap: Record<Dependency, string> = {
+  '@faker-js/faker': '^10.0.0',
   axios: '^1.13.6',
   ofetch: '^1.5.1',
   '@siberiacancode/fetches': '^1.14.1',

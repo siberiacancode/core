@@ -178,3 +178,35 @@ Generate React Query query, mutations and options for your API requests:
   "plugins": ["tanstack"]
 }
 ```
+
+### Faker Plugin
+
+Generate faker-based schema factories with deep partial merge support:
+
+```json
+{
+  "input": "api.yaml",
+  "output": "generated/api",
+  "instance": "fetches",
+  "plugins": ["faker"]
+}
+```
+
+Generated API example:
+
+```ts
+createUser({ profile: { firstName: 'John' } });
+```
+
+You can also provide your own faker instance created with `new Faker(...)`:
+
+```json
+{
+  "plugins": [
+    {
+      "name": "faker",
+      "runtimeFakerInstancePath": "./src/shared/faker-instance"
+    }
+  ]
+}
+```

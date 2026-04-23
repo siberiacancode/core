@@ -11,6 +11,7 @@ import { getConfig, installDependencies } from '@/bin/helpers';
 import type { ApicraftOption, GenerateApicraftOption, InstanceName } from './schemas';
 
 import { defineAxiosPlugin } from './plugins/axios';
+import { defineFakerPlugin } from './plugins/faker';
 import { defineFetchesPlugin } from './plugins/fetches';
 import { defineOfetchPlugin } from './plugins/ofetch';
 import { defineTanstackPlugin } from './plugins/tanstack';
@@ -119,6 +120,26 @@ export const generate = {
               nameBy: option.nameBy,
               groupBy: option.groupBy,
               baseUrl: option.baseUrl
+            })
+          );
+        }
+
+        const fakerPlugin = plugins.find((plugin) => plugin === 'faker' || plugin.name === 'faker');
+        if (fakerPlugin) {
+          const runtimeFakerInstancePath =
+            typeof fakerPlugin === 'object' &&
+            'runtimeFakerInstancePath' in fakerPlugin &&
+            typeof fakerPlugin.runtimeFakerInstancePath === 'string'
+              ? fakerPlugin.runtimeFakerInstancePath
+              : undefined;
+
+          dependencies.add('@faker-js/faker');
+          plugins.push(
+            defineFakerPlugin({
+              generateOutput,
+              exportFromIndex: true,
+              groupBy: option.groupBy,
+              runtimeFakerInstancePath
             })
           );
         }
