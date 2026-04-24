@@ -21,16 +21,17 @@ export const handler: FakerPlugin['Handler'] = ({ plugin }) => {
 
   plugin.forEach('schema', (event) => {
     const { name, schema } = event;
-    if (schema.type !== 'object' || !schema.properties) return;
+    if (schema.type !== 'object') return;
 
     const typeName = capitalize(name);
     typeImportNames.add(typeName);
 
-    const propertyAssignments = Object.entries(schema.properties).map(([propName, propSchema]) =>
-      ts.factory.createPropertyAssignment(
-        ts.factory.createIdentifier(propName),
-        getFakerValue(propName, propSchema)
-      )
+    const propertyAssignments = Object.entries(schema.properties ?? {}).map(
+      ([propName, propSchema]) =>
+        ts.factory.createPropertyAssignment(
+          ts.factory.createIdentifier(propName),
+          getFakerValue(propName, propSchema)
+        )
     );
 
     // export const createTypeName = (overrides?: Partial<TypeName>): TypeName => deepMerge<TypeName>({...}, overrides)

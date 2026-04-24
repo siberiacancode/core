@@ -7,7 +7,7 @@ import { getFakerCall } from './getFakerCall';
 const matchName = (name: string, ...keywords: string[]) =>
   keywords.some((keyword) => name.toLowerCase().includes(keyword.toLowerCase()));
 
-const getFakerValueByName = (name: string): ts.Expression | undefined => {
+const getFakerValueByName = (name: string): ts.Expression => {
   if (matchName(name, 'email')) return getFakerCall('internet', 'email');
   if (matchName(name, 'username', 'user_name')) return getFakerCall('internet', 'username');
   if (matchName(name, 'password')) return getFakerCall('internet', 'password');
@@ -36,17 +36,7 @@ const getFakerValueByName = (name: string): ts.Expression | undefined => {
     return getFakerCall('lorem', 'words');
   if (matchName(name, 'slug')) return getFakerCall('lorem', 'slug');
   if (matchName(name, 'token', 'secret', 'apikey', 'api_key', 'accesskey', 'access_key'))
-    return ts.factory.createCallExpression(
-      ts.factory.createPropertyAccessExpression(
-        ts.factory.createPropertyAccessExpression(
-          ts.factory.createIdentifier('faker'),
-          ts.factory.createIdentifier('string')
-        ),
-        ts.factory.createIdentifier('alphanumeric')
-      ),
-      undefined,
-      [ts.factory.createNumericLiteral('32')]
-    );
+    return getFakerCall('string', 'alphanumeric', [ts.factory.createNumericLiteral('32')]);
   if (
     name.toLowerCase() === 'id' ||
     name.toLowerCase().endsWith('id') ||
@@ -56,17 +46,7 @@ const getFakerValueByName = (name: string): ts.Expression | undefined => {
   if (matchName(name, 'createdat', 'updatedat', 'deletedat', 'date', 'time', '_at'))
     return ts.factory.createCallExpression(
       ts.factory.createPropertyAccessExpression(
-        ts.factory.createCallExpression(
-          ts.factory.createPropertyAccessExpression(
-            ts.factory.createPropertyAccessExpression(
-              ts.factory.createIdentifier('faker'),
-              ts.factory.createIdentifier('date')
-            ),
-            ts.factory.createIdentifier('recent')
-          ),
-          undefined,
-          []
-        ),
+        getFakerCall('date', 'recent'),
         ts.factory.createIdentifier('toISOString')
       ),
       undefined,
@@ -77,39 +57,37 @@ const getFakerValueByName = (name: string): ts.Expression | undefined => {
   if (matchName(name, 'count', 'total', 'quantity', 'size', 'length', 'age', 'year', 'limit'))
     return getFakerCall('number', 'int');
 
-  return undefined;
+  return getFakerCall('lorem', 'word');
 };
 
-const getFakerValueBySchema = (schema: IR.SchemaObject): ts.Expression => {
-  if (schema.format === 'date-time' || schema.format === 'date')
-    return ts.factory.createCallExpression(
-      ts.factory.createPropertyAccessExpression(
-        ts.factory.createCallExpression(
-          ts.factory.createPropertyAccessExpression(
-            ts.factory.createPropertyAccessExpression(
-              ts.factory.createIdentifier('faker'),
-              ts.factory.createIdentifier('date')
-            ),
-            ts.factory.createIdentifier('recent')
-          ),
-          undefined,
-          []
-        ),
-        ts.factory.createIdentifier('toISOString')
-      ),
-      undefined,
-      []
-    );
-  if (schema.format === 'email') return getFakerCall('internet', 'email');
-  if (schema.format === 'uri' || schema.format === 'url') return getFakerCall('internet', 'url');
-  if (schema.format === 'uuid') return getFakerCall('string', 'uuid');
-  if (schema.format === 'password') return getFakerCall('internet', 'password');
+const getFakerValueBySchema = (
+  propName: string,
+  schema: IR.SchemaObject
+): ts.Expression | undefined => {
+  if (schema.type === 'array') {
+    if (schema.items?.length) {
+      return ts.factory.createArrayLiteralExpression(
+        [getFakerValue(propName, schema.items[0])],
+        false
+      );
+    }
+    return ts.factory.createArrayLiteralExpression([], false);
+  }
 
-  if (schema.type === 'boolean') return getFakerCall('datatype', 'boolean');
-  if (schema.type === 'integer') return getFakerCall('number', 'int');
-  if (schema.type === 'number') return getFakerCall('number', 'float');
-  if (schema.type === 'array') return ts.factory.createArrayLiteralExpression([]);
-  if (schema.type === 'object') return ts.factory.createObjectLiteralExpression([]);
+  if (schema.type === 'object') {
+    if (schema.properties) {
+      return ts.factory.createObjectLiteralExpression(
+        Object.entries(schema.properties).map(([nestedPropName, nestedPropSchema]) =>
+          ts.factory.createPropertyAssignment(
+            ts.factory.createIdentifier(nestedPropName),
+            getFakerValue(nestedPropName, nestedPropSchema)
+          )
+        ),
+        true
+      );
+    }
+    return ts.factory.createObjectLiteralExpression([], false);
+  }
 
   if (schema.type === 'enum' && schema.items?.length) {
     const first = schema.items[0];
@@ -122,8 +100,27 @@ const getFakerValueBySchema = (schema: IR.SchemaObject): ts.Expression => {
     }
   }
 
-  return getFakerCall('lorem', 'word');
+  if (schema.format === 'date-time' || schema.format === 'date') {
+    return ts.factory.createCallExpression(
+      ts.factory.createPropertyAccessExpression(
+        getFakerCall('date', 'recent'),
+        ts.factory.createIdentifier('toISOString')
+      ),
+      undefined,
+      []
+    );
+  }
+
+  if (schema.format === 'email') return getFakerCall('internet', 'email');
+  if (schema.format === 'uri' || schema.format === 'url') return getFakerCall('internet', 'url');
+  if (schema.format === 'uuid') return getFakerCall('string', 'uuid');
+  if (schema.format === 'password') return getFakerCall('internet', 'password');
+  if (schema.type === 'boolean') return getFakerCall('datatype', 'boolean');
+  if (schema.type === 'integer') return getFakerCall('number', 'int');
+  if (schema.type === 'number') return getFakerCall('number', 'float');
+
+  return undefined;
 };
 
-export const getFakerValue = (propName: string, schema: IR.SchemaObject): ts.Expression =>
-  getFakerValueByName(propName) ?? getFakerValueBySchema(schema);
+export const getFakerValue = (propName: string, schema: IR.SchemaObject) =>
+  getFakerValueBySchema(propName, schema) ?? getFakerValueByName(propName);
