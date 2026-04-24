@@ -2,49 +2,39 @@ import type { IR } from '@hey-api/openapi-ts';
 
 import ts from 'typescript';
 
-const fakerCall = (module: string, method: string, args: ts.Expression[] = []) =>
-  ts.factory.createCallExpression(
-    ts.factory.createPropertyAccessExpression(
-      ts.factory.createPropertyAccessExpression(
-        ts.factory.createIdentifier('faker'),
-        ts.factory.createIdentifier(module)
-      ),
-      ts.factory.createIdentifier(method)
-    ),
-    undefined,
-    args
-  );
+import { getFakerCall } from './getFakerCall';
 
 const matchName = (name: string, ...keywords: string[]) =>
   keywords.some((keyword) => name.toLowerCase().includes(keyword.toLowerCase()));
 
 const getFakerValueByName = (name: string): ts.Expression | undefined => {
-  if (matchName(name, 'email')) return fakerCall('internet', 'email');
-  if (matchName(name, 'username', 'user_name')) return fakerCall('internet', 'username');
-  if (matchName(name, 'password')) return fakerCall('internet', 'password');
-  if (matchName(name, 'url', 'website', 'href', 'link')) return fakerCall('internet', 'url');
+  if (matchName(name, 'email')) return getFakerCall('internet', 'email');
+  if (matchName(name, 'username', 'user_name')) return getFakerCall('internet', 'username');
+  if (matchName(name, 'password')) return getFakerCall('internet', 'password');
+  if (matchName(name, 'url', 'website', 'href', 'link')) return getFakerCall('internet', 'url');
   if (matchName(name, 'avatar', 'photo', 'image', 'picture', 'thumbnail'))
-    return fakerCall('image', 'url');
-  if (matchName(name, 'firstname', 'first_name')) return fakerCall('person', 'firstName');
-  if (matchName(name, 'lastname', 'last_name')) return fakerCall('person', 'lastName');
+    return getFakerCall('image', 'url');
+  if (matchName(name, 'firstname', 'first_name')) return getFakerCall('person', 'firstName');
+  if (matchName(name, 'lastname', 'last_name')) return getFakerCall('person', 'lastName');
   if (matchName(name, 'fullname', 'full_name', 'displayname', 'display_name'))
-    return fakerCall('person', 'fullName');
-  if (name.toLowerCase() === 'name') return fakerCall('person', 'fullName');
-  if (matchName(name, 'phone', 'tel', 'mobile', 'fax')) return fakerCall('phone', 'number');
+    return getFakerCall('person', 'fullName');
+  if (name.toLowerCase() === 'name') return getFakerCall('person', 'fullName');
+  if (matchName(name, 'phone', 'tel', 'mobile', 'fax')) return getFakerCall('phone', 'number');
   if (matchName(name, 'company', 'organization', 'employer', 'firm'))
-    return fakerCall('company', 'name');
-  if (matchName(name, 'address', 'street')) return fakerCall('location', 'streetAddress');
+    return getFakerCall('company', 'name');
+  if (matchName(name, 'address', 'street')) return getFakerCall('location', 'streetAddress');
   if (name.toLowerCase() === 'city' || matchName(name, 'cityname'))
-    return fakerCall('location', 'city');
-  if (matchName(name, 'country')) return fakerCall('location', 'country');
-  if (matchName(name, 'zip', 'postal', 'postcode')) return fakerCall('location', 'zipCode');
-  if (matchName(name, 'latitude', '_lat')) return fakerCall('location', 'latitude');
-  if (matchName(name, 'longitude', '_lon', '_lng')) return fakerCall('location', 'longitude');
-  if (matchName(name, 'color', 'colour')) return fakerCall('color', 'human');
+    return getFakerCall('location', 'city');
+  if (matchName(name, 'country')) return getFakerCall('location', 'country');
+  if (matchName(name, 'zip', 'postal', 'postcode')) return getFakerCall('location', 'zipCode');
+  if (matchName(name, 'latitude', '_lat')) return getFakerCall('location', 'latitude');
+  if (matchName(name, 'longitude', '_lon', '_lng')) return getFakerCall('location', 'longitude');
+  if (matchName(name, 'color', 'colour')) return getFakerCall('color', 'human');
   if (matchName(name, 'description', 'bio', 'summary', 'content', 'body', 'text', 'message'))
-    return fakerCall('lorem', 'sentence');
-  if (matchName(name, 'title', 'subject', 'heading', 'label')) return fakerCall('lorem', 'words');
-  if (matchName(name, 'slug')) return fakerCall('lorem', 'slug');
+    return getFakerCall('lorem', 'sentence');
+  if (matchName(name, 'title', 'subject', 'heading', 'label'))
+    return getFakerCall('lorem', 'words');
+  if (matchName(name, 'slug')) return getFakerCall('lorem', 'slug');
   if (matchName(name, 'token', 'secret', 'apikey', 'api_key', 'accesskey', 'access_key'))
     return ts.factory.createCallExpression(
       ts.factory.createPropertyAccessExpression(
@@ -62,7 +52,7 @@ const getFakerValueByName = (name: string): ts.Expression | undefined => {
     name.toLowerCase().endsWith('id') ||
     matchName(name, 'uuid', 'guid')
   )
-    return fakerCall('string', 'uuid');
+    return getFakerCall('string', 'uuid');
   if (matchName(name, 'createdat', 'updatedat', 'deletedat', 'date', 'time', '_at'))
     return ts.factory.createCallExpression(
       ts.factory.createPropertyAccessExpression(
@@ -83,9 +73,9 @@ const getFakerValueByName = (name: string): ts.Expression | undefined => {
       []
     );
   if (matchName(name, 'price', 'amount', 'cost', 'salary', 'fee'))
-    return fakerCall('number', 'float');
+    return getFakerCall('number', 'float');
   if (matchName(name, 'count', 'total', 'quantity', 'size', 'length', 'age', 'year', 'limit'))
-    return fakerCall('number', 'int');
+    return getFakerCall('number', 'int');
 
   return undefined;
 };
@@ -110,28 +100,29 @@ const getFakerValueBySchema = (schema: IR.SchemaObject): ts.Expression => {
       undefined,
       []
     );
-  if (schema.format === 'email') return fakerCall('internet', 'email');
-  if (schema.format === 'uri' || schema.format === 'url') return fakerCall('internet', 'url');
-  if (schema.format === 'uuid') return fakerCall('string', 'uuid');
-  if (schema.format === 'password') return fakerCall('internet', 'password');
+  if (schema.format === 'email') return getFakerCall('internet', 'email');
+  if (schema.format === 'uri' || schema.format === 'url') return getFakerCall('internet', 'url');
+  if (schema.format === 'uuid') return getFakerCall('string', 'uuid');
+  if (schema.format === 'password') return getFakerCall('internet', 'password');
 
-  if (schema.type === 'boolean') return fakerCall('datatype', 'boolean');
-  if (schema.type === 'integer') return fakerCall('number', 'int');
-  if (schema.type === 'number') return fakerCall('number', 'float');
+  if (schema.type === 'boolean') return getFakerCall('datatype', 'boolean');
+  if (schema.type === 'integer') return getFakerCall('number', 'int');
+  if (schema.type === 'number') return getFakerCall('number', 'float');
   if (schema.type === 'array') return ts.factory.createArrayLiteralExpression([]);
   if (schema.type === 'object') return ts.factory.createObjectLiteralExpression([]);
 
   if (schema.type === 'enum' && schema.items?.length) {
     const first = schema.items[0];
-    if (first.const !== undefined) {
-      const val = first.const;
-      if (typeof val === 'string') return ts.factory.createStringLiteral(val);
-      if (typeof val === 'number') return ts.factory.createNumericLiteral(String(val));
-      if (typeof val === 'boolean') return val ? ts.factory.createTrue() : ts.factory.createFalse();
+    if (first.const) {
+      const value = first.const;
+      if (typeof value === 'string') return ts.factory.createStringLiteral(value);
+      if (typeof value === 'number') return ts.factory.createNumericLiteral(String(value));
+      if (typeof value === 'boolean')
+        return value ? ts.factory.createTrue() : ts.factory.createFalse();
     }
   }
 
-  return fakerCall('lorem', 'word');
+  return getFakerCall('lorem', 'word');
 };
 
 export const getFakerValue = (propName: string, schema: IR.SchemaObject): ts.Expression =>

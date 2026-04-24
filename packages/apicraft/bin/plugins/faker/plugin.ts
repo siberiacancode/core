@@ -5,7 +5,7 @@ import { capitalize, getApicraftImport, getImportTypes } from '@/bin/plugins/hel
 
 import type { FakerPlugin } from './types';
 
-import { getFakerImport, getFakerValue } from './helpers';
+import { getFakerImport, getFakerValue, getImportFakerRuntimeInstance } from './helpers';
 
 export const handler: FakerPlugin['Handler'] = ({ plugin }) => {
   const fakersFilePath = nodePath.normalize(`${plugin.output}/fakers`);
@@ -85,8 +85,19 @@ export const handler: FakerPlugin['Handler'] = ({ plugin }) => {
     fakerStatements.push(fakerFunction);
   });
 
-  // import { faker } from '@faker-js/faker';
-  fakersFile.add(getFakerImport());
+  if (plugin.config.runtimeInstancePath) {
+    // import { faker } from runtimeInstancePath;
+    fakersFile.add(
+      getImportFakerRuntimeInstance({
+        folderPath: fakersFolderPath,
+        runtimeInstancePath: plugin.config.runtimeInstancePath
+      })
+    );
+  }
+  if (!plugin.config.runtimeInstancePath) {
+    // import { faker } from '@faker-js/faker';
+    fakersFile.add(getFakerImport());
+  }
   // import { deepMerge } from '@siberiacancode/apicraft';
   fakersFile.add(getApicraftImport('deepMerge'));
   // import type { TypeA, TypeB, ... } from './types.gen';

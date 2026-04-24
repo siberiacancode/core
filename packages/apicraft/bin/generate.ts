@@ -55,7 +55,10 @@ export const generate = {
 
       for (const option of options) {
         const dependencies: Set<Dependency> = new Set();
-        const plugins: any[] = ['@hey-api/typescript', ...(option.plugins ?? [])];
+        const plugins: ApicraftOption['plugins'] = [
+          '@hey-api/typescript',
+          ...(option.plugins ?? [])
+        ];
 
         const matchInstance = (name: InstanceName) =>
           option.instance === name ||
@@ -108,9 +111,7 @@ export const generate = {
           );
         }
 
-        const tanstackPlugin = plugins.find(
-          (plugin) => plugin === 'tanstack' || plugin.name === 'tanstack'
-        );
+        const tanstackPlugin = plugins.find((plugin) => plugin === 'tanstack');
         if (tanstackPlugin) {
           dependencies.add('@tanstack/react-query');
           plugins.push(
@@ -124,13 +125,18 @@ export const generate = {
           );
         }
 
-        const fakerPlugin = plugins.find((plugin) => plugin === 'faker' || plugin.name === 'faker');
+        const fakerPlugin = plugins.find(
+          (plugin) => plugin === 'faker' || (typeof plugin === 'object' && plugin.name === 'faker')
+        );
         if (fakerPlugin) {
           dependencies.add('@faker-js/faker');
           plugins.push(
             defineFakerPlugin({
               generateOutput,
-              exportFromIndex: true
+              exportFromIndex: true,
+              ...(typeof fakerPlugin === 'object' && {
+                runtimeInstancePath: fakerPlugin.runtimeInstancePath
+              })
             })
           );
         }

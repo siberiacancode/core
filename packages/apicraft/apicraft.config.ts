@@ -8,11 +8,7 @@ const apicraftConfig = apicraft([
   {
     input: 'example-apiV2.yaml',
     output: 'generated/axios-class',
-    instance: 'axios',
-    baseUrl: '/api',
-    nameBy: 'path',
-    groupBy: 'class',
-    plugins: ['faker']
+    plugins: [{ name: 'faker', runtimeInstancePath: './faker-instance' }]
   },
   {
     input: 'example-apiV1.yaml',

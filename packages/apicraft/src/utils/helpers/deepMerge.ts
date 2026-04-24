@@ -1,7 +1,7 @@
-export const deepMerge = <T extends object>(defaults: T, overrides?: Partial<T>): T => {
+export const deepMerge = <Data extends object>(defaults: Data, overrides?: Partial<Data>): Data => {
   if (!overrides) return defaults;
 
-  const result = { ...defaults } as T;
+  const result = { ...defaults };
 
   for (const key in overrides) {
     const override = overrides[key];
@@ -16,9 +16,9 @@ export const deepMerge = <T extends object>(defaults: T, overrides?: Partial<T>)
       !Array.isArray(base) &&
       !Array.isArray(override)
     ) {
-      result[key] = deepMerge(base as object, override as object) as T[typeof key];
+      result[key] = deepMerge(base, override);
     } else {
-      result[key] = override as T[typeof key];
+      result[key] = override as Data[typeof key];
     }
   }
 

@@ -5,6 +5,7 @@ export interface FakerPluginConfig {
   generateOutput: string;
   name: 'faker';
   output?: string;
+  runtimeInstancePath?: string;
 }
 
 export type FakerPlugin = DefinePlugin<FakerPluginConfig>;
