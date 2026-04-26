@@ -1,11 +1,19 @@
+import type ts from 'typescript';
+
 import nodePath from 'node:path';
-import ts from 'typescript';
 
 import { capitalize, getApicraftImport, getImportTypes } from '@/bin/plugins/helpers';
 
 import type { FakerPlugin } from './types';
 
-import { getFakerImport, getFakerValue, getImportFakerRuntimeInstance } from './helpers';
+import { IGNORED_SCHEMA_TYPES, PRIMITIVE_SCHEMA_TYPES } from './constants';
+import {
+  getArrayObjectFakerFunction,
+  getFakerImport,
+  getImportFakerRuntimeInstance,
+  getObjectFakerFunction,
+  getPrimitiveFakerFunction
+} from './helpers';
 
 export const handler: FakerPlugin['Handler'] = ({ plugin }) => {
   const fakersFilePath = nodePath.normalize(`${plugin.output}/fakers`);
@@ -21,68 +29,38 @@ export const handler: FakerPlugin['Handler'] = ({ plugin }) => {
 
   plugin.forEach('schema', (event) => {
     const { name, schema } = event;
-    if (schema.type !== 'object') return;
+
+    if (
+      IGNORED_SCHEMA_TYPES.includes(schema.type) ||
+      (schema.type === 'array' && IGNORED_SCHEMA_TYPES.includes(schema.items?.[0].type))
+    ) {
+      return;
+    }
 
     const typeName = capitalize(name);
     typeImportNames.add(typeName);
 
-    const propertyAssignments = Object.entries(schema.properties ?? {}).map(
-      ([propName, propSchema]) =>
-        ts.factory.createPropertyAssignment(
-          ts.factory.createIdentifier(propName),
-          getFakerValue(propName, propSchema)
-        )
-    );
+    if (
+      PRIMITIVE_SCHEMA_TYPES.includes(schema.type) ||
+      (schema.type === 'array' && PRIMITIVE_SCHEMA_TYPES.includes(schema.items?.[0].type))
+    ) {
+      // export const createTypeName = (overrides?: TypeName): TypeName => overrides ?? faker
+      const fakerFunction = getPrimitiveFakerFunction({ schema, schemaName: name, typeName });
+      fakerStatements.push(fakerFunction);
+
+      return;
+    }
+
+    if (schema.type === 'array') {
+      // export const createTypeName = (overrides?: TypeName): TypeName => overrides ?? [{...}]
+      const fakerFunction = getArrayObjectFakerFunction({ schema, schemaName: name, typeName });
+      fakerStatements.push(fakerFunction);
+
+      return;
+    }
 
     // export const createTypeName = (overrides?: Partial<TypeName>): TypeName => deepMerge<TypeName>({...}, overrides)
-    const fakerFunction = ts.factory.createVariableStatement(
-      [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
-      ts.factory.createVariableDeclarationList(
-        [
-          ts.factory.createVariableDeclaration(
-            ts.factory.createIdentifier(`create${typeName}`),
-            undefined,
-            undefined,
-            ts.factory.createArrowFunction(
-              undefined,
-              undefined,
-              [
-                ts.factory.createParameterDeclaration(
-                  undefined,
-                  undefined,
-                  ts.factory.createIdentifier('overrides'),
-                  ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                  ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Partial'), [
-                    ts.factory.createTypeReferenceNode(
-                      ts.factory.createIdentifier(typeName),
-                      undefined
-                    )
-                  ]),
-                  undefined
-                )
-              ],
-              ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(typeName), undefined),
-              ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-              ts.factory.createCallExpression(
-                ts.factory.createIdentifier('deepMerge'),
-                [
-                  ts.factory.createTypeReferenceNode(
-                    ts.factory.createIdentifier(typeName),
-                    undefined
-                  )
-                ],
-                [
-                  ts.factory.createObjectLiteralExpression(propertyAssignments, true),
-                  ts.factory.createIdentifier('overrides')
-                ]
-              )
-            )
-          )
-        ],
-        ts.NodeFlags.Const
-      )
-    );
-
+    const fakerFunction = getObjectFakerFunction({ schema, schemaName: name, typeName });
     fakerStatements.push(fakerFunction);
   });
 
