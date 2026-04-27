@@ -41,7 +41,6 @@ export const getRequestResponseInfo = (request: IR.OperationObject) => {
 
   const successKeywords = ['success'];
   if (
-    !result.hasSuccessResponse ||
     successKeywords.some(
       (successKeyword) =>
         defaultResponseDescription.includes(successKeyword) ||
