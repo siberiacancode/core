@@ -58,6 +58,7 @@
     "e2e-test": "pnpm build && vitest -c tests/vitest.config.ts"
   },
   "peerDependencies": {
+    "@faker-js/faker": "^10",
     "@siberiacancode/fetches": "^1",
     "@tanstack/react-query": "^5",
     "axios": "^1",
@@ -76,6 +77,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.0.0",
     "@siberiacancode/eslint": "*",
     "@siberiacancode/fetches": "^1.14.1",
     "@siberiacancode/prettier": "*",

@@ -63,6 +63,9 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
+      '@faker-js/faker':
+        specifier: ^10.0.0
+        version: 10.4.0
       '@siberiacancode/eslint':
         specifier: '*'
         version: 2.16.5(@typescript-eslint/rule-tester@8.56.1(eslint@10.0.2(jiti@2.6.1))(typescript@5.9.3))(@typescript-eslint/typescript-estree@8.56.1(typescript@5.9.3))(@typescript-eslint/utils@8.56.1(eslint@10.0.2(jiti@2.6.1))(typescript@5.9.3))(jiti@2.6.1)(tailwindcss@4.2.1)(typescript@5.9.3)(vitest@4.0.16(@types/node@25.3.5)(jiti@2.6.1)(jsdom@27.3.0)(yaml@2.8.2))
@@ -150,6 +153,9 @@ importers:
       eslint-plugin-better-tailwindcss:
         specifier: 4.3.2
         version: 4.3.2(eslint@10.0.3(jiti@2.6.1))(tailwindcss@4.2.1)(typescript@6.0.2)
+      eslint-plugin-jsx-a11y:
+        specifier: ^6.10.2
+        version: 6.10.2(eslint@10.0.3(jiti@2.6.1))
       eslint-plugin-playwright:
         specifier: 2.9.0
         version: 2.9.0(eslint@10.0.3(jiti@2.6.1))
@@ -859,6 +865,10 @@ packages:
     peerDependenciesMeta:
       '@noble/hashes':
         optional: true
+
+  '@faker-js/faker@10.4.0':
+    resolution: {integrity: sha512-sDBWI3yLy8EcDzgobvJTWq1MJYzAkQdpjXuPukga9wXonhpMRvd1Izuo2Qgwey2OiEoRIBr35RMU9HJRoOHzpw==}
+    engines: {node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: '>=10'}
 
   '@hey-api/codegen-core@0.0.1':
     resolution: {integrity: sha512-Q7vUF7n2gYSL6Z16XFweIm6O7uh9sBGty05X6T5lYBKTMv1K31P2iSTxyhzW04M2r/s3dAE1bCpW+h9di0Ux7w==}
@@ -4575,7 +4585,7 @@ snapshots:
       bidi-js: 1.0.3
       css-tree: 3.2.1
       is-potential-custom-element-name: 1.0.1
-      lru-cache: 11.2.6
+      lru-cache: 11.2.7
 
   '@asamuzakjp/nwsapi@2.3.9': {}
 
@@ -5244,6 +5254,8 @@ snapshots:
       levn: 0.4.1
 
   '@exodus/bytes@1.15.0': {}
+
+  '@faker-js/faker@10.4.0': {}
 
   '@hey-api/codegen-core@0.0.1(typescript@5.9.3)':
     dependencies:
@@ -7003,7 +7015,6 @@ snapshots:
       object.fromentries: 2.0.8
       safe-regex-test: 1.1.0
       string.prototype.includes: 2.0.1
-    optional: true
 
   eslint-plugin-n@17.24.0(eslint@10.0.2(jiti@2.6.1))(typescript@5.9.3):
     dependencies:
