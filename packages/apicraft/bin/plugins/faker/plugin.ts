@@ -1,3 +1,4 @@
+import type { IR } from '@hey-api/openapi-ts';
 import type ts from 'typescript';
 
 import nodePath from 'node:path';
@@ -6,7 +7,6 @@ import { capitalize, getApicraftImport, getImportTypes } from '@/bin/plugins/hel
 
 import type { FakerPlugin } from './types';
 
-import { IGNORED_SCHEMA_TYPES, PRIMITIVE_SCHEMA_TYPES } from './constants';
 import {
   getArrayObjectFakerFunction,
   getFakerImport,
@@ -14,6 +14,15 @@ import {
   getObjectFakerFunction,
   getPrimitiveFakerFunction
 } from './helpers';
+
+export const IGNORED_SCHEMA_TYPES: IR.SchemaObject['type'][] = [
+  'never',
+  'null',
+  'tuple',
+  'undefined',
+  'unknown',
+  'void'
+];
 
 export const handler: FakerPlugin['Handler'] = ({ plugin }) => {
   const fakersFilePath = nodePath.normalize(`${plugin.output}/fakers`);
@@ -40,18 +49,15 @@ export const handler: FakerPlugin['Handler'] = ({ plugin }) => {
     const typeName = capitalize(name);
     typeImportNames.add(typeName);
 
-    if (
-      PRIMITIVE_SCHEMA_TYPES.includes(schema.type) ||
-      (schema.type === 'array' && PRIMITIVE_SCHEMA_TYPES.includes(schema.items?.[0].type))
-    ) {
-      // export const createTypeName = (overrides?: TypeName): TypeName => overrides ?? faker
-      const fakerFunction = getPrimitiveFakerFunction({ schema, schemaName: name, typeName });
+    if (schema.type === 'object') {
+      // export const createTypeName = (overrides?: Partial<TypeName>): TypeName => deepMerge<TypeName>({...}, overrides)
+      const fakerFunction = getObjectFakerFunction({ schema, schemaName: name, typeName });
       fakerStatements.push(fakerFunction);
 
       return;
     }
 
-    if (schema.type === 'array') {
+    if (schema.type === 'array' && schema.items?.[0].type === 'object') {
       // export const createTypeName = (overrides?: TypeName): TypeName => overrides ?? [{...}]
       const fakerFunction = getArrayObjectFakerFunction({ schema, schemaName: name, typeName });
       fakerStatements.push(fakerFunction);
@@ -59,8 +65,8 @@ export const handler: FakerPlugin['Handler'] = ({ plugin }) => {
       return;
     }
 
-    // export const createTypeName = (overrides?: Partial<TypeName>): TypeName => deepMerge<TypeName>({...}, overrides)
-    const fakerFunction = getObjectFakerFunction({ schema, schemaName: name, typeName });
+    // export const createTypeName = (overrides?: TypeName): TypeName => overrides ?? faker
+    const fakerFunction = getPrimitiveFakerFunction({ schema, schemaName: name, typeName });
     fakerStatements.push(fakerFunction);
   });
 
@@ -82,7 +88,7 @@ export const handler: FakerPlugin['Handler'] = ({ plugin }) => {
   // import type { TypeA, TypeB, ... } from './types.gen';
   fakersFile.add(
     getImportTypes({
-      typeNames: Array.from(typeImportNames),
+      typeNames: [...typeImportNames],
       folderPath: fakersFolderPath,
       generateOutput: plugin.config.generateOutput
     })
