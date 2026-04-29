@@ -14,7 +14,7 @@ export type ValidateStatus = (status: number) => boolean;
 
 export const DEFAULT_VALIDATE_STATUS: ValidateStatus = (status) => status >= 200 && status < 300;
 
-export interface RequestOptions extends Omit<RequestInit, 'body' | 'method'> {
+export interface FetchesRequestOptions extends Omit<RequestInit, 'body' | 'method'> {
   baseURL?: BaseUrl;
   body?: RequestBody;
   context?: Record<string, any>;
@@ -47,7 +47,7 @@ export interface FetchesResponse<Data> {
   config: RequestConfig;
   data: Data;
   headers: Headers;
-  options: RequestOptions;
+  options: FetchesRequestOptions;
   status: number;
   statusText: string;
   url: string;
@@ -92,8 +92,8 @@ export interface Interceptors {
 }
 
 export type FetchesRequestConfig<Params = undefined> = Params extends undefined
-  ? { params?: undefined; config?: RequestOptions }
-  : { params: Params; config?: RequestOptions };
+  ? { params?: undefined; config?: FetchesRequestOptions }
+  : { params: Params; config?: FetchesRequestOptions };
 
 export type ApiFetchesRequest<Params, Response = any> = (
   Params extends { [K in keyof Params]: undefined extends Params[K] ? never : any }[keyof Params]
@@ -262,7 +262,7 @@ class Fetches {
   private async runResponseInterceptors<Data>(
     initialResponse: Response,
     initialConfig: RequestConfig,
-    requestOptions: RequestOptions
+    requestOptions: FetchesRequestOptions
   ) {
     const data = await this.parseResponse<Data>(initialResponse, initialConfig.parse);
     let response = {
@@ -329,7 +329,7 @@ class Fetches {
 
   private async runRequestInterceptors(
     initialConfig: RequestConfig,
-    requestOptions: RequestOptions
+    requestOptions: FetchesRequestOptions
   ) {
     let config = initialConfig;
 
@@ -363,7 +363,7 @@ class Fetches {
   private async request<Data, R = FetchesResponse<Data>>(
     endpoint: string,
     method: RequestMethod,
-    options: RequestOptions = {}
+    options: FetchesRequestOptions = {}
   ) {
     const { body, query, parse, baseURL, ...rest } = options;
     let url = `${baseURL ?? this.baseURL}${endpoint}`;
@@ -397,21 +397,21 @@ class Fetches {
 
   get<Data, Response = FetchesResponse<Data>>(
     endpoint: string,
-    options: Omit<RequestOptions, 'body'> = {}
+    options: Omit<FetchesRequestOptions, 'body'> = {}
   ) {
     return this.request<Data, Response>(endpoint, 'GET', options);
   }
 
   head<Data, Response = FetchesResponse<Data>>(
     endpoint: string,
-    options: Omit<RequestOptions, 'body'> = {}
+    options: Omit<FetchesRequestOptions, 'body'> = {}
   ) {
     return this.request<Data, Response>(endpoint, 'HEAD', options);
   }
 
   delete<Data, Response = FetchesResponse<Data>>(
     endpoint: string,
-    options: Omit<RequestOptions, 'body'> = {}
+    options: Omit<FetchesRequestOptions, 'body'> = {}
   ) {
     return this.request<Data, Response>(endpoint, 'DELETE', options);
   }
@@ -419,7 +419,7 @@ class Fetches {
   post<Data, Response = FetchesResponse<Data>>(
     endpoint: string,
     body?: RequestBody,
-    options: RequestOptions = {}
+    options: FetchesRequestOptions = {}
   ) {
     options.body = body;
     return this.request<Data, Response>(endpoint, 'POST', options);
@@ -428,7 +428,7 @@ class Fetches {
   put<Data, Response = FetchesResponse<Data>>(
     endpoint: string,
     body?: RequestBody,
-    options: RequestOptions = {}
+    options: FetchesRequestOptions = {}
   ) {
     options.body = body;
     return this.request<Data, Response>(endpoint, 'PUT', options);
@@ -437,7 +437,7 @@ class Fetches {
   patch<Data, Response = FetchesResponse<Data>>(
     endpoint: string,
     body?: RequestBody,
-    options: RequestOptions = {}
+    options: FetchesRequestOptions = {}
   ) {
     options.body = body;
     return this.request<Data, Response>(endpoint, 'PATCH', options);
@@ -446,7 +446,7 @@ class Fetches {
   call<Data, Response = FetchesResponse<Data>>(
     method: RequestMethod,
     url: string,
-    options?: RequestOptions
+    options?: FetchesRequestOptions
   ) {
     return this.request<Data, Response>(url, method, options);
   }

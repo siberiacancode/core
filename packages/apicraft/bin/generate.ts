@@ -11,6 +11,7 @@ import { getConfig, installDependencies } from '@/bin/helpers';
 import type { ApicraftOption, GenerateApicraftOption, InstanceName } from './schemas';
 
 import { defineAxiosPlugin } from './plugins/axios';
+import { defineFakerPlugin } from './plugins/faker';
 import { defineFetchesPlugin } from './plugins/fetches';
 import { defineOfetchPlugin } from './plugins/ofetch';
 import { defineTanstackPlugin } from './plugins/tanstack';
@@ -54,7 +55,10 @@ export const generate = {
 
       for (const option of options) {
         const dependencies: Set<Dependency> = new Set();
-        const plugins: any[] = ['@hey-api/typescript', ...(option.plugins ?? [])];
+        const plugins: ApicraftOption['plugins'] = [
+          '@hey-api/typescript',
+          ...(option.plugins ?? [])
+        ];
 
         const matchInstance = (name: InstanceName) =>
           option.instance === name ||
@@ -107,9 +111,7 @@ export const generate = {
           );
         }
 
-        const tanstackPlugin = plugins.find(
-          (plugin) => plugin === 'tanstack' || plugin.name === 'tanstack'
-        );
+        const tanstackPlugin = plugins.find((plugin) => plugin === 'tanstack');
         if (tanstackPlugin) {
           dependencies.add('@tanstack/react-query');
           plugins.push(
@@ -119,6 +121,22 @@ export const generate = {
               nameBy: option.nameBy,
               groupBy: option.groupBy,
               baseUrl: option.baseUrl
+            })
+          );
+        }
+
+        const fakerPlugin = plugins.find(
+          (plugin) => plugin === 'faker' || (typeof plugin === 'object' && plugin.name === 'faker')
+        );
+        if (fakerPlugin) {
+          dependencies.add('@faker-js/faker');
+          plugins.push(
+            defineFakerPlugin({
+              generateOutput,
+              exportFromIndex: true,
+              ...(typeof fakerPlugin === 'object' && {
+                runtimeInstancePath: fakerPlugin.runtimeInstancePath
+              })
             })
           );
         }

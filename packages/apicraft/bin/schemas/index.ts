@@ -107,8 +107,14 @@ const pluginNameSchema = z.enum([
   'fastify',
   'valibot',
   'tanstack',
-  'zod'
+  'zod',
+  'faker'
 ]);
+
+const fakerPluginSchema = z.object({
+  name: z.literal('faker'),
+  runtimeInstancePath: z.string().optional()
+});
 
 export const apicraftOptionSchema = z
   .object({
@@ -162,9 +168,7 @@ export const apicraftOptionSchema = z
     instance: z.union([instanceNameSchema, instanceSchema]).optional(),
     nameBy: z.enum(['path', 'operationId']).default('operationId').optional(),
     groupBy: z.enum(['paths', 'tags', 'class', 'standalone']).default('standalone').optional(),
-    plugins: z
-      .array(pluginNameSchema.or(z.object({ name: pluginNameSchema }).passthrough()))
-      .optional()
+    plugins: z.array(z.union([pluginNameSchema, fakerPluginSchema])).optional()
   })
   .strict();
 

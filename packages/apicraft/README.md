@@ -21,7 +21,7 @@ export default apicraft([
     output: 'generated/api',
     instance: 'fetches',
     nameBy: 'path',
-    groupBy: 'tag'
+    groupBy: 'tags'
   }
 ]);
 ```
@@ -177,4 +177,35 @@ Generate React Query query, mutations and options for your API requests:
   "instance": "fetches",
   "plugins": ["tanstack"]
 }
+```
+
+### Faker.js plugin
+
+Generate faker functions for your API schemas:
+
+```json
+{
+  "input": "api.yaml",
+  "output": "generated/api",
+  "instance": "fetches",
+  "plugins": ["faker"]
+}
+```
+
+Set the plugin option to an object to specify `runtimeInstancePath`. This path provides a custom import that Apicraft will use instead of the default Faker.js instance.
+
+```ts
+export default apicraft([
+  {
+    input: 'api.yaml',
+    output: 'generated/api',
+    baseUrl: '/api',
+    plugins: [
+      {
+        name: 'faker',
+        runtimeInstancePath: './src/lib/faker/instance' // must export { faker }
+      }
+    ]
+  }
+]);
 ```

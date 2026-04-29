@@ -63,6 +63,7 @@
     "eslint": "10.0.3",
     "eslint-flat-config-utils": "3.0.2",
     "eslint-plugin-better-tailwindcss": "4.3.2",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-playwright": "2.9.0",
     "eslint-plugin-react-hooks": "7.0.1",
     "eslint-plugin-react-refresh": "0.5.2"
