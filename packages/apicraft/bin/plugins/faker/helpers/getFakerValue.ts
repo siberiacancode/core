@@ -65,6 +65,9 @@ const getFakerValueBySchema = (
   propName: string,
   schema: IR.SchemaObject
 ): ts.Expression | undefined => {
+  // 📌 important:
+  // schema is generated as an array when using allOf/anyOf/oneOf or when nullable is true
+  // in such cases we use the first variant for fake value
   schema = !schema.type && schema.items?.[0] ? schema.items[0] : schema;
 
   if (schema.$ref) {
