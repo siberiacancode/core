@@ -3658,7 +3658,7 @@ import { deepMerge } from "@siberiacancode/apicraft";
 
 import type { User, NewUser, Task, TaskUpdate, ReportEntry, ErrorResponse } from "./types.gen";
 
-export const createUser = (overrides?: Partial<User>): User => deepMerge<User>({
+export const createUserFake = (overrides?: Partial<User>): User => deepMerge<User>({
     id: faker.string.uuid(),
     username: faker.internet.username(),
     email: faker.internet.email(),
@@ -3666,7 +3666,7 @@ export const createUser = (overrides?: Partial<User>): User => deepMerge<User>({
     metadata: {}
 }, overrides);
 
-export const createNewUser = (overrides?: Partial<NewUser>): NewUser => deepMerge<NewUser>({
+export const createNewUserFake = (overrides?: Partial<NewUser>): NewUser => deepMerge<NewUser>({
     username: faker.internet.username(),
     email: faker.internet.email(),
     status: faker.lorem.word(),
@@ -3677,7 +3677,7 @@ export const createNewUser = (overrides?: Partial<NewUser>): NewUser => deepMerg
     }
 }, overrides);
 
-export const createTask = (overrides?: Partial<Task>): Task => deepMerge<Task>({
+export const createTaskFake = (overrides?: Partial<Task>): Task => deepMerge<Task>({
     id: faker.string.uuid(),
     projectId: faker.string.uuid(),
     title: faker.lorem.words(),
@@ -3686,14 +3686,14 @@ export const createTask = (overrides?: Partial<Task>): Task => deepMerge<Task>({
     priority_level: faker.number.int()
 }, overrides);
 
-export const createTaskUpdate = (overrides?: Partial<TaskUpdate>): TaskUpdate => deepMerge<TaskUpdate>({
+export const createTaskUpdateFake = (overrides?: Partial<TaskUpdate>): TaskUpdate => deepMerge<TaskUpdate>({
     title: faker.lorem.words(),
     description: faker.lorem.sentence(),
     completed: faker.datatype.boolean(),
     priority_level: faker.number.int()
 }, overrides);
 
-export const createReportEntry = (overrides?: Partial<ReportEntry>): ReportEntry => deepMerge<ReportEntry>({
+export const createReportEntryFake = (overrides?: Partial<ReportEntry>): ReportEntry => deepMerge<ReportEntry>({
     entry_id: faker.string.uuid(),
     createdAt: faker.date.recent().toISOString(),
     payload: {},
@@ -3703,7 +3703,7 @@ export const createReportEntry = (overrides?: Partial<ReportEntry>): ReportEntry
     }
 }, overrides);
 
-export const createErrorResponse = (overrides?: Partial<ErrorResponse>): ErrorResponse => deepMerge<ErrorResponse>({
+export const createErrorResponseFake = (overrides?: Partial<ErrorResponse>): ErrorResponse => deepMerge<ErrorResponse>({
     code: faker.lorem.word(),
     message: faker.lorem.sentence(),
     details: [faker.lorem.word()]

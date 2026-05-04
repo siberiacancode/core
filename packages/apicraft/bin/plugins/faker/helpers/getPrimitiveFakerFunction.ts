@@ -2,6 +2,7 @@ import type { IR } from '@hey-api/openapi-ts';
 
 import ts from 'typescript';
 
+import { getFakerFunctionName } from './getFakerFunctionName';
 import { getFakerValue } from './getFakerValue';
 
 interface GetPrimitiveFakerFunctionParams {
@@ -21,7 +22,7 @@ export const getPrimitiveFakerFunction = ({
     ts.factory.createVariableDeclarationList(
       [
         ts.factory.createVariableDeclaration(
-          ts.factory.createIdentifier(`create${typeName}`),
+          ts.factory.createIdentifier(getFakerFunctionName(typeName)),
           undefined,
           undefined,
           ts.factory.createArrowFunction(

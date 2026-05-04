@@ -2,9 +2,8 @@ import type { IR } from '@hey-api/openapi-ts';
 
 import ts from 'typescript';
 
-import { capitalize } from '@/bin/plugins/helpers';
-
 import { getFakerCall } from './getFakerCall';
+import { getFakerFunctionName } from './getFakerFunctionName';
 
 const matchName = (name: string, ...keywords: string[]) =>
   keywords.some((keyword) => name.toLowerCase().includes(keyword.toLowerCase()));
@@ -66,10 +65,12 @@ const getFakerValueBySchema = (
   propName: string,
   schema: IR.SchemaObject
 ): ts.Expression | undefined => {
+  schema = !schema.type && schema.items?.[0] ? schema.items[0] : schema;
+
   if (schema.$ref) {
     const refName = schema.$ref.split('/').pop()!;
     return ts.factory.createCallExpression(
-      ts.factory.createIdentifier(`create${capitalize(refName)}`),
+      ts.factory.createIdentifier(getFakerFunctionName(refName)),
       undefined,
       []
     );
