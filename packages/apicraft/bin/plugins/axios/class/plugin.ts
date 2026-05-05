@@ -149,7 +149,7 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
 
   // private instance: AxiosInstance;
   const classInstanceProperty = ts.factory.createPropertyDeclaration(
-    [ts.factory.createModifier(ts.SyntaxKind.PrivateKeyword)],
+    [ts.factory.createModifier(ts.SyntaxKind.PublicKeyword)],
     ts.factory.createIdentifier('instance'),
     undefined,
     ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('AxiosInstance'), undefined),

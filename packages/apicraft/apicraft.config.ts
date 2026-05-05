@@ -6,8 +6,9 @@ import { apicraft } from './dist/esm/index.mjs';
 
 const apicraftConfig = apicraft([
   {
-    input: 'example-apiV2.yaml',
+    input: 'example-apiV1.yaml',
     output: 'generated/axios-class',
+    groupBy: 'class',
     plugins: ['faker']
   },
   {

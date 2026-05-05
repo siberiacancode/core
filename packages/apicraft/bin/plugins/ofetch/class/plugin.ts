@@ -132,7 +132,7 @@ export const classHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
 
   // private instance: Instance;
   const classInstanceProperty = ts.factory.createPropertyDeclaration(
-    [ts.factory.createModifier(ts.SyntaxKind.PrivateKeyword)],
+    [ts.factory.createModifier(ts.SyntaxKind.PublicKeyword)],
     ts.factory.createIdentifier('instance'),
     undefined,
     ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Instance'), undefined),

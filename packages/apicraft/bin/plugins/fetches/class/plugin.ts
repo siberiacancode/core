@@ -148,7 +148,7 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
 
   // private instance: FetchesInstance;
   const classInstanceProperty = ts.factory.createPropertyDeclaration(
-    [ts.factory.createModifier(ts.SyntaxKind.PrivateKeyword)],
+    [ts.factory.createModifier(ts.SyntaxKind.PublicKeyword)],
     ts.factory.createIdentifier('instance'),
     undefined,
     ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('FetchesInstance'), undefined),
