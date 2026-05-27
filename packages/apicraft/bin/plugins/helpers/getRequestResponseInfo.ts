@@ -24,7 +24,7 @@ export const getRequestResponseInfo = (request: IR.OperationObject) => {
   }
   if (
     Object.entries(responses).some(
-      ([code, response]) => /[45]\d{2}/.test(code) && !isUnknownSchema(response?.schema)
+      ([code, response]) => /[45].*/.test(code) && !isUnknownSchema(response?.schema)
     )
   ) {
     result.hasErrorResponse = true;

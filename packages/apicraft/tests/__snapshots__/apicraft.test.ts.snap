@@ -144,7 +144,7 @@ export type UpdateTaskStatusRequestParams = AxiosRequestParams<UpdateTaskStatusD
 export type DeleteReportEntryRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
 export class ApiInstance {
-    private instance: AxiosInstance;
+    public instance: AxiosInstance;
     constructor(config?: CreateAxiosDefaults) {
         this.instance = axios.create(config);
     }
@@ -325,7 +325,7 @@ export type PatchProjectByProjectIdTaskByTaskIdRequestParams = AxiosRequestParam
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
 export class ApiInstance {
-    private instance: AxiosInstance;
+    public instance: AxiosInstance;
     constructor(config?: CreateAxiosDefaults) {
         this.instance = axios.create(config);
     }
@@ -1074,7 +1074,7 @@ export type UpdateTaskStatusRequestParams = AxiosRequestParams<UpdateTaskStatusD
 export type DeleteReportEntryRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
 export class ApiInstance {
-    private instance: AxiosInstance;
+    public instance: AxiosInstance;
     constructor() {
         this.instance = runtimeInstance;
     }
@@ -1255,7 +1255,7 @@ export type PatchProjectByProjectIdTaskByTaskIdRequestParams = AxiosRequestParam
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = AxiosRequestParams<DeleteReportEntryData>;
 
 export class ApiInstance {
-    private instance: AxiosInstance;
+    public instance: AxiosInstance;
     constructor() {
         this.instance = runtimeInstance;
     }
@@ -3853,7 +3853,7 @@ export type UpdateTaskStatusRequestParams = FetchesRequestParams<UpdateTaskStatu
 export type DeleteReportEntryRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
 export class ApiInstance {
-    private instance: FetchesInstance;
+    public instance: FetchesInstance;
     constructor(config?: FetchesParams) {
         this.instance = fetches.create(config);
     }
@@ -4026,7 +4026,7 @@ export type PatchProjectByProjectIdTaskByTaskIdRequestParams = FetchesRequestPar
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
 export class ApiInstance {
-    private instance: FetchesInstance;
+    public instance: FetchesInstance;
     constructor(config?: FetchesParams) {
         this.instance = fetches.create(config);
     }
@@ -4751,7 +4751,7 @@ export type UpdateTaskStatusRequestParams = FetchesRequestParams<UpdateTaskStatu
 export type DeleteReportEntryRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
 export class ApiInstance {
-    private instance: FetchesInstance;
+    public instance: FetchesInstance;
     constructor() {
         this.instance = runtimeInstance;
     }
@@ -4924,7 +4924,7 @@ export type PatchProjectByProjectIdTaskByTaskIdRequestParams = FetchesRequestPar
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = FetchesRequestParams<DeleteReportEntryData>;
 
 export class ApiInstance {
-    private instance: FetchesInstance;
+    public instance: FetchesInstance;
     constructor() {
         this.instance = runtimeInstance;
     }
@@ -7377,7 +7377,7 @@ export type UpdateTaskStatusRequestParams = OfetchRequestParams<UpdateTaskStatus
 export type DeleteReportEntryRequestParams = OfetchRequestParams<DeleteReportEntryData>;
 
 export class ApiInstance {
-    private instance: Instance;
+    public instance: Instance;
     constructor(config?: FetchOptions) {
         this.instance = ofetch.create(config ?? {});
     }
@@ -7558,7 +7558,7 @@ export type PatchProjectByProjectIdTaskByTaskIdRequestParams = OfetchRequestPara
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = OfetchRequestParams<DeleteReportEntryData>;
 
 export class ApiInstance {
-    private instance: Instance;
+    public instance: Instance;
     constructor(config?: FetchOptions) {
         this.instance = ofetch.create(config ?? {});
     }
@@ -8311,7 +8311,7 @@ export type UpdateTaskStatusRequestParams = OfetchRequestParams<UpdateTaskStatus
 export type DeleteReportEntryRequestParams = OfetchRequestParams<DeleteReportEntryData>;
 
 export class ApiInstance {
-    private instance: Instance;
+    public instance: Instance;
     constructor() {
         this.instance = runtimeInstance;
     }
@@ -8492,7 +8492,7 @@ export type PatchProjectByProjectIdTaskByTaskIdRequestParams = OfetchRequestPara
 export type DeleteReportByReportIdEntrieByEntryIdRequestParams = OfetchRequestParams<DeleteReportEntryData>;
 
 export class ApiInstance {
-    private instance: Instance;
+    public instance: Instance;
     constructor() {
         this.instance = runtimeInstance;
     }
