@@ -206,7 +206,8 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
         {
           namedComponents: ['arrow-function']
         }
-      ]
+      ],
+      'siberiacancode/prefer-tacit': 'error'
     }
   });
 
