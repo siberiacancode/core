@@ -14,6 +14,7 @@ npm install @siberiacancode/eslint
 import { eslint } from '@siberiacancode/eslint';
 
 export default eslint({
-  typescript: true
+  typescript: true,
+  storybook: true
 });
 ```

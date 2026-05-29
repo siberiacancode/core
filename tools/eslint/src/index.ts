@@ -14,6 +14,7 @@ import pluginCss from '@eslint/css';
 import pluginBetterTailwindcss from 'eslint-plugin-better-tailwindcss';
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginPlaywright from 'eslint-plugin-playwright';
+import pluginStorybook from 'eslint-plugin-storybook';
 
 import { siberiacancodePlugin } from './plugin/index';
 
@@ -39,6 +40,7 @@ type EslintOptions = OptionsConfig &
   TypedFlatConfigItem & {
     jsxA11y?: boolean;
     playwright?: boolean | OptionsPlaywright;
+    storybook?: boolean;
     tailwind?: boolean | OptionsTailwind;
     typescript?: boolean | 'engine' | OptionsTypescript;
   };
@@ -50,10 +52,11 @@ export type Eslint = (
   >[]
 ) => FlatConfigComposer<TypedFlatConfigItem, ConfigNames>;
 
-export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) => {
+export const eslint: Eslint = (inputOptions = {}, ...configs) => {
   const {
     jsxA11y = false,
     playwright = false,
+    storybook = false,
     tailwind = false,
     typescript = false,
     ...options
@@ -121,6 +124,47 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
     });
   }
 
+  if (storybook) {
+    const storybookConfig = pluginStorybook.configs['flat/recommended'] as TypedFlatConfigItem[];
+    const storybookStoriesConfig = storybookConfig.find((config) =>
+      config.name?.includes(':stories-rules')
+    );
+    const storybookMainConfig = storybookConfig.find((config) =>
+      config.name?.includes(':main-rules')
+    );
+
+    const storybookStoriesRules = (storybookStoriesConfig?.rules ?? {}) as Linter.RulesRecord;
+    const storybookMainRules = (storybookMainConfig?.rules ?? {}) as Linter.RulesRecord;
+
+    configs.unshift({
+      name: 'siberiacancode/storybook/stories',
+      ...(storybookStoriesConfig?.files && { files: storybookStoriesConfig.files }),
+      plugins: {
+        'siberiacancode-storybook': pluginStorybook
+      },
+      rules: {
+        ...Object.entries(storybookStoriesRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
+          acc[key.replace('storybook', 'siberiacancode-storybook')] = value;
+          return acc;
+        }, {})
+      }
+    });
+
+    configs.unshift({
+      name: 'siberiacancode/storybook/main',
+      ...(storybookMainConfig?.files && { files: storybookMainConfig.files }),
+      plugins: {
+        'siberiacancode-storybook': pluginStorybook
+      },
+      rules: {
+        ...Object.entries(storybookMainRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
+          acc[key.replace('storybook', 'siberiacancode-storybook')] = value;
+          return acc;
+        }, {})
+      }
+    });
+  }
+
   if (tailwind) {
     const tailwindRules = pluginBetterTailwindcss.configs.recommended.rules as Linter.RulesRecord;
 
@@ -181,6 +225,8 @@ export const eslint: Eslint = (inputOptions = {} as EslintOptions, ...configs) =
 
   configs.unshift({
     name: 'siberiacancode/css',
+    files: ['**/*.css'],
+    language: 'siberiacancode-css/css',
     plugins: {
       'siberiacancode-css': pluginCss
     },
