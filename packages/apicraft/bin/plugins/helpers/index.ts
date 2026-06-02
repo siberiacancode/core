@@ -6,6 +6,7 @@ export * from './getRequestFilePath';
 export * from './getRequestInfo';
 export * from './getRequestParamsType';
 export * from './getRequestReturnType';
+export * from './getSchemaTypeName';
 export * from './hasRuntimeResponseType';
 export * from './imports';
 export * from './normalizeName';
