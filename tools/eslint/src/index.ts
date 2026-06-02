@@ -126,38 +126,18 @@ export const eslint: Eslint = (inputOptions = {}, ...configs) => {
 
   if (storybook) {
     const storybookConfig = pluginStorybook.configs['flat/recommended'] as TypedFlatConfigItem[];
-    const storybookStoriesConfig = storybookConfig.find((config) =>
-      config.name?.includes(':stories-rules')
-    );
-    const storybookMainConfig = storybookConfig.find((config) =>
-      config.name?.includes(':main-rules')
-    );
-
-    const storybookStoriesRules = (storybookStoriesConfig?.rules ?? {}) as Linter.RulesRecord;
-    const storybookMainRules = (storybookMainConfig?.rules ?? {}) as Linter.RulesRecord;
+    const storybookRules = storybookConfig.reduce<Linter.RulesRecord>((acc, config) => {
+      acc = { ...acc, ...(config.rules as Linter.RulesRecord) };
+      return acc;
+    }, {});
 
     configs.unshift({
-      name: 'siberiacancode/storybook/stories',
-      ...(storybookStoriesConfig?.files && { files: storybookStoriesConfig.files }),
+      name: 'siberiacancode/storybook',
       plugins: {
         'siberiacancode-storybook': pluginStorybook
       },
       rules: {
-        ...Object.entries(storybookStoriesRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
-          acc[key.replace('storybook', 'siberiacancode-storybook')] = value;
-          return acc;
-        }, {})
-      }
-    });
-
-    configs.unshift({
-      name: 'siberiacancode/storybook/main',
-      ...(storybookMainConfig?.files && { files: storybookMainConfig.files }),
-      plugins: {
-        'siberiacancode-storybook': pluginStorybook
-      },
-      rules: {
-        ...Object.entries(storybookMainRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
+        ...Object.entries(storybookRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
           acc[key.replace('storybook', 'siberiacancode-storybook')] = value;
           return acc;
         }, {})
