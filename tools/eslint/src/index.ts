@@ -125,24 +125,24 @@ export const eslint: Eslint = (inputOptions = {}, ...configs) => {
   }
 
   if (storybook) {
-    const storybookConfig = pluginStorybook.configs['flat/recommended'] as TypedFlatConfigItem[];
-    const storybookRules = storybookConfig.reduce<Linter.RulesRecord>((acc, config) => {
-      acc = { ...acc, ...(config.rules as Linter.RulesRecord) };
-      return acc;
-    }, {});
-
-    configs.unshift({
-      name: 'siberiacancode/storybook',
-      plugins: {
-        'siberiacancode-storybook': pluginStorybook
-      },
-      rules: {
-        ...Object.entries(storybookRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
-          acc[key.replace('storybook', 'siberiacancode-storybook')] = value;
-          return acc;
-        }, {})
-      }
-    });
+    const storybookConfigs = pluginStorybook.configs['flat/recommended'] as TypedFlatConfigItem[];
+    for (const config of [...storybookConfigs].reverse()) {
+      configs.unshift({
+        ...config,
+        ...(config.rules && {
+          rules: {
+            ...Object.entries(config.rules as Linter.RulesRecord).reduce<Linter.RulesRecord>(
+              (acc, [key, value]) => {
+                acc[key.replace('storybook', 'siberiacancode-storybook')] = value;
+                return acc;
+              },
+              {}
+            )
+          }
+        }),
+        name: `siberiacancode/storybook-${config.name}`
+      });
+    }
   }
 
   if (tailwind) {
