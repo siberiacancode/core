@@ -140,7 +140,7 @@ export const eslint: Eslint = (inputOptions = {}, ...configs) => {
             )
           }
         }),
-        name: `siberiacancode/storybook-${config.name}`
+        name: `siberiacancode/${config.name}`
       });
     }
   }
