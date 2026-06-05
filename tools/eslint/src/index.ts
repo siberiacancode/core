@@ -10,11 +10,6 @@ import type { Linter } from 'eslint';
 import type { FlatConfigComposer } from 'eslint-flat-config-utils';
 
 import antfu from '@antfu/eslint-config';
-import pluginCss from '@eslint/css';
-import pluginBetterTailwindcss from 'eslint-plugin-better-tailwindcss';
-import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
-import pluginPlaywright from 'eslint-plugin-playwright';
-import pluginStorybook from 'eslint-plugin-storybook';
 
 import { siberiacancodePlugin } from './plugin/index';
 
@@ -88,98 +83,127 @@ export const eslint: Eslint = (inputOptions = {}, ...configs) => {
   }
 
   if (jsxA11y) {
-    const jsxA11yRules = pluginJsxA11y.flatConfigs.recommended.rules as Linter.RulesRecord;
+    configs.unshift(
+      import('eslint-plugin-jsx-a11y').then(({ default: pluginJsxA11y }): TypedFlatConfigItem => {
+        const jsxA11yRules = pluginJsxA11y.flatConfigs.recommended.rules as Linter.RulesRecord;
 
-    configs.unshift({
-      name: 'siberiacancode/jsx-a11y',
-      plugins: {
-        'siberiacancode-jsx-a11y': pluginJsxA11y
-      },
-      rules: {
-        ...Object.entries(jsxA11yRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
-          acc[key.replace('jsx-a11y', 'siberiacancode-jsx-a11y')] = value;
-          return acc;
-        }, {})
-      }
-    });
+        return {
+          name: 'siberiacancode/jsx-a11y',
+          plugins: {
+            'siberiacancode-jsx-a11y': pluginJsxA11y
+          },
+          rules: {
+            ...Object.entries(jsxA11yRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
+              acc[key.replace('jsx-a11y', 'siberiacancode-jsx-a11y')] = value;
+              return acc;
+            }, {})
+          }
+        };
+      })
+    );
   }
 
   if (playwright) {
-    const playwrightRules = pluginPlaywright.configs['flat/recommended']
-      .rules as Linter.RulesRecord;
+    configs.unshift(
+      import('eslint-plugin-playwright').then(
+        ({ default: pluginPlaywright }): TypedFlatConfigItem => {
+          const playwrightRules = pluginPlaywright.configs['flat/recommended']
+            .rules as Linter.RulesRecord;
 
-    configs.unshift({
-      name: 'siberiacancode/playwright',
-      ...(typeof playwright === 'object' && { files: playwright.patterns }),
-      plugins: {
-        'siberiacancode-playwright': pluginPlaywright
-      },
-      rules: {
-        ...Object.entries(playwrightRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
-          acc[key.replace('playwright', 'siberiacancode-playwright')] = value;
-          return acc;
-        }, {}),
-        'siberiacancode-playwright/expect-expect': 'off'
-      }
-    });
+          return {
+            name: 'siberiacancode/playwright',
+            ...(typeof playwright === 'object' && { files: playwright.patterns }),
+            plugins: {
+              'siberiacancode-playwright': pluginPlaywright
+            },
+            rules: {
+              ...Object.entries(playwrightRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
+                acc[key.replace('playwright', 'siberiacancode-playwright')] = value;
+                return acc;
+              }, {}),
+              'siberiacancode-playwright/expect-expect': 'off'
+            }
+          };
+        }
+      )
+    );
   }
 
   if (storybook) {
-    const storybookConfigs = pluginStorybook.configs['flat/recommended'] as TypedFlatConfigItem[];
+    configs.unshift(
+      import('eslint-plugin-storybook').then(
+        ({ default: pluginStorybook }): TypedFlatConfigItem[] => {
+          const storybookConfigs = pluginStorybook.configs[
+            'flat/recommended'
+          ] as TypedFlatConfigItem[];
 
-    configs.unshift({
-      name: 'siberiacancode/storybook',
-      plugins: {
-        'siberiacancode-storybook': pluginStorybook
-      }
-    });
+          const result: TypedFlatConfigItem[] = [
+            {
+              name: 'siberiacancode/storybook',
+              plugins: {
+                'siberiacancode-storybook': pluginStorybook
+              }
+            }
+          ];
 
-    for (const config of [...storybookConfigs].reverse()) {
-      if (config.plugins) continue;
-      configs.unshift({
-        ...config,
-        ...(config.rules && {
-          rules: {
-            ...Object.entries(config.rules as Linter.RulesRecord).reduce<Linter.RulesRecord>(
-              (acc, [key, value]) => {
-                acc[key.replace('storybook', 'siberiacancode-storybook')] = value;
-                return acc;
-              },
-              {}
-            )
+          for (const config of [...storybookConfigs].reverse()) {
+            if (config.plugins) continue;
+            result.unshift({
+              ...config,
+              ...(config.rules && {
+                rules: {
+                  ...Object.entries(config.rules as Linter.RulesRecord).reduce<Linter.RulesRecord>(
+                    (acc, [key, value]) => {
+                      acc[key.replace('storybook', 'siberiacancode-storybook')] = value;
+                      return acc;
+                    },
+                    {}
+                  )
+                }
+              }),
+              name: `siberiacancode/${config.name}`
+            });
           }
-        }),
-        name: `siberiacancode/${config.name}`
-      });
-    }
+
+          return result;
+        }
+      )
+    );
   }
 
   if (tailwind) {
-    const tailwindRules = pluginBetterTailwindcss.configs.recommended.rules as Linter.RulesRecord;
+    configs.unshift(
+      import('eslint-plugin-better-tailwindcss').then(
+        ({ default: pluginBetterTailwindcss }): TypedFlatConfigItem => {
+          const tailwindRules = pluginBetterTailwindcss.configs.recommended
+            .rules as Linter.RulesRecord;
 
-    configs.unshift({
-      name: 'siberiacancode/tailwind',
-      plugins: {
-        'siberiacancode-tailwind': pluginBetterTailwindcss
-      },
-      rules: {
-        ...Object.entries(tailwindRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
-          acc[key.replace('better-tailwindcss', 'siberiacancode-tailwind')] = value;
-          return acc;
-        }, {}),
-        'siberiacancode-tailwind/enforce-consistent-line-wrapping': 'off'
-      },
-      settings: {
-        'better-tailwindcss': {
-          entryPoint: 'src/global.css'
+          return {
+            name: 'siberiacancode/tailwind',
+            plugins: {
+              'siberiacancode-tailwind': pluginBetterTailwindcss
+            },
+            rules: {
+              ...Object.entries(tailwindRules).reduce<Linter.RulesRecord>((acc, [key, value]) => {
+                acc[key.replace('better-tailwindcss', 'siberiacancode-tailwind')] = value;
+                return acc;
+              }, {}),
+              'siberiacancode-tailwind/enforce-consistent-line-wrapping': 'off'
+            },
+            settings: {
+              'better-tailwindcss': {
+                entryPoint: 'src/global.css'
+              }
+            },
+            ...(typeof tailwind === 'object' && {
+              settings: {
+                'better-tailwindcss': tailwind.settings
+              }
+            })
+          };
         }
-      },
-      ...(typeof tailwind === 'object' && {
-        settings: {
-          'better-tailwindcss': tailwind.settings
-        }
-      })
-    });
+      )
+    );
   }
 
   if (stylistic) {
@@ -212,23 +236,27 @@ export const eslint: Eslint = (inputOptions = {}, ...configs) => {
     });
   }
 
-  configs.unshift({
-    name: 'siberiacancode/css',
-    files: ['**/*.css'],
-    language: 'siberiacancode-css/css',
-    plugins: {
-      'siberiacancode-css': pluginCss
-    },
-    rules: {
-      ...Object.entries(pluginCss.configs.recommended.rules).reduce<Linter.RulesRecord>(
-        (acc, [key, value]) => {
-          acc[key.replace('css', 'siberiacancode-css')] = value;
-          return acc;
+  configs.unshift(
+    import('@eslint/css').then(
+      ({ default: pluginCss }): TypedFlatConfigItem => ({
+        name: 'siberiacancode/css',
+        files: ['**/*.css'],
+        language: 'siberiacancode-css/css',
+        plugins: {
+          'siberiacancode-css': pluginCss
         },
-        {}
-      )
-    }
-  });
+        rules: {
+          ...Object.entries(pluginCss.configs.recommended.rules).reduce<Linter.RulesRecord>(
+            (acc, [key, value]) => {
+              acc[key.replace('css', 'siberiacancode-css')] = value;
+              return acc;
+            },
+            {}
+          )
+        }
+      })
+    )
+  );
 
   configs.unshift({
     name: 'siberiacancode',
