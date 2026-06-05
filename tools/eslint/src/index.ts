@@ -126,7 +126,16 @@ export const eslint: Eslint = (inputOptions = {}, ...configs) => {
 
   if (storybook) {
     const storybookConfigs = pluginStorybook.configs['flat/recommended'] as TypedFlatConfigItem[];
+
+    configs.unshift({
+      name: 'siberiacancode/storybook',
+      plugins: {
+        'siberiacancode-storybook': pluginStorybook
+      }
+    });
+
     for (const config of [...storybookConfigs].reverse()) {
+      if (config.plugins) continue;
       configs.unshift({
         ...config,
         ...(config.rules && {
