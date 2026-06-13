@@ -233,3 +233,8 @@ components:
           type: array
           items:
             type: string
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
