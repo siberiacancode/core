@@ -3,12 +3,7 @@ import type ts from 'typescript';
 
 import nodePath from 'node:path';
 
-import {
-  capitalize,
-  getApicraftImport,
-  getImportTypes,
-  normalizeName
-} from '@/bin/plugins/helpers';
+import { getApicraftImport, getImportTypes, getSchemaTypeName } from '@/bin/plugins/helpers';
 
 import type { FakerPlugin } from './types';
 
@@ -51,7 +46,7 @@ export const handler: FakerPlugin['Handler'] = ({ plugin }) => {
       return;
     }
 
-    const typeName = capitalize(normalizeName(name));
+    const typeName = getSchemaTypeName(name);
     typeImportNames.add(typeName);
 
     if (schema.type === 'object') {
