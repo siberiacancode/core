@@ -236,27 +236,26 @@ export const eslint: Eslint = (inputOptions = {}, ...configs) => {
     });
   }
 
-  configs.unshift(
-    import('@eslint/css').then(
-      ({ default: pluginCss }): TypedFlatConfigItem => ({
-        name: 'siberiacancode/css',
-        files: ['**/*.css'],
-        language: 'siberiacancode-css/css',
-        plugins: {
-          'siberiacancode-css': pluginCss
-        },
-        rules: {
-          ...Object.entries(pluginCss.configs.recommended.rules).reduce<Linter.RulesRecord>(
-            (acc, [key, value]) => {
-              acc[key.replace('css', 'siberiacancode-css')] = value;
-              return acc;
-            },
-            {}
-          )
-        }
-      })
-    )
-  );
+  // configs.unshift(
+  //   import('@eslint/css').then(
+  //     ({ default: pluginCss }): TypedFlatConfigItem => ({
+  //       name: 'siberiacancode/css',
+  //       files: ['**/*.css'],
+  //       plugins: {
+  //         'siberiacancode-css': pluginCss
+  //       },
+  //       rules: {
+  //         ...Object.entries(pluginCss.configs.recommended.rules).reduce<Linter.RulesRecord>(
+  //           (acc, [key, value]) => {
+  //             acc[key.replace('css', 'siberiacancode-css')] = value;
+  //             return acc;
+  //           },
+  //           {}
+  //         )
+  //       }
+  //     })
+  //   )
+  // );
 
   configs.unshift({
     name: 'siberiacancode',
@@ -386,13 +385,6 @@ export const eslint: Eslint = (inputOptions = {}, ...configs) => {
             type: 'alphabetical'
           }
         ]
-      }
-    },
-    {
-      name: 'siberiacancode/disable/markdown',
-      files: ['**/*.md'],
-      rules: {
-        'perfectionist/sort-imports': 'off'
       }
     },
     ...configs
