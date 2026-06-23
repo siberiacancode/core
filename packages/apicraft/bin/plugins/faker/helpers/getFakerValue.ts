@@ -8,7 +8,7 @@ import { getFakerFunctionName } from './getFakerFunctionName';
 const matchName = (name: string, ...keywords: string[]) =>
   keywords.some((keyword) => name.toLowerCase().includes(keyword.toLowerCase()));
 
-const getFakerValueByName = (name: string): ts.Expression => {
+const getFakerStringValueByName = (name: string): ts.Expression => {
   if (matchName(name, 'email')) return getFakerCall('internet', 'email');
   if (matchName(name, 'username', 'user_name')) return getFakerCall('internet', 'username');
   if (matchName(name, 'password')) return getFakerCall('internet', 'password');
@@ -28,8 +28,6 @@ const getFakerValueByName = (name: string): ts.Expression => {
     return getFakerCall('location', 'city');
   if (matchName(name, 'country')) return getFakerCall('location', 'country');
   if (matchName(name, 'zip', 'postal', 'postcode')) return getFakerCall('location', 'zipCode');
-  if (matchName(name, 'latitude', '_lat')) return getFakerCall('location', 'latitude');
-  if (matchName(name, 'longitude', '_lon', '_lng')) return getFakerCall('location', 'longitude');
   if (matchName(name, 'color', 'colour')) return getFakerCall('color', 'human');
   if (matchName(name, 'description', 'bio', 'summary', 'content', 'body', 'text', 'message'))
     return getFakerCall('lorem', 'sentence');
@@ -53,18 +51,22 @@ const getFakerValueByName = (name: string): ts.Expression => {
       undefined,
       []
     );
+
+  return getFakerCall('lorem', 'word');
+};
+
+const getFakerNumberValueByName = (name: string): ts.Expression => {
+  if (matchName(name, 'latitude', '_lat')) return getFakerCall('location', 'latitude');
+  if (matchName(name, 'longitude', '_lon', '_lng')) return getFakerCall('location', 'longitude');
   if (matchName(name, 'price', 'amount', 'cost', 'salary', 'fee'))
     return getFakerCall('number', 'float');
   if (matchName(name, 'count', 'total', 'quantity', 'size', 'length', 'age', 'year', 'limit'))
     return getFakerCall('number', 'int');
 
-  return getFakerCall('lorem', 'word');
+  return getFakerCall('number', 'int');
 };
 
-const getFakerValueBySchema = (
-  propName: string,
-  schema: IR.SchemaObject
-): ts.Expression | undefined => {
+export const getFakerValue = (propName: string, schema: IR.SchemaObject): ts.Expression => {
   // 📌 important:
   // schema is generated as an array when using allOf/anyOf/oneOf or when nullable is true
   // in such cases we use the first variant for fake value
@@ -131,11 +133,9 @@ const getFakerValueBySchema = (
   if (schema.format === 'uuid') return getFakerCall('string', 'uuid');
   if (schema.format === 'password') return getFakerCall('internet', 'password');
   if (schema.type === 'boolean') return getFakerCall('datatype', 'boolean');
-  if (schema.type === 'integer') return getFakerCall('number', 'int');
-  if (schema.type === 'number') return getFakerCall('number', 'float');
+  if (schema.type === 'integer' || schema.type === 'number')
+    return getFakerNumberValueByName(propName);
+  if (schema.type === 'string') return getFakerStringValueByName(propName);
 
-  return undefined;
+  return getFakerCall('lorem', 'word');
 };
-
-export const getFakerValue = (propName: string, schema: IR.SchemaObject) =>
-  getFakerValueBySchema(propName, schema) ?? getFakerValueByName(propName);

@@ -3699,7 +3699,7 @@ export const createReportEntryFake = (overrides?: Partial<ReportEntry>): ReportE
     payload: {},
     metrics: {
         total_count: faker.number.int(),
-        success-rate: faker.number.float()
+        success-rate: faker.number.int()
     }
 }, overrides);
 
