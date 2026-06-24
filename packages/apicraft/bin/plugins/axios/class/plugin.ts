@@ -191,7 +191,20 @@ export const classHandler: AxiosPlugin['Handler'] = ({ plugin }) => {
                     ts.factory.createIdentifier('create')
                   ),
                   undefined,
-                  !plugin.config.runtimeInstancePath ? [ts.factory.createIdentifier('config')] : []
+                  plugin.config.baseUrl
+                    ? [
+                        ts.factory.createObjectLiteralExpression(
+                          [
+                            ts.factory.createPropertyAssignment(
+                              ts.factory.createIdentifier('baseURL'),
+                              ts.factory.createStringLiteral(plugin.config.baseUrl)
+                            ),
+                            ts.factory.createSpreadAssignment(ts.factory.createIdentifier('config'))
+                          ],
+                          false
+                        )
+                      ]
+                    : [ts.factory.createIdentifier('config')]
                 )
           )
         )

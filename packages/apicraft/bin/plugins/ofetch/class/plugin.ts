@@ -174,15 +174,26 @@ export const classHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
                     ts.factory.createIdentifier('create')
                   ),
                   undefined,
-                  !plugin.config.runtimeInstancePath
+                  plugin.config.baseUrl
                     ? [
+                        ts.factory.createObjectLiteralExpression(
+                          [
+                            ts.factory.createPropertyAssignment(
+                              ts.factory.createIdentifier('baseURL'),
+                              ts.factory.createStringLiteral(plugin.config.baseUrl)
+                            ),
+                            ts.factory.createSpreadAssignment(ts.factory.createIdentifier('config'))
+                          ],
+                          false
+                        )
+                      ]
+                    : [
                         ts.factory.createBinaryExpression(
                           ts.factory.createIdentifier('config'),
                           ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
                           ts.factory.createObjectLiteralExpression([], false)
                         )
                       ]
-                    : []
                 )
           )
         )

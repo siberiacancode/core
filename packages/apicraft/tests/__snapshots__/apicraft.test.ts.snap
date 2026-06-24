@@ -146,7 +146,7 @@ export type DeleteReportEntryRequestParams = AxiosRequestParams<DeleteReportEntr
 export class ApiInstance {
     public instance: AxiosInstance;
     constructor(config?: CreateAxiosDefaults) {
-        this.instance = axios.create(config);
+        this.instance = axios.create({ baseURL: "/api", ...config });
     }
     getUserByName({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> {
         return this.instance.request({
@@ -327,7 +327,7 @@ export type DeleteReportByReportIdEntrieByEntryIdRequestParams = AxiosRequestPar
 export class ApiInstance {
     public instance: AxiosInstance;
     constructor(config?: CreateAxiosDefaults) {
-        this.instance = axios.create(config);
+        this.instance = axios.create({ baseURL: "/api", ...config });
     }
     getUserByUsername({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftAxiosResponse<GetUserByNameResponse, GetUserByNameError>> {
         return this.instance.request({
@@ -3859,7 +3859,7 @@ export type DeleteReportEntryRequestParams = FetchesRequestParams<DeleteReportEn
 export class ApiInstance {
     public instance: FetchesInstance;
     constructor(config?: FetchesParams) {
-        this.instance = fetches.create(config);
+        this.instance = fetches.create({ baseURL: "/api", ...config });
     }
     getUserByName({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> {
         return this.instance.call("GET", \`/users/\${path.username}\`, {
@@ -4032,7 +4032,7 @@ export type DeleteReportByReportIdEntrieByEntryIdRequestParams = FetchesRequestP
 export class ApiInstance {
     public instance: FetchesInstance;
     constructor(config?: FetchesParams) {
-        this.instance = fetches.create(config);
+        this.instance = fetches.create({ baseURL: "/api", ...config });
     }
     getUserByUsername({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftFetchesResponse<GetUserByNameResponse, GetUserByNameError>> {
         return this.instance.call("GET", \`/users/\${path.username}\`, {
@@ -7383,7 +7383,7 @@ export type DeleteReportEntryRequestParams = OfetchRequestParams<DeleteReportEnt
 export class ApiInstance {
     public instance: Instance;
     constructor(config?: FetchOptions) {
-        this.instance = ofetch.create(config ?? {});
+        this.instance = ofetch.create({ baseURL: "/api", ...config });
     }
     getUserByName({ config, query, path }: GetUserByNameRequestParams): Promise<ApicraftOfetchResponse<GetUserByNameResponse, GetUserByNameError>> {
         return this.instance(\`/users/\${path.username}\`, {
@@ -7564,7 +7564,7 @@ export type DeleteReportByReportIdEntrieByEntryIdRequestParams = OfetchRequestPa
 export class ApiInstance {
     public instance: Instance;
     constructor(config?: FetchOptions) {
-        this.instance = ofetch.create(config ?? {});
+        this.instance = ofetch.create({ baseURL: "/api", ...config });
     }
     getUserByUsername({ config, query, path }: GetUserByUsernameRequestParams): Promise<ApicraftOfetchResponse<GetUserByNameResponse, GetUserByNameError>> {
         return this.instance(\`/users/\${path.username}\`, {
