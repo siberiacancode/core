@@ -1,8 +1,8 @@
-import type { IR } from '@hey-api/openapi-ts';
-
 import ts from 'typescript';
 
-import { getRequestInfo } from '@/bin/plugins/helpers';
+import type { GetRequestInfoResult } from '@/bin/plugins/helpers/';
+
+import { capitalize } from '@/bin/plugins/helpers/';
 
 import type { TanstackPlugin } from '../types';
 
@@ -12,24 +12,48 @@ interface GetSuspenseQueryHookParams {
   hookName: string;
   optionsFunctionName: string;
   plugin: TanstackPlugin['Instance'];
-  request: IR.OperationObject;
+  requestErrorTypeName: string;
+  requestInfo: GetRequestInfoResult;
   requestName: string;
 }
 
-// export const requestNameSuspenseQueryKey = requestName
-// const requestNameSuspenseQueryOptions = queryOptions({...})
-// const useRequestNameSuspenseQuery = (settings: TanstackSuspenseQuerySettings<typeof requestName>) => useSuspenseQuery
+// const requestNameSuspenseQueryKey = requestName;
+// const requestNameSuspenseQueryOptions = <TData = RequestNameSuspenseHookData, TError = DefaultError>(settings: {...}): UseSuspenseQueryOptions<...> => queryOptions({...})
+// const useRequestNameSuspenseQuery = <TData = RequestNameSuspenseHookData, TError = DefaultError>(...args: Parameters<typeof requestNameSuspenseQueryOptions<TData, TError>>): UseSuspenseQueryResult<TData, TError> => useSuspenseQuery(requestNameSuspenseQueryOptions<TData, TError>(...args))
 export const getSuspenseQueryHook = ({
-  plugin,
-  optionsFunctionName,
-  request,
   hookName,
+  optionsFunctionName,
+  requestInfo,
+  requestErrorTypeName,
+  plugin,
   requestName
 }: GetSuspenseQueryHookParams) => {
-  const requestInfo = getRequestInfo(request);
   const queryKeyName = `${requestName}SuspenseQueryKey`;
+  const hookDataTypeName = `${capitalize(requestName)}HookData`;
 
-  // export const requestNameSuspenseQueryKey = requestName
+  const requestEntityName =
+    plugin.config.groupBy === 'class'
+      ? ts.factory.createQualifiedName(
+          ts.factory.createIdentifier('instance'),
+          ts.factory.createIdentifier(requestName)
+        )
+      : ts.factory.createIdentifier(requestName);
+
+  const requestCallExpression =
+    plugin.config.groupBy === 'class'
+      ? ts.factory.createPropertyAccessExpression(
+          ts.factory.createIdentifier('instance'),
+          ts.factory.createIdentifier(requestName)
+        )
+      : ts.factory.createIdentifier(requestName);
+
+  const tDataTypeRef = ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('TData'));
+  const tErrorTypeRef = ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('TError'));
+  const hookDataTypeRef = ts.factory.createTypeReferenceNode(
+    ts.factory.createIdentifier(hookDataTypeName)
+  );
+
+  // export const requestNameSuspenseQueryKey = "requestNameSuspenseQueryKey";
   const suspenseQueryKey = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -45,7 +69,12 @@ export const getSuspenseQueryHook = ({
     )
   );
 
-  // const requestNameSuspenseQueryOptions = queryOptions({...})
+  const useSuspenseQueryOptionsTypeRef = ts.factory.createTypeReferenceNode(
+    ts.factory.createIdentifier('UseSuspenseQueryOptions'),
+    [hookDataTypeRef, tErrorTypeRef, tDataTypeRef]
+  );
+
+  // export const requestNameSuspenseQueryOptions = <TData = RequestNameSuspenseHookData, TError = DefaultError>(settings: {...}): UseSuspenseQueryOptions<...> => queryOptions({...})
   const optionsFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -56,7 +85,22 @@ export const getSuspenseQueryHook = ({
           undefined,
           ts.factory.createArrowFunction(
             undefined,
-            undefined,
+            [
+              ts.factory.createTypeParameterDeclaration(
+                undefined,
+                ts.factory.createIdentifier('TData'),
+                undefined,
+                hookDataTypeRef
+              ),
+              ts.factory.createTypeParameterDeclaration(
+                undefined,
+                ts.factory.createIdentifier('TError'),
+                undefined,
+                ts.factory.createTypeReferenceNode(
+                  ts.factory.createIdentifier(requestErrorTypeName)
+                )
+              )
+            ],
             [
               ts.factory.createParameterDeclaration(
                 undefined,
@@ -65,22 +109,38 @@ export const getSuspenseQueryHook = ({
                 !requestInfo.hasRequiredParam
                   ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
                   : undefined,
-                ts.factory.createTypeReferenceNode(
-                  ts.factory.createIdentifier('TanstackSuspenseQuerySettings'),
-                  [
-                    ts.factory.createTypeQueryNode(
-                      plugin.config.groupBy === 'class'
-                        ? ts.factory.createQualifiedName(
-                            ts.factory.createIdentifier('instance'),
-                            ts.factory.createIdentifier(requestName)
-                          )
-                        : ts.factory.createIdentifier(requestName)
-                    )
-                  ]
-                )
+                ts.factory.createTypeLiteralNode([
+                  // params?: Omit<UseSuspenseQueryOptions<RequestNameSuspenseHookData, TError, TData>, 'queryKey'>;
+                  ts.factory.createPropertySignature(
+                    undefined,
+                    ts.factory.createIdentifier('params'),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Omit'), [
+                      useSuspenseQueryOptionsTypeRef,
+                      ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral('queryKey'))
+                    ])
+                  ),
+                  // request: NonNullable<Parameters<typeof requestName>[0]>;
+                  ts.factory.createPropertySignature(
+                    undefined,
+                    ts.factory.createIdentifier('request'),
+                    !requestInfo.hasRequiredParam
+                      ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
+                      : undefined,
+                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('NonNullable'), [
+                      ts.factory.createIndexedAccessTypeNode(
+                        ts.factory.createTypeReferenceNode(
+                          ts.factory.createIdentifier('Parameters'),
+                          [ts.factory.createTypeQueryNode(requestEntityName)]
+                        ),
+                        ts.factory.createLiteralTypeNode(ts.factory.createNumericLiteral('0'))
+                      )
+                    ])
+                  )
+                ])
               )
             ],
-            undefined,
+            useSuspenseQueryOptionsTypeRef,
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
             ts.factory.createCallExpression(
               ts.factory.createIdentifier('queryOptions'),
@@ -88,7 +148,7 @@ export const getSuspenseQueryHook = ({
               [
                 ts.factory.createObjectLiteralExpression(
                   [
-                    // queryKey: [requestNameSuspenseQueryKey, ...(!!settings.request.path ? [settings.request.path] : undefined)]
+                    // queryKey: [requestNameSuspenseQueryKey, ...(!!settings.request.path ? [settings.request.path] : [])]
                     getQueryKey({ requestInfo, queryKeyName }),
                     // queryFn: async () => requestName({ ...settings.request })
                     ts.factory.createPropertyAssignment(
@@ -99,31 +159,22 @@ export const getSuspenseQueryHook = ({
                         [],
                         undefined,
                         ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                        ts.factory.createCallExpression(
-                          plugin.config.groupBy === 'class'
-                            ? ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier('instance'),
-                                ts.factory.createIdentifier(requestName)
-                              )
-                            : ts.factory.createIdentifier(requestName),
-                          undefined,
-                          [
-                            ts.factory.createObjectLiteralExpression(
-                              [
-                                ts.factory.createSpreadAssignment(
-                                  ts.factory.createPropertyAccessChain(
-                                    ts.factory.createIdentifier('settings'),
-                                    !requestInfo.hasRequiredParam
-                                      ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
-                                      : undefined,
-                                    ts.factory.createIdentifier('request')
-                                  )
+                        ts.factory.createCallExpression(requestCallExpression, undefined, [
+                          ts.factory.createObjectLiteralExpression(
+                            [
+                              ts.factory.createSpreadAssignment(
+                                ts.factory.createPropertyAccessChain(
+                                  ts.factory.createIdentifier('settings'),
+                                  !requestInfo.hasRequiredParam
+                                    ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken)
+                                    : undefined,
+                                  ts.factory.createIdentifier('request')
                                 )
-                              ],
-                              false
-                            )
-                          ]
-                        )
+                              )
+                            ],
+                            false
+                          )
+                        ])
                       )
                     ),
                     // ...settings.params
@@ -148,7 +199,7 @@ export const getSuspenseQueryHook = ({
     )
   );
 
-  // const useRequestNameSuspenseQuery = (settings: TanstackSuspenseQuerySettings<typeof requestName>) => useSuspenseQuery
+  // export const useRequestNameSuspenseQuery = <TData = RequestNameSuspenseHookData, TError = DefaultError>(...args: Parameters<typeof requestNameSuspenseQueryOptions<TData, TError>>): UseSuspenseQueryResult<TData, TError> => useSuspenseQuery(requestNameSuspenseQueryOptions<TData, TError>(...args))
   const hookFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -159,7 +210,22 @@ export const getSuspenseQueryHook = ({
           undefined,
           ts.factory.createArrowFunction(
             undefined,
-            undefined,
+            [
+              ts.factory.createTypeParameterDeclaration(
+                undefined,
+                ts.factory.createIdentifier('TData'),
+                undefined,
+                hookDataTypeRef
+              ),
+              ts.factory.createTypeParameterDeclaration(
+                undefined,
+                ts.factory.createIdentifier('TError'),
+                undefined,
+                ts.factory.createTypeReferenceNode(
+                  ts.factory.createIdentifier(requestErrorTypeName)
+                )
+              )
+            ],
             [
               ts.factory.createParameterDeclaration(
                 undefined,
@@ -167,11 +233,17 @@ export const getSuspenseQueryHook = ({
                 ts.factory.createIdentifier('args'),
                 undefined,
                 ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Parameters'), [
-                  ts.factory.createTypeQueryNode(ts.factory.createIdentifier(optionsFunctionName))
+                  ts.factory.createTypeQueryNode(ts.factory.createIdentifier(optionsFunctionName), [
+                    tDataTypeRef,
+                    tErrorTypeRef
+                  ])
                 ])
               )
             ],
-            undefined,
+            ts.factory.createTypeReferenceNode(
+              ts.factory.createIdentifier('UseSuspenseQueryResult'),
+              [tDataTypeRef, tErrorTypeRef]
+            ),
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
             ts.factory.createCallExpression(
               ts.factory.createIdentifier('useSuspenseQuery'),
@@ -179,7 +251,7 @@ export const getSuspenseQueryHook = ({
               [
                 ts.factory.createCallExpression(
                   ts.factory.createIdentifier(optionsFunctionName),
-                  undefined,
+                  [tDataTypeRef, tErrorTypeRef],
                   [ts.factory.createSpreadElement(ts.factory.createIdentifier('args'))]
                 )
               ]
