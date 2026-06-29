@@ -1,28 +1,43 @@
-import type { DefinePlugin } from '@hey-api/openapi-ts';
+import type { IR } from '@hey-api/openapi-ts';
 
 import nodePath from 'node:path';
+
+import type { GetRequestInfoResult } from '@/bin/plugins/helpers';
 
 import {
   capitalize,
   getApicraftTypeImport,
   getImportInstance,
-  getImportRequest
+  getImportRequest,
+  getImportTypes,
+  getRequestErrorTypeName
 } from '@/bin/plugins/helpers';
 
-import type { TanstackPluginConfig } from '../../types';
+import type { TanstackPlugin } from '../../types';
 
-import { getMutationHook, getTanstackImport } from '../../helpers';
+import {
+  getHookDataType,
+  getMutationHook,
+  getTanstackImport,
+  getTanstackTypeImport
+} from '../../helpers';
+
+const DEFAULT_REQUEST_ERROR_TYPE_NAME = 'DefaultError';
 
 interface GenerateMutationHookFileParams {
-  plugin: DefinePlugin<TanstackPluginConfig>['Instance'];
+  plugin: TanstackPlugin['Instance'];
+  request: IR.OperationObject;
   requestFilePath: string;
+  requestInfo: GetRequestInfoResult;
   requestName: string;
 }
 
 export const generateMutationHookFile = ({
   plugin,
+  requestFilePath,
+  requestInfo,
   requestName,
-  requestFilePath
+  request
 }: GenerateMutationHookFileParams) => {
   const hookName = `use${capitalize(requestName)}Mutation`;
   const hookFilePath = `${nodePath.dirname(requestFilePath).replace('requests', 'hooks')}/${hookName}`;
@@ -32,11 +47,32 @@ export const generateMutationHookFile = ({
     path: hookFilePath
   });
 
-  // import type { TanstackMutationSettings } from '@siberiacancode/apicraft';
-  hookFile.add(getApicraftTypeImport('TanstackMutationSettings'));
+  // import type { UseMutationOptions, DefaultError } from '@tanstack/react-query';
+  hookFile.add(
+    getTanstackTypeImport([
+      'UseMutationOptions',
+      ...(!requestInfo.hasErrorResponse ? [DEFAULT_REQUEST_ERROR_TYPE_NAME] : [])
+    ])
+  );
+
+  // import type { UnwrapPromise } from '@siberiacancode/apicraft';
+  hookFile.add(getApicraftTypeImport(['UnwrapPromise']));
 
   // import { useMutation } from '@tanstack/react-query';
-  hookFile.add(getTanstackImport('useMutation'));
+  hookFile.add(getTanstackImport(['useMutation']));
+
+  let requestErrorTypeName = DEFAULT_REQUEST_ERROR_TYPE_NAME;
+  if (requestInfo.hasErrorResponse) {
+    requestErrorTypeName = getRequestErrorTypeName(request.id);
+    // import type { RequestNameError } from 'generated/types.gen';
+    hookFile.add(
+      getImportTypes({
+        folderPath: hookFolderPath,
+        generateOutput: plugin.config.generateOutput,
+        typeNames: [requestErrorTypeName]
+      })
+    );
+  }
 
   if (plugin.config.groupBy === 'class') {
     // import { instance } from '../../instance.gen';
@@ -60,7 +96,11 @@ export const generateMutationHookFile = ({
     );
   }
 
-  // const requestNameMutationKey = requestName;
-  // const useRequestNameMutation = (settings: TanstackMutationSettings<typeof requestName>) => useMutation
-  hookFile.add(...getMutationHook({ hookName, plugin, requestName }));
+  // type RequestNameHookData = UnwrapPromise<ReturnType<typeof requestName>>;
+  hookFile.add(getHookDataType({ requestName, plugin }));
+
+  // const requestNameMutationKey = "requestNameMutationKey";
+  // type RequestNameMutationVariables = Parameters<typeof requestName>[0];
+  // const useRequestNameMutation = <TError = ..., TContext = unknown>(settings) => useMutation({...})
+  hookFile.add(...getMutationHook({ hookName, plugin, requestErrorTypeName, requestName }));
 };

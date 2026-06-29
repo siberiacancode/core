@@ -13,7 +13,7 @@ interface GetMutationHookParams {
 
 // export const requestNameMutationKey = "requestNameMutationKey";
 // type RequestNameMutationVariables = Parameters<typeof requestName>[0];
-// export const useRequestNameMutation = <TError = DefaultError, TContext = unknown>(settings?: {...}): UseMutationResult<...> => useMutation({...})
+// export const useRequestNameMutation = <TError = DefaultError, TContext = unknown>(settings?: {...}) => useMutation({...})
 export const getMutationHook = ({
   hookName,
   plugin,
@@ -85,12 +85,7 @@ export const getMutationHook = ({
     [hookDataTypeRef, tErrorTypeRef, variablesTypeRef, tContextTypeRef]
   );
 
-  const useMutationResultTypeRef = ts.factory.createTypeReferenceNode(
-    ts.factory.createIdentifier('UseMutationResult'),
-    [hookDataTypeRef, tErrorTypeRef, variablesTypeRef, tContextTypeRef]
-  );
-
-  // export const useRequestNameMutation = <TError = DefaultError, TContext = unknown>(settings?: {...}): UseMutationResult<...> => useMutation({...})
+  // export const useRequestNameMutation = <TError = DefaultError, TContext = unknown>(settings?: {...}) => useMutation({...})
   const hookFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -143,7 +138,7 @@ export const getMutationHook = ({
                 ])
               )
             ],
-            useMutationResultTypeRef,
+            undefined,
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
             ts.factory.createCallExpression(ts.factory.createIdentifier('useMutation'), undefined, [
               ts.factory.createObjectLiteralExpression(

@@ -8,6 +8,7 @@ import {
   getApicraftTypeImport,
   getImportInstance,
   getImportTypes,
+  getRequestErrorTypeName,
   getRequestInfo
 } from '@/bin/plugins/helpers';
 
@@ -39,12 +40,11 @@ export const classHandler: TanstackPlugin['Handler'] = ({ plugin }) => {
     const requestName = generateRequestName(request, plugin.config.nameBy);
     const requestInfo = getRequestInfo(request);
 
-    let requestErrorTypeName: string;
+    let requestErrorTypeName = DEFAULT_REQUEST_ERROR_TYPE_NAME;
     if (requestInfo.hasErrorResponse) {
-      requestErrorTypeName = `${capitalize(request.id)}Error`;
+      requestErrorTypeName = getRequestErrorTypeName(request.id);
       requestErrorTypeNames.push(requestErrorTypeName);
     } else {
-      requestErrorTypeName = DEFAULT_REQUEST_ERROR_TYPE_NAME;
       hasDefaultError = true;
     }
 
@@ -82,16 +82,9 @@ export const classHandler: TanstackPlugin['Handler'] = ({ plugin }) => {
   const hooksFilePath = nodePath.normalize(`${plugin.output}/hooks`);
   const hooksFolderPath = nodePath.dirname(`${plugin.config.generateOutput}/${hooksFilePath}`);
   const imports: ts.ImportDeclaration[] = [
-    // import type { UseSuspenseQueryOptions, UseSuspenseQueryResult, UseQueryOptions, UseQueryResult, UseMutationOptions, UseMutationResult, DefaultError } from '@tanstack/react-query';
+    // import type { UseSuspenseQueryOptions, UseQueryOptions, UseMutationOptions, DefaultError } from '@tanstack/react-query';
     getTanstackTypeImport([
-      ...[
-        'UseSuspenseQueryOptions',
-        'UseSuspenseQueryResult',
-        'UseQueryOptions',
-        'UseQueryResult',
-        'UseMutationOptions',
-        'UseMutationResult'
-      ],
+      ...['UseSuspenseQueryOptions', 'UseQueryOptions', 'UseMutationOptions'],
       ...(hasDefaultError ? [DEFAULT_REQUEST_ERROR_TYPE_NAME] : [])
     ]),
     // import type { UnwrapPromise } from '@siberiacancode/apicraft';

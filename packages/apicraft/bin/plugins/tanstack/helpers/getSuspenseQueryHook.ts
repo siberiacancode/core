@@ -18,8 +18,8 @@ interface GetSuspenseQueryHookParams {
 }
 
 // const requestNameSuspenseQueryKey = requestName;
-// const requestNameSuspenseQueryOptions = <TData = RequestNameSuspenseHookData, TError = DefaultError>(settings: {...}): UseSuspenseQueryOptions<...> => queryOptions({...})
-// const useRequestNameSuspenseQuery = <TData = RequestNameSuspenseHookData, TError = DefaultError>(...args: Parameters<typeof requestNameSuspenseQueryOptions<TData, TError>>): UseSuspenseQueryResult<TData, TError> => useSuspenseQuery(requestNameSuspenseQueryOptions<TData, TError>(...args))
+// const requestNameSuspenseQueryOptions = <TData = RequestNameSuspenseHookData, TError = DefaultError>(settings: {...}) => queryOptions({...})
+// const useRequestNameSuspenseQuery = <TData = RequestNameSuspenseHookData, TError = DefaultError>(...args: Parameters<typeof requestNameSuspenseQueryOptions<TData, TError>>) => useSuspenseQuery(requestNameSuspenseQueryOptions<TData, TError>(...args))
 export const getSuspenseQueryHook = ({
   hookName,
   optionsFunctionName,
@@ -74,7 +74,7 @@ export const getSuspenseQueryHook = ({
     [hookDataTypeRef, tErrorTypeRef, tDataTypeRef]
   );
 
-  // export const requestNameSuspenseQueryOptions = <TData = RequestNameSuspenseHookData, TError = DefaultError>(settings: {...}): UseSuspenseQueryOptions<...> => queryOptions({...})
+  // export const requestNameSuspenseQueryOptions = <TData = RequestNameSuspenseHookData, TError = DefaultError>(settings: {...}) => queryOptions({...})
   const optionsFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -140,7 +140,7 @@ export const getSuspenseQueryHook = ({
                 ])
               )
             ],
-            useSuspenseQueryOptionsTypeRef,
+            undefined,
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
             ts.factory.createCallExpression(
               ts.factory.createIdentifier('queryOptions'),
@@ -199,7 +199,7 @@ export const getSuspenseQueryHook = ({
     )
   );
 
-  // export const useRequestNameSuspenseQuery = <TData = RequestNameSuspenseHookData, TError = DefaultError>(...args: Parameters<typeof requestNameSuspenseQueryOptions<TData, TError>>): UseSuspenseQueryResult<TData, TError> => useSuspenseQuery(requestNameSuspenseQueryOptions<TData, TError>(...args))
+  // export const useRequestNameSuspenseQuery = <TData = RequestNameSuspenseHookData, TError = DefaultError>(...args: Parameters<typeof requestNameSuspenseQueryOptions<TData, TError>>) => useSuspenseQuery(requestNameSuspenseQueryOptions<TData, TError>(...args))
   const hookFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -240,10 +240,7 @@ export const getSuspenseQueryHook = ({
                 ])
               )
             ],
-            ts.factory.createTypeReferenceNode(
-              ts.factory.createIdentifier('UseSuspenseQueryResult'),
-              [tDataTypeRef, tErrorTypeRef]
-            ),
+            undefined,
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
             ts.factory.createCallExpression(
               ts.factory.createIdentifier('useSuspenseQuery'),

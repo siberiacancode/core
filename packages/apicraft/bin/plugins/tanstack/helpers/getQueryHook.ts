@@ -18,8 +18,8 @@ interface GetQueryHookParams {
 }
 
 // const requestNameQueryKey = requestName;
-// const requestNameQueryOptions = <TData = RequestNameHookData, TError = DefaultError>(settings: {...}): UseQueryOptions<...> => queryOptions({...})
-// const useRequestNameQuery = <TData = RequestNameHookData, TError = DefaultError>(...args: Parameters<typeof requestNameQueryOptions<TData, TError>>): UseQueryResult<TData, TError> => useQuery(requestNameQueryOptions<TData, TError>(...args))
+// const requestNameQueryOptions = <TData = RequestNameHookData, TError = DefaultError>(settings: {...}) => queryOptions({...})
+// const useRequestNameQuery = <TData = RequestNameHookData, TError = DefaultError>(...args: Parameters<typeof requestNameQueryOptions<TData, TError>>) => useQuery(requestNameQueryOptions<TData, TError>(...args))
 export const getQueryHook = ({
   hookName,
   optionsFunctionName,
@@ -74,7 +74,7 @@ export const getQueryHook = ({
     [hookDataTypeRef, tErrorTypeRef, tDataTypeRef]
   );
 
-  // export const requestNameQueryOptions = <TData = RequestNameHookData, TError = DefaultError>(settings: {...}): UseQueryOptions<...> => queryOptions({...})
+  // export const requestNameQueryOptions = <TData = RequestNameHookData, TError = DefaultError>(settings: {...}) => queryOptions({...})
   const optionsFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -140,7 +140,7 @@ export const getQueryHook = ({
                 ])
               )
             ],
-            useQueryOptionsTypeRef,
+            undefined,
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
             ts.factory.createCallExpression(
               ts.factory.createIdentifier('queryOptions'),
@@ -199,7 +199,7 @@ export const getQueryHook = ({
     )
   );
 
-  // export const useRequestNameQuery = <TData = RequestNameHookData, TError = DefaultError>(...args: Parameters<typeof requestNameQueryOptions<TData, TError>>): UseQueryResult<TData, TError> => useQuery(requestNameQueryOptions<TData, TError>(...args))
+  // export const useRequestNameQuery = <TData = RequestNameHookData, TError = DefaultError>(...args: Parameters<typeof requestNameQueryOptions<TData, TError>>) => useQuery(requestNameQueryOptions<TData, TError>(...args))
   const hookFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -240,10 +240,7 @@ export const getQueryHook = ({
                 ])
               )
             ],
-            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('UseQueryResult'), [
-              tDataTypeRef,
-              tErrorTypeRef
-            ]),
+            undefined,
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
             ts.factory.createCallExpression(ts.factory.createIdentifier('useQuery'), undefined, [
               ts.factory.createCallExpression(

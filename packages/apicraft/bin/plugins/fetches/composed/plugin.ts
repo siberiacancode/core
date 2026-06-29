@@ -8,6 +8,7 @@ import {
   getImportInstance,
   getImportRuntimeResponseType,
   getImportTypes,
+  getRequestErrorTypeName,
   getRequestFilePath,
   getRequestInfo,
   getRequestParamsType,
@@ -49,7 +50,7 @@ export const composedHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
     const requestDataTypeName = `${capitalize(request.id)}Data`;
     const requestResponseTypeName = `${capitalize(request.id)}Response`;
-    const requestErrorTypeName = `${capitalize(request.id)}Error`;
+    const requestErrorTypeName = getRequestErrorTypeName(request.id);
 
     const requestFolderPath = nodePath.dirname(
       `${plugin.config.generateOutput}/${requestFilePath}`

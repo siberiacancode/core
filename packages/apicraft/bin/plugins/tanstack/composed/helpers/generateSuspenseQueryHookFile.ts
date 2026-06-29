@@ -1,30 +1,43 @@
-import type { DefinePlugin, IR } from '@hey-api/openapi-ts';
+import type { IR } from '@hey-api/openapi-ts';
 
 import nodePath from 'node:path';
+
+import type { GetRequestInfoResult } from '@/bin/plugins/helpers';
 
 import {
   capitalize,
   getApicraftTypeImport,
   getImportInstance,
-  getImportRequest
+  getImportRequest,
+  getImportTypes,
+  getRequestErrorTypeName
 } from '@/bin/plugins/helpers';
 
-import type { TanstackPluginConfig } from '../../types';
+import type { TanstackPlugin } from '../../types';
 
-import { getSuspenseQueryHook, getTanstackImport } from '../../helpers';
+import {
+  getHookDataType,
+  getSuspenseQueryHook,
+  getTanstackImport,
+  getTanstackTypeImport
+} from '../../helpers';
+
+const DEFAULT_REQUEST_ERROR_TYPE_NAME = 'DefaultError';
 
 interface GenerateSuspenseQueryHookParams {
-  plugin: DefinePlugin<TanstackPluginConfig>['Instance'];
+  plugin: TanstackPlugin['Instance'];
   request: IR.OperationObject;
   requestFilePath: string;
+  requestInfo: GetRequestInfoResult;
   requestName: string;
 }
 
 export const generateSuspenseQueryHookFile = ({
   plugin,
-  request,
+  requestFilePath,
+  requestInfo,
   requestName,
-  requestFilePath
+  request
 }: GenerateSuspenseQueryHookParams) => {
   const hookName = `use${capitalize(requestName)}SuspenseQuery`;
   const hookFilePath = `${nodePath.dirname(requestFilePath).replace('requests', 'hooks')}/${hookName}`;
@@ -34,11 +47,32 @@ export const generateSuspenseQueryHookFile = ({
     path: hookFilePath
   });
 
-  // import type { TanstackSuspenseQuerySettings } from '@siberiacancode/apicraft';
-  hookFile.add(getApicraftTypeImport('TanstackSuspenseQuerySettings'));
+  // import type { UseSuspenseQueryOptions, DefaultError } from '@tanstack/react-query';
+  hookFile.add(
+    getTanstackTypeImport([
+      'UseSuspenseQueryOptions',
+      ...(!requestInfo.hasErrorResponse ? [DEFAULT_REQUEST_ERROR_TYPE_NAME] : [])
+    ])
+  );
+
+  // import type { UnwrapPromise } from '@siberiacancode/apicraft';
+  hookFile.add(getApicraftTypeImport(['UnwrapPromise']));
 
   // import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
   hookFile.add(getTanstackImport(['queryOptions', 'useSuspenseQuery']));
+
+  let requestErrorTypeName = DEFAULT_REQUEST_ERROR_TYPE_NAME;
+  if (requestInfo.hasErrorResponse) {
+    requestErrorTypeName = getRequestErrorTypeName(request.id);
+    // import type { RequestNameError } from 'generated/types.gen';
+    hookFile.add(
+      getImportTypes({
+        folderPath: hookFolderPath,
+        generateOutput: plugin.config.generateOutput,
+        typeNames: [requestErrorTypeName]
+      })
+    );
+  }
 
   if (plugin.config.groupBy === 'class') {
     // import { instance } from '../../instance.gen';
@@ -62,15 +96,19 @@ export const generateSuspenseQueryHookFile = ({
     );
   }
 
-  // const requestNameSuspenseQueryKey = requestName;
-  // const requestNameOptions = queryOptions({...})
-  // const useRequestNameSuspenseQuery = (settings: TanstackSuspenseQuerySettings<typeof requestName>) => useSuspenseQuery
+  // type RequestNameHookData = UnwrapPromise<ReturnType<typeof requestName>>;
+  hookFile.add(getHookDataType({ requestName, plugin }));
+
+  // const requestNameSuspenseQueryKey = "requestNameSuspenseQueryKey";
+  // const requestNameSuspenseQueryOptions = <TData = RequestNameHookData, TError = ...>(settings) => queryOptions({...})
+  // const useRequestNameSuspenseQuery = <TData = RequestNameHookData, TError = ...>(...args) => useSuspenseQuery(...)
   hookFile.add(
     ...getSuspenseQueryHook({
-      optionsFunctionName: `${requestName}SuspenseQueryOptions`,
       hookName,
+      optionsFunctionName: `${requestName}SuspenseQueryOptions`,
       plugin,
-      request,
+      requestErrorTypeName,
+      requestInfo,
       requestName
     })
   );
