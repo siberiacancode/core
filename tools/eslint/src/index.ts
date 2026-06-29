@@ -268,7 +268,8 @@ export const eslint: Eslint = (inputOptions = {}, ...configs) => {
         {
           namedComponents: ['arrow-function']
         }
-      ]
+      ],
+      'siberiacancode/prefer-tacit': 'error'
     }
   });
 
