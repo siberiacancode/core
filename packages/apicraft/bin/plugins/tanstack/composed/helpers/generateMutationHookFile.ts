@@ -6,7 +6,6 @@ import type { GetRequestInfoResult } from '@/bin/plugins/helpers';
 
 import {
   capitalize,
-  getApicraftTypeImport,
   getImportInstance,
   getImportRequest,
   getImportTypes,
@@ -55,9 +54,6 @@ export const generateMutationHookFile = ({
     ])
   );
 
-  // import type { UnwrapPromise } from '@siberiacancode/apicraft';
-  hookFile.add(getApicraftTypeImport(['UnwrapPromise']));
-
   // import { useMutation } from '@tanstack/react-query';
   hookFile.add(getTanstackImport(['useMutation']));
 
@@ -96,7 +92,7 @@ export const generateMutationHookFile = ({
     );
   }
 
-  // type RequestNameHookData = UnwrapPromise<ReturnType<typeof requestName>>;
+  // type RequestNameHookData = Awaited<ReturnType<typeof requestName>>;
   hookFile.add(getHookDataType({ requestName, plugin }));
 
   // const requestNameMutationKey = "requestNameMutationKey";

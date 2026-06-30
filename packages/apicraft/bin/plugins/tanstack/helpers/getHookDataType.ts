@@ -9,7 +9,7 @@ interface GetHookDataTypeParams {
   requestName: string;
 }
 
-// type RequestNameHookData = UnwrapPromise<ReturnType<typeof requestName>>;
+// type RequestNameHookData = Awaited<ReturnType<typeof requestName>>;
 export const getHookDataType = ({ requestName, plugin }: GetHookDataTypeParams) => {
   const hookDataTypeName = `${capitalize(requestName)}HookData`;
 
@@ -25,7 +25,7 @@ export const getHookDataType = ({ requestName, plugin }: GetHookDataTypeParams) 
     undefined,
     ts.factory.createIdentifier(hookDataTypeName),
     undefined,
-    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('UnwrapPromise'), [
+    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Awaited'), [
       ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('ReturnType'), [
         ts.factory.createTypeQueryNode(requestEntityName)
       ])

@@ -5,7 +5,6 @@ import nodePath from 'node:path';
 import {
   capitalize,
   generateRequestName,
-  getApicraftTypeImport,
   getImportRequest,
   getImportTypes,
   getRequestErrorTypeName,
@@ -90,8 +89,6 @@ export const standaloneHandler: TanstackPlugin['Handler'] = ({ plugin }) => {
       ...['UseSuspenseQueryOptions', 'UseQueryOptions', 'UseMutationOptions'],
       ...(hasDefaultError ? [DEFAULT_REQUEST_ERROR_TYPE_NAME] : [])
     ]),
-    // import type { UnwrapPromise } from '@siberiacancode/apicraft';
-    getApicraftTypeImport(['UnwrapPromise']),
     // import { useQuery, useMutation, queryOptions, useSuspenseQuery } from '@tanstack/react-query';
     getTanstackImport(['useQuery', 'useMutation', 'queryOptions', 'useSuspenseQuery']),
     // import type { Type } from 'generated/types.gen';
