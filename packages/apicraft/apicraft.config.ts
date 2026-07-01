@@ -14,7 +14,7 @@ const apicraftConfig = apicraft([
   {
     input: 'example-apiV1.yaml',
     output: 'generated/axios-class-runtime',
-    instance: { name: 'axios', runtimeInstancePath: './src/instance' },
+    instance: { name: 'axios' },
     baseUrl: '/api',
     nameBy: 'path',
     groupBy: 'class',
