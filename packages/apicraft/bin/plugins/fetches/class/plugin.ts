@@ -8,6 +8,7 @@ import {
   getImportRuntimeInstance,
   getImportRuntimeResponseType,
   getImportTypes,
+  getRequestErrorTypeName,
   getRequestInfo,
   getRequestParamsType,
   getRequestReturnType,
@@ -49,7 +50,7 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
 
     const requestResponseTypeName = `${capitalize(request.id)}Response`;
     if (requestInfo.hasSuccessResponse) typeImportNames.add(requestResponseTypeName);
-    const requestErrorTypeName = `${capitalize(request.id)}Error`;
+    const requestErrorTypeName = getRequestErrorTypeName(request.id);
     if (requestInfo.hasErrorResponse) typeImportNames.add(requestErrorTypeName);
 
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
@@ -190,7 +191,20 @@ export const classHandler: FetchesPlugin['Handler'] = ({ plugin }) => {
                     ts.factory.createIdentifier('create')
                   ),
                   undefined,
-                  !plugin.config.runtimeInstancePath ? [ts.factory.createIdentifier('config')] : []
+                  plugin.config.baseUrl
+                    ? [
+                        ts.factory.createObjectLiteralExpression(
+                          [
+                            ts.factory.createPropertyAssignment(
+                              ts.factory.createIdentifier('baseURL'),
+                              ts.factory.createStringLiteral(plugin.config.baseUrl)
+                            ),
+                            ts.factory.createSpreadAssignment(ts.factory.createIdentifier('config'))
+                          ],
+                          false
+                        )
+                      ]
+                    : [ts.factory.createIdentifier('config')]
                 )
           )
         )

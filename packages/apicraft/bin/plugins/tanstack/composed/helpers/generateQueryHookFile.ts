@@ -2,29 +2,40 @@ import type { IR } from '@hey-api/openapi-ts';
 
 import nodePath from 'node:path';
 
+import type { GetRequestInfoResult } from '@/bin/plugins/helpers';
+
 import {
   capitalize,
-  getApicraftTypeImport,
   getImportInstance,
-  getImportRequest
+  getImportRequest,
+  getImportTypes,
+  getRequestErrorTypeName
 } from '@/bin/plugins/helpers';
 
 import type { TanstackPlugin } from '../../types';
 
-import { getQueryHook, getTanstackImport } from '../../helpers';
+import { DEFAULT_REQUEST_ERROR_TYPE_NAME } from '../../constants';
+import {
+  getHookDataType,
+  getQueryHook,
+  getTanstackImport,
+  getTanstackTypeImport
+} from '../../helpers';
 
 interface GenerateQueryHookParams {
   plugin: TanstackPlugin['Instance'];
   request: IR.OperationObject;
   requestFilePath: string;
+  requestInfo: GetRequestInfoResult;
   requestName: string;
 }
 
 export const generateQueryHookFile = ({
   plugin,
-  request,
+  requestFilePath,
+  requestInfo,
   requestName,
-  requestFilePath
+  request
 }: GenerateQueryHookParams) => {
   const hookName = `use${capitalize(requestName)}Query`;
   const hookFilePath = `${nodePath.dirname(requestFilePath).replace('requests', 'hooks')}/${hookName}`;
@@ -34,11 +45,29 @@ export const generateQueryHookFile = ({
     path: hookFilePath
   });
 
-  // import type { TanstackQuerySettings } from '@siberiacancode/apicraft';
-  hookFile.add(getApicraftTypeImport('TanstackQuerySettings'));
+  // import type { UseQueryOptions, DefaultError } from '@tanstack/react-query';
+  hookFile.add(
+    getTanstackTypeImport([
+      'UseQueryOptions',
+      ...(!requestInfo.hasErrorResponse ? [DEFAULT_REQUEST_ERROR_TYPE_NAME] : [])
+    ])
+  );
 
   // import { queryOptions, useQuery } from '@tanstack/react-query';
   hookFile.add(getTanstackImport(['queryOptions', 'useQuery']));
+
+  let requestErrorTypeName = DEFAULT_REQUEST_ERROR_TYPE_NAME;
+  if (requestInfo.hasErrorResponse) {
+    requestErrorTypeName = getRequestErrorTypeName(request.id);
+    // import type { RequestNameError } from 'generated/types.gen';
+    hookFile.add(
+      getImportTypes({
+        folderPath: hookFolderPath,
+        generateOutput: plugin.config.generateOutput,
+        typeNames: [requestErrorTypeName]
+      })
+    );
+  }
 
   if (plugin.config.groupBy === 'class') {
     // import { instance } from '../../instance.gen';
@@ -62,15 +91,19 @@ export const generateQueryHookFile = ({
     );
   }
 
-  // const requestNameQueryKey = requestName;
-  // const requestNameQueryOptions = queryOptions({...})
-  // const useRequestNameQuery = (settings: TanstackQuerySettings<typeof requestName>) => useQuery
+  // type RequestNameHookData = Awaited<ReturnType<typeof requestName>>;
+  hookFile.add(getHookDataType({ requestName, plugin }));
+
+  // const requestNameQueryKey = "requestNameQueryKey";
+  // const requestNameQueryOptions = <TData = RequestNameHookData, TError = ...>(settings) => queryOptions({...})
+  // const useRequestNameQuery = <TData = RequestNameHookData, TError = ...>(...args) => useQuery(...)
   hookFile.add(
     ...getQueryHook({
       hookName,
       optionsFunctionName: `${requestName}QueryOptions`,
-      request,
       plugin,
+      requestErrorTypeName,
+      requestInfo,
       requestName
     })
   );

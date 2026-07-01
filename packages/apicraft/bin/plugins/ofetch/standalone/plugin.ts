@@ -8,6 +8,7 @@ import {
   getImportInstance,
   getImportRuntimeResponseType,
   getImportTypes,
+  getRequestErrorTypeName,
   getRequestInfo,
   getRequestParamsType,
   getRequestReturnType,
@@ -51,7 +52,7 @@ export const standaloneHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
 
     const requestResponseTypeName = `${capitalize(request.id)}Response`;
     if (requestInfo.hasSuccessResponse) typeImportNames.add(requestResponseTypeName);
-    const requestErrorTypeName = `${capitalize(request.id)}Error`;
+    const requestErrorTypeName = getRequestErrorTypeName(request.id);
     if (requestInfo.hasErrorResponse) typeImportNames.add(requestErrorTypeName);
 
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;

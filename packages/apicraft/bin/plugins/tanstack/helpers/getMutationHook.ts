@@ -1,33 +1,91 @@
 import ts from 'typescript';
 
+import { capitalize } from '@/bin/plugins/helpers/';
+
 import type { TanstackPlugin } from '../types';
 
 interface GetMutationHookParams {
   hookName: string;
   plugin: TanstackPlugin['Instance'];
+  requestErrorTypeName: string;
   requestName: string;
 }
 
-// export const requestNameMutationKey = requestName
-// const useRequestNameMutation = (settings: TanstackMutationSettings<typeof requestName>) => useMutation
-export const getMutationHook = ({ hookName, plugin, requestName }: GetMutationHookParams) => {
-  // export const requestNameMutationKey = requestName;
+// export const requestNameMutationKey = "requestNameMutationKey";
+// type RequestNameMutationVariables = Parameters<typeof requestName>[0];
+// export const useRequestNameMutation = <TError = DefaultError, TContext = unknown>(settings?: {...}) => useMutation({...})
+export const getMutationHook = ({
+  hookName,
+  plugin,
+  requestErrorTypeName,
+  requestName
+}: GetMutationHookParams) => {
+  const mutationKeyName = `${requestName}MutationKey`;
+  const hookDataTypeName = `${capitalize(requestName)}HookData`;
+  const variablesTypeName = `${capitalize(requestName)}MutationVariables`;
+
+  const requestEntityName =
+    plugin.config.groupBy === 'class'
+      ? ts.factory.createQualifiedName(
+          ts.factory.createIdentifier('instance'),
+          ts.factory.createIdentifier(requestName)
+        )
+      : ts.factory.createIdentifier(requestName);
+
+  const requestCallExpression =
+    plugin.config.groupBy === 'class'
+      ? ts.factory.createPropertyAccessExpression(
+          ts.factory.createIdentifier('instance'),
+          ts.factory.createIdentifier(requestName)
+        )
+      : ts.factory.createIdentifier(requestName);
+
+  const tErrorTypeRef = ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('TError'));
+  const tContextTypeRef = ts.factory.createTypeReferenceNode(
+    ts.factory.createIdentifier('TContext')
+  );
+  const hookDataTypeRef = ts.factory.createTypeReferenceNode(
+    ts.factory.createIdentifier(hookDataTypeName)
+  );
+  const variablesTypeRef = ts.factory.createTypeReferenceNode(
+    ts.factory.createIdentifier(variablesTypeName)
+  );
+
+  // export const requestNameMutationKey = "requestNameMutationKey";
   const mutationKey = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
       [
         ts.factory.createVariableDeclaration(
-          ts.factory.createIdentifier(`${requestName}MutationKey`),
+          ts.factory.createIdentifier(mutationKeyName),
           undefined,
           undefined,
-          ts.factory.createStringLiteral(`${requestName}MutationKey`)
+          ts.factory.createStringLiteral(mutationKeyName)
         )
       ],
       ts.NodeFlags.Const
     )
   );
 
-  // const useRequestNameMutation = (settings: TanstackMutationSettings<typeof requestName>) => useMutation
+  // type RequestNameMutationVariables = Parameters<typeof requestName>[0];
+  const variablesType = ts.factory.createTypeAliasDeclaration(
+    undefined,
+    ts.factory.createIdentifier(variablesTypeName),
+    undefined,
+    ts.factory.createIndexedAccessTypeNode(
+      ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Parameters'), [
+        ts.factory.createTypeQueryNode(requestEntityName)
+      ]),
+      ts.factory.createLiteralTypeNode(ts.factory.createNumericLiteral('0'))
+    )
+  );
+
+  const useMutationOptionsTypeRef = ts.factory.createTypeReferenceNode(
+    ts.factory.createIdentifier('UseMutationOptions'),
+    [hookDataTypeRef, tErrorTypeRef, variablesTypeRef, tContextTypeRef]
+  );
+
+  // export const useRequestNameMutation = <TError = DefaultError, TContext = unknown>(settings?: {...}) => useMutation({...})
   const hookFunction = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -38,38 +96,58 @@ export const getMutationHook = ({ hookName, plugin, requestName }: GetMutationHo
           undefined,
           ts.factory.createArrowFunction(
             undefined,
-            undefined,
+            [
+              ts.factory.createTypeParameterDeclaration(
+                undefined,
+                ts.factory.createIdentifier('TError'),
+                undefined,
+                ts.factory.createTypeReferenceNode(
+                  ts.factory.createIdentifier(requestErrorTypeName)
+                )
+              ),
+              ts.factory.createTypeParameterDeclaration(
+                undefined,
+                ts.factory.createIdentifier('TContext'),
+                undefined,
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
+              )
+            ],
             [
               ts.factory.createParameterDeclaration(
                 undefined,
                 undefined,
                 ts.factory.createIdentifier('settings'),
                 ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                ts.factory.createTypeReferenceNode(
-                  ts.factory.createIdentifier('TanstackMutationSettings'),
-                  [
-                    ts.factory.createTypeQueryNode(
-                      plugin.config.groupBy === 'class'
-                        ? ts.factory.createQualifiedName(
-                            ts.factory.createIdentifier('instance'),
-                            ts.factory.createIdentifier(requestName)
-                          )
-                        : ts.factory.createIdentifier(requestName)
-                    )
-                  ]
-                )
+                ts.factory.createTypeLiteralNode([
+                  // params?: UseMutationOptions<RequestNameMutationHookData, TError, RequestNameMutationVariables, TContext>;
+                  ts.factory.createPropertySignature(
+                    undefined,
+                    ts.factory.createIdentifier('params'),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                    useMutationOptionsTypeRef
+                  ),
+                  // request?: NonNullable<RequestNameMutationVariables>;
+                  ts.factory.createPropertySignature(
+                    undefined,
+                    ts.factory.createIdentifier('request'),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('NonNullable'), [
+                      variablesTypeRef
+                    ])
+                  )
+                ])
               )
             ],
             undefined,
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-            // mutationKey: [requestNameMutationKey],
             ts.factory.createCallExpression(ts.factory.createIdentifier('useMutation'), undefined, [
               ts.factory.createObjectLiteralExpression(
                 [
+                  // mutationKey: [requestNameMutationKey],
                   ts.factory.createPropertyAssignment(
                     ts.factory.createIdentifier('mutationKey'),
                     ts.factory.createArrayLiteralExpression(
-                      [ts.factory.createIdentifier(`${requestName}MutationKey`)],
+                      [ts.factory.createIdentifier(mutationKeyName)],
                       false
                     )
                   ),
@@ -88,32 +166,21 @@ export const getMutationHook = ({ hookName, plugin, requestName }: GetMutationHo
                       ],
                       undefined,
                       ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                      ts.factory.createCallExpression(
-                        plugin.config.groupBy === 'class'
-                          ? ts.factory.createPropertyAccessExpression(
-                              ts.factory.createIdentifier('instance'),
-                              ts.factory.createIdentifier(requestName)
-                            )
-                          : ts.factory.createIdentifier(requestName),
-                        undefined,
-                        [
-                          ts.factory.createObjectLiteralExpression(
-                            [
-                              ts.factory.createSpreadAssignment(
-                                ts.factory.createPropertyAccessChain(
-                                  ts.factory.createIdentifier('settings'),
-                                  ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                  ts.factory.createIdentifier('request')
-                                )
-                              ),
-                              ts.factory.createSpreadAssignment(
-                                ts.factory.createIdentifier('params')
+                      ts.factory.createCallExpression(requestCallExpression, undefined, [
+                        ts.factory.createObjectLiteralExpression(
+                          [
+                            ts.factory.createSpreadAssignment(
+                              ts.factory.createPropertyAccessChain(
+                                ts.factory.createIdentifier('settings'),
+                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                ts.factory.createIdentifier('request')
                               )
-                            ],
-                            false
-                          )
-                        ]
-                      )
+                            ),
+                            ts.factory.createSpreadAssignment(ts.factory.createIdentifier('params'))
+                          ],
+                          false
+                        )
+                      ])
                     )
                   ),
                   // ...settings?.params
@@ -135,5 +202,5 @@ export const getMutationHook = ({ hookName, plugin, requestName }: GetMutationHo
     )
   );
 
-  return [mutationKey, hookFunction];
+  return [mutationKey, variablesType, hookFunction];
 };

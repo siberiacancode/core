@@ -8,6 +8,7 @@ import {
   getImportRuntimeInstance,
   getImportRuntimeResponseType,
   getImportTypes,
+  getRequestErrorTypeName,
   getRequestInfo,
   getRequestParamsType,
   getRequestReturnType,
@@ -51,7 +52,7 @@ export const classHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
 
     const requestResponseTypeName = `${capitalize(request.id)}Response`;
     if (requestInfo.hasSuccessResponse) typeImportNames.add(requestResponseTypeName);
-    const requestErrorTypeName = `${capitalize(request.id)}Error`;
+    const requestErrorTypeName = getRequestErrorTypeName(request.id);
     if (requestInfo.hasErrorResponse) typeImportNames.add(requestErrorTypeName);
 
     const requestParamsTypeName = `${capitalize(requestName)}RequestParams`;
@@ -174,15 +175,26 @@ export const classHandler: OFetchPlugin['Handler'] = ({ plugin }) => {
                     ts.factory.createIdentifier('create')
                   ),
                   undefined,
-                  !plugin.config.runtimeInstancePath
+                  plugin.config.baseUrl
                     ? [
+                        ts.factory.createObjectLiteralExpression(
+                          [
+                            ts.factory.createPropertyAssignment(
+                              ts.factory.createIdentifier('baseURL'),
+                              ts.factory.createStringLiteral(plugin.config.baseUrl)
+                            ),
+                            ts.factory.createSpreadAssignment(ts.factory.createIdentifier('config'))
+                          ],
+                          false
+                        )
+                      ]
+                    : [
                         ts.factory.createBinaryExpression(
                           ts.factory.createIdentifier('config'),
                           ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
                           ts.factory.createObjectLiteralExpression([], false)
                         )
                       ]
-                    : []
                 )
           )
         )
