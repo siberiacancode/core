@@ -11,7 +11,7 @@ import type { FlatConfigComposer } from 'eslint-flat-config-utils';
 
 import antfu from '@antfu/eslint-config';
 
-import { siberiacancodePlugin } from './plugin/index';
+import { siberiacancodePlugin } from './plugin';
 
 export interface OptionsPlaywright extends OptionsOverrides {
   patterns?: string[];
@@ -77,7 +77,8 @@ export const eslint: Eslint = (inputOptions = {}, ...configs) => {
         'ts/no-floating-promises': 'off',
         'ts/no-misused-promises': ['error', { checksVoidReturn: false }],
         'ts/no-empty-object-type': 'warn',
-        'ts/unbound-method': 'off'
+        'ts/unbound-method': 'off',
+        'ts/no-unnecessary-template-expression': 'error'
       }
     });
   }
@@ -268,7 +269,8 @@ export const eslint: Eslint = (inputOptions = {}, ...configs) => {
         {
           namedComponents: ['arrow-function']
         }
-      ]
+      ],
+      'siberiacancode/no-useless-template-literal': 'error'
     }
   });
 
