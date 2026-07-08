@@ -164,8 +164,8 @@ importers:
         version: 10.4.6(eslint@10.6.0(jiti@2.7.0))(storybook@10.4.1(@testing-library/dom@10.4.1)(@types/react@19.2.14)(prettier@3.9.4)(react-dom@19.2.6(react@19.2.4))(react@19.2.4))(typescript@6.0.2)
     devDependencies:
       '@siberiacancode/prettier':
-        specifier: 1.7.0
-        version: 1.7.0(prettier@3.9.4)
+        specifier: 1.8.0
+        version: 1.8.0(prettier@3.9.4)
       '@siberiacancode/tsconfig':
         specifier: 1.2.0
         version: 1.2.0(typescript@6.0.2)
@@ -1564,10 +1564,10 @@ packages:
     peerDependencies:
       prettier: ^3.8.1
 
-  '@siberiacancode/prettier@1.7.0':
-    resolution: {integrity: sha512-dE/kSQM0VOB85CnvV+ppmYYTPM+OM7GZuegw8fgOLbbaeG4xxoUqUjRgdPeIzAQK8RsqOAb4WEB7yvI/iI7oLg==}
+  '@siberiacancode/prettier@1.8.0':
+    resolution: {integrity: sha512-r93FU7aPWEXD1i/zHDqE5dIqqm5aaqF8AggvmanbLoHIyPPhqmiYO5iwo7GF/zsNwrhZrXaOkpMsATXP7rflXQ==}
     peerDependencies:
-      prettier: ^3.8.3
+      prettier: ^3.9.4
 
   '@siberiacancode/tsconfig@1.1.0':
     resolution: {integrity: sha512-A8IvojNlKM3gVWQfh2FP6K47NHbKJ7Ig6BaSdgHqyEGOl/2ibQH51IpJ/fV29zoPEEBzco3XlR+JHYfa7Z/5nQ==}
@@ -6895,7 +6895,7 @@ snapshots:
     dependencies:
       prettier: 3.9.4
 
-  '@siberiacancode/prettier@1.7.0(prettier@3.9.4)':
+  '@siberiacancode/prettier@1.8.0(prettier@3.9.4)':
     dependencies:
       prettier: 3.9.4
 
