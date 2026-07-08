@@ -1,7 +1,7 @@
 {
   "name": "@siberiacancode/eslint",
   "type": "module",
-  "version": "2.17.7",
+  "version": "2.18.0",
   "description": "eslint configs",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -69,7 +69,7 @@
     "eslint-plugin-storybook": "^10.4.6"
   },
   "devDependencies": {
-    "@siberiacancode/prettier": "1.7.0",
+    "@siberiacancode/prettier": "1.8.0",
     "@siberiacancode/tsconfig": "1.2.0"
   },
   "lint-staged": {

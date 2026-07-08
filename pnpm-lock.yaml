@@ -71,7 +71,7 @@ importers:
         version: 1.14.1
       '@siberiacancode/prettier':
         specifier: '*'
-        version: 1.6.1(prettier@3.8.3)
+        version: 1.6.1(prettier@3.9.4)
       '@siberiacancode/tsconfig':
         specifier: '*'
         version: 1.1.0(typescript@5.9.3)
@@ -95,7 +95,7 @@ importers:
         version: 2.16.5(@typescript-eslint/rule-tester@8.56.1(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.2))(@typescript-eslint/typescript-estree@8.63.0(typescript@6.0.2))(@typescript-eslint/utils@8.63.0(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.2))(jiti@2.7.0)(tailwindcss@4.2.1)(typescript@6.0.2)(vitest@4.0.16(@types/node@25.3.5)(jiti@2.6.1)(jsdom@27.3.0)(yaml@2.8.2))
       '@siberiacancode/prettier':
         specifier: '*'
-        version: 1.6.1(prettier@3.8.3)
+        version: 1.6.1(prettier@3.9.4)
       '@siberiacancode/vitest':
         specifier: '*'
         version: 2.4.1(jsdom@27.3.0)(vitest@4.0.16(@types/node@25.3.5)(jiti@2.6.1)(jsdom@27.3.0)(yaml@2.8.2))
@@ -110,7 +110,7 @@ importers:
         version: 2.16.5(@typescript-eslint/rule-tester@8.56.1(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.2))(@typescript-eslint/typescript-estree@8.63.0(typescript@6.0.2))(@typescript-eslint/utils@8.63.0(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.2))(jiti@2.7.0)(tailwindcss@4.2.1)(typescript@6.0.2)(vitest@4.0.18(@types/node@25.3.5)(jiti@2.7.0)(jsdom@28.1.0)(yaml@2.9.0))
       '@siberiacancode/prettier':
         specifier: '*'
-        version: 1.6.1(prettier@3.8.3)
+        version: 1.6.1(prettier@3.9.4)
       '@siberiacancode/tsconfig':
         specifier: '*'
         version: 1.1.0(typescript@6.0.2)
@@ -161,11 +161,11 @@ importers:
         version: 0.5.3(eslint@10.6.0(jiti@2.7.0))
       eslint-plugin-storybook:
         specifier: ^10.4.6
-        version: 10.4.6(eslint@10.6.0(jiti@2.7.0))(storybook@10.4.1(@testing-library/dom@10.4.1)(@types/react@19.2.14)(prettier@3.8.3)(react-dom@19.2.6(react@19.2.4))(react@19.2.4))(typescript@6.0.2)
+        version: 10.4.6(eslint@10.6.0(jiti@2.7.0))(storybook@10.4.1(@testing-library/dom@10.4.1)(@types/react@19.2.14)(prettier@3.9.4)(react-dom@19.2.6(react@19.2.4))(react@19.2.4))(typescript@6.0.2)
     devDependencies:
       '@siberiacancode/prettier':
         specifier: 1.7.0
-        version: 1.7.0(prettier@3.8.3)
+        version: 1.7.0(prettier@3.9.4)
       '@siberiacancode/tsconfig':
         specifier: 1.2.0
         version: 1.2.0(typescript@6.0.2)
@@ -173,12 +173,15 @@ importers:
   tools/prettier:
     dependencies:
       prettier:
-        specifier: ^3.8.3
-        version: 3.8.3
+        specifier: ^3.9.4
+        version: 3.9.4
     devDependencies:
       '@siberiacancode/eslint':
         specifier: '*'
         version: 2.16.5(@typescript-eslint/rule-tester@8.56.1(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.2))(@typescript-eslint/typescript-estree@8.63.0(typescript@6.0.2))(@typescript-eslint/utils@8.63.0(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.2))(jiti@2.7.0)(tailwindcss@4.2.1)(typescript@6.0.2)(vitest@4.0.18(@types/node@25.3.5)(jiti@2.7.0)(jsdom@28.1.0)(yaml@2.9.0))
+      '@siberiacancode/tsconfig':
+        specifier: 1.2.0
+        version: 1.2.0(typescript@6.0.2)
 
   tools/stylelint:
     dependencies:
@@ -197,7 +200,7 @@ importers:
     devDependencies:
       '@siberiacancode/prettier':
         specifier: '*'
-        version: 1.6.1(prettier@3.8.3)
+        version: 1.6.1(prettier@3.9.4)
 
   tools/tsconfig:
     dependencies:
@@ -219,7 +222,7 @@ importers:
         version: 2.16.5(@typescript-eslint/rule-tester@8.56.1(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.2))(@typescript-eslint/typescript-estree@8.63.0(typescript@6.0.2))(@typescript-eslint/utils@8.63.0(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.2))(jiti@2.7.0)(tailwindcss@4.2.1)(typescript@6.0.2)(vitest@4.0.18(@types/node@25.3.5)(jiti@2.7.0)(jsdom@28.1.0)(yaml@2.9.0))
       '@siberiacancode/prettier':
         specifier: '*'
-        version: 1.6.1(prettier@3.8.3)
+        version: 1.6.1(prettier@3.9.4)
 
 packages:
 
@@ -4322,8 +4325,8 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
-  prettier@3.8.3:
-    resolution: {integrity: sha512-7igPTM53cGHMW8xWuVTydi2KO233VFiTNyF5hLJqpilHfmn8C8gPf+PS7dUT64YcXFbiMGZxS9pCSxL/Dxm/Jw==}
+  prettier@3.9.4:
+    resolution: {integrity: sha512-yWG/o/4oJfo036EKAfK6ACAoDOfHeRHx4tuxkfBZiauURiaSmYwlpOr5LQqKtIkRD2z1PLteme2WoxEnj4tHTg==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -6888,13 +6891,13 @@ snapshots:
 
   '@siberiacancode/fetches@1.14.1': {}
 
-  '@siberiacancode/prettier@1.6.1(prettier@3.8.3)':
+  '@siberiacancode/prettier@1.6.1(prettier@3.9.4)':
     dependencies:
-      prettier: 3.8.3
+      prettier: 3.9.4
 
-  '@siberiacancode/prettier@1.7.0(prettier@3.8.3)':
+  '@siberiacancode/prettier@1.7.0(prettier@3.9.4)':
     dependencies:
-      prettier: 3.8.3
+      prettier: 3.9.4
 
   '@siberiacancode/tsconfig@1.1.0(typescript@5.9.3)':
     dependencies:
@@ -7212,7 +7215,7 @@ snapshots:
       eslint: 10.0.2(jiti@2.6.1)
       json-stable-stringify-without-jsonify: 1.0.1
       lodash.merge: 4.6.2
-      semver: 7.7.4
+      semver: 7.8.5
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -7226,7 +7229,7 @@ snapshots:
       eslint: 10.6.0(jiti@2.7.0)
       json-stable-stringify-without-jsonify: 1.0.1
       lodash.merge: 4.6.2
-      semver: 7.7.4
+      semver: 7.8.5
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -9268,11 +9271,11 @@ snapshots:
       regexp-ast-analysis: 0.7.1
       scslre: 0.3.0
 
-  eslint-plugin-storybook@10.4.6(eslint@10.6.0(jiti@2.7.0))(storybook@10.4.1(@testing-library/dom@10.4.1)(@types/react@19.2.14)(prettier@3.8.3)(react-dom@19.2.6(react@19.2.4))(react@19.2.4))(typescript@6.0.2):
+  eslint-plugin-storybook@10.4.6(eslint@10.6.0(jiti@2.7.0))(storybook@10.4.1(@testing-library/dom@10.4.1)(@types/react@19.2.14)(prettier@3.9.4)(react-dom@19.2.6(react@19.2.4))(react@19.2.4))(typescript@6.0.2):
     dependencies:
       '@typescript-eslint/utils': 8.60.0(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.2)
       eslint: 10.6.0(jiti@2.7.0)
-      storybook: 10.4.1(@testing-library/dom@10.4.1)(@types/react@19.2.14)(prettier@3.8.3)(react-dom@19.2.6(react@19.2.4))(react@19.2.4)
+      storybook: 10.4.1(@testing-library/dom@10.4.1)(@types/react@19.2.14)(prettier@3.9.4)(react-dom@19.2.6(react@19.2.4))(react@19.2.4)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -11097,7 +11100,7 @@ snapshots:
 
   prettier@3.8.1: {}
 
-  prettier@3.8.3: {}
+  prettier@3.9.4: {}
 
   pretty-format@27.5.1:
     dependencies:
@@ -11461,7 +11464,7 @@ snapshots:
       es-errors: 1.3.0
       internal-slot: 1.1.0
 
-  storybook@10.4.1(@testing-library/dom@10.4.1)(@types/react@19.2.14)(prettier@3.8.3)(react-dom@19.2.6(react@19.2.4))(react@19.2.4):
+  storybook@10.4.1(@testing-library/dom@10.4.1)(@types/react@19.2.14)(prettier@3.9.4)(react-dom@19.2.6(react@19.2.4))(react@19.2.4):
     dependencies:
       '@storybook/global': 5.0.0
       '@storybook/icons': 2.0.2(react-dom@19.2.6(react@19.2.4))(react@19.2.4)
@@ -11475,12 +11478,12 @@ snapshots:
       oxc-parser: 0.127.0
       oxc-resolver: 11.20.0
       recast: 0.23.11
-      semver: 7.7.4
+      semver: 7.8.5
       use-sync-external-store: 1.6.0(react@19.2.4)
       ws: 8.20.0
     optionalDependencies:
       '@types/react': 19.2.14
-      prettier: 3.8.3
+      prettier: 3.9.4
     transitivePeerDependencies:
       - '@testing-library/dom'
       - bufferutil
