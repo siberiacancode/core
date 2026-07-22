@@ -9,7 +9,7 @@ const apicraftConfig = apicraft([
     input: 'example-apiV1.yaml',
     output: 'generated/axios-class',
     groupBy: 'class',
-    plugins: ['faker']
+    plugins: ['faker', { name: '@hey-api/typescript', case: 'PascalCase' }]
   },
   {
     input: 'example-apiV1.yaml',
