@@ -116,6 +116,84 @@ const fakerPluginSchema = z.object({
   runtimeInstancePath: z.string().optional()
 });
 
+const typescriptCaseSchema = z.enum([
+  'camelCase',
+  'PascalCase',
+  'preserve',
+  'snake_case',
+  'SCREAMING_SNAKE_CASE'
+]);
+const typescriptEnumsModeSchema = z.enum(['javascript', 'typescript', 'typescript-const']);
+const typescriptPluginSchema = z.object({
+  name: z.literal('@hey-api/typescript'),
+  case: stringCaseSchema.optional(),
+  definitions: z
+    .union([
+      stringNameSchema,
+      z.object({
+        case: typescriptCaseSchema.optional(),
+        name: stringNameSchema.optional()
+      })
+    ])
+    .optional(),
+  enums: z
+    .union([
+      z.boolean(),
+      typescriptEnumsModeSchema,
+      z.object({
+        case: typescriptCaseSchema.optional(),
+        constantsIgnoreNull: z.boolean().optional(),
+        enabled: z.boolean().optional(),
+        mode: typescriptEnumsModeSchema.optional()
+      })
+    ])
+    .optional(),
+  errors: z
+    .union([
+      stringNameSchema,
+      z.object({
+        case: typescriptCaseSchema.optional(),
+        error: stringNameSchema.optional(),
+        name: stringNameSchema.optional()
+      })
+    ])
+    .optional(),
+  exportFromIndex: z.boolean().optional(),
+  output: z.string().optional(),
+  requests: z
+    .union([
+      stringNameSchema,
+      z.object({
+        case: typescriptCaseSchema.optional(),
+        name: stringNameSchema.optional()
+      })
+    ])
+    .optional(),
+  responses: z
+    .union([
+      stringNameSchema,
+      z.object({
+        case: typescriptCaseSchema.optional(),
+        name: stringNameSchema.optional(),
+        response: stringNameSchema.optional()
+      })
+    ])
+    .optional(),
+  webhooks: z
+    .union([
+      stringNameSchema,
+      z.object({
+        case: typescriptCaseSchema.optional(),
+        name: stringNameSchema.optional(),
+        payload: stringNameSchema.optional()
+      })
+    ])
+    .optional(),
+  include: z.string().optional(),
+  style: z.enum(['PascalCase', 'preserve']).optional(),
+  tree: z.boolean().optional()
+});
+
 export const apicraftOptionSchema = z
   .object({
     input: z
@@ -168,7 +246,9 @@ export const apicraftOptionSchema = z
     instance: z.union([instanceNameSchema, instanceSchema]).optional(),
     nameBy: z.enum(['path', 'operationId']).default('operationId').optional(),
     groupBy: z.enum(['paths', 'tags', 'class', 'standalone']).default('standalone').optional(),
-    plugins: z.array(z.union([pluginNameSchema, fakerPluginSchema])).optional()
+    plugins: z
+      .array(z.union([pluginNameSchema, typescriptPluginSchema, fakerPluginSchema]))
+      .optional()
   })
   .strict();
 

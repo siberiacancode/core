@@ -55,10 +55,14 @@ export const generate = {
 
       for (const option of options) {
         const dependencies: Set<Dependency> = new Set();
-        const plugins: ApicraftOption['plugins'] = [
-          '@hey-api/typescript',
-          ...(option.plugins ?? [])
-        ];
+        const plugins: ApicraftOption['plugins'] = option.plugins ?? [];
+
+        const typescriptPlugin = plugins.find(
+          (plugin) =>
+            plugin === '@hey-api/typescript' ||
+            (typeof plugin === 'object' && plugin.name === '@hey-api/typescript')
+        );
+        if (!typescriptPlugin) plugins.push('@hey-api/typescript');
 
         const matchInstance = (name: InstanceName) =>
           option.instance === name ||
