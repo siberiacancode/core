@@ -3,3 +3,5 @@ packages:
   - 'packages/*'
 allowBuilds:
   esbuild: false
+minimumReleaseAgeExclude:
+  - '@siberiacancode/prettier@1.8.0'
