@@ -7,7 +7,7 @@ interface GetQueryKeyParams {
   requestInfo: GetRequestInfoResult;
 }
 
-// queryKey: [requestNameSuspenseQueryKey, ...(!!settings.request.path ? [settings.request.path] : undefined)]
+// queryKey: [requestNameQueryKey, ...(!!settings.request.path ? [settings.request.path] : undefined)]
 export const getQueryKey = ({ requestInfo, queryKeyName }: GetQueryKeyParams) => {
   const getRequestSettingsAccess = (field: string) =>
     ts.factory.createPropertyAccessChain(

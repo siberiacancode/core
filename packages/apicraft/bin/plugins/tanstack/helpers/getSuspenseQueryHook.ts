@@ -53,7 +53,7 @@ export const getSuspenseQueryHook = ({
     ts.factory.createIdentifier(hookDataTypeName)
   );
 
-  // export const requestNameSuspenseQueryKey = "requestNameSuspenseQueryKey";
+  // export const requestNameSuspenseQueryKey = "requestNameQueryKey";
   const suspenseQueryKey = ts.factory.createVariableStatement(
     [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
     ts.factory.createVariableDeclarationList(
@@ -62,7 +62,7 @@ export const getSuspenseQueryHook = ({
           ts.factory.createIdentifier(queryKeyName),
           undefined,
           undefined,
-          ts.factory.createStringLiteral(queryKeyName)
+          ts.factory.createStringLiteral(`${requestName}QueryKey`)
         )
       ],
       ts.NodeFlags.Const

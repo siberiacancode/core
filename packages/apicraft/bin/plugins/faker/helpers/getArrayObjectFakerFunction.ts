@@ -3,6 +3,7 @@ import type { IR } from '@hey-api/openapi-ts';
 import ts from 'typescript';
 
 import { getFakerFunctionName } from './getFakerFunctionName';
+import { getFakerObjectPropName } from './getFakerObjectPropName';
 import { getFakerValue } from './getFakerValue';
 
 interface GetArrayFakerFunctionParams {
@@ -52,7 +53,7 @@ export const getArrayObjectFakerFunction = ({
                       ts.factory.createObjectLiteralExpression(
                         Object.entries(schema.items![0].properties).map(([propName, propSchema]) =>
                           ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier(propName),
+                            getFakerObjectPropName(propName),
                             getFakerValue(propName, propSchema)
                           )
                         ),

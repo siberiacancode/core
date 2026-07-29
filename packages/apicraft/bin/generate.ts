@@ -55,10 +55,7 @@ export const generate = {
 
       for (const option of options) {
         const dependencies: Set<Dependency> = new Set();
-        const plugins: ApicraftOption['plugins'] = [
-          '@hey-api/typescript',
-          ...(option.plugins ?? [])
-        ];
+        const plugins: ApicraftOption['plugins'] = option.plugins ?? [];
 
         const matchInstance = (name: InstanceName) =>
           option.instance === name ||
@@ -143,11 +140,26 @@ export const generate = {
 
         await installDependencies(Array.from(dependencies));
 
+        const typescriptPlugin = plugins.find(
+          (plugin) =>
+            plugin === 'typescript' || (typeof plugin === 'object' && plugin.name === 'typescript')
+        );
+        if (!typescriptPlugin) plugins.push('typescript');
+
+        const resolvedPlugins = plugins.map((plugin) => {
+          if (plugin === 'typescript') return '@hey-api/typescript';
+          if (typeof plugin === 'object' && plugin.name === 'typescript') {
+            return { ...plugin, name: '@hey-api/typescript' };
+          }
+
+          return plugin;
+        }) as UserConfig['plugins'];
+
         await createClient({
           ...(option.parser && { parser: option.parser as UserConfig['parser'] }),
           input: typeof option.input === 'function' ? await option.input() : option.input,
           output: option.output,
-          plugins: plugins as UserConfig['plugins']
+          plugins: resolvedPlugins
         });
       }
 

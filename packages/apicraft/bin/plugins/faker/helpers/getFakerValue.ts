@@ -4,6 +4,7 @@ import ts from 'typescript';
 
 import { getFakerCall } from './getFakerCall';
 import { getFakerFunctionName } from './getFakerFunctionName';
+import { getFakerObjectPropName } from './getFakerObjectPropName';
 
 const matchName = (name: string, ...keywords: string[]) =>
   keywords.some((keyword) => name.toLowerCase().includes(keyword.toLowerCase()));
@@ -96,7 +97,7 @@ export const getFakerValue = (propName: string, schema: IR.SchemaObject): ts.Exp
       return ts.factory.createObjectLiteralExpression(
         Object.entries(schema.properties).map(([nestedPropName, nestedPropSchema]) =>
           ts.factory.createPropertyAssignment(
-            ts.factory.createIdentifier(nestedPropName),
+            getFakerObjectPropName(nestedPropName),
             getFakerValue(nestedPropName, nestedPropSchema)
           )
         ),
@@ -107,9 +108,9 @@ export const getFakerValue = (propName: string, schema: IR.SchemaObject): ts.Exp
   }
 
   if (schema.type === 'enum' && schema.items?.length) {
-    const first = schema.items[0];
-    if (first.const) {
-      const value = first.const;
+    const [firstItem] = schema.items;
+    if (typeof firstItem.const !== 'undefined') {
+      const value = firstItem.const;
       if (typeof value === 'string') return ts.factory.createStringLiteral(value);
       if (typeof value === 'number') return ts.factory.createNumericLiteral(String(value));
       if (typeof value === 'boolean')
