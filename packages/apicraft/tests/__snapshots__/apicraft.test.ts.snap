@@ -40,7 +40,7 @@ export const useGetUserByNameMutation = <TError = GetUserByNameError, TContext =
     ...settings?.params
 });
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -81,7 +81,7 @@ export const useCreateUserRecordMutation = <TError = CreateUserRecordError, TCon
     ...settings?.params
 });
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -122,7 +122,7 @@ export const useUpdateTaskStatusMutation = <TError = DefaultError, TContext = un
     ...settings?.params
 });
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -163,7 +163,7 @@ export const useDeleteReportEntryMutation = <TError = DefaultError, TContext = u
     ...settings?.params
 });
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -275,7 +275,7 @@ export const useGetUserByUsernameMutation = <TError = GetUserByNameError, TConte
     ...settings?.params
 });
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -316,7 +316,7 @@ export const usePostUsersMutation = <TError = CreateUserRecordError, TContext = 
     ...settings?.params
 });
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -357,7 +357,7 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = <TError = DefaultE
     ...settings?.params
 });
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -398,7 +398,7 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = <TError = Defaul
     ...settings?.params
 });
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -526,7 +526,7 @@ import { updateTaskStatus } from "../../../../../requests/projects/{projectId}/t
 
 type UpdateTaskStatusHookData = Awaited<ReturnType<typeof updateTaskStatus>>;
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -592,7 +592,7 @@ import { deleteReportEntry } from "../../../../../requests/reports/{report_id}/e
 
 type DeleteReportEntryHookData = Awaited<ReturnType<typeof deleteReportEntry>>;
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -664,7 +664,7 @@ import { createUserRecord } from "../../requests/users/post.gen";
 
 type CreateUserRecordHookData = Awaited<ReturnType<typeof createUserRecord>>;
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -736,7 +736,7 @@ import { getUserByName } from "../../../requests/users/{username}/get.gen";
 
 type GetUserByNameHookData = Awaited<ReturnType<typeof getUserByName>>;
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -890,7 +890,7 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../../../../requests/pro
 
 type PatchProjectByProjectIdTaskByTaskIdHookData = Awaited<ReturnType<typeof patchProjectByProjectIdTaskByTaskId>>;
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -956,7 +956,7 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../../../../requests/r
 
 type DeleteReportByReportIdEntrieByEntryIdHookData = Awaited<ReturnType<typeof deleteReportByReportIdEntrieByEntryId>>;
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -1028,7 +1028,7 @@ import { postUsers } from "../../requests/users/post.gen";
 
 type PostUsersHookData = Awaited<ReturnType<typeof postUsers>>;
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -1100,7 +1100,7 @@ import { getUserByUsername } from "../../../requests/users/{username}/get.gen";
 
 type GetUserByUsernameHookData = Awaited<ReturnType<typeof getUserByUsername>>;
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -1238,7 +1238,7 @@ export const useGetUserByNameMutation = <TError = GetUserByNameError, TContext =
     ...settings?.params
 });
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -1279,7 +1279,7 @@ export const useCreateUserRecordMutation = <TError = CreateUserRecordError, TCon
     ...settings?.params
 });
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -1320,7 +1320,7 @@ export const useUpdateTaskStatusMutation = <TError = DefaultError, TContext = un
     ...settings?.params
 });
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -1361,7 +1361,7 @@ export const useDeleteReportEntryMutation = <TError = DefaultError, TContext = u
     ...settings?.params
 });
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -1473,7 +1473,7 @@ export const useGetUserByUsernameMutation = <TError = GetUserByNameError, TConte
     ...settings?.params
 });
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -1514,7 +1514,7 @@ export const usePostUsersMutation = <TError = CreateUserRecordError, TContext = 
     ...settings?.params
 });
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -1555,7 +1555,7 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = <TError = DefaultE
     ...settings?.params
 });
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -1596,7 +1596,7 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = <TError = Defaul
     ...settings?.params
 });
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -1724,7 +1724,7 @@ import { updateTaskStatus } from "../../../../../requests/projects/{projectId}/t
 
 type UpdateTaskStatusHookData = Awaited<ReturnType<typeof updateTaskStatus>>;
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -1790,7 +1790,7 @@ import { deleteReportEntry } from "../../../../../requests/reports/{report_id}/e
 
 type DeleteReportEntryHookData = Awaited<ReturnType<typeof deleteReportEntry>>;
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -1862,7 +1862,7 @@ import { createUserRecord } from "../../requests/users/post.gen";
 
 type CreateUserRecordHookData = Awaited<ReturnType<typeof createUserRecord>>;
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -1934,7 +1934,7 @@ import { getUserByName } from "../../../requests/users/{username}/get.gen";
 
 type GetUserByNameHookData = Awaited<ReturnType<typeof getUserByName>>;
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -2082,7 +2082,7 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../../../../requests/pro
 
 type PatchProjectByProjectIdTaskByTaskIdHookData = Awaited<ReturnType<typeof patchProjectByProjectIdTaskByTaskId>>;
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -2148,7 +2148,7 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../../../../requests/r
 
 type DeleteReportByReportIdEntrieByEntryIdHookData = Awaited<ReturnType<typeof deleteReportByReportIdEntrieByEntryId>>;
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -2220,7 +2220,7 @@ import { postUsers } from "../../requests/users/post.gen";
 
 type PostUsersHookData = Awaited<ReturnType<typeof postUsers>>;
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -2292,7 +2292,7 @@ import { getUserByUsername } from "../../../requests/users/{username}/get.gen";
 
 type GetUserByUsernameHookData = Awaited<ReturnType<typeof getUserByUsername>>;
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -2424,7 +2424,7 @@ export const useGetUserByNameMutation = <TError = GetUserByNameError, TContext =
     ...settings?.params
 });
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -2465,7 +2465,7 @@ export const useCreateUserRecordMutation = <TError = CreateUserRecordError, TCon
     ...settings?.params
 });
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -2506,7 +2506,7 @@ export const useUpdateTaskStatusMutation = <TError = DefaultError, TContext = un
     ...settings?.params
 });
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -2547,7 +2547,7 @@ export const useDeleteReportEntryMutation = <TError = DefaultError, TContext = u
     ...settings?.params
 });
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -2644,7 +2644,7 @@ export const useGetUserByUsernameMutation = <TError = GetUserByNameError, TConte
     ...settings?.params
 });
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -2685,7 +2685,7 @@ export const usePostUsersMutation = <TError = CreateUserRecordError, TContext = 
     ...settings?.params
 });
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -2726,7 +2726,7 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = <TError = DefaultE
     ...settings?.params
 });
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -2767,7 +2767,7 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = <TError = Defaul
     ...settings?.params
 });
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -2880,7 +2880,7 @@ import { updateTaskStatus } from "../../requests/project/updateTaskStatus.gen";
 
 type UpdateTaskStatusHookData = Awaited<ReturnType<typeof updateTaskStatus>>;
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -2946,7 +2946,7 @@ import { deleteReportEntry } from "../../requests/reportsAnalytics/deleteReportE
 
 type DeleteReportEntryHookData = Awaited<ReturnType<typeof deleteReportEntry>>;
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -3018,7 +3018,7 @@ import { createUserRecord } from "../../requests/user/createUserRecord.gen";
 
 type CreateUserRecordHookData = Awaited<ReturnType<typeof createUserRecord>>;
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -3090,7 +3090,7 @@ import { getUserByName } from "../../requests/user/getUserByName.gen";
 
 type GetUserByNameHookData = Awaited<ReturnType<typeof getUserByName>>;
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -3238,7 +3238,7 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../requests/project/patc
 
 type PatchProjectByProjectIdTaskByTaskIdHookData = Awaited<ReturnType<typeof patchProjectByProjectIdTaskByTaskId>>;
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -3304,7 +3304,7 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../requests/reportsAna
 
 type DeleteReportByReportIdEntrieByEntryIdHookData = Awaited<ReturnType<typeof deleteReportByReportIdEntrieByEntryId>>;
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -3376,7 +3376,7 @@ import { getUserByUsername } from "../../requests/user/getUserByUsername.gen";
 
 type GetUserByUsernameHookData = Awaited<ReturnType<typeof getUserByUsername>>;
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -3448,7 +3448,7 @@ import { postUsers } from "../../requests/user/postUsers.gen";
 
 type PostUsersHookData = Awaited<ReturnType<typeof postUsers>>;
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -3580,7 +3580,7 @@ export const useGetUserByNameMutation = <TError = GetUserByNameError, TContext =
     ...settings?.params
 });
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -3621,7 +3621,7 @@ export const useCreateUserRecordMutation = <TError = CreateUserRecordError, TCon
     ...settings?.params
 });
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -3662,7 +3662,7 @@ export const useUpdateTaskStatusMutation = <TError = DefaultError, TContext = un
     ...settings?.params
 });
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -3703,7 +3703,7 @@ export const useDeleteReportEntryMutation = <TError = DefaultError, TContext = u
     ...settings?.params
 });
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -3806,7 +3806,7 @@ export const useGetUserByUsernameMutation = <TError = GetUserByNameError, TConte
     ...settings?.params
 });
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -3847,7 +3847,7 @@ export const usePostUsersMutation = <TError = CreateUserRecordError, TContext = 
     ...settings?.params
 });
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -3888,7 +3888,7 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = <TError = DefaultE
     ...settings?.params
 });
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -3929,7 +3929,7 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = <TError = Defaul
     ...settings?.params
 });
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -4048,7 +4048,7 @@ import { updateTaskStatus } from "../../requests/project/updateTaskStatus.gen";
 
 type UpdateTaskStatusHookData = Awaited<ReturnType<typeof updateTaskStatus>>;
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -4114,7 +4114,7 @@ import { deleteReportEntry } from "../../requests/reportsAnalytics/deleteReportE
 
 type DeleteReportEntryHookData = Awaited<ReturnType<typeof deleteReportEntry>>;
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -4186,7 +4186,7 @@ import { createUserRecord } from "../../requests/user/createUserRecord.gen";
 
 type CreateUserRecordHookData = Awaited<ReturnType<typeof createUserRecord>>;
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -4258,7 +4258,7 @@ import { getUserByName } from "../../requests/user/getUserByName.gen";
 
 type GetUserByNameHookData = Awaited<ReturnType<typeof getUserByName>>;
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -4412,7 +4412,7 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../requests/project/patc
 
 type PatchProjectByProjectIdTaskByTaskIdHookData = Awaited<ReturnType<typeof patchProjectByProjectIdTaskByTaskId>>;
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -4478,7 +4478,7 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../requests/reportsAna
 
 type DeleteReportByReportIdEntrieByEntryIdHookData = Awaited<ReturnType<typeof deleteReportByReportIdEntrieByEntryId>>;
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -4550,7 +4550,7 @@ import { getUserByUsername } from "../../requests/user/getUserByUsername.gen";
 
 type GetUserByUsernameHookData = Awaited<ReturnType<typeof getUserByUsername>>;
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -4622,7 +4622,7 @@ import { postUsers } from "../../requests/user/postUsers.gen";
 
 type PostUsersHookData = Awaited<ReturnType<typeof postUsers>>;
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -4744,7 +4744,7 @@ export const createNewUserFake = (overrides?: Partial<NewUser>): NewUser => deep
     status: faker.lorem.word(),
     profile: {
         first_name: faker.person.firstName(),
-        last-name: faker.lorem.word(),
+        "last-name": faker.lorem.word(),
         tags: [faker.lorem.word()]
     }
 }, overrides);
@@ -4771,7 +4771,7 @@ export const createReportEntryFake = (overrides?: Partial<ReportEntry>): ReportE
     payload: {},
     metrics: {
         total_count: faker.number.int(),
-        success-rate: faker.number.int()
+        "success-rate": faker.number.int()
     }
 }, overrides);
 
@@ -4825,7 +4825,7 @@ export const useGetUserByNameMutation = <TError = GetUserByNameError, TContext =
     ...settings?.params
 });
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -4866,7 +4866,7 @@ export const useCreateUserRecordMutation = <TError = CreateUserRecordError, TCon
     ...settings?.params
 });
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -4907,7 +4907,7 @@ export const useUpdateTaskStatusMutation = <TError = DefaultError, TContext = un
     ...settings?.params
 });
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -4948,7 +4948,7 @@ export const useDeleteReportEntryMutation = <TError = DefaultError, TContext = u
     ...settings?.params
 });
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -5052,7 +5052,7 @@ export const useGetUserByUsernameMutation = <TError = GetUserByNameError, TConte
     ...settings?.params
 });
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -5093,7 +5093,7 @@ export const usePostUsersMutation = <TError = CreateUserRecordError, TContext = 
     ...settings?.params
 });
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -5134,7 +5134,7 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = <TError = DefaultE
     ...settings?.params
 });
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -5175,7 +5175,7 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = <TError = Defaul
     ...settings?.params
 });
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -5295,7 +5295,7 @@ import { updateTaskStatus } from "../../../../../requests/projects/{projectId}/t
 
 type UpdateTaskStatusHookData = Awaited<ReturnType<typeof updateTaskStatus>>;
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -5361,7 +5361,7 @@ import { deleteReportEntry } from "../../../../../requests/reports/{report_id}/e
 
 type DeleteReportEntryHookData = Awaited<ReturnType<typeof deleteReportEntry>>;
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -5433,7 +5433,7 @@ import { createUserRecord } from "../../requests/users/post.gen";
 
 type CreateUserRecordHookData = Awaited<ReturnType<typeof createUserRecord>>;
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -5505,7 +5505,7 @@ import { getUserByName } from "../../../requests/users/{username}/get.gen";
 
 type GetUserByNameHookData = Awaited<ReturnType<typeof getUserByName>>;
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -5651,7 +5651,7 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../../../../requests/pro
 
 type PatchProjectByProjectIdTaskByTaskIdHookData = Awaited<ReturnType<typeof patchProjectByProjectIdTaskByTaskId>>;
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -5717,7 +5717,7 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../../../../requests/r
 
 type DeleteReportByReportIdEntrieByEntryIdHookData = Awaited<ReturnType<typeof deleteReportByReportIdEntrieByEntryId>>;
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -5789,7 +5789,7 @@ import { postUsers } from "../../requests/users/post.gen";
 
 type PostUsersHookData = Awaited<ReturnType<typeof postUsers>>;
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -5861,7 +5861,7 @@ import { getUserByUsername } from "../../../requests/users/{username}/get.gen";
 
 type GetUserByUsernameHookData = Awaited<ReturnType<typeof getUserByUsername>>;
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -5991,7 +5991,7 @@ export const useGetUserByNameMutation = <TError = GetUserByNameError, TContext =
     ...settings?.params
 });
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -6032,7 +6032,7 @@ export const useCreateUserRecordMutation = <TError = CreateUserRecordError, TCon
     ...settings?.params
 });
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -6073,7 +6073,7 @@ export const useUpdateTaskStatusMutation = <TError = DefaultError, TContext = un
     ...settings?.params
 });
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -6114,7 +6114,7 @@ export const useDeleteReportEntryMutation = <TError = DefaultError, TContext = u
     ...settings?.params
 });
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -6218,7 +6218,7 @@ export const useGetUserByUsernameMutation = <TError = GetUserByNameError, TConte
     ...settings?.params
 });
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -6259,7 +6259,7 @@ export const usePostUsersMutation = <TError = CreateUserRecordError, TContext = 
     ...settings?.params
 });
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -6300,7 +6300,7 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = <TError = DefaultE
     ...settings?.params
 });
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -6341,7 +6341,7 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = <TError = Defaul
     ...settings?.params
 });
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -6461,7 +6461,7 @@ import { updateTaskStatus } from "../../../../../requests/projects/{projectId}/t
 
 type UpdateTaskStatusHookData = Awaited<ReturnType<typeof updateTaskStatus>>;
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -6527,7 +6527,7 @@ import { deleteReportEntry } from "../../../../../requests/reports/{report_id}/e
 
 type DeleteReportEntryHookData = Awaited<ReturnType<typeof deleteReportEntry>>;
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -6599,7 +6599,7 @@ import { createUserRecord } from "../../requests/users/post.gen";
 
 type CreateUserRecordHookData = Awaited<ReturnType<typeof createUserRecord>>;
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -6671,7 +6671,7 @@ import { getUserByName } from "../../../requests/users/{username}/get.gen";
 
 type GetUserByNameHookData = Awaited<ReturnType<typeof getUserByName>>;
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -6811,7 +6811,7 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../../../../requests/pro
 
 type PatchProjectByProjectIdTaskByTaskIdHookData = Awaited<ReturnType<typeof patchProjectByProjectIdTaskByTaskId>>;
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -6877,7 +6877,7 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../../../../requests/r
 
 type DeleteReportByReportIdEntrieByEntryIdHookData = Awaited<ReturnType<typeof deleteReportByReportIdEntrieByEntryId>>;
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -6949,7 +6949,7 @@ import { postUsers } from "../../requests/users/post.gen";
 
 type PostUsersHookData = Awaited<ReturnType<typeof postUsers>>;
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -7021,7 +7021,7 @@ import { getUserByUsername } from "../../../requests/users/{username}/get.gen";
 
 type GetUserByUsernameHookData = Awaited<ReturnType<typeof getUserByUsername>>;
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -7145,7 +7145,7 @@ export const useGetUserByNameMutation = <TError = GetUserByNameError, TContext =
     ...settings?.params
 });
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -7186,7 +7186,7 @@ export const useCreateUserRecordMutation = <TError = CreateUserRecordError, TCon
     ...settings?.params
 });
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -7227,7 +7227,7 @@ export const useUpdateTaskStatusMutation = <TError = DefaultError, TContext = un
     ...settings?.params
 });
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -7268,7 +7268,7 @@ export const useDeleteReportEntryMutation = <TError = DefaultError, TContext = u
     ...settings?.params
 });
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -7357,7 +7357,7 @@ export const useGetUserByUsernameMutation = <TError = GetUserByNameError, TConte
     ...settings?.params
 });
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -7398,7 +7398,7 @@ export const usePostUsersMutation = <TError = CreateUserRecordError, TContext = 
     ...settings?.params
 });
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -7439,7 +7439,7 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = <TError = DefaultE
     ...settings?.params
 });
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -7480,7 +7480,7 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = <TError = Defaul
     ...settings?.params
 });
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -7585,7 +7585,7 @@ import { updateTaskStatus } from "../../requests/project/updateTaskStatus.gen";
 
 type UpdateTaskStatusHookData = Awaited<ReturnType<typeof updateTaskStatus>>;
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -7651,7 +7651,7 @@ import { deleteReportEntry } from "../../requests/reportsAnalytics/deleteReportE
 
 type DeleteReportEntryHookData = Awaited<ReturnType<typeof deleteReportEntry>>;
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -7723,7 +7723,7 @@ import { createUserRecord } from "../../requests/user/createUserRecord.gen";
 
 type CreateUserRecordHookData = Awaited<ReturnType<typeof createUserRecord>>;
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -7795,7 +7795,7 @@ import { getUserByName } from "../../requests/user/getUserByName.gen";
 
 type GetUserByNameHookData = Awaited<ReturnType<typeof getUserByName>>;
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -7935,7 +7935,7 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../requests/project/patc
 
 type PatchProjectByProjectIdTaskByTaskIdHookData = Awaited<ReturnType<typeof patchProjectByProjectIdTaskByTaskId>>;
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -8001,7 +8001,7 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../requests/reportsAna
 
 type DeleteReportByReportIdEntrieByEntryIdHookData = Awaited<ReturnType<typeof deleteReportByReportIdEntrieByEntryId>>;
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -8073,7 +8073,7 @@ import { getUserByUsername } from "../../requests/user/getUserByUsername.gen";
 
 type GetUserByUsernameHookData = Awaited<ReturnType<typeof getUserByUsername>>;
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -8145,7 +8145,7 @@ import { postUsers } from "../../requests/user/postUsers.gen";
 
 type PostUsersHookData = Awaited<ReturnType<typeof postUsers>>;
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -8269,7 +8269,7 @@ export const useGetUserByNameMutation = <TError = GetUserByNameError, TContext =
     ...settings?.params
 });
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -8310,7 +8310,7 @@ export const useCreateUserRecordMutation = <TError = CreateUserRecordError, TCon
     ...settings?.params
 });
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -8351,7 +8351,7 @@ export const useUpdateTaskStatusMutation = <TError = DefaultError, TContext = un
     ...settings?.params
 });
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -8392,7 +8392,7 @@ export const useDeleteReportEntryMutation = <TError = DefaultError, TContext = u
     ...settings?.params
 });
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -8487,7 +8487,7 @@ export const useGetUserByUsernameMutation = <TError = GetUserByNameError, TConte
     ...settings?.params
 });
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -8528,7 +8528,7 @@ export const usePostUsersMutation = <TError = CreateUserRecordError, TContext = 
     ...settings?.params
 });
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -8569,7 +8569,7 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = <TError = DefaultE
     ...settings?.params
 });
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -8610,7 +8610,7 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = <TError = Defaul
     ...settings?.params
 });
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -8721,7 +8721,7 @@ import { updateTaskStatus } from "../../requests/project/updateTaskStatus.gen";
 
 type UpdateTaskStatusHookData = Awaited<ReturnType<typeof updateTaskStatus>>;
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -8787,7 +8787,7 @@ import { deleteReportEntry } from "../../requests/reportsAnalytics/deleteReportE
 
 type DeleteReportEntryHookData = Awaited<ReturnType<typeof deleteReportEntry>>;
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -8859,7 +8859,7 @@ import { createUserRecord } from "../../requests/user/createUserRecord.gen";
 
 type CreateUserRecordHookData = Awaited<ReturnType<typeof createUserRecord>>;
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -8931,7 +8931,7 @@ import { getUserByName } from "../../requests/user/getUserByName.gen";
 
 type GetUserByNameHookData = Awaited<ReturnType<typeof getUserByName>>;
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -9077,7 +9077,7 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../requests/project/patc
 
 type PatchProjectByProjectIdTaskByTaskIdHookData = Awaited<ReturnType<typeof patchProjectByProjectIdTaskByTaskId>>;
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -9143,7 +9143,7 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../requests/reportsAna
 
 type DeleteReportByReportIdEntrieByEntryIdHookData = Awaited<ReturnType<typeof deleteReportByReportIdEntrieByEntryId>>;
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -9215,7 +9215,7 @@ import { getUserByUsername } from "../../requests/user/getUserByUsername.gen";
 
 type GetUserByUsernameHookData = Awaited<ReturnType<typeof getUserByUsername>>;
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -9287,7 +9287,7 @@ import { postUsers } from "../../requests/user/postUsers.gen";
 
 type PostUsersHookData = Awaited<ReturnType<typeof postUsers>>;
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -9417,7 +9417,7 @@ export const useGetUserByNameMutation = <TError = GetUserByNameError, TContext =
     ...settings?.params
 });
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -9458,7 +9458,7 @@ export const useCreateUserRecordMutation = <TError = CreateUserRecordError, TCon
     ...settings?.params
 });
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -9499,7 +9499,7 @@ export const useUpdateTaskStatusMutation = <TError = DefaultError, TContext = un
     ...settings?.params
 });
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -9540,7 +9540,7 @@ export const useDeleteReportEntryMutation = <TError = DefaultError, TContext = u
     ...settings?.params
 });
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -9652,7 +9652,7 @@ export const useGetUserByUsernameMutation = <TError = GetUserByNameError, TConte
     ...settings?.params
 });
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -9693,7 +9693,7 @@ export const usePostUsersMutation = <TError = CreateUserRecordError, TContext = 
     ...settings?.params
 });
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -9734,7 +9734,7 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = <TError = DefaultE
     ...settings?.params
 });
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -9775,7 +9775,7 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = <TError = Defaul
     ...settings?.params
 });
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -9903,7 +9903,7 @@ import { updateTaskStatus } from "../../../../../requests/projects/{projectId}/t
 
 type UpdateTaskStatusHookData = Awaited<ReturnType<typeof updateTaskStatus>>;
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -9969,7 +9969,7 @@ import { deleteReportEntry } from "../../../../../requests/reports/{report_id}/e
 
 type DeleteReportEntryHookData = Awaited<ReturnType<typeof deleteReportEntry>>;
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -10041,7 +10041,7 @@ import { createUserRecord } from "../../requests/users/post.gen";
 
 type CreateUserRecordHookData = Awaited<ReturnType<typeof createUserRecord>>;
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -10113,7 +10113,7 @@ import { getUserByName } from "../../../requests/users/{username}/get.gen";
 
 type GetUserByNameHookData = Awaited<ReturnType<typeof getUserByName>>;
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -10269,7 +10269,7 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../../../../requests/pro
 
 type PatchProjectByProjectIdTaskByTaskIdHookData = Awaited<ReturnType<typeof patchProjectByProjectIdTaskByTaskId>>;
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -10335,7 +10335,7 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../../../../requests/r
 
 type DeleteReportByReportIdEntrieByEntryIdHookData = Awaited<ReturnType<typeof deleteReportByReportIdEntrieByEntryId>>;
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -10407,7 +10407,7 @@ import { postUsers } from "../../requests/users/post.gen";
 
 type PostUsersHookData = Awaited<ReturnType<typeof postUsers>>;
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -10479,7 +10479,7 @@ import { getUserByUsername } from "../../../requests/users/{username}/get.gen";
 
 type GetUserByUsernameHookData = Awaited<ReturnType<typeof getUserByUsername>>;
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -10619,7 +10619,7 @@ export const useGetUserByNameMutation = <TError = GetUserByNameError, TContext =
     ...settings?.params
 });
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -10660,7 +10660,7 @@ export const useCreateUserRecordMutation = <TError = CreateUserRecordError, TCon
     ...settings?.params
 });
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -10701,7 +10701,7 @@ export const useUpdateTaskStatusMutation = <TError = DefaultError, TContext = un
     ...settings?.params
 });
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -10742,7 +10742,7 @@ export const useDeleteReportEntryMutation = <TError = DefaultError, TContext = u
     ...settings?.params
 });
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -10854,7 +10854,7 @@ export const useGetUserByUsernameMutation = <TError = GetUserByNameError, TConte
     ...settings?.params
 });
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -10895,7 +10895,7 @@ export const usePostUsersMutation = <TError = CreateUserRecordError, TContext = 
     ...settings?.params
 });
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -10936,7 +10936,7 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = <TError = DefaultE
     ...settings?.params
 });
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -10977,7 +10977,7 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = <TError = Defaul
     ...settings?.params
 });
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -11105,7 +11105,7 @@ import { updateTaskStatus } from "../../../../../requests/projects/{projectId}/t
 
 type UpdateTaskStatusHookData = Awaited<ReturnType<typeof updateTaskStatus>>;
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -11171,7 +11171,7 @@ import { deleteReportEntry } from "../../../../../requests/reports/{report_id}/e
 
 type DeleteReportEntryHookData = Awaited<ReturnType<typeof deleteReportEntry>>;
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -11243,7 +11243,7 @@ import { createUserRecord } from "../../requests/users/post.gen";
 
 type CreateUserRecordHookData = Awaited<ReturnType<typeof createUserRecord>>;
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -11315,7 +11315,7 @@ import { getUserByName } from "../../../requests/users/{username}/get.gen";
 
 type GetUserByNameHookData = Awaited<ReturnType<typeof getUserByName>>;
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -11459,7 +11459,7 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../../../../requests/pro
 
 type PatchProjectByProjectIdTaskByTaskIdHookData = Awaited<ReturnType<typeof patchProjectByProjectIdTaskByTaskId>>;
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -11525,7 +11525,7 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../../../../requests/r
 
 type DeleteReportByReportIdEntrieByEntryIdHookData = Awaited<ReturnType<typeof deleteReportByReportIdEntrieByEntryId>>;
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -11597,7 +11597,7 @@ import { postUsers } from "../../requests/users/post.gen";
 
 type PostUsersHookData = Awaited<ReturnType<typeof postUsers>>;
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -11669,7 +11669,7 @@ import { getUserByUsername } from "../../../requests/users/{username}/get.gen";
 
 type GetUserByUsernameHookData = Awaited<ReturnType<typeof getUserByUsername>>;
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -11797,7 +11797,7 @@ export const useGetUserByNameMutation = <TError = GetUserByNameError, TContext =
     ...settings?.params
 });
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -11838,7 +11838,7 @@ export const useCreateUserRecordMutation = <TError = CreateUserRecordError, TCon
     ...settings?.params
 });
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -11879,7 +11879,7 @@ export const useUpdateTaskStatusMutation = <TError = DefaultError, TContext = un
     ...settings?.params
 });
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -11920,7 +11920,7 @@ export const useDeleteReportEntryMutation = <TError = DefaultError, TContext = u
     ...settings?.params
 });
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -12013,7 +12013,7 @@ export const useGetUserByUsernameMutation = <TError = GetUserByNameError, TConte
     ...settings?.params
 });
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -12054,7 +12054,7 @@ export const usePostUsersMutation = <TError = CreateUserRecordError, TContext = 
     ...settings?.params
 });
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -12095,7 +12095,7 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = <TError = DefaultE
     ...settings?.params
 });
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -12136,7 +12136,7 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = <TError = Defaul
     ...settings?.params
 });
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -12245,7 +12245,7 @@ import { updateTaskStatus } from "../../requests/project/updateTaskStatus.gen";
 
 type UpdateTaskStatusHookData = Awaited<ReturnType<typeof updateTaskStatus>>;
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -12311,7 +12311,7 @@ import { deleteReportEntry } from "../../requests/reportsAnalytics/deleteReportE
 
 type DeleteReportEntryHookData = Awaited<ReturnType<typeof deleteReportEntry>>;
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -12383,7 +12383,7 @@ import { createUserRecord } from "../../requests/user/createUserRecord.gen";
 
 type CreateUserRecordHookData = Awaited<ReturnType<typeof createUserRecord>>;
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -12455,7 +12455,7 @@ import { getUserByName } from "../../requests/user/getUserByName.gen";
 
 type GetUserByNameHookData = Awaited<ReturnType<typeof getUserByName>>;
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -12599,7 +12599,7 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../requests/project/patc
 
 type PatchProjectByProjectIdTaskByTaskIdHookData = Awaited<ReturnType<typeof patchProjectByProjectIdTaskByTaskId>>;
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -12665,7 +12665,7 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../requests/reportsAna
 
 type DeleteReportByReportIdEntrieByEntryIdHookData = Awaited<ReturnType<typeof deleteReportByReportIdEntrieByEntryId>>;
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -12737,7 +12737,7 @@ import { getUserByUsername } from "../../requests/user/getUserByUsername.gen";
 
 type GetUserByUsernameHookData = Awaited<ReturnType<typeof getUserByUsername>>;
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -12809,7 +12809,7 @@ import { postUsers } from "../../requests/user/postUsers.gen";
 
 type PostUsersHookData = Awaited<ReturnType<typeof postUsers>>;
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -12937,7 +12937,7 @@ export const useGetUserByNameMutation = <TError = GetUserByNameError, TContext =
     ...settings?.params
 });
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -12978,7 +12978,7 @@ export const useCreateUserRecordMutation = <TError = CreateUserRecordError, TCon
     ...settings?.params
 });
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -13019,7 +13019,7 @@ export const useUpdateTaskStatusMutation = <TError = DefaultError, TContext = un
     ...settings?.params
 });
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -13060,7 +13060,7 @@ export const useDeleteReportEntryMutation = <TError = DefaultError, TContext = u
     ...settings?.params
 });
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -13165,7 +13165,7 @@ export const useGetUserByUsernameMutation = <TError = GetUserByNameError, TConte
     ...settings?.params
 });
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -13206,7 +13206,7 @@ export const usePostUsersMutation = <TError = CreateUserRecordError, TContext = 
     ...settings?.params
 });
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
@@ -13247,7 +13247,7 @@ export const usePatchProjectByProjectIdTaskByTaskIdMutation = <TError = DefaultE
     ...settings?.params
 });
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -13288,7 +13288,7 @@ export const useDeleteReportByReportIdEntrieByEntryIdMutation = <TError = Defaul
     ...settings?.params
 });
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -13409,7 +13409,7 @@ import { updateTaskStatus } from "../../requests/project/updateTaskStatus.gen";
 
 type UpdateTaskStatusHookData = Awaited<ReturnType<typeof updateTaskStatus>>;
 
-export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusSuspenseQueryKey";
+export const updateTaskStatusSuspenseQueryKey = "updateTaskStatusQueryKey";
 
 export const updateTaskStatusSuspenseQueryOptions = <TData = UpdateTaskStatusHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<UpdateTaskStatusHookData, TError, TData>, "queryKey">;
@@ -13475,7 +13475,7 @@ import { deleteReportEntry } from "../../requests/reportsAnalytics/deleteReportE
 
 type DeleteReportEntryHookData = Awaited<ReturnType<typeof deleteReportEntry>>;
 
-export const deleteReportEntrySuspenseQueryKey = "deleteReportEntrySuspenseQueryKey";
+export const deleteReportEntrySuspenseQueryKey = "deleteReportEntryQueryKey";
 
 export const deleteReportEntrySuspenseQueryOptions = <TData = DeleteReportEntryHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportEntryHookData, TError, TData>, "queryKey">;
@@ -13547,7 +13547,7 @@ import { createUserRecord } from "../../requests/user/createUserRecord.gen";
 
 type CreateUserRecordHookData = Awaited<ReturnType<typeof createUserRecord>>;
 
-export const createUserRecordSuspenseQueryKey = "createUserRecordSuspenseQueryKey";
+export const createUserRecordSuspenseQueryKey = "createUserRecordQueryKey";
 
 export const createUserRecordSuspenseQueryOptions = <TData = CreateUserRecordHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<CreateUserRecordHookData, TError, TData>, "queryKey">;
@@ -13619,7 +13619,7 @@ import { getUserByName } from "../../requests/user/getUserByName.gen";
 
 type GetUserByNameHookData = Awaited<ReturnType<typeof getUserByName>>;
 
-export const getUserByNameSuspenseQueryKey = "getUserByNameSuspenseQueryKey";
+export const getUserByNameSuspenseQueryKey = "getUserByNameQueryKey";
 
 export const getUserByNameSuspenseQueryOptions = <TData = GetUserByNameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByNameHookData, TError, TData>, "queryKey">;
@@ -13775,7 +13775,7 @@ import { patchProjectByProjectIdTaskByTaskId } from "../../requests/project/patc
 
 type PatchProjectByProjectIdTaskByTaskIdHookData = Awaited<ReturnType<typeof patchProjectByProjectIdTaskByTaskId>>;
 
-export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey";
+export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryKey = "patchProjectByProjectIdTaskByTaskIdQueryKey";
 
 export const patchProjectByProjectIdTaskByTaskIdSuspenseQueryOptions = <TData = PatchProjectByProjectIdTaskByTaskIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<PatchProjectByProjectIdTaskByTaskIdHookData, TError, TData>, "queryKey">;
@@ -13841,7 +13841,7 @@ import { deleteReportByReportIdEntrieByEntryId } from "../../requests/reportsAna
 
 type DeleteReportByReportIdEntrieByEntryIdHookData = Awaited<ReturnType<typeof deleteReportByReportIdEntrieByEntryId>>;
 
-export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey";
+export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryKey = "deleteReportByReportIdEntrieByEntryIdQueryKey";
 
 export const deleteReportByReportIdEntrieByEntryIdSuspenseQueryOptions = <TData = DeleteReportByReportIdEntrieByEntryIdHookData, TError = DefaultError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<DeleteReportByReportIdEntrieByEntryIdHookData, TError, TData>, "queryKey">;
@@ -13913,7 +13913,7 @@ import { getUserByUsername } from "../../requests/user/getUserByUsername.gen";
 
 type GetUserByUsernameHookData = Awaited<ReturnType<typeof getUserByUsername>>;
 
-export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameSuspenseQueryKey";
+export const getUserByUsernameSuspenseQueryKey = "getUserByUsernameQueryKey";
 
 export const getUserByUsernameSuspenseQueryOptions = <TData = GetUserByUsernameHookData, TError = GetUserByNameError>(settings: {
     params?: Omit<UseSuspenseQueryOptions<GetUserByUsernameHookData, TError, TData>, "queryKey">;
@@ -13985,7 +13985,7 @@ import { postUsers } from "../../requests/user/postUsers.gen";
 
 type PostUsersHookData = Awaited<ReturnType<typeof postUsers>>;
 
-export const postUsersSuspenseQueryKey = "postUsersSuspenseQueryKey";
+export const postUsersSuspenseQueryKey = "postUsersQueryKey";
 
 export const postUsersSuspenseQueryOptions = <TData = PostUsersHookData, TError = CreateUserRecordError>(settings?: {
     params?: Omit<UseSuspenseQueryOptions<PostUsersHookData, TError, TData>, "queryKey">;
