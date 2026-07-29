@@ -97,13 +97,13 @@ const pluginNameSchema = z.enum([
   '@hey-api/schemas',
   '@hey-api/sdk',
   '@hey-api/transformers',
-  '@hey-api/typescript',
   '@pinia/colada',
   '@tanstack/angular-query-experimental',
   '@tanstack/react-query',
   '@tanstack/solid-query',
   '@tanstack/svelte-query',
   '@tanstack/vue-query',
+  'typescript',
   'fastify',
   'valibot',
   'tanstack',
@@ -125,7 +125,7 @@ const typescriptCaseSchema = z.enum([
 ]);
 const typescriptEnumsModeSchema = z.enum(['javascript', 'typescript', 'typescript-const']);
 const typescriptPluginSchema = z.object({
-  name: z.literal('@hey-api/typescript'),
+  name: z.literal('typescript'),
   case: stringCaseSchema.optional(),
   definitions: z
     .union([
