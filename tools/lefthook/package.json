@@ -1,7 +1,7 @@
 {
   "name": "@siberiacancode/lefthook",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "lefthook config and shared git hooks",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -19,23 +19,12 @@
     "lefthook",
     "git",
     "hooks",
-    "husky",
-    "lint-staged"
+    "lint staged"
   ],
   "publishConfig": {
     "access": "public"
   },
   "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/esm/index.d.mts",
-        "default": "./dist/esm/index.mjs"
-      },
-      "require": {
-        "types": "./dist/cjs/index.d.cts",
-        "default": "./dist/cjs/index.cjs"
-      }
-    },
     "./lefthook.yml": "./dist/lefthook.yml",
     "./hooks/*": "./dist/hooks/*"
   },
@@ -46,14 +35,12 @@
     "dist"
   ],
   "scripts": {
-    "prepublishOnly": "pnpm type && pnpm build",
-    "build": "tsdown && pnpm copy",
-    "copy": "shx cp src/lefthook.yml dist/lefthook.yml && shx cp -r src/hooks dist/hooks && shx chmod +x dist/hooks/*.sh",
+    "prepublishOnly": "pnpm build",
+    "build": "shx mkdir -p dist && shx cp lefthook.yml dist/lefthook.yml && shx cp -r src/hooks dist/hooks && shx chmod +x dist/hooks/*.sh",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector",
-    "type": "tsc --noEmit",
     "format": "prettier --write .",
-    "pretty": "pnpm type && pnpm lint && pnpm format"
+    "pretty": "pnpm lint && pnpm format"
   },
   "peerDependencies": {
     "lefthook": "^2.1.10"
@@ -64,7 +51,6 @@
   "devDependencies": {
     "@siberiacancode/eslint": "*",
     "@siberiacancode/prettier": "*",
-    "@siberiacancode/tsconfig": "*",
     "shx": "0.4.0"
   }
 }

@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@siberiacancode/eslint": "2.18.1",
-    "@siberiacancode/prettier": "1.8.0",
+    "@siberiacancode/prettier": "1.9.0",
     "@siberiacancode/tsconfig": "1.2.0"
   }
 }
