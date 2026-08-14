@@ -284,6 +284,7 @@ export const eslint: Eslint = (inputOptions = {}, ...configs) => {
     },
     {
       name: 'siberiacancode/rewrite',
+      files: ['**/*.?([cm])[jt]s?(x)'],
       rules: {
         'antfu/if-newline': 'off',
         'antfu/top-level-function': 'off',

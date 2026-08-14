@@ -1,7 +1,33 @@
 packages:
   - 'tools/*'
   - 'packages/*'
+publicHoistPattern:
+  - eslint
+  - prettier
+  - vitest
 allowBuilds:
-  esbuild: false
+  esbuild: true
+  lefthook: true
 minimumReleaseAgeExclude:
   - '@siberiacancode/prettier@1.8.0'
+  - '@eslint-react/ast@5.18.2'
+  - '@eslint-react/core@5.18.2'
+  - '@eslint-react/eslint-plugin@5.18.2'
+  - '@eslint-react/eslint@5.18.2'
+  - '@eslint-react/jsx@5.18.2'
+  - '@eslint-react/shared@5.18.2'
+  - '@eslint-react/var@5.18.2'
+  - '@vue/compiler-core@3.5.41'
+  - '@vue/compiler-dom@3.5.41'
+  - '@vue/compiler-sfc@3.5.41'
+  - '@vue/compiler-ssr@3.5.41'
+  - '@vue/shared@3.5.41'
+  - eslint-plugin-react-dom@5.18.2
+  - eslint-plugin-react-jsx@5.18.2
+  - eslint-plugin-react-naming-convention@5.18.2
+  - eslint-plugin-react-rsc@5.18.2
+  - eslint-plugin-react-web-api@5.18.2
+  - eslint-plugin-react-x@5.18.2
+  - '@next/eslint-plugin-next@16.3.1'
+  - eslint-plugin-storybook@10.5.8
+  - storybook@10.5.8

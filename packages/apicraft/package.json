@@ -65,11 +65,11 @@
     "ofetch": "^1 || ^2"
   },
   "dependencies": {
-    "@antfu/install-pkg": "^1.1.0",
-    "@clack/prompts": "^1.2.0",
+    "@antfu/install-pkg": "^2.0.1",
+    "@clack/prompts": "^1.7.0",
     "@hey-api/openapi-ts": "0.82.5",
-    "@tanstack/react-query": "^5.90.21",
-    "axios": "^1.13.6",
+    "@tanstack/react-query": "^5.101.4",
+    "axios": "^1.19.0",
     "cosmiconfig": "^9.0.1",
     "local-pkg": "^1.1.2",
     "typescript": "^5.9.3",
@@ -77,22 +77,16 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@faker-js/faker": "^10.0.0",
-    "@siberiacancode/eslint": "*",
+    "@faker-js/faker": "^10.5.0",
+    "@siberiacancode/eslint": "2.18.1",
     "@siberiacancode/fetches": "^1.14.1",
-    "@siberiacancode/prettier": "*",
-    "@siberiacancode/tsconfig": "*",
-    "@siberiacancode/vitest": "*",
-    "@tanstack/react-query": "^5.90.21",
-    "@types/node": "^25.3.3",
+    "@siberiacancode/prettier": "1.8.0",
+    "@siberiacancode/tsconfig": "1.2.0",
+    "@siberiacancode/vitest": "2.4.1",
+    "@tanstack/react-query": "^5.101.4",
+    "@types/node": "^26.2.0",
     "@types/yargs": "^17.0.35",
-    "axios": "^1.13.6",
+    "axios": "^1.19.0",
     "ofetch": "^1.5.1"
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
   }
 }

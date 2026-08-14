@@ -1,9 +1,9 @@
-import type { FetchesRequestOptions, FetchesResponse } from '@siberiacancode/fetches';
+import type { FetchesResponse, RequestOptions } from '@siberiacancode/fetches';
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { FetchOptions } from 'ofetch';
 
 export type FetchesRequestParams<Params> = Omit<Params, 'url'> & {
-  config?: FetchesRequestOptions;
+  config?: RequestOptions;
 };
 
 export type AxiosRequestParams<Params> = Omit<Params, 'url'> & {

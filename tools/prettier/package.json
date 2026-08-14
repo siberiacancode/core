@@ -49,19 +49,13 @@
     "pretty": "pnpm type && pnpm lint && pnpm format"
   },
   "peerDependencies": {
-    "prettier": "^3.9.4"
+    "prettier": "^3.9.6"
   },
   "dependencies": {
-    "prettier": "^3.9.4"
+    "prettier": "^3.9.6"
   },
   "devDependencies": {
-    "@siberiacancode/eslint": "*",
+    "@siberiacancode/eslint": "2.18.1",
     "@siberiacancode/tsconfig": "1.2.0"
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
   }
 }

@@ -34,16 +34,14 @@
     "format": "pnpm -r run format",
     "stylelint": "pnpm -r run stylelint",
     "unit-test": "pnpm -r run unit-test",
-    "lint-staged": "lint-staged",
-    "prepare": "husky"
+    "prepare": "lefthook install"
   },
   "devDependencies": {
-    "husky": "^9.1.7",
-    "lint-staged": "^16.4.0",
-    "prettier": "^3.8.1",
+    "prettier": "^3.9.6",
     "shx": "0.4.0",
-    "tsdown": "^0.21.4",
-    "typescript": "^6.0.2"
+    "tsdown": "^0.22.14",
+    "typescript": "^6.0.3",
+    "lefthook": "^2.1.10"
   },
   "pnpm": {
     "overrides": {

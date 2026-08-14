@@ -1,0 +1,70 @@
+{
+  "name": "@siberiacancode/lefthook",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "lefthook config and shared git hooks",
+  "author": {
+    "name": "SIBERIA CAN CODE 🧊",
+    "url": "https://github.com/siberiacancode"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/siberiacancode/core",
+  "repository": {
+    "url": "https://github.com/siberiacancode/core"
+  },
+  "bugs": {
+    "url": "https://github.com/siberiacancode/core/issues"
+  },
+  "keywords": [
+    "lefthook",
+    "git",
+    "hooks",
+    "husky",
+    "lint-staged"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.mts",
+        "default": "./dist/esm/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.cts",
+        "default": "./dist/cjs/index.cjs"
+      }
+    },
+    "./lefthook.yml": "./dist/lefthook.yml",
+    "./hooks/*": "./dist/hooks/*"
+  },
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/esm/index.mjs",
+  "types": "dist/esm/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepublishOnly": "pnpm type && pnpm build",
+    "build": "tsdown && pnpm copy",
+    "copy": "shx cp src/lefthook.yml dist/lefthook.yml && shx cp -r src/hooks dist/hooks && shx chmod +x dist/hooks/*.sh",
+    "lint": "eslint . --fix",
+    "lint-inspector": "npx @eslint/config-inspector",
+    "type": "tsc --noEmit",
+    "format": "prettier --write .",
+    "pretty": "pnpm type && pnpm lint && pnpm format"
+  },
+  "peerDependencies": {
+    "lefthook": "^2.1.10"
+  },
+  "dependencies": {
+    "lefthook": "^2.1.10"
+  },
+  "devDependencies": {
+    "@siberiacancode/eslint": "*",
+    "@siberiacancode/prettier": "*",
+    "@siberiacancode/tsconfig": "*",
+    "shx": "0.4.0"
+  }
+}

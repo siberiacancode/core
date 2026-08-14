@@ -1,7 +1,7 @@
 {
   "name": "@siberiacancode/vitest",
   "type": "module",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "vitest config",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -48,21 +48,16 @@
     "pretty": "pnpm type && pnpm lint && pnpm format"
   },
   "peerDependencies": {
-    "jsdom": "28.1.0",
-    "vitest": "4.0.18"
+    "jsdom": "30.0.1",
+    "vitest": "4.1.10"
   },
   "dependencies": {
-    "jsdom": "28.1.0",
-    "vitest": "4.0.18"
+    "jsdom": "30.0.1",
+    "vitest": "4.1.10"
   },
   "devDependencies": {
-    "@siberiacancode/eslint": "*",
-    "@siberiacancode/prettier": "*"
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
+    "@siberiacancode/eslint": "2.18.1",
+    "@siberiacancode/prettier": "1.8.0",
+    "@siberiacancode/tsconfig": "1.2.0"
   }
 }

@@ -53,15 +53,10 @@
     "pretty": "pnpm type && pnpm lint && pnpm format"
   },
   "devDependencies": {
-    "@siberiacancode/eslint": "*",
-    "@siberiacancode/prettier": "*",
-    "@siberiacancode/vitest": "*",
-    "vitest": "4.0.16"
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
+    "@siberiacancode/eslint": "2.18.1",
+    "@siberiacancode/prettier": "1.8.0",
+    "@siberiacancode/tsconfig": "1.2.0",
+    "@siberiacancode/vitest": "2.4.1",
+    "vitest": "4.1.10"
   }
 }

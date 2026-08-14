@@ -1,0 +1,32 @@
+# @siberiacancode/lefthook — default shared config
+#
+# usage in a consumer project (lefthook.yml):
+#
+#   extends:
+#     - node_modules/@siberiacancode/lefthook/dist/lefthook.yml
+#
+# every job can be overridden or turned off locally:
+#
+#   pre-commit:
+#     jobs:
+#       - name: eslint
+#         skip: true
+
+assert_lefthook_installed: true
+
+commit-msg:
+  jobs:
+    - name: commit-msg
+      run: bash node_modules/@siberiacancode/lefthook/dist/hooks/commit-msg.sh {1}
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: linter
+      glob: '*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}'
+      run: npx eslint --fix {staged_files}
+      stage_fixed: true
+    - name: format
+      glob: '*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,json,jsonc,md,yml,yaml,css,scss,html}'
+      run: npx prettier --write --ignore-unknown {staged_files}
+      stage_fixed: true

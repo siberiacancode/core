@@ -1,0 +1,71 @@
+assert_lefthook_installed: true
+
+pre-commit:
+  parallel: true
+  jobs:
+    # ── packages ──────────────────────────────────────────────────────────
+    - name: apicraft
+      root: packages/apicraft/
+      glob: '*.{js,ts,json}'
+      run: npx prettier --write {staged_files} && npx eslint --fix {staged_files} && pnpm run type
+      stage_fixed: true
+
+    - name: fetches
+      root: packages/fetches/
+      glob: '*.{js,ts,json}'
+      run: npx prettier --write {staged_files} && npx eslint --fix {staged_files} && pnpm run type
+      stage_fixed: true
+
+    - name: yandex-metrika
+      root: packages/yandex-metrika/
+      glob: '*.{js,ts,tsx}'
+      run: npx prettier --write {staged_files} && npx eslint --fix {staged_files} && pnpm run type
+      stage_fixed: true
+
+    # - name: testids
+    #   root: packages/testids/
+    #   glob: '*.{js,ts}'
+    #   run: npx prettier --write {staged_files} && npx eslint --fix {staged_files} && pnpm run type
+    #   stage_fixed: true
+
+    # ── tools ─────────────────────────────────────────────────────────────
+    - name: eslint
+      root: tools/eslint/
+      glob: '*.{js,ts}'
+      run: npx eslint --fix {staged_files} && npx prettier --write {staged_files} && pnpm run type
+      stage_fixed: true
+
+    - name: prettier
+      root: tools/prettier/
+      glob: '*.{js,ts}'
+      run: npx eslint --fix {staged_files} && npx prettier --write {staged_files} && pnpm run type
+      stage_fixed: true
+
+    - name: vitest
+      root: tools/vitest/
+      glob: '*.{js,ts}'
+      run: npx eslint --fix {staged_files} && npx prettier --write {staged_files} && pnpm run type
+      stage_fixed: true
+
+    - name: lefthook
+      root: tools/lefthook/
+      glob: '*.{js,ts}'
+      run: npx eslint --fix {staged_files} && npx prettier --write {staged_files} && pnpm run type
+      stage_fixed: true
+
+    - name: stylelint
+      root: tools/stylelint/
+      glob: '*.js'
+      run: npx prettier --write {staged_files}
+      stage_fixed: true
+
+    - name: tsconfig
+      root: tools/tsconfig/
+      glob: '*.json'
+      run: npx prettier --write {staged_files}
+      stage_fixed: true
+
+commit-msg:
+  jobs:
+    - name: branch-prefix
+      run: sh tools/lefthook/src/hooks/commit-msg.sh {1}
