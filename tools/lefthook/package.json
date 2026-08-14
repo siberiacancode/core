@@ -1,7 +1,7 @@
 {
   "name": "@siberiacancode/lefthook",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "lefthook config and shared git hooks",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -36,7 +36,7 @@
   ],
   "scripts": {
     "prepublishOnly": "pnpm build",
-    "build": "shx mkdir -p dist && shx cp lefthook.yml dist/lefthook.yml && shx cp -r src/hooks dist/hooks && shx chmod +x dist/hooks/*.sh",
+    "build": "shx rm -rf dist && shx mkdir -p dist/hooks && shx cp lefthook.yml dist/lefthook.yml && shx cp -r src/hooks/. dist/hooks && shx chmod +x dist/hooks/*.sh",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector",
     "format": "prettier --write .",

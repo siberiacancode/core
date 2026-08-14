@@ -29,6 +29,7 @@ extends:
 | hook | what it does |
 | --- | --- |
 | `pre-commit` | runs prettier and eslint on staged files |
+| `pre-push` | asks to confirm changed `tests/**/*.png` screenshots |
 | `commit-msg` | prefixes the message with `<branch> <emoji>` |
 
 The emoji comes from `git config user.emoji` and defaults to 🧊.
