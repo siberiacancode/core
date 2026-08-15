@@ -2,7 +2,6 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "lib": ["ESNext"],
-    "moduleResolution": "node",
     "sourceMap": true,
     "noFallthroughCasesInSwitch": true
   }

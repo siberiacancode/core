@@ -1,0 +1,25 @@
+clickable:
+  button:
+    - next
+    - prev
+    - submit
+  link:
+    - home
+  modal:
+    close:
+
+changeable:
+  input:
+    - email
+    - password
+  select:
+    - country
+  checkbox:
+    - terms
+
+static:
+  label:
+    - title
+    - subtitle
+  text:
+    - error

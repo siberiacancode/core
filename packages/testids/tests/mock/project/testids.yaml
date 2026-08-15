@@ -1,0 +1,14 @@
+clickable:
+  button:
+    - next
+    - prev
+    - submit
+  modal:
+    close:
+changeable:
+  select:
+    - country
+static:
+  label:
+    - title
+    - subtitle

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@siberiacancode/tsconfig/tsconfig.node.json",
+  "compilerOptions": {
+    "composite": false,
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "allowJs": true,
+    "sourceMap": true
+  },
+  "exclude": ["node_modules", "dist", "tests/mock/**"]
+}
