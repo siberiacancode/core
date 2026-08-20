@@ -3,7 +3,6 @@
   "extends": "@siberiacancode/tsconfig/tsconfig.bundler.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "baseUrl": ".",
     "allowJs": true,
     "sourceMap": true
   },
