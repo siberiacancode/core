@@ -32,3 +32,4 @@ minimumReleaseAgeExclude:
   - eslint-plugin-storybook@10.5.8
   - storybook@10.5.8
   - '@siberiacancode/vitest@2.5.0'
+  - '@types/node@26.4.0'

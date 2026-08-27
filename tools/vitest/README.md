@@ -12,6 +12,36 @@ npm install @siberiacancode/vitest
 
 ```javascript
 import { vitest } from '@siberiacancode/vitest';
+import { defineConfig } from 'vitest/config';
 
-export default vitest;
+export default defineConfig({
+  test: {
+    ...vitest
+  }
+});
+```
+
+## Files
+
+```javascript
+import { getCoverageInclude, getFiles, getTsFiles, vitest } from '@siberiacancode/vitest';
+import { defineConfig } from 'vitest/config';
+
+const files = getFiles('src', {
+  ignore: ['generated', /\.stories\.tsx$/]
+});
+
+const tsFiles = getTsFiles('src', {
+  ignore: [(file) => file.includes('/mock/')]
+});
+
+export default defineConfig({
+  test: {
+    ...vitest,
+    coverage: {
+      ...vitest.coverage,
+      include: getCoverageInclude('src')
+    }
+  }
+});
 ```

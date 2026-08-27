@@ -48,10 +48,12 @@
     "pretty": "pnpm type && pnpm lint && pnpm format"
   },
   "peerDependencies": {
+    "@vitest/coverage-v8": "4.1.10",
     "jsdom": "30.0.1",
     "vitest": "4.1.10"
   },
   "dependencies": {
+    "@vitest/coverage-v8": "4.1.10",
     "jsdom": "30.0.1",
     "vitest": "4.1.10"
   },
