@@ -21,6 +21,26 @@ export default defineConfig({
 });
 ```
 
+V8 coverage is enabled by default. Disable it for a single run:
+
+```bash
+vitest --coverage.enabled=false
+```
+
+Or disable it in a project's configuration:
+
+```javascript
+export default defineConfig({
+  test: {
+    ...vitest,
+    coverage: {
+      ...vitest.coverage,
+      enabled: false
+    }
+  }
+});
+```
+
 ## Files
 
 ```javascript
