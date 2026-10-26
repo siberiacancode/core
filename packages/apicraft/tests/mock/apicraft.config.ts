@@ -27,7 +27,7 @@ for (const instance of ['axios', 'fetches', 'ofetch'] as const) {
 
 options.push({
   input: 'spec.yaml',
-  output: `generated/faker`,
+  output: 'generated/faker',
   baseUrl: '/api',
   plugins: [{ name: 'faker', runtimeInstancePath: './faker-instance' }]
 });

@@ -11,6 +11,7 @@ import {
   getArrayObjectFakerFunction,
   getFakerImport,
   getImportFakerRuntimeInstance,
+  getNullableObjectFakerFunction,
   getObjectFakerFunction,
   getPrimitiveFakerFunction
 } from './helpers';
@@ -48,6 +49,33 @@ export const handler: FakerPlugin['Handler'] = ({ plugin }) => {
 
     const typeName = getSchemaTypeName(name);
     typeImportNames.add(typeName);
+
+    const schemaItems = schema.items ?? [];
+
+    let objectSchema: IR.SchemaObject | undefined;
+
+    if (schema.type === 'object') objectSchema = schema;
+
+    if (!schema.type) {
+      objectSchema = schemaItems.find((schemaItem) => schemaItem.type === 'object');
+    }
+    const isNullableObject =
+      objectSchema &&
+      schemaItems.some((schemaItem) => schemaItem.type === 'null') &&
+      schemaItems.every((schemaItem) => schemaItem.type === 'object' || schemaItem.type === 'null');
+
+    if (objectSchema && isNullableObject) {
+      // export const createTypeName = (overrides?: Partial<NonNullable<TypeName>> | null): TypeName =>
+      //   overrides === null ? null : deepMerge<NonNullable<TypeName>>({...}, overrides)
+      const fakerFunction = getNullableObjectFakerFunction({
+        schema: objectSchema,
+        schemaName: name,
+        typeName
+      });
+      fakerStatements.push(fakerFunction);
+
+      return;
+    }
 
     if (schema.type === 'object') {
       // export const createTypeName = (overrides?: Partial<TypeName>): TypeName => deepMerge<TypeName>({...}, overrides)
