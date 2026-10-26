@@ -238,3 +238,18 @@ components:
       properties:
         message:
           type: string
+    MergeRequest:
+      type: object
+      nullable: true
+      required:
+        - name
+        - id
+        - url
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        url:
+          type: string
+          format: uri
