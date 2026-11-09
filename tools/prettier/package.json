@@ -1,7 +1,7 @@
 {
   "name": "@siberiacancode/prettier",
   "type": "module",
-  "version": "1.10.0",
+  "version": "1.9.1",
   "description": "prettier configs",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -49,13 +49,13 @@
     "pretty": "pnpm type && pnpm lint && pnpm format"
   },
   "peerDependencies": {
-    "prettier": "^3.9.8"
+    "prettier": "^3.9.10"
   },
   "dependencies": {
-    "prettier": "^3.9.8"
+    "prettier": "^3.9.10"
   },
   "devDependencies": {
-    "@siberiacancode/eslint": "2.18.1",
+    "@siberiacancode/eslint": "2.19.1",
     "@siberiacancode/tsconfig": "1.2.0"
   }
 }
