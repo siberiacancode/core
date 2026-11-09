@@ -49,10 +49,10 @@
     "pretty": "pnpm type && pnpm lint && pnpm format"
   },
   "peerDependencies": {
-    "prettier": "^3.9.6"
+    "prettier": "^3.9.8"
   },
   "dependencies": {
-    "prettier": "^3.9.6"
+    "prettier": "^3.9.8"
   },
   "devDependencies": {
     "@siberiacancode/eslint": "2.18.1",
