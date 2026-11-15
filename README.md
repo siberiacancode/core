@@ -12,6 +12,7 @@
 - builder
 - eslint
 - jest
+- oxfmt
 - prettier
 - stylelint
 - tsconfig

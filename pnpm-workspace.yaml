@@ -24,3 +24,4 @@ minimumReleaseAgeExclude:
   - eslint-plugin-react-web-api@5.18.2 || 5.20.0
   - eslint-plugin-react-x@5.18.2 || 5.20.0
   - eslint@10.11.0
+  - '@siberiacancode/eslint@2.19.0 || 2.19.1'

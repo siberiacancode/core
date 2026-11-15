@@ -1,0 +1,61 @@
+{
+  "name": "@siberiacancode/oxfmt",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "oxfmt config",
+  "author": {
+    "name": "SIBERIA CAN CODE 🧊",
+    "url": "https://github.com/siberiacancode"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/siberiacancode/core",
+  "repository": {
+    "url": "https://github.com/siberiacancode/core"
+  },
+  "bugs": {
+    "url": "https://github.com/siberiacancode/core/issues"
+  },
+  "keywords": [
+    "formatter",
+    "oxfmt"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.mts",
+        "default": "./dist/esm/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.cts",
+        "default": "./dist/cjs/index.cjs"
+      }
+    }
+  },
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/esm/index.mjs",
+  "types": "dist/esm/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepublishOnly": "pnpm type && pnpm build",
+    "build": "tsdown",
+    "lint": "eslint . --fix",
+    "type": "tsc --noEmit",
+    "format": "oxfmt",
+    "pretty": "pnpm type && pnpm lint && pnpm format"
+  },
+  "peerDependencies": {
+    "oxfmt": "^0.78.0"
+  },
+  "dependencies": {
+    "oxfmt": "^0.78.0"
+  },
+  "devDependencies": {
+    "@siberiacancode/eslint": "2.19.1",
+    "@siberiacancode/tsconfig": "1.2.0"
+  }
+}

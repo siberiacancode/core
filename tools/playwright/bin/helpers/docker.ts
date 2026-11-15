@@ -38,13 +38,14 @@ export const dockerUp = async (options: DockerOptions) => {
     'run',
     '--name',
     options.container,
+    '-e',
+    'PW_IN_DOCKER=1',
     ...mountArgs,
     '-itd',
     options.image
   ]);
 };
 
-/** Ensure the container is up, then exec the given CLI args inside it. */
 export const dockerExec = async (options: DockerOptions, cliArgs: string[]) => {
   const running = await docker(['inspect', '-f', '.', options.container]);
   if (running !== 0) {
